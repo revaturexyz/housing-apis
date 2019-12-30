@@ -1,4 +1,4 @@
-# account :: docker
+# housing_apis :: complex_dockerfile
 
 ## arguments
 ARG DOTNET_VERSION=3.1
@@ -6,16 +6,16 @@ ARG DOTNET_VERSION=3.1
 ## stage - restore
 FROM mcr.microsoft.com/dotnet/core/sdk:${DOTNET_VERSION} as restore
 WORKDIR /src
-COPY src/Revature.Account.Api/*.csproj Revature.Account.Api/
-COPY src/Revature.Account.DataAccess/*.csproj Revature.Account.DataAccess/
-COPY src/Revature.Account.Lib/*.csproj Revature.Account.Lib/
+COPY src/Revature.Complex.Api/*.csproj Revature.Complex.Api/
+COPY src/Revature.Complex.DataAccess/*.csproj Revature.Complex.DataAccess/
+COPY src/Revature.Complex.Lib/*.csproj Revature.Complex.Lib/
 RUN dotnet restore *.Api
 
 ## stage - publish
 FROM restore as publish
-COPY src/Revature.Account.Api/ Revature.Account.Api/
-COPY src/Revature.Account.DataAccess/ Revature.Account.DataAccess/
-COPY src/Revature.Account.Lib/ Revature.Account.Lib/
+COPY src/Revature.Complex.Api/ Revature.Complex.Api/
+COPY src/Revature.Complex.DataAccess/ Revature.Complex.DataAccess/
+COPY src/Revature.Complex.Lib/ Revature.Complex.Lib/
 RUN dotnet publish *.Api --configuration Release --no-restore --output /src/dist
 
 ## stage - deploy

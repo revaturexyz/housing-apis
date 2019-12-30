@@ -67,8 +67,8 @@ namespace Revature.Complex.Api
 
       services.AddScoped<IRepository, Repository>();
       services.AddScoped<IMapper, Mapper>();
-      services.AddHostedService<RoomServiceReceiver>();
-      services.AddScoped<IRoomServiceSender, RoomServiceSender>();
+      // services.AddHostedService<RoomServiceReceiver>();
+      // services.AddScoped<IRoomServiceSender, RoomServiceSender>();
       services.AddHttpClient<IAddressRequest, AddressRequest>();
       services.AddHttpClient<IRoomRequest, RoomRequest>();
 

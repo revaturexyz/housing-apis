@@ -1,4 +1,4 @@
-# address :: docker
+# housing_apis :: tenant_dockerfile
 
 ## arguments
 ARG DOTNET_VERSION=3.1
@@ -6,16 +6,16 @@ ARG DOTNET_VERSION=3.1
 ## stage - restore
 FROM mcr.microsoft.com/dotnet/core/sdk:${DOTNET_VERSION} as restore
 WORKDIR /src
-COPY src/Revature.Address.Api/*.csproj Revature.Address.Api/
-COPY src/Revature.Address.DataAccess/*.csproj Revature.Address.DataAccess/
-COPY src/Revature.Address.Lib/*.csproj Revature.Address.Lib/
+COPY src/Revature.Tenant.Api/*.csproj Revature.Tenant.Api/
+COPY src/Revature.Tenant.DataAccess/*.csproj Revature.Tenant.DataAccess/
+COPY src/Revature.Tenant.Lib/*.csproj Revature.Tenant.Lib/
 RUN dotnet restore *.Api
 
 ## stage - publish
 FROM restore as publish
-COPY src/Revature.Address.Api/ Revature.Address.Api/
-COPY src/Revature.Address.DataAccess/ Revature.Address.DataAccess/
-COPY src/Revature.Address.Lib/ Revature.Address.Lib/
+COPY src/Revature.Tenant.Api/ Revature.Tenant.Api/
+COPY src/Revature.Tenant.DataAccess/ Revature.Tenant.DataAccess/
+COPY src/Revature.Tenant.Lib/ Revature.Tenant.Lib/
 RUN dotnet publish *.Api --configuration Release --no-restore --output /src/dist
 
 ## stage - deploy

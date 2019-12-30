@@ -1,0 +1,147 @@
+# housing_apis :: docker-compose
+
+networks:
+  locally:
+
+services:
+  account_api:
+    build:
+      args:
+        - DOTNET_VERSION=3.1
+      context: ./account
+      dockerfile: ../.docker/account.dockerfile
+    depends_on:
+      - account_data
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    environment:
+      ConnectionStrings__AccountDb: 'Host=account_data;Database=account;Username=postgres;Password=Pass@word'
+    image: account
+    networks:
+      - locally
+    ports:
+      - 9100:80
+      - 9101:443
+    restart: on-failure
+
+  account_data:
+    environment:
+      POSTGRES_PASSWORD: 'Pass@word'
+    image: postgres:alpine
+    networks:
+      - locally
+
+  address_api:
+    build:
+      args:
+        - DOTNET_VERSION=3.1
+      context: ./address
+      dockerfile: ../.docker/address.dockerfile
+    depends_on:
+      - address_data
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    environment:
+      ConnectionStrings__AddressDb: 'Host=address_data;Database=address;Username=postgres;Password=Pass@word'
+    image: address
+    networks:
+      - locally
+    ports:
+      - 9110:80
+      - 9111:443
+    restart: on-failure
+
+  address_data:
+    environment:
+      POSTGRES_PASSWORD: 'Pass@word'
+    image: postgres:alpine
+    networks:
+      - locally
+
+  complex_api:
+    build:
+      args:
+        - DOTNET_VERSION=3.1
+      context: ./complex
+      dockerfile: ../.docker/complex.dockerfile
+    depends_on:
+      - complex_data
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    environment:
+      ConnectionStrings__ComplexDb: 'Host=complex_data;Database=complex;Username=postgres;Password=Pass@word'
+    image: complex
+    networks:
+      - locally
+    ports:
+      - 9120:80
+      - 9121:443
+    restart: on-failure
+
+  complex_data:
+    environment:
+      POSTGRES_PASSWORD: 'Pass@word'
+    image: postgres:alpine
+    networks:
+      - locally
+
+  room_api:
+    build:
+      args:
+        - DOTNET_VERSION=3.1
+      context: ./room
+      dockerfile: ../.docker/room.dockerfile
+    depends_on:
+      - room_data
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    environment:
+      ConnectionStrings__RoomDb: 'Host=room_data;Database=room;Username=postgres;Password=Pass@word'
+    image: room
+    networks:
+      - locally
+    ports:
+      - 9130:80
+      - 9131:443
+    restart: on-failure
+
+  room_data:
+    environment:
+      POSTGRES_PASSWORD: 'Pass@word'
+    image: postgres:alpine
+    networks:
+      - locally
+
+  tenant_api:
+    build:
+      args:
+        - DOTNET_VERSION=3.1
+      context: ./tenant
+      dockerfile: ../.docker/tenant.dockerfile
+    depends_on:
+      - tenant_data
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    environment:
+      ConnectionStrings__TenantDb: 'Host=tenant_data;Database=tenant;Username=postgres;Password=Pass@word'
+    image: tenant
+    networks:
+      - locally
+    ports:
+      - 9140:80
+      - 9141:443
+    restart: on-failure
+
+  tenant_data:
+    environment:
+      POSTGRES_PASSWORD: 'Pass@word'
+    image: postgres:alpine
+    networks:
+      - locally
+
+version: '3.7'
