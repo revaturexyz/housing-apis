@@ -8,3 +8,6 @@ node_modules/
 
 ## rule :: terraform
 .terraform/
+
+## rule :: vscode
+.vs/
