@@ -59,6 +59,13 @@ namespace Revature.Room.Api
       // services.AddHostedService<ServiceBusConsumer>();
       // services.AddScoped<IServiceBusSender, ServiceBusSender>();
       services.AddControllers();
+
+      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+        options.Authority = "https://dev-837913-admin.okta.com/oauth2/default";
+        options.Audience = "api://default";
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -80,7 +87,16 @@ namespace Revature.Room.Api
 
       app.UseCors(CorsPolicyName);
 
+      app.UseAuthentication();
+
       app.UseAuthorization();
+
+      app.UseIdentityServerBearerTokenAuthentication(new UseIdentityServerBearerTokenAuthenticationOptions
+        {
+          Authority = "https://v1/introspect",
+          RequiredScopes = new[] {"room"}
+        });
+
 
       app.UseEndpoints(endpoints =>
       {
