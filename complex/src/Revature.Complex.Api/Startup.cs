@@ -58,6 +58,8 @@ namespace Revature.Complex.Api
         });
       });
 
+      services.AddApplicationInsightsTelemetry();
+
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Revature Complex", Version = "v1" });
