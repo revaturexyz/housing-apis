@@ -58,6 +58,10 @@ namespace Revature.Room.Api
       services.AddScoped<IMapper, DbMapper>();
       // services.AddHostedService<ServiceBusConsumer>();
       // services.AddScoped<IServiceBusSender, ServiceBusSender>();
+
+      // The following line enables Application Insights telemetry collection.
+      services.AddApplicationInsightsTelemetry();
+      
       services.AddControllers();
     }
 

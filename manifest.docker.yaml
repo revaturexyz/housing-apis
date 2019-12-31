@@ -31,7 +31,7 @@ services:
     image: postgres:alpine
     networks:
       - locally
-
+###############################################################################
   address_api:
     build:
       args:
@@ -59,7 +59,7 @@ services:
     image: postgres:alpine
     networks:
       - locally
-
+###########################################################################
   complex_api:
     build:
       args:
@@ -87,7 +87,7 @@ services:
     image: postgres:alpine
     networks:
       - locally
-
+#####################################################################################
   room_api:
     build:
       args:
@@ -115,7 +115,7 @@ services:
     image: postgres:alpine
     networks:
       - locally
-
+######################################################################################
   tenant_api:
     build:
       args:
