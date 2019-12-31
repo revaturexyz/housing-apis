@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,10 @@ namespace Revature.Tenant.Api
 
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddApplicationInsightsTelemetry();
+
+      services.AddHealthChecks();
+
       services.AddDbContext<TenantContext>(options =>
           options.UseNpgsql(Configuration.GetConnectionString(ConnectionStringName)));
 
@@ -90,6 +95,7 @@ namespace Revature.Tenant.Api
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+        endpoints.MapHealthChecks("/health");
       });
     }
   }
