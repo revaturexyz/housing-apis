@@ -87,9 +87,9 @@ namespace Revature.Room.Api
 
       app.UseCors(CorsPolicyName);
 
-      app.UseAuthentication();
-
       app.UseAuthorization();
+
+      app.UseAuthentication();
 
       app.UseIdentityServerBearerTokenAuthentication(new UseIdentityServerBearerTokenAuthenticationOptions
         {
