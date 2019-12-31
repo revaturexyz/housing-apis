@@ -61,7 +61,9 @@ namespace Revature.Room.Api
 
       // The following line enables Application Insights telemetry collection.
       services.AddApplicationInsightsTelemetry();
-      
+
+      services.AddHealthChecks();
+
       services.AddControllers();
     }
 
@@ -89,6 +91,7 @@ namespace Revature.Room.Api
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+        endpoints.MapHealthChecks("/health");
       });
     }
   }
