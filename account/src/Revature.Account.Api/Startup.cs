@@ -128,6 +128,7 @@ namespace Revature.Account.Api
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+        endpoints.MapHealthChecks("/health");
       });
 
       // Found at https://stackoverflow.com/questions/36958318/where-should-i-put-database-ensurecreated
