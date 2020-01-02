@@ -59,6 +59,8 @@ namespace Revature.Complex.Api
       });
 
       services.AddApplicationInsightsTelemetry();
+      
+      services.AddHealthChecks();
 
       services.AddSwaggerGen(c =>
       {
@@ -107,6 +109,7 @@ namespace Revature.Complex.Api
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+        endpoints.MapHealthChecks("/health");
       });
 
       ////for the service-bus listener
