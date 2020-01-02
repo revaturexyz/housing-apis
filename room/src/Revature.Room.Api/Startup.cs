@@ -10,7 +10,6 @@ using Revature.Room.DataAccess.Entities;
 using Revature.Room.Lib;
 using Serilog;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using IdentityServer3.AccessTokenValidation;
 
 namespace Revature.Room.Api
 {
@@ -68,6 +67,12 @@ namespace Revature.Room.Api
         options.Audience = "api://default";
         });
 
+      services.AddAuthorization(options =>
+        {
+            options.AddPolicy("room",
+                policy => policy.RequireClaim("scope", "room"));
+        });
+
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -89,7 +94,10 @@ namespace Revature.Room.Api
 
       app.UseCors(CorsPolicyName);
 
+      app.UseAuthorization();
+
       app.UseAuthentication();
+
 
       app.UseEndpoints(endpoints =>
       {

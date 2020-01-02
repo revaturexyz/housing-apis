@@ -10,7 +10,7 @@ namespace Revature.Room.Api.Controllers
 {
   [Route("api/rooms")]
   [ApiController]
-  [Authorize]
+  [Authorize("room")]
   public class TenantController : ControllerBase
   {
     private readonly IRepository _repository;
