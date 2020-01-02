@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -9,6 +10,7 @@ namespace Revature.Room.Api.Controllers
 {
   [Route("api/rooms")]
   [ApiController]
+  [Authorize]
   public class TenantController : ControllerBase
   {
     private readonly IRepository _repository;

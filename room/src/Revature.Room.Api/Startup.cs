@@ -9,7 +9,8 @@ using Revature.Room.DataAccess;
 using Revature.Room.DataAccess.Entities;
 using Revature.Room.Lib;
 using Serilog;
-using ServiceBusMessaging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using IdentityServer3.AccessTokenValidation;
 
 namespace Revature.Room.Api
 {
@@ -66,6 +67,7 @@ namespace Revature.Room.Api
         options.Authority = "https://dev-837913-admin.okta.com/oauth2/default";
         options.Audience = "api://default";
         });
+
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -87,16 +89,7 @@ namespace Revature.Room.Api
 
       app.UseCors(CorsPolicyName);
 
-      app.UseAuthorization();
-
       app.UseAuthentication();
-
-      app.UseIdentityServerBearerTokenAuthentication(new UseIdentityServerBearerTokenAuthenticationOptions
-        {
-          Authority = "https://v1/introspect",
-          RequiredScopes = new[] {"room"}
-        });
-
 
       app.UseEndpoints(endpoints =>
       {
