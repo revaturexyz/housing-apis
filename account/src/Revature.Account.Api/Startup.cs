@@ -99,6 +99,9 @@ namespace Revature.Account.Api
         });
         c.OperationFilter<SwaggerFilter>();
       });
+
+      services.AddApplicationInsightsTelemetry();
+      services.AddHealthChecks();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
