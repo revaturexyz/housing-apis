@@ -66,7 +66,7 @@ namespace Revature.Room.Api
         options.Authority = "https://dev-837913.okta.com/oauth2/default";
         options.Audience = "api://default";
         });
-
+      //test comment
       services.AddAuthorization(options =>
         {
             options.AddPolicy("room",
