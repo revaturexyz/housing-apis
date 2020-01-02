@@ -63,7 +63,7 @@ namespace Revature.Room.Api
       services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
-        options.Authority = "https://dev-837913-admin.okta.com/oauth2/default";
+        options.Authority = "https://dev-837913.okta.com/oauth2/default";
         options.Audience = "api://default";
         });
 
