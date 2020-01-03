@@ -1,9 +1,7 @@
-using System;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Http;
-using System.Web;
 
 namespace Revature.Tenant.Api.Telemetry
 {
