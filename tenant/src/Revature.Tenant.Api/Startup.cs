@@ -72,6 +72,11 @@ namespace Revature.Tenant.Api
         options.Authority = "https://dev-837913.okta.com/oauth2/default";
         options.Audience = "api://default";
         });
+      services.AddAuthorization(options =>
+        {
+            options.AddPolicy("tenant",
+                policy => policy.RequireClaim("scope", "tenant"));
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

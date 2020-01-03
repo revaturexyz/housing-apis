@@ -17,7 +17,7 @@ namespace Revature.Tenant.Api.Controllers
   /// </summary>
   [Route("api/Tenant/")]
   [ApiController]
-  [Authorize]
+  [Authorize("tenant")]
   public class TenantRoomController : ControllerBase
   {
     private readonly ITenantRoomRepository _repository;
