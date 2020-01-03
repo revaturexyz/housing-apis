@@ -1,4 +1,5 @@
 using System;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Revature.Tenant.Api.ServiceBus;
+using Revature.Tenant.Api.Telemetry;
 using Revature.Tenant.DataAccess;
 using Revature.Tenant.DataAccess.Entities;
 using Revature.Tenant.DataAccess.Repository;
@@ -65,6 +67,7 @@ namespace Revature.Tenant.Api
       services.AddScoped<ITenantRoomRepository, TenantRoomRepository>();
       services.AddScoped<IMapper, Mapper>();
       services.AddScoped<IServiceBusSender, ServiceBusSender>();
+      services.AddScoped<ITelemetryInitializer, CustomTelemetryInitializer>();
 
       services.AddHttpClient<IAddressService, AddressService>();
 
