@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Http;
 
 namespace Revature.Tenant.Api.Telemetry
 {
-  internal class CustomTelemetryInitializer : ITelemetryInitializer
+  internal class TenantTelemetryInitializer : ITelemetryInitializer
   {
     IHttpContextAccessor contextAccessor;
 
-    public CustomTelemetryInitializer(IHttpContextAccessor ctxAccessor)
+    public TenantTelemetryInitializer(IHttpContextAccessor ctxAccessor)
     {
       contextAccessor = ctxAccessor;
     }
