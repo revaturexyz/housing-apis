@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -58,6 +59,19 @@ namespace Revature.Address.Api
       });
 
       services.AddControllers();
+
+      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+        options.Authority = "https://dev-837913.okta.com/oauth2/default";
+        options.Audience = "api://default";
+      });
+
+      services.AddAuthorization(options =>
+        {
+        options.AddPolicy("Address", policy =>
+            policy.RequireClaim("Role", "Coordinator", "Manager"));
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -78,6 +92,8 @@ namespace Revature.Address.Api
       app.UseRouting();
 
       app.UseCors(CorsPolicyName);
+
+      app.UseAuthentication();
 
       app.UseAuthorization();
 
