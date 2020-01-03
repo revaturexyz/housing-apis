@@ -69,10 +69,9 @@ namespace Revature.Room.Api
       //test comment
       services.AddAuthorization(options =>
         {
-            options.AddPolicy("room",
-                policy => policy.RequireClaim("scope", "room"));
+        options.AddPolicy("Room", policy =>
+            policy.RequireClaim("Role", "Coordinator"));
         });
-
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
