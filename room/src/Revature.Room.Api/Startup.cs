@@ -10,6 +10,8 @@ using Revature.Room.DataAccess.Entities;
 using Revature.Room.Lib;
 using Serilog;
 using ServiceBusMessaging;
+using Microsoft.ApplicationInsights.Extensibility;
+using Revature.Room.Api.Telemetry;
 
 namespace Revature.Room.Api
 {
@@ -61,6 +63,8 @@ namespace Revature.Room.Api
 
       // The following line enables Application Insights telemetry collection.
       services.AddApplicationInsightsTelemetry();
+
+      services.AddScoped<ITelemetryInitializer, RoomTelemetryInitializer>();
 
       services.AddHealthChecks();
 
