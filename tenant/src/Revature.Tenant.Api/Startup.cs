@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Revature.Tenant.Api.ServiceBus;
@@ -64,6 +65,13 @@ namespace Revature.Tenant.Api
       services.AddHttpClient<IAddressService, AddressService>();
 
       services.AddControllers();
+
+      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+        options.Authority = "https://dev-837913.okta.com/oauth2/default";
+        options.Audience = "api://default";
+      });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
