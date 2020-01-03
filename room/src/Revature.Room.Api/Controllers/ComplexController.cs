@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,6 +14,7 @@ namespace Revature.Room.Api.Controllers
   /// </summary>
   [Route("api/complexes/{complexId}/rooms")]
   [ApiController]
+  [Authorize(Policy = "Room")]
   public class ComplexController : ControllerBase
   {
     private readonly IRepository _repository;
