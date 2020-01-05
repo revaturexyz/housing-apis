@@ -33,7 +33,7 @@ namespace Revature.Account.Api
 
     public static string Secret { get; private set; }
 
-    public static string ClaimsDomain { get; } = "https://revature.com/";
+    public static string ClaimsDomain { get; } = "https://dev-837913.okta.com/";
 
     /// <summary>
     /// Function to set the secret values, intended for use in Startup.
@@ -73,7 +73,7 @@ namespace Revature.Account.Api
     /// <returns></returns>
     public bool ConnectManagementClient()
     {
-      var client = new RestClient($"https://{Domain}/oauth/token");
+      var client = new RestClient($"https://{Domain}/oauth2/default");
       var request = new RestRequest(Method.POST);
 
       request.AddHeader("content-type", "application/json");
