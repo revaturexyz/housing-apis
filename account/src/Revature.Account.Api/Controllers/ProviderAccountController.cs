@@ -19,9 +19,9 @@ namespace Revature.Account.Api.Controllers
   {
     private readonly IGenericRepository _repo;
     private readonly ILogger<ProviderAccountController> _logger;
-    private readonly IAuth0HelperFactory _authHelperFactory;
+    private readonly IOktaHelperFactory _authHelperFactory;
 
-    public ProviderAccountController(IGenericRepository repo, ILogger<ProviderAccountController> logger, IAuth0HelperFactory authHelperFactory)
+    public ProviderAccountController(IGenericRepository repo, ILogger<ProviderAccountController> logger, IOktaHelperFactory authHelperFactory)
     {
       _repo = repo ?? throw new ArgumentNullException(nameof(repo));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -87,20 +87,22 @@ namespace Revature.Account.Api.Controllers
       var existingProvider = await _repo.GetProviderAccountByIdAsync(providerId);
       if (existingProvider != null && existingProvider.Status.StatusText != Status.Approved)
       {
-        Auth0Helper auth0 = _authHelperFactory.Create(Request);
+        OktaHelper auth0 = _authHelperFactory.Create(Request);
         if (existingProvider.Email != auth0.Email)
           return Forbid();
 
-        var authUser = await auth0.Client.Users.GetUsersByEmailAsync(auth0.Email);
+        // var authUser = await auth0.Client.Users.GetUsersByEmailAsync(auth0.Email);
+        var authUser = await auth0.Client.Users.FirstOrDefault(user => user.Profile.Email == auth0.Email);
+
 
         // Remove unapproved_provider role
-        if (auth0.Roles.Contains(Auth0Helper.UnapprovedProviderRole))
+        if (auth0.Roles.Contains(OktaHelper.UnapprovedProviderRole))
         {
-          await auth0.RemoveRoleAsync(authUser[0].UserId, Auth0Helper.UnapprovedProviderRole);
+          await auth0.RemoveRoleAsync(authUser.Id, OktaHelper.UnapprovedProviderRole);
         }
 
         // Add approved_provider 
-        await auth0.AddRoleAsync(authUser[0].UserId, Auth0Helper.ApprovedProviderRole);
+        await auth0.AddRoleAsync(authUser.Id, OktaHelper.ApprovedProviderRole);
 
         existingProvider.Status.StatusText = Status.Approved;
         await _repo.UpdateProviderAccountAsync(existingProvider);
