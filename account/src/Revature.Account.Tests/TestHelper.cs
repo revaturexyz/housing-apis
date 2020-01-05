@@ -22,7 +22,7 @@ namespace Revature.Account.Tests
   public class TestHelper
   {
     public Mock<Revature.Account.Lib.Interface.IGenericRepository> Repository { get; private set; }
-    public Mock<Revature.Account.Api.IAuth0HelperFactory> Auth0HelperFactory { get; private set; }
+    public Mock<Revature.Account.Api.IOktaHelperFactory> Auth0HelperFactory { get; private set; }
 
     //API Controller Instantiation
     public CoordinatorAccountController CoordinatorAccountController { get; private set; }
@@ -198,7 +198,7 @@ namespace Revature.Account.Tests
     private void SetUpMocks()
     {
       Repository = new Mock<Lib.Interface.IGenericRepository>();
-      Auth0HelperFactory = new Mock<IAuth0HelperFactory>();
+      Auth0HelperFactory = new Mock<IOktaHelperFactory>();
 
       CoordinatorAccountController = new CoordinatorAccountController(Repository.Object, LoggerCoord, Auth0HelperFactory.Object)
       {
