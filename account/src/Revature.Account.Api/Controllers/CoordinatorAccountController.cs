@@ -20,9 +20,9 @@ namespace Revature.Account.Api.Controllers
   {
     private readonly IGenericRepository _repo;
     private readonly ILogger<CoordinatorAccountController> _logger;
-    private readonly IAuth0HelperFactory _authHelperFactory;
+    private readonly IOktaHelperFactory _authHelperFactory;
 
-    public CoordinatorAccountController(IGenericRepository repo, ILogger<CoordinatorAccountController> logger, IAuth0HelperFactory authHelperFactory)
+    public CoordinatorAccountController(IGenericRepository repo, ILogger<CoordinatorAccountController> logger, IOktaHelperFactory authHelperFactory)
     {
       _repo = repo ?? throw new ArgumentNullException(nameof(repo));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -45,8 +45,10 @@ namespace Revature.Account.Api.Controllers
       try
       {
         var auth0 = _authHelperFactory.Create(Request);
-        var authUser = await auth0.Client.Users.GetUsersByEmailAsync(auth0.Email);
-        var authRoles = await auth0.Client.Roles.GetAllAsync(new GetRolesRequest());
+        // var authUser = await auth0.Client.Users.GetUsersByEmailAsync(auth0.Email);
+        var authUser = await auth0.Client.Users.FirstOrDefault(user => user.Profile.Email == auth0.Email);
+        // var authRoles = await auth0.Client.Roles.GetAllAsync(new GetRolesRequest());
+        var authRoles = await auth0.Client.Groups.ToList();
 
         var id = await _repo.GetCoordinatorIdByEmailAsync(auth0.Email);
         if (id != Guid.Empty)
@@ -54,7 +56,7 @@ namespace Revature.Account.Api.Controllers
           // If their roles arent set properly, set them
           if (!auth0.Roles.Contains(Auth0Helper.CoordinatorRole))
           {
-            await auth0.AddRoleAsync(authUser[0].UserId, authRoles.First(r => r.Name == Auth0Helper.CoordinatorRole).Id);
+            await auth0.AddRoleAsync(authUser.Id, authRoles.First(r => r.Profile.Name == Auth0Helper.CoordinatorRole).Id);
           }
         }
         else
@@ -67,7 +69,7 @@ namespace Revature.Account.Api.Controllers
             && !auth0.Roles.Contains(Auth0Helper.ApprovedProviderRole))
           {
             // They have no role, so set them as unapproved
-            await auth0.AddRoleAsync(authUser[0].UserId, authRoles.First(r => r.Name == Auth0Helper.UnapprovedProviderRole).Id);
+            await auth0.AddRoleAsync(authUser.Id, authRoles.First(r => r.Profile.Name == Auth0Helper.UnapprovedProviderRole).Id);
           }
         }
 
@@ -79,8 +81,8 @@ namespace Revature.Account.Api.Controllers
             // They have been set as a coordinator on the Auth0 site, so make a new account
             var coordinator = new CoordinatorAccount
             {
-              Name = authUser[0].FirstName != null && authUser[0].LastName != null
-                ? authUser[0].FirstName + " " + authUser[0].LastName
+              Name = authUser.Profile.FirstName != null && authUser.Profile.LastName != null
+                ? authUser.Profile.FirstName + " " + authUser.Profile.LastName
                 : "No Name",
               Email = auth0.Email,
               TrainingCenterName = "No Name",
@@ -94,8 +96,8 @@ namespace Revature.Account.Api.Controllers
             // Make a new provider
             var provider = new ProviderAccount
             {
-              Name = authUser[0].FirstName != null && authUser[0].LastName != null
-                ? authUser[0].FirstName + " " + authUser[0].LastName
+              Name = authUser.Profile.FirstName != null && authUser.Profile.LastName != null
+                ? authUser.Profile.FirstName + " " + authUser.Profile.LastName
                 : "No Name",
               Email = auth0.Email,
               Status = new Status(Status.Pending),
@@ -109,7 +111,7 @@ namespace Revature.Account.Api.Controllers
             // they select a training center and click 'request approval'
 
             // They have no role, so set them as unapproved
-            await auth0.AddRoleAsync(authUser[0].UserId, authRoles.First(r => r.Name == Auth0Helper.UnapprovedProviderRole).Id);
+            await auth0.AddRoleAsync(authUser.Id, authRoles.First(r => r.Profile.Name == Auth0Helper.UnapprovedProviderRole).Id);
           }
           // Db was modified either way, save changes
           await _repo.SaveAsync();
@@ -119,7 +121,7 @@ namespace Revature.Account.Api.Controllers
         }
 
         // Update the app_metadata if it doesnt contain the correct id
-        await auth0.UpdateMetadataWithIdAsync(authUser[0].UserId, id);
+        await auth0.UpdateMetadataWithIdAsync(authUser.Id, id);
 
         return Ok(id);
       }
