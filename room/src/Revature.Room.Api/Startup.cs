@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Okta.AspNetCore;
 using Revature.Room.DataAccess;
 using Revature.Room.DataAccess.Entities;
 using Revature.Room.Lib;
@@ -47,6 +48,21 @@ namespace Revature.Room.Api
         });
       });
 
+      services.AddAuthentication(options =>
+        {
+          options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+          options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
+          options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+        })
+      .AddOktaWebApi(new OktaWebApiOptions()
+      {
+        OktaDomain = Configuration["Okta:OktaDomain"],
+      });
+
+      services.AddAuthorization();
+            
+      services.AddControllers();
+
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Revature Room", Version = "v1" });
@@ -58,7 +74,7 @@ namespace Revature.Room.Api
       services.AddScoped<IMapper, DbMapper>();
       // services.AddHostedService<ServiceBusConsumer>();
       // services.AddScoped<IServiceBusSender, ServiceBusSender>();
-      services.AddControllers();
+
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -79,6 +95,8 @@ namespace Revature.Room.Api
       app.UseRouting();
 
       app.UseCors(CorsPolicyName);
+
+      app.UseAuthentication();
 
       app.UseAuthorization();
 

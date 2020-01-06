@@ -1,5 +1,7 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -9,6 +11,7 @@ namespace Revature.Room.Api.Controllers
 {
   [Route("api/rooms")]
   [ApiController]
+  [Authorize]
   public class TenantController : ControllerBase
   {
     private readonly IRepository _repository;
@@ -26,6 +29,7 @@ namespace Revature.Room.Api.Controllers
     // GET: api/rooms?gender=g&endDate=e
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
+
     public async Task<IActionResult> GetAsync(
           [FromQuery] string gender,
           [FromQuery] DateTime endDate
