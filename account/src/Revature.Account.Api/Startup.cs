@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Revature.Account.Api.Telemetry;
 using Revature.Account.DataAccess;
 using Revature.Account.DataAccess.Repositories;
 using Revature.Account.Lib.Interface;
