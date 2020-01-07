@@ -1,3 +1,5 @@
+using System;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Revature.Tenant.Api.ServiceBus;
+using Revature.Tenant.Api.Telemetry;
 using Revature.Tenant.DataAccess;
 using Revature.Tenant.DataAccess.Entities;
 using Revature.Tenant.DataAccess.Repository;
@@ -28,6 +31,10 @@ namespace Revature.Tenant.Api
 
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddApplicationInsightsTelemetry();
+
+      services.AddHealthChecks();
+
       services.AddDbContext<TenantContext>(options =>
           options.UseNpgsql(Configuration.GetConnectionString(ConnectionStringName)));
 
@@ -60,6 +67,7 @@ namespace Revature.Tenant.Api
       services.AddScoped<ITenantRoomRepository, TenantRoomRepository>();
       services.AddScoped<IMapper, Mapper>();
       services.AddScoped<IServiceBusSender, ServiceBusSender>();
+      services.AddScoped<ITelemetryInitializer, TenantTelemetryInitializer>();
 
       services.AddHttpClient<IAddressService, AddressService>();
 
@@ -90,6 +98,7 @@ namespace Revature.Tenant.Api
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+        endpoints.MapHealthChecks("/health");
       });
     }
   }
