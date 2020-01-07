@@ -65,12 +65,3 @@ resource "azurerm_resource_group" "roomxyz" {
     owner = "${var.resource_group["owner"]}"
   }
 }
-
-resource "cloudflare_record" "roomxyz" {
-  domain = "${var.cloudflare_record["domain"]}"
-  name = "${var.cloudflare_record["name"]}"
-  proxied = "${var.cloudflare_record["proxied"]}"
-  ttl = "${var.cloudflare_record["ttl"]}"
-  type = "${var.cloudflare_record["type"]}"
-  value = "${var.cloudflare_record["value"]}"
-}
