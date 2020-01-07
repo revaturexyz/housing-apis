@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Okta.AspNetCore;
 using Revature.Complex.Api.Services;
 using Revature.Complex.DataAccess;
 using Revature.Complex.DataAccess.Entities;
@@ -72,6 +73,21 @@ namespace Revature.Complex.Api
       services.AddHttpClient<IAddressRequest, AddressRequest>();
       services.AddHttpClient<IRoomRequest, RoomRequest>();
 
+      services.AddAuthentication(options => 
+          {
+          options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+          options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
+          options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+        })
+        .AddOktaWebApi(new OktaWebApiOptions()
+        {
+          OktaDomain = Configuration["Okta:OktaDomain"],
+        }
+
+      );
+
+      services.AddAuthorization();
+
       services.AddControllers();
 
     }
@@ -99,6 +115,8 @@ namespace Revature.Complex.Api
       app.UseRouting();
 
       app.UseCors(CorsPolicyName);
+
+      app.UseAuthentication();
 
       app.UseAuthorization();
 
