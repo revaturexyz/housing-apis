@@ -80,7 +80,7 @@ namespace Revature.Account.Api.Controllers
     [HttpPut("{providerId}/approve")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize(Policy = "CoordinatorRole")]
+    [Authorize]
     public async Task<IActionResult> Put(Guid providerId)
     {
       _logger.LogInformation($"PUT - Approval request for provider: {providerId}");
@@ -118,7 +118,7 @@ namespace Revature.Account.Api.Controllers
     [HttpDelete("{providerId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize(Policy = "CoordinatorRole")]
+    [Authorize]
     public async Task<ActionResult> Delete(Guid providerId)
     {
       _logger.LogInformation($"DELETE - Delete request for provider ID: {providerId}");
