@@ -1,3 +1,4 @@
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -99,6 +100,9 @@ namespace Revature.Account.Api
         });
         c.OperationFilter<SwaggerFilter>();
       });
+
+      services.AddApplicationInsightsTelemetry();
+      services.AddHealthChecks();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -125,6 +129,7 @@ namespace Revature.Account.Api
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+        endpoints.MapHealthChecks("/health");
       });
 
       // Found at https://stackoverflow.com/questions/36958318/where-should-i-put-database-ensurecreated
