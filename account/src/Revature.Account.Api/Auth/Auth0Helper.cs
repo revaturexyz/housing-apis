@@ -55,11 +55,11 @@ namespace Revature.Account.Api
       jwt = jwt[7..];
       var handler = new JwtSecurityTokenHandler();
       var token = handler.ReadJwtToken(jwt);
-
-      Email = (string)token.Payload[ClaimsDomain + "email"];
-      Roles = JsonSerializer.Deserialize<string[]>(token.Payload[ClaimsDomain + "roles"].ToString());
+      Console.WriteLine(token);
+      // Email = (string)token.Payload[ClaimsDomain + "email"];
+      // Roles = JsonSerializer.Deserialize<string[]>(token.Payload[ClaimsDomain + "roles"].ToString());
       // Will only need the id field from the app metadata
-      AppMetadata = JsonSerializer.Deserialize<dynamic>(token.Payload[ClaimsDomain + "app_metadata"].ToString());
+      // AppMetadata = JsonSerializer.Deserialize<dynamic>(token.Payload[ClaimsDomain + "app_metadata"].ToString());
       _logger = logger;
     }
 
@@ -139,7 +139,7 @@ namespace Revature.Account.Api
     }
 
     /// <summary>
-    /// Updates remote Auth0 profile's app metadata to include the given Revature account id. 
+    /// Updates remote Auth0 profile's app metadata to include the given Revature account id.
     /// </summary>
     /// <param name="authUserId"></param>
     /// <param name="newId"></param>

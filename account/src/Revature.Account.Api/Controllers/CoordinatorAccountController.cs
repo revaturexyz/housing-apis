@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Auth0.ManagementApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace Revature.Account.Api.Controllers
   /// </summary>
   [Route("api/coordinator-accounts")]
   [ApiController]
+  [EnableCors("RevatureCorsPolicy")]
   public class CoordinatorAccountController : ControllerBase
   {
     private readonly IGenericRepository _repo;
@@ -119,7 +121,7 @@ namespace Revature.Account.Api.Controllers
         }
 
         // Update the app_metadata if it doesnt contain the correct id
-        await auth0.UpdateMetadataWithIdAsync(authUser[0].UserId, id);
+        // await auth0.UpdateMetadataWithIdAsync(authUser[0].UserId, id);
 
         return Ok(id);
       }
