@@ -11,6 +11,8 @@ using Revature.Complex.DataAccess.Entities;
 using Revature.Complex.DataAccess.Repository;
 using Revature.Complex.Lib.Interface;
 using Serilog;
+using Microsoft.ApplicationInsights.Extensibility;
+using Revature.Complex.Api.Telemetry;
 
 namespace Revature.Complex.Api
 {
@@ -58,6 +60,10 @@ namespace Revature.Complex.Api
         });
       });
 
+      services.AddApplicationInsightsTelemetry();
+      
+      services.AddHealthChecks();
+
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Revature Complex", Version = "v1" });
@@ -71,6 +77,7 @@ namespace Revature.Complex.Api
       // services.AddScoped<IRoomServiceSender, RoomServiceSender>();
       services.AddHttpClient<IAddressRequest, AddressRequest>();
       services.AddHttpClient<IRoomRequest, RoomRequest>();
+      services.AddScoped<ITelemetryInitializer, ComplexTelemetryInitializer>();
 
       services.AddControllers();
 
@@ -105,6 +112,7 @@ namespace Revature.Complex.Api
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+        endpoints.MapHealthChecks("/health");
       });
 
       ////for the service-bus listener
