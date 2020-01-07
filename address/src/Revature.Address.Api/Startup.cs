@@ -1,3 +1,4 @@
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -5,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Revature.Address.Api.Telemetry;
 using Revature.Address.DataAccess.Entities;
 using Revature.Address.DataAccess.Interfaces;
 using Revature.Address.Lib.BusinessLogic;
@@ -56,6 +58,10 @@ namespace Revature.Address.Api
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Revature Address", Version = "v1" });
       });
+      services.AddApplicationInsightsTelemetry();
+      
+      services.AddHealthChecks();
+      services.AddScoped<ITelemetryInitializer, AddressTelemetryInitializer>();
 
       services.AddControllers();
     }
@@ -84,6 +90,7 @@ namespace Revature.Address.Api
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+        endpoints.MapHealthChecks("/health");
       });
     }
   }
