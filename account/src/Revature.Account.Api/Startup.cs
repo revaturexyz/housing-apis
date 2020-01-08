@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Okta.AspNetCore;
 using Revature.Account.Api.Telemetry;
 using Revature.Account.DataAccess;
 using Revature.Account.DataAccess.Repositories;
@@ -30,10 +31,6 @@ namespace Revature.Account.Api
 
     public void ConfigureServices(IServiceCollection services)
     {
-      Auth0Helper.SetSecretValues(Configuration.GetSection("Auth0").GetValue<string>("Domain"),
-        Configuration.GetSection("Auth0").GetValue<string>("Audience"),
-        Configuration.GetSection("Auth0").GetValue<string>("ClientId"),
-        Configuration.GetSection("Auth0").GetValue<string>("ClientSecret"));
 
       services.AddControllers();
       services.AddDbContext<AccountDbContext>(options =>
@@ -62,33 +59,6 @@ namespace Revature.Account.Api
       services.AddSingleton<IAuthorizationHandler, RoleRequirementHandler>();
       services.AddScoped<ITelemetryInitializer, AccountTelemetryInitializer>();
 
-      // This line configures how to view and validate the token
-      services.AddAuthentication(options =>
-      {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-      }).AddJwtBearer(options =>
-      {
-        options.Authority = $"http://{Auth0Helper.Domain}/";
-        options.Audience = Auth0Helper.Audience;
-        options.RequireHttpsMetadata = !Configuration.GetSection("Auth0").GetValue<bool>("IsDevelopment");
-      });
-
-      // This method is for adding policies and other settings to the Authorize attribute
-      services.AddAuthorization(options =>
-      {
-        options.AddPolicy("ApprovedProviderRole", policy =>
-          policy.Requirements.Add(new RoleRequirement(Auth0Helper.ApprovedProviderRole)));
-        options.AddPolicy("CoordinatorRole", policy =>
-          policy.Requirements.Add(new RoleRequirement(Auth0Helper.CoordinatorRole)));
-
-        // To fix needing to manually specify the schema every time I want to call [Authorize]
-        // Found it at https://github.com/aspnet/AspNetCore/issues/2193
-        options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
-          .RequireAuthenticatedUser()
-          .Build();
-      });
-
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Revature Account", Version = "v1" });
@@ -102,6 +72,19 @@ namespace Revature.Account.Api
         });
         c.OperationFilter<SwaggerFilter>();
       });
+
+      services.AddAuthentication(options =>
+          {
+              options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+              options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
+              options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+          })
+          .AddOktaWebApi(new OktaWebApiOptions()
+          {
+              OktaDomain = Configuration["Okta:OktaDomain"],
+          });
+
+      services.AddAuthorization();
 
       services.AddApplicationInsightsTelemetry();
       services.AddHealthChecks();
@@ -125,6 +108,8 @@ namespace Revature.Account.Api
       app.UseRouting();
 
       app.UseCors(CorsPolicyName);
+
+      app.UseAuthentication();
 
       app.UseAuthorization();
 

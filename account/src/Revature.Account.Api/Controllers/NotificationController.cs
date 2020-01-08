@@ -14,7 +14,6 @@ namespace Revature.Account.Api.Controllers
   /// </summary>
   [Route("api/notifications")]
   [ApiController]
-  [Authorize]
   public class NotificationController : ControllerBase
   {
     private readonly IGenericRepository _repo;
@@ -30,7 +29,7 @@ namespace Revature.Account.Api.Controllers
     [HttpGet("{coordinatorId}", Name = "GetNotificationsByCoordinatorId")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize(Policy = "CoordinatorRole")]
+    [Authorize]
     public async Task<ActionResult> GetNotificationsByCoordinatorIdAsync(Guid coordinatorId)
     {
       _logger.LogInformation($"GET - Getting notifications by coordinator ID: {coordinatorId}");
@@ -87,7 +86,7 @@ namespace Revature.Account.Api.Controllers
     [HttpPut("{notificationId}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [Authorize(Policy = "CoordinatorRole")]
+    [Authorize]
     public async Task<ActionResult> Put(Guid notificationId, [FromBody] string notificationStatus)
     {
       _logger.LogInformation("PUT - Updating notification information for notification {notificationId}", notificationId);
@@ -120,7 +119,7 @@ namespace Revature.Account.Api.Controllers
     [HttpDelete("{notificationId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize(Policy = "CoordinatorRole")]
+    [Authorize]
     public async Task<ActionResult> Delete(Guid notificationId)
     {
       _logger.LogInformation($"DELETE - Deleting notification with ID: {notificationId}");
