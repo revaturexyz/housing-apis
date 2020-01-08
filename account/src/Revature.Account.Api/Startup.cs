@@ -1,3 +1,4 @@
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Revature.Account.Api.Telemetry;
 using Revature.Account.DataAccess;
 using Revature.Account.DataAccess.Repositories;
 using Revature.Account.Lib.Interface;
@@ -58,6 +60,7 @@ namespace Revature.Account.Api
       services.AddScoped<IGenericRepository, GenericRepository>();
       services.AddTransient<IAuth0HelperFactory, Auth0HelperFactory>();
       services.AddSingleton<IAuthorizationHandler, RoleRequirementHandler>();
+      services.AddScoped<ITelemetryInitializer, AccountTelemetryInitializer>();
 
       // This line configures how to view and validate the token
       services.AddAuthentication(options =>
@@ -99,6 +102,9 @@ namespace Revature.Account.Api
         });
         c.OperationFilter<SwaggerFilter>();
       });
+
+      services.AddApplicationInsightsTelemetry();
+      services.AddHealthChecks();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -125,6 +131,7 @@ namespace Revature.Account.Api
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+        endpoints.MapHealthChecks("/health");
       });
 
       // Found at https://stackoverflow.com/questions/36958318/where-should-i-put-database-ensurecreated

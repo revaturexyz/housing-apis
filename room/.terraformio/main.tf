@@ -36,14 +36,6 @@ resource "azurerm_app_service" "roomxyz" {
   }
 }
 
-resource "azurerm_app_service_custom_hostname_binding" "roomxyz" {
-  app_service_name = "${azurerm_app_service.roomxyz.name}"
-  hostname = "${var.app_service_custom["hostname"]}"
-  resource_group_name = "${azurerm_resource_group.roomxyz.name}"
-
-  depends_on = ["cloudflare_record.roomxyz"]
-}
-
 resource "azurerm_app_service_plan" "roomxyz" {
   kind = "${var.app_service_plan["kind"]}"
   location = "${azurerm_resource_group.roomxyz.location}"
@@ -64,13 +56,4 @@ resource "azurerm_resource_group" "roomxyz" {
   tags = {
     owner = "${var.resource_group["owner"]}"
   }
-}
-
-resource "cloudflare_record" "roomxyz" {
-  domain = "${var.cloudflare_record["domain"]}"
-  name = "${var.cloudflare_record["name"]}"
-  proxied = "${var.cloudflare_record["proxied"]}"
-  ttl = "${var.cloudflare_record["ttl"]}"
-  type = "${var.cloudflare_record["type"]}"
-  value = "${var.cloudflare_record["value"]}"
 }
