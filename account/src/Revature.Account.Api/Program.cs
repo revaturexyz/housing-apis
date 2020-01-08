@@ -16,7 +16,7 @@ namespace Revature.Account.Api
       try
       {
         Log.Information("Building web host");
-        using var host = CreateHostBuilder(args).Build();
+        var host = CreateHostBuilder(args).Build();
 
         Log.Information("Starting web host");
         await host.RunAsync();
