@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,6 +16,7 @@ namespace Revature.Tenant.Api.Controllers
   // root uri: api/Tenant
   [Route("api/[controller]")]
   [ApiController]
+  [Authorize]
   public class TenantController : ControllerBase
   {
     private readonly ITenantRepository _tenantRepository;
