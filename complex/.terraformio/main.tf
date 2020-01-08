@@ -36,14 +36,6 @@ resource "azurerm_app_service" "complexxyz" {
   }
 }
 
-resource "azurerm_app_service_custom_hostname_binding" "complexxyz" {
-  app_service_name = "${azurerm_app_service.complexxyz.name}"
-  hostname = "${var.app_service_custom["hostname"]}"
-  resource_group_name = "${azurerm_resource_group.complexxyz.name}"
-
-  depends_on = ["cloudflare_record.complexxyz"]
-}
-
 resource "azurerm_app_service_plan" "complexxyz" {
   kind = "${var.app_service_plan["kind"]}"
   location = "${azurerm_resource_group.complexxyz.location}"
