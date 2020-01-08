@@ -22,9 +22,9 @@ namespace Revature.Account.Api
     {
       if (context.Resource is AuthorizationFilterContext mvcContext)
       {
-        var logger = _loggerFactory.CreateLogger("Revature.Account.Api.Auth0Helper");
+        var logger = _loggerFactory.CreateLogger("Revature.Account.Api.OktaHelper");
         // We just want to read the token, no management client, so we don't use the factory
-        var auth = new Auth0Helper(mvcContext.HttpContext.Request, logger);
+        var auth = new OktaHelper(mvcContext.HttpContext.Request, logger);
 
         foreach (var role in auth.Roles)
           if (role == requirement.Role)
