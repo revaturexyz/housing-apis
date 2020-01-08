@@ -25,13 +25,13 @@ namespace Revature.Account.Tests.Repository_Tests
       var options = new DbContextOptionsBuilder<AccountDbContext>()
         .UseInMemoryDatabase("GetNotificationByProviderIdTest")
         .Options;
-      using var arrangeContext = new AccountDbContext(options);
+      var arrangeContext = new AccountDbContext(options);
       arrangeContext.ProviderAccount.Add(mapper.MapProvider(helper.Providers[0]));
       arrangeContext.CoordinatorAccount.Add(mapper.MapCoordinator(helper.Coordinators[0]));
       arrangeContext.UpdateAction.Add(mapper.MapUpdateAction(helper.UpdateActions[0]));
       arrangeContext.Notification.Add(mapper.MapNotification(helper.Notifications[0]));
       arrangeContext.SaveChanges();
-      using var actContext = new AccountDbContext(options);
+      var actContext = new AccountDbContext(options);
       var repo = new GenericRepository(actContext, new Mapper());
 
       // Act
@@ -53,8 +53,8 @@ namespace Revature.Account.Tests.Repository_Tests
       var options = new DbContextOptionsBuilder<AccountDbContext>()
         .UseInMemoryDatabase("AddNewNotificationTest")
         .Options;
-      using var actContext = new AccountDbContext(options);
-      using var arrangeContext = new AccountDbContext(options);
+      var actContext = new AccountDbContext(options);
+      var arrangeContext = new AccountDbContext(options);
       var actRepo = new GenericRepository(actContext, new Mapper());
       var newNotification = helper.Notifications[0];
 
@@ -63,7 +63,7 @@ namespace Revature.Account.Tests.Repository_Tests
       actContext.SaveChanges();
 
       // Assert
-      using var assertContext = new AccountDbContext(options);
+      var assertContext = new AccountDbContext(options);
       var assertNotification = assertContext.Notification.First(p => p.CoordinatorId == newNotification.CoordinatorId);
       Assert.NotNull(assertNotification);
     }
@@ -81,7 +81,7 @@ namespace Revature.Account.Tests.Repository_Tests
       var options = new DbContextOptionsBuilder<AccountDbContext>()
         .UseInMemoryDatabase("UpdateNotificationAccountTestAsync")
         .Options;
-      using var arrangeContext = new AccountDbContext(options);
+      var arrangeContext = new AccountDbContext(options);
       arrangeContext.ProviderAccount.Add(mapper.MapProvider(helper.Providers[0]));
       arrangeContext.CoordinatorAccount.Add(mapper.MapCoordinator(helper.Coordinators[0]));
       arrangeContext.UpdateAction.Add(mapper.MapUpdateAction(helper.UpdateActions[0]));
@@ -111,11 +111,11 @@ namespace Revature.Account.Tests.Repository_Tests
       var options = new DbContextOptionsBuilder<AccountDbContext>()
         .UseInMemoryDatabase("DeleteNotificationTestAsync")
         .Options;
-      using var assembleContext = new AccountDbContext(options);
+      var assembleContext = new AccountDbContext(options);
       var deleteNotification = mapper.MapNotification(helper.Notifications[0]);
       assembleContext.Add(deleteNotification);
       assembleContext.SaveChanges();
-      using var actContext = new AccountDbContext(options);
+      var actContext = new AccountDbContext(options);
       var repo = new GenericRepository(actContext, new Mapper());
 
       // Act
