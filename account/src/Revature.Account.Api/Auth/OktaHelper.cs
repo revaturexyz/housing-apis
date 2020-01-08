@@ -54,7 +54,7 @@ namespace Revature.Account.Api
     {
       string jwt = request.Headers["Authorization"];
       // Remove 'Bearer '
-      jwt = jwt[7..];
+      jwt = jwt.Replace("Bearer", "");
       var handler = new JwtSecurityTokenHandler();
       var token = handler.ReadJwtToken(jwt);
 
@@ -73,7 +73,7 @@ namespace Revature.Account.Api
     /// <returns></returns>
     public bool ConnectManagementClient()
     {
-      var client = new RestClient($"https://{Domain}/oauth2/default");
+      var client = new RestClient($"{Domain}");
       var request = new RestRequest(Method.POST);
 
       request.AddHeader("content-type", "application/json");
@@ -114,59 +114,35 @@ namespace Revature.Account.Api
     /// <summary>
     /// Adds a role to the remote Auth0 profile.
     /// </summary>
-    /// <param name="authUserId">UserId according to Auth0. Has to be retrieved from the Management client.</param>
+    /// <param name="oktaUserId">UserId according to Auth0. Has to be retrieved from the Management client.</param>
     /// <param name="roleId">RoleId according to Auth0. Has to be retrieved from the Management client.</param>
     /// <returns></returns>
-    public async Task AddRoleAsync(string authUserId, string roleId)
+    public async Task AddRoleAsync(string oktaUserId, string roleId)
     {
-      // var rolesRequest = new Auth0.ManagementApi.Models.AssignRolesRequest
-      // {
-      //   Roles = new string[] { roleId }
-      // };
-      // await Client.Users.AssignRolesAsync(authUserId, rolesRequest); 
-      await Client.Groups.AddUserToGroupAsync(roleId, authUserId);
+      await Client.Groups.AddUserToGroupAsync(roleId, oktaUserId);
     }
 
     /// <summary>
     /// Removes a role from the remote Auth0 profile.
     /// </summary>
-    /// <param name="authUserId">UserId according to Auth0. Has to be retrieved from the Management client.</param>
+    /// <param name="oktaUserId">UserId according to Auth0. Has to be retrieved from the Management client.</param>
     /// <param name="roleId">RoleId according to Auth0. Has to be retrieved from the Management client.</param>
     /// <returns></returns>
-    public async Task RemoveRoleAsync(string authUserId, string roleId)
+    public async Task RemoveRoleAsync(string oktaUserId, string roleId)
     {
-      // var rolesRequest = new Auth0.ManagementApi.Models.AssignRolesRequest
-      // {
-      //   Roles = new string[] { roleId }
-      // };
-
-      await Client.Groups.RemoveGroupUserAsync( roleId, authUserId);
+      await Client.Groups.RemoveGroupUserAsync( roleId, oktaUserId);
     }
 
     /// <summary>
     /// Updates remote Auth0 profile's app metadata to include the given Revature account id. 
     /// </summary>
-    /// <param name="authUserId"></param>
+    /// <param name="oktaUserId"></param>
     /// <param name="newId"></param>
     /// <returns></returns>
-    public async Task UpdateMetadataWithIdAsync(string authUserId, Guid newId)
+    public async Task UpdateMetadataWithIdAsync(string oktaUserId, Guid newId)
     {
-      // var elementExists = AppMetadata.TryGetProperty("id", out var currentMetadataId);
-      // if (!elementExists || currentMetadataId.GetString() != newId.ToString())
-      // {
-      //   dynamic newMetadata = new { id = newId };
-
-      //   var userUpdateRequest = new Auth0.ManagementApi.Models.UserUpdateRequest
-      //   {
-      //     AppMetadata = newMetadata
-      //   };
-
-      //   await Client.Users.UpdateAsync(authUserId, userUpdateRequest);
-      // }
-
-        var User = await Client.Users.GetUserAsync( authUserId );
-
-        await Client.Users.UpdateUserAsync(User, authUserId, null);
+        var User = await Client.Users.GetUserAsync(oktaUserId);
+        await Client.Users.UpdateUserAsync(User, oktaUserId, null);
     }
   }
 }

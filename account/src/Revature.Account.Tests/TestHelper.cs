@@ -22,7 +22,7 @@ namespace Revature.Account.Tests
   public class TestHelper
   {
     public Mock<Revature.Account.Lib.Interface.IGenericRepository> Repository { get; private set; }
-    public Mock<Revature.Account.Api.IOktaHelperFactory> Auth0HelperFactory { get; private set; }
+    public Mock<Revature.Account.Api.IOktaHelperFactory> OktaHelperFactory { get; private set; }
 
     //API Controller Instantiation
     public CoordinatorAccountController CoordinatorAccountController { get; private set; }
@@ -198,9 +198,9 @@ namespace Revature.Account.Tests
     private void SetUpMocks()
     {
       Repository = new Mock<Lib.Interface.IGenericRepository>();
-      Auth0HelperFactory = new Mock<IOktaHelperFactory>();
+      OktaHelperFactory = new Mock<IOktaHelperFactory>();
 
-      CoordinatorAccountController = new CoordinatorAccountController(Repository.Object, LoggerCoord, Auth0HelperFactory.Object)
+      CoordinatorAccountController = new CoordinatorAccountController(Repository.Object, LoggerCoord, OktaHelperFactory.Object)
       {
         ControllerContext = new ControllerContext
         {
@@ -209,7 +209,7 @@ namespace Revature.Account.Tests
       };
       CoordinatorAccountController.ControllerContext.HttpContext.Request.Headers["Authorize"] = "Not a token.";
 
-      ProviderAccountController = new ProviderAccountController(Repository.Object, LoggerProv, Auth0HelperFactory.Object)
+      ProviderAccountController = new ProviderAccountController(Repository.Object, LoggerProv, OktaHelperFactory.Object)
       {
         ControllerContext = new ControllerContext
         {

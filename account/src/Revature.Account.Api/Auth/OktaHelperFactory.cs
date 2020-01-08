@@ -20,9 +20,9 @@ namespace Revature.Account.Api
     public OktaHelper Create(HttpRequest request)
     {
       var logger = _loggerFactory.CreateLogger("Revature.Account.Api.OktaHelper");
-      var auth = new OktaHelper(request, logger);
-      auth.ConnectManagementClient();
-      return auth;
+      var okta = new OktaHelper(request, logger);
+      okta.ConnectManagementClient();
+      return okta;
     }
   }
 }

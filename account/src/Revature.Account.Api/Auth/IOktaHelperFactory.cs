@@ -4,6 +4,6 @@ namespace Revature.Account.Api
 {
   public interface IOktaHelperFactory
   {
-    public OktaHelper Create(HttpRequest request);
+    OktaHelper Create(HttpRequest request);
   }
 }
