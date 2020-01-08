@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Okta.AspNetCore;
+using Revature.Account.Api.Telemetry;
 using Revature.Account.DataAccess;
 using Revature.Account.DataAccess.Repositories;
 using Revature.Account.Lib.Interface;
@@ -56,6 +57,7 @@ namespace Revature.Account.Api
       services.AddScoped<IGenericRepository, GenericRepository>();
       services.AddTransient<IAuth0HelperFactory, Auth0HelperFactory>();
       services.AddSingleton<IAuthorizationHandler, RoleRequirementHandler>();
+      services.AddScoped<ITelemetryInitializer, AccountTelemetryInitializer>();
 
       services.AddSwaggerGen(c =>
       {
