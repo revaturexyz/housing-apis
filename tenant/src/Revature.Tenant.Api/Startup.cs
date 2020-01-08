@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Okta.AspNetCore;
 using Revature.Tenant.Api.ServiceBus;
 using Revature.Tenant.Api.Telemetry;
 using Revature.Tenant.DataAccess;
@@ -71,6 +72,19 @@ namespace Revature.Tenant.Api
 
       services.AddHttpClient<IAddressService, AddressService>();
 
+      services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+                options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
+                options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+            })
+            .AddOktaWebApi(new OktaWebApiOptions()
+            {
+                OktaDomain = Configuration["Okta:OktaDomain"],
+            });
+
+      services.AddAuthorization();
+
       services.AddControllers();
     }
 
@@ -92,6 +106,8 @@ namespace Revature.Tenant.Api
       app.UseRouting();
 
       app.UseCors(CorsPolicyName);
+
+      app.UseAuthentication();
 
       app.UseAuthorization();
 

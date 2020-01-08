@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,7 @@ namespace Revature.Complex.Api.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
+  [Authorize]
   public class ComplexController : Controller
   {
     private readonly IRepository _complexRepository;
