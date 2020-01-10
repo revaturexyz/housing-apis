@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Auth0.ManagementApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +19,13 @@ namespace Revature.Account.Api.Controllers
   {
     private readonly IGenericRepository _repo;
     private readonly ILogger<CoordinatorAccountController> _logger;
-    private readonly IAuth0HelperFactory _authHelperFactory;
+    private readonly IOktaHelperFactory _oktaHelperFactory;
 
-    public CoordinatorAccountController(IGenericRepository repo, ILogger<CoordinatorAccountController> logger, IAuth0HelperFactory authHelperFactory)
+    public CoordinatorAccountController(IGenericRepository repo, ILogger<CoordinatorAccountController> logger, IOktaHelperFactory oktaHelperFactory)
     {
       _repo = repo ?? throw new ArgumentNullException(nameof(repo));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-      _authHelperFactory = authHelperFactory;
+      _oktaHelperFactory = oktaHelperFactory;
     }
 
     /* This method is called every time the user first shows up to the site in order to
@@ -44,45 +43,44 @@ namespace Revature.Account.Api.Controllers
 
       try
       {
-        var auth0 = _authHelperFactory.Create(Request);
-        var authUser = await auth0.Client.Users.GetUsersByEmailAsync(auth0.Email);
-        var authRoles = await auth0.Client.Roles.GetAllAsync(new GetRolesRequest());
+        var okta = _oktaHelperFactory.Create(Request);
+        var oktaUser = await okta.Client.Users.GetUserAsync(okta.Email);
+        var oktaRoles = await okta.Client.Groups.ToList();
 
-        var id = await _repo.GetCoordinatorIdByEmailAsync(auth0.Email);
+        var id = await _repo.GetCoordinatorIdByEmailAsync(okta.Email);
         if (id != Guid.Empty)
         {
           // If their roles arent set properly, set them
-          if (!auth0.Roles.Contains(Auth0Helper.CoordinatorRole))
+          if (!okta.Roles.Contains("coordinator"))
           {
-            await auth0.AddRoleAsync(authUser[0].UserId, authRoles.First(r => r.Name == Auth0Helper.CoordinatorRole).Id);
+            await okta.AddRoleAsync(oktaUser.Id, oktaRoles.First(r => r.Profile.Name == "coordinator").Id);
           }
         }
         else
         {
           // Check the provider db
-          id = await _repo.GetProviderIdByEmailAsync(auth0.Email);
+          id = await _repo.GetProviderIdByEmailAsync(okta.Email);
 
           if (id != Guid.Empty
-            && !auth0.Roles.Contains(Auth0Helper.UnapprovedProviderRole)
-            && !auth0.Roles.Contains(Auth0Helper.ApprovedProviderRole))
+            && !okta.Roles.Contains("approved_provider"))
           {
-            // They have no role, so set them as unapproved
-            await auth0.AddRoleAsync(authUser[0].UserId, authRoles.First(r => r.Name == Auth0Helper.UnapprovedProviderRole).Id);
+            // They have no role, so set them as tenant
+            await okta.AddRoleAsync(oktaUser.Id, oktaRoles.First(r => r.Profile.Name == "Tenants").Id);
           }
         }
 
         if (id == Guid.Empty)
         {
           // They have no account anywhere - check roles for coordinator role
-          if (auth0.Roles.Contains(Auth0Helper.CoordinatorRole))
+          if (okta.Roles.Contains("coordinator"))
           {
-            // They have been set as a coordinator on the Auth0 site, so make a new account
+            // They have been set as a coordinator on the okta site, so make a new account
             var coordinator = new CoordinatorAccount
             {
-              Name = authUser[0].FirstName != null && authUser[0].LastName != null
-                ? authUser[0].FirstName + " " + authUser[0].LastName
+              Name = oktaUser.Profile.FirstName != null && oktaUser.Profile.LastName != null
+                ? oktaUser.Profile.FirstName + " " + oktaUser.Profile.LastName
                 : "No Name",
-              Email = auth0.Email,
+              Email = okta.Email,
               TrainingCenterName = "No Name",
               TrainingCenterAddress = "No Address"
             };
@@ -94,10 +92,10 @@ namespace Revature.Account.Api.Controllers
             // Make a new provider
             var provider = new ProviderAccount
             {
-              Name = authUser[0].FirstName != null && authUser[0].LastName != null
-                ? authUser[0].FirstName + " " + authUser[0].LastName
+              Name = oktaUser.Profile.FirstName != null && oktaUser.Profile.LastName != null
+                ? oktaUser.Profile.FirstName + " " + oktaUser.Profile.LastName
                 : "No Name",
-              Email = auth0.Email,
+              Email = okta.Email,
               Status = new Status(Status.Pending),
               AccountCreatedAt = DateTime.Now,
               AccountExpiresAt = DateTime.Now.AddDays(7)
@@ -109,17 +107,17 @@ namespace Revature.Account.Api.Controllers
             // they select a training center and click 'request approval'
 
             // They have no role, so set them as unapproved
-            await auth0.AddRoleAsync(authUser[0].UserId, authRoles.First(r => r.Name == Auth0Helper.UnapprovedProviderRole).Id);
+            await okta.AddRoleAsync(oktaUser.Id, oktaRoles.First(r => r.Profile.Name == "Tenants").Id);
           }
           // Db was modified either way, save changes
           await _repo.SaveAsync();
 
           // Get their id
-          id = await _repo.GetProviderIdByEmailAsync(auth0.Email);
+          id = await _repo.GetProviderIdByEmailAsync(okta.Email);
         }
 
         // Update the app_metadata if it doesnt contain the correct id
-        await auth0.UpdateMetadataWithIdAsync(authUser[0].UserId, id);
+        await okta.UpdateMetadataWithIdAsync(oktaUser.Id, id);
 
         return Ok(id);
       }

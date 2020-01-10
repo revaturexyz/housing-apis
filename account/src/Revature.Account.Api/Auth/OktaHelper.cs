@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Auth0.ManagementApi;
 using Microsoft.AspNetCore.Http;
+using Okta.AspNetCore;
 using Microsoft.Extensions.Logging;
 using RestSharp;
+using Okta.Sdk;
+using Okta.Sdk.Configuration;
 
 namespace Revature.Account.Api
 {
-  public class Auth0Helper
+  public class OktaHelper
   {
     public static readonly string CoordinatorRole = "coordinator";
     public static readonly string UnapprovedProviderRole = "unapproved_provider";
@@ -18,7 +20,7 @@ namespace Revature.Account.Api
 
     private readonly ILogger _logger;
 
-    public ManagementApiClient Client { get; private set; }
+    public OktaClient Client { get; private set; }
     public string Email { get; private set; }
     public IEnumerable<string> Roles { get; private set; }
     public JsonElement AppMetadata { get; private set; }
@@ -31,7 +33,7 @@ namespace Revature.Account.Api
 
     public static string Secret { get; private set; }
 
-    public static string ClaimsDomain { get; } = "https://revature.com/";
+    public static string ClaimsDomain { get; } = "https://dev-837913.okta.com/";
 
     /// <summary>
     /// Function to set the secret values, intended for use in Startup.
@@ -48,11 +50,11 @@ namespace Revature.Account.Api
       Secret = secret;
     }
 
-    public Auth0Helper(HttpRequest request, ILogger logger)
+    public OktaHelper(Microsoft.AspNetCore.Http.HttpRequest request, ILogger logger)
     {
       string jwt = request.Headers["Authorization"];
       // Remove 'Bearer '
-      jwt = jwt[7..];
+      jwt = jwt.Replace("Bearer", "");
       var handler = new JwtSecurityTokenHandler();
       var token = handler.ReadJwtToken(jwt);
 
@@ -71,7 +73,7 @@ namespace Revature.Account.Api
     /// <returns></returns>
     public bool ConnectManagementClient()
     {
-      var client = new RestClient($"https://{Domain}/oauth/token");
+      var client = new RestClient($"{Domain}");
       var request = new RestRequest(Method.POST);
 
       request.AddHeader("content-type", "application/json");
@@ -81,15 +83,18 @@ namespace Revature.Account.Api
 
       if (response.ErrorException != null)
       {
-        _logger.LogError(response.ErrorException, "Error while making Auth0 request");
+        _logger.LogError(response.ErrorException, "Error while making Okta request");
         return false;
       }
       try
       {
         var deserializedResponse = JsonSerializer.Deserialize<JsonElement>(response.Content);
         var managementToken = deserializedResponse.GetProperty("access_token").GetString();
-        Client = new ManagementApiClient(managementToken, Domain);
-        return true;
+        Client = new OktaClient(new OktaClientConfiguration 
+        {
+          OktaDomain = Domain,
+          Token = managementToken
+        });
       }
       catch (JsonException ex)
       {
@@ -109,55 +114,35 @@ namespace Revature.Account.Api
     /// <summary>
     /// Adds a role to the remote Auth0 profile.
     /// </summary>
-    /// <param name="authUserId">UserId according to Auth0. Has to be retrieved from the Management client.</param>
+    /// <param name="oktaUserId">UserId according to Auth0. Has to be retrieved from the Management client.</param>
     /// <param name="roleId">RoleId according to Auth0. Has to be retrieved from the Management client.</param>
     /// <returns></returns>
-    public async Task AddRoleAsync(string authUserId, string roleId)
+    public async Task AddRoleAsync(string oktaUserId, string roleId)
     {
-      var rolesRequest = new Auth0.ManagementApi.Models.AssignRolesRequest
-      {
-        Roles = new string[] { roleId }
-      };
-
-      await Client.Users.AssignRolesAsync(authUserId, rolesRequest);
+      await Client.Groups.AddUserToGroupAsync(roleId, oktaUserId);
     }
 
     /// <summary>
     /// Removes a role from the remote Auth0 profile.
     /// </summary>
-    /// <param name="authUserId">UserId according to Auth0. Has to be retrieved from the Management client.</param>
+    /// <param name="oktaUserId">UserId according to Auth0. Has to be retrieved from the Management client.</param>
     /// <param name="roleId">RoleId according to Auth0. Has to be retrieved from the Management client.</param>
     /// <returns></returns>
-    public async Task RemoveRoleAsync(string authUserId, string roleId)
+    public async Task RemoveRoleAsync(string oktaUserId, string roleId)
     {
-      var rolesRequest = new Auth0.ManagementApi.Models.AssignRolesRequest
-      {
-        Roles = new string[] { roleId }
-      };
-
-      await Client.Users.RemoveRolesAsync(authUserId, rolesRequest);
+      await Client.Groups.RemoveGroupUserAsync( roleId, oktaUserId);
     }
 
     /// <summary>
     /// Updates remote Auth0 profile's app metadata to include the given Revature account id. 
     /// </summary>
-    /// <param name="authUserId"></param>
+    /// <param name="oktaUserId"></param>
     /// <param name="newId"></param>
     /// <returns></returns>
-    public async Task UpdateMetadataWithIdAsync(string authUserId, Guid newId)
+    public async Task UpdateMetadataWithIdAsync(string oktaUserId, Guid newId)
     {
-      var elementExists = AppMetadata.TryGetProperty("id", out var currentMetadataId);
-      if (!elementExists || currentMetadataId.GetString() != newId.ToString())
-      {
-        dynamic newMetadata = new { id = newId };
-
-        var userUpdateRequest = new Auth0.ManagementApi.Models.UserUpdateRequest
-        {
-          AppMetadata = newMetadata
-        };
-
-        await Client.Users.UpdateAsync(authUserId, userUpdateRequest);
-      }
+        var User = await Client.Users.GetUserAsync(oktaUserId);
+        await Client.Users.UpdateUserAsync(User, oktaUserId, null);
     }
   }
 }

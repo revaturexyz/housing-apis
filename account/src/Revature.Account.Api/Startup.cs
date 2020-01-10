@@ -55,7 +55,7 @@ namespace Revature.Account.Api
 
       services.AddSingleton<IMapper, Mapper>();
       services.AddScoped<IGenericRepository, GenericRepository>();
-      services.AddTransient<IAuth0HelperFactory, Auth0HelperFactory>();
+      services.AddTransient<IOktaHelperFactory, OktaHelperFactory>();
       services.AddSingleton<IAuthorizationHandler, RoleRequirementHandler>();
       services.AddScoped<ITelemetryInitializer, AccountTelemetryInitializer>();
 
@@ -121,7 +121,7 @@ namespace Revature.Account.Api
 
       // Found at https://stackoverflow.com/questions/36958318/where-should-i-put-database-ensurecreated
       var serviceScopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
-      using var serviceScope = serviceScopeFactory.CreateScope();
+      var serviceScope = serviceScopeFactory.CreateScope();
       var dbContext = serviceScope.ServiceProvider.GetService<AccountDbContext>();
       dbContext.Database.EnsureCreated();
     }

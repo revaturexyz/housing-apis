@@ -19,12 +19,12 @@ namespace Revature.Account.Tests.Repository_Tests
       var options = new DbContextOptionsBuilder<AccountDbContext>()
         .UseInMemoryDatabase("GetCoordinatorByIdTest")
         .Options;
-      using var arrangeContext = new AccountDbContext(options);
+      var arrangeContext = new AccountDbContext(options);
       var testCoordinator = helper.Coordinators[0];
       var testId = testCoordinator.CoordinatorId;
       arrangeContext.CoordinatorAccount.Add(mapper.MapCoordinator(testCoordinator));
       arrangeContext.SaveChanges();
-      using var actContext = new AccountDbContext(options);
+      var actContext = new AccountDbContext(options);
       var repo = new GenericRepository(actContext, new Mapper());
 
       // Act
