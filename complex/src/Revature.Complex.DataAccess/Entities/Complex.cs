@@ -8,7 +8,7 @@ namespace Revature.Complex.DataAccess.Entities
   /// </summary>
   public partial class Complex
   {
-    public Guid ComplexId { get; set; }
+    public int ComplexId { get; set; }
 
     public Guid AddressId { get; set; }
 

@@ -27,5 +27,7 @@ namespace Revature.Room.DataAccess.Entities
     public DateTime LeaseEnd { get; set; }
 
     public Guid ComplexId { get; set; }
+
+    public int FloorPlanID {get; set;}
   }
 }
