@@ -22,6 +22,13 @@ namespace Revature.Lodging.Lib.Interfaces
     public Task<Complex> GetComplexByIdAsync(int complexId);
 
     /// <summary>
+    ///   Gets all Amenity objects that have the given Complex ID. Gets them from database.
+    /// </summary>
+    /// <param name="complexId"> Used to specify Amenity object </param>
+    /// <returns> Collection of Amenity objects </returns>
+    public Task<IEnumerable<Amenity>> GetAmenitiesByComplexId(int complexId);
+
+    /// <summary>
     ///   Updates an existing Complex object from database.
     /// </summary>
     /// <param name="complex"> Used to indicate the modified Complex object </param>
@@ -38,5 +45,10 @@ namespace Revature.Lodging.Lib.Interfaces
     /// </summary>
     /// <param name="newComplex"> Used to indicate a new Complex object </param>
     public void AddComplexAsync(Complex newComplex);
+
+    /// <summary>
+    ///   Persists any changes made to DbContext to the database.
+    /// </summary>
+    public void SaveChanges();
   }
 }

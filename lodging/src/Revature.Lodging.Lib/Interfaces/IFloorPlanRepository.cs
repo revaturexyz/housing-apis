@@ -38,5 +38,9 @@ namespace Revature.Lodging.Lib.Interfaces
     /// <param name="floorPlanId"> Used to specify FloorPlan object </param>
     public void DeleteFloorPlanAsync(long floorPlanId);
 
+    /// <summary>
+    ///   Persists any changes made to DbContext to the database.
+    /// </summary>
+    public void SaveChanges();
   }
 }
