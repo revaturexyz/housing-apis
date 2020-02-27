@@ -115,7 +115,7 @@ namespace Revature.Lodging.DataAccess
     {
       return new Entities.FloorPlan
       {
-        FloorPlanID= floorPlan.FloorPlanID,
+        FloorPlanID= floorPlan.FloorPlanId,
         FloorPlanName = floorPlan.FloorPlanName,
         NumberBeds = floorPlan.NumberOfBeds,
         RoomTypeID = floorPlan.RoomTypeId,
@@ -139,8 +139,8 @@ namespace Revature.Lodging.DataAccess
     {
       return new Entities.Gender
       {
-        GenderId = gender.GenderId,
-        Type = gender.GenderType
+        GenderID = gender.GenderId,
+        Type = gender.Type
       };
     }
 
@@ -148,8 +148,8 @@ namespace Revature.Lodging.DataAccess
     {
       return new Gender
       { 
-        GenderId = gender.GenderId,
-        GenderType = gender.Type
+        GenderId = gender.GenderID,
+        Type = gender.Type
       };
     }
 
@@ -161,10 +161,10 @@ namespace Revature.Lodging.DataAccess
         RoomNumber = room.RoomNumber,
         NumberOfBeds = room.NumberBeds,
         NumberOfOccupants = room.NumberOccupants,
-        Gender = room.GenderId,
+        Gender = MapGendertoE(room.Gender),
         LeaseStart = room.LeaseStart,
         LeaseEnd = room.LeaseEnd,
-        RoomType = room.RoomTypeId,
+        RoomType = MapRoomTypetoE(room.RoomTypeId),
         ComplexId = room.ComplexId,
         FloorPlanID = room.FloorPlanId
       };
@@ -178,8 +178,8 @@ namespace Revature.Lodging.DataAccess
         RoomNumber = room.RoomNumber,
         NumberBeds = room.NumberOfBeds,
         NumberOccupants = room.NumberOfOccupants,
-        GenderId = room.Gender,
-        RoomTypeId = room.RoomType,
+        Gender = MapGendertoLib(room.Gender),
+        RoomTypeId = MapRoomTypetoLib(room.RoomType),
         ComplexId = room.ComplexId,
         FloorPlanId = room.FloorPlanID
       };

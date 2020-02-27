@@ -90,6 +90,6 @@ namespace Revature.Lodging.Lib.Models
       }
     }
     public Guid ComplexId{ get; set; }
-    public Guid FloorPlanId { get; set; }
+    public int FloorPlanId { get; set; }
   }
 }

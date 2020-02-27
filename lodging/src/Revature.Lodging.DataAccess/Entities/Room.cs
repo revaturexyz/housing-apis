@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Revature.Lodging.DataAccess.Entities
@@ -20,14 +21,18 @@ namespace Revature.Lodging.DataAccess.Entities
     /// </summary>
     public int NumberOfOccupants { get; set; }
 
+    public int GenderId { get; set; }
     public Gender Gender { get; set; }
-
+    public int RoomTypeId { get; set; }
     public RoomType RoomType { get; set; }
+    public Guid ComplexId { get; set; }
+    public Complex Complex { get; set; }
+    public int FloorPlanID { get; set; }
+    public FloorPlan FloorPlan { get; set; }
+
     public DateTime LeaseStart { get; set; }
     public DateTime LeaseEnd { get; set; }
 
-    public Guid ComplexId { get; set; }
-
-    public int FloorPlanID {get; set;}
+    public ICollection<AmenityRoom> AmenityRoom { get; set; }
   }
 }

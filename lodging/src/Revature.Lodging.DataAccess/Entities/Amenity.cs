@@ -22,5 +22,7 @@ namespace Revature.Lodging.DataAccess.Entities
     /// It is for complex Id behave as FK in AmenityRoom table
     /// </summary>
     public virtual ICollection<AmenityComplex> AmenityComplex { get; set; }
+
+    public virtual ICollection<AmenityFloorPlan> AmenityFloorPlan { get; set; }
   }
 }

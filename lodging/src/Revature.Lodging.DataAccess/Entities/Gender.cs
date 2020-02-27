@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 namespace Revature.Lodging.DataAccess.Entities
 {
   /// <summary>
@@ -5,7 +6,8 @@ namespace Revature.Lodging.DataAccess.Entities
   /// </summary>
   public class Gender
   {
-    public int GenderId { get; set; }
+    public int GenderID { get; set; }
     public string Type { get; set; }
+    public ICollection<Room> Room { get; set; }
   }
 }

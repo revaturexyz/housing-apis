@@ -6,7 +6,9 @@ namespace Revature.Lodging.DataAccess.Entities
         public Guid AmenityFloorPlanID { get; set; }
 
         public Guid AmenityID { get; set; }
+    public Amenity Amenity { get; set; }
 
         public Guid FloorPlanID { get; set; }
-    }
+    public FloorPlan FloorPlan { get; set; }
+  }
 }

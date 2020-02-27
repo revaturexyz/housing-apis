@@ -20,5 +20,7 @@ namespace Revature.Lodging.DataAccess.Entities
     /// for FK: amenity Id
     /// </summary>
     public Amenity Amenity { get; set; }
+
+    public Room Room { get; set; }
   }
 }

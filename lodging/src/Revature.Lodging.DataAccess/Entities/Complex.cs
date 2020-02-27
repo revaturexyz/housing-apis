@@ -23,5 +23,7 @@ namespace Revature.Lodging.DataAccess.Entities
     /// represent the amenities offered by the complex.
     /// </summary>
     public virtual ICollection<AmenityComplex> AmenityComplex { get; set; }
+    public ICollection<FloorPlan> FloorPlan { get; set; }
+    public ICollection<Room> Room { get; set; }
   }
 }

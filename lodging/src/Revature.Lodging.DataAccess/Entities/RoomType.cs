@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Revature.Lodging.DataAccess.Entities
 {
   /// <summary>
@@ -7,5 +9,7 @@ namespace Revature.Lodging.DataAccess.Entities
   {
     public int RoomTypeId { get; set; }
     public string Type { get; set; }
+    public ICollection<FloorPlan> FloorPlan { get; set; }
+    public ICollection<Room> Room { get; set; }
   }
 }
