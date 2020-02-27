@@ -10,7 +10,7 @@ namespace Revature.Lodging.Lib.Models
     [Required]
     public Guid AmenityComplexId { get; set; }
     [Required]
-    public Guid AmentityID { get; set; }
+    public Guid AmentityId { get; set; }
     [Required]
     public Guid ComplexId { get; set; }
   }
