@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Revature.Lodging.Lib.Interfaces;
+using Revature.Lodging.DataAccess.Repositories;
 
 namespace Revature.Lodging.Api
 {
@@ -25,6 +27,10 @@ namespace Revature.Lodging.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // Register the repositories
+            services.AddTransient<IComplexRepository, ComplexRepository>();
+            
             services.AddControllers();
         }
 

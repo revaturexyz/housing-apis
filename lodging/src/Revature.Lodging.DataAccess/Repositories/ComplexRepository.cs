@@ -1,10 +1,11 @@
-﻿using System;
+using Revature.Lodging.Lib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Revature.Lodging.DataAccess.Repositories
 {
-    class ComplexRepository
+    public class ComplexRepository : IComplexRepository 
     {
     }
 }
