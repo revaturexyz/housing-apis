@@ -1,0 +1,11 @@
+C:\Users\ZFisher-LegionY530\Desktop\Revature Example Code\housing-apis\identity\src\Revature.Identity.DataAccess\bin\Debug\netcoreapp3.1\Revature.Identity.Lib.dll
+C:\Users\ZFisher-LegionY530\Desktop\Revature Example Code\housing-apis\identity\src\Revature.Identity.DataAccess\obj\Debug\netcoreapp3.1\Revature.Identity.DataAccess.csprojAssemblyReference.cache
+C:\Users\ZFisher-LegionY530\Desktop\Revature Example Code\housing-apis\identity\src\Revature.Identity.DataAccess\obj\Debug\netcoreapp3.1\Revature.Identity.DataAccess.AssemblyInfoInputs.cache
+C:\Users\ZFisher-LegionY530\Desktop\Revature Example Code\housing-apis\identity\src\Revature.Identity.DataAccess\obj\Debug\netcoreapp3.1\Revature.Identity.DataAccess.AssemblyInfo.cs
+C:\Users\ZFisher-LegionY530\Desktop\Revature Example Code\housing-apis\identity\src\Revature.Identity.DataAccess\bin\Debug\netcoreapp3.1\Revature.Identity.DataAccess.deps.json
+C:\Users\ZFisher-LegionY530\Desktop\Revature Example Code\housing-apis\identity\src\Revature.Identity.DataAccess\bin\Debug\netcoreapp3.1\Revature.Identity.DataAccess.dll
+C:\Users\ZFisher-LegionY530\Desktop\Revature Example Code\housing-apis\identity\src\Revature.Identity.DataAccess\bin\Debug\netcoreapp3.1\Revature.Identity.DataAccess.pdb
+C:\Users\ZFisher-LegionY530\Desktop\Revature Example Code\housing-apis\identity\src\Revature.Identity.DataAccess\bin\Debug\netcoreapp3.1\Revature.Identity.Lib.pdb
+C:\Users\ZFisher-LegionY530\Desktop\Revature Example Code\housing-apis\identity\src\Revature.Identity.DataAccess\obj\Debug\netcoreapp3.1\Revature.Identity.DataAccess.csproj.CopyComplete
+C:\Users\ZFisher-LegionY530\Desktop\Revature Example Code\housing-apis\identity\src\Revature.Identity.DataAccess\obj\Debug\netcoreapp3.1\Revature.Identity.DataAccess.dll
+C:\Users\ZFisher-LegionY530\Desktop\Revature Example Code\housing-apis\identity\src\Revature.Identity.DataAccess\obj\Debug\netcoreapp3.1\Revature.Identity.DataAccess.pdb

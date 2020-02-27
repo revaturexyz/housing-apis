@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "Revature.Identity.Lib/1.0.0": {
+        "runtime": {
+          "Revature.Identity.Lib.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Revature.Identity.Lib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

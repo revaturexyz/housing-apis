@@ -1,10 +1,11 @@
-﻿using System;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Revature.Identity.DataAccess
 {
-    class AccountDbContext
-    {
+    public class IdentityDbContext : DbContext
+  {
     }
 }
