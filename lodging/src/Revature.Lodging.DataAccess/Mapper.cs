@@ -127,7 +127,7 @@ namespace Revature.Lodging.DataAccess
     {
       return new FloorPlan
       {
-        FloorPlanId = floorPlan.FloorPlanId,
+        FloorPlanId = floorPlan.FloorPlanID,
         FloorPlanName = floorPlan.FloorPlanName,
         NumberOfBeds = floorPlan.NumberBeds,
         RoomTypeId = floorPlan.RoomTypeID,
@@ -140,7 +140,7 @@ namespace Revature.Lodging.DataAccess
       return new Entities.Gender
       {
         GenderId = gender.GenderId,
-        GenderType = gender.GenderType
+        Type = gender.GenderType
       };
     }
 
@@ -149,7 +149,7 @@ namespace Revature.Lodging.DataAccess
       return new Gender
       { 
         GenderId = gender.GenderId,
-        GenderType = gender.GenderType
+        GenderType = gender.Type
       };
     }
 
@@ -159,14 +159,14 @@ namespace Revature.Lodging.DataAccess
       {
         RoomId = room.RoomId,
         RoomNumber = room.RoomNumber,
-        NumberBeds = room.NumberBeds,
-        NumberOccupants = room.NumberOccupants,
-        GenderId = room.GenderId,
+        NumberOfBeds = room.NumberBeds,
+        NumberOfOccupants = room.NumberOccupants,
+        Gender = room.GenderId,
         LeaseStart = room.LeaseStart,
         LeaseEnd = room.LeaseEnd,
-        RoomTypeId = room.RoomTypeId,
+        RoomType = room.RoomTypeId,
         ComplexId = room.ComplexId,
-        FloorPlanId = room.FloorPlanId
+        FloorPlanID = room.FloorPlanId
       };
     }
 
@@ -176,12 +176,12 @@ namespace Revature.Lodging.DataAccess
       {
         RoomId = room.RoomId,
         RoomNumber = room.RoomNumber,
-        NumberBeds = room.NumberBeds,
-        NumberOccupants = room.NumberOccupants,
-        GenderId = room.GenderId,
-        RoomTypeId = room.RoomTypeId,
+        NumberBeds = room.NumberOfBeds,
+        NumberOccupants = room.NumberOfOccupants,
+        GenderId = room.Gender,
+        RoomTypeId = room.RoomType,
         ComplexId = room.ComplexId,
-        FloorPlanId = room.FloorPlanId
+        FloorPlanId = room.FloorPlanID
       };
       tempRoom.SetLease(room.LeaseStart, room.LeaseEnd);
       return tempRoom;

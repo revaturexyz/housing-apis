@@ -1,3 +1,4 @@
+using System;
 namespace Revature.Lodging.DataAccess.Entities
 {
     public class AmenityFloorPlan

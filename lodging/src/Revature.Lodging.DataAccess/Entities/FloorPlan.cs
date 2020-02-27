@@ -1,8 +1,9 @@
+using System;
 namespace Revature.Lodging.DataAccess.Entities
 {
     public class FloorPlan
     {
-        public int FloorPlanID { get; set; }
+        public Guid FloorPlanID { get; set; }
 
         public string FloorPlanName {get; set;}
 

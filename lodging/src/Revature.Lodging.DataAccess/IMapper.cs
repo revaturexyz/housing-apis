@@ -9,15 +9,15 @@ namespace Revature.Lodging.DataAccess
   public interface IMapper
   {
     //Maps Library Models to Data Access Entities
-    public Entities.Amenity MapAmenitytoE(Lib.Models.Amenity amenity);
-    public Entities.AmenityComplex MapAmenityComplextoE(Lib.Models.AmenityComplex amenityComplex);
-    public Entities.AmenityFloorPlan MapAmenityFloortoE(Lib.Models.AmenityFloorPlan amenityFloorPlan);
-    public Entities.AmenityRoom MapAmenityRoomtoE(Lib.Models.AmenityRoom amenityRoom);
-    public Entities.Complex MapComplextoE(Lib.Models.Complex complex);
-    public Entities.FloorPlan MapFloorPlantoE(Lib.Models.FloorPlan floorPlan);
-    public Entities.Gender MapGendertoE(Lib.Models.Gender gender);
-    public Entities.Room MapRoomtoE(Lib.Models.Room room);
-    public Entities.RoomType MapRoomTypetoE(Lib.Models.RoomType roomType);
+    public Amenity MapAmenitytoE(Lib.Models.Amenity amenity);
+    public AmenityComplex MapAmenityComplextoE(Lib.Models.AmenityComplex amenityComplex);
+    public AmenityFloorPlan MapAmenityFloortoE(Lib.Models.AmenityFloorPlan amenityFloorPlan);
+    public AmenityRoom MapAmenityRoomtoE(Lib.Models.AmenityRoom amenityRoom);
+    public Complex MapComplextoE(Lib.Models.Complex complex);
+    public FloorPlan MapFloorPlantoE(Lib.Models.FloorPlan floorPlan);
+    public Gender MapGendertoE(Lib.Models.Gender gender);
+    public Room MapRoomtoE(Lib.Models.Room room);
+    public RoomType MapRoomTypetoE(Lib.Models.RoomType roomType);
 
     //Maps Data Access to Library Models
     public Lib.Models.Amenity MapAmenitytoLib(Entities.Amenity amenity);
