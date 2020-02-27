@@ -1,7 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Revature.Room.DataAccess.Entities
+namespace Revature.Lodging.DataAccess.Entities
 {
   /// <summary>
   /// Entity for Room table, most attributes are assigned from the complex service except the number of occupants
@@ -20,14 +21,18 @@ namespace Revature.Room.DataAccess.Entities
     /// </summary>
     public int NumberOfOccupants { get; set; }
 
+    public int GenderId { get; set; }
     public Gender Gender { get; set; }
-
+    public int RoomTypeId { get; set; }
     public RoomType RoomType { get; set; }
+    public Guid ComplexId { get; set; }
+    public Complex Complex { get; set; }
+    public int FloorPlanID { get; set; }
+    public FloorPlan FloorPlan { get; set; }
+
     public DateTime LeaseStart { get; set; }
     public DateTime LeaseEnd { get; set; }
 
-    public Guid ComplexId { get; set; }
-
-    public int FloorPlanID {get; set;}
+    public ICollection<AmenityRoom> AmenityRoom { get; set; }
   }
 }

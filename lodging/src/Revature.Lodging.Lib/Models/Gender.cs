@@ -10,6 +10,6 @@ namespace Revature.Lodging.Lib.Models
     [Required]
     public int GenderId { get; set; }
     [Required]
-    public string GenderType { get; set; }
+    public string Type { get; set; }
   }
 }

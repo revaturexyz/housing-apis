@@ -1,6 +1,6 @@
 using System;
 
-namespace Revature.Complex.DataAccess.Entities
+namespace Revature.Lodging.DataAccess.Entities
 {
   /// <summary>
   /// Entity AmenityComplex model. Repository use it to CRUD amenity of complex data from database

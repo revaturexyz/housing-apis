@@ -1,4 +1,6 @@
-namespace Revature.Room.DataAccess.Entities
+using System.Collections.Generic;
+
+namespace Revature.Lodging.DataAccess.Entities
 {
   /// <summary>
   /// Entity for available Room types: Apartment, Dorm, House, etc
@@ -7,5 +9,7 @@ namespace Revature.Room.DataAccess.Entities
   {
     public int RoomTypeId { get; set; }
     public string Type { get; set; }
+    public ICollection<FloorPlan> FloorPlan { get; set; }
+    public ICollection<Room> Room { get; set; }
   }
 }

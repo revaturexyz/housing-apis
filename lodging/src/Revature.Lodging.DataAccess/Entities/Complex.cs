@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Revature.Complex.DataAccess.Entities
+namespace Revature.Lodging.DataAccess.Entities
 {
   /// <summary>
   /// Entity Complex model. Repository use it to CRUD complex data from database
@@ -23,5 +23,7 @@ namespace Revature.Complex.DataAccess.Entities
     /// represent the amenities offered by the complex.
     /// </summary>
     public virtual ICollection<AmenityComplex> AmenityComplex { get; set; }
+    public ICollection<FloorPlan> FloorPlan { get; set; }
+    public ICollection<Room> Room { get; set; }
   }
 }

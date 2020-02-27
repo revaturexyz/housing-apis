@@ -11,7 +11,7 @@ namespace Revature.Lodging.Lib.Models
     private string _roomNumber;
     private int _numberOccupants;
     private int _numberBeds;
-    private int _roomTypeId;
+    private RoomType _roomTypeId;
     //public stuff
     public Guid RoomId { get; set; }
     public string RoomNumber {
@@ -57,9 +57,9 @@ namespace Revature.Lodging.Lib.Models
         }
       }
     }
-    public int? GenderId { get; set; }
-    public DateTime? LeaseStart { get; set; }
-    public DateTime? LeaseEnd { get; set; }
+    public Gender Gender { get; set; }
+    public DateTime LeaseStart { get; set; }
+    public DateTime LeaseEnd { get; set; }
 
     public void SetLease (DateTime start, DateTime end)
     {
@@ -75,11 +75,11 @@ namespace Revature.Lodging.Lib.Models
       
     }
 
-    public int RoomTypeId {
+    public RoomType RoomTypeId {
       get => _roomTypeId;
       set
       {
-        if (value > 0)
+        if (value != null)
         {
           _roomTypeId = value;
         }
@@ -89,7 +89,7 @@ namespace Revature.Lodging.Lib.Models
         }
       }
     }
-    public int ComplexId{ get; set; }
-    public long FloorPlanId { get; set; }
+    public Guid ComplexId{ get; set; }
+    public int FloorPlanId { get; set; }
   }
 }

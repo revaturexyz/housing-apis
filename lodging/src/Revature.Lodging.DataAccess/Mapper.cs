@@ -21,19 +21,19 @@ namespace Revature.Lodging.DataAccess
     {
       return new AmenityComplex
       {
-        AmenityComplexId = amenityComplex.AmenityComnplexId,
+        AmenityComplexId = amenityComplex.AmenityComplexId,
         AmentityId = amenityComplex.AmenityId,
         ComplexId = amenityComplex.ComplexId
       };
     }
 
-    public Entities.AmenityFloor MapAmenityFloortoE(AmenityFloorPlan amenityFloorPlan)
+    public Entities.AmenityFloorPlan MapAmenityFloortoE(AmenityFloorPlan amenityFloorPlan)
     {
-      return new Entities.AmenityFloor
+      return new Entities.AmenityFloorPlan
       {
-        AmenityFloorPlanId = amenityFloorPlan.AmenityFloorPlanId,
-        AmenityId = amenityFloorPlan.AmenityId,
-        FloorPlanId = amenityFloorPlan.FloorPlanId
+        AmenityFloorPlanID = amenityFloorPlan.AmenityFloorPlanId,
+        AmenityID = amenityFloorPlan.AmenityId,
+        FloorPlanID = amenityFloorPlan.FloorPlanId
       };
     }
 
@@ -41,9 +41,9 @@ namespace Revature.Lodging.DataAccess
     {
       return new AmenityFloorPlan
       {
-        AmenityFloorPlanId = amenityFloorPlan.AmenityFloorPlanId,
-        AmenityId = amenityFloorPlan.AmenityId,
-        FloorPlanId = amenityFloorPlan.FloorPlanId
+        AmenityFloorPlanId = amenityFloorPlan.AmenityFloorPlanID,
+        AmenityId = amenityFloorPlan.AmenityID,
+        FloorPlanId = amenityFloorPlan.FloorPlanID
       };
     }
 
@@ -115,11 +115,11 @@ namespace Revature.Lodging.DataAccess
     {
       return new Entities.FloorPlan
       {
-        FloorPlanId = floorPlan.FloorPlanId,
+        FloorPlanID= floorPlan.FloorPlanId,
         FloorPlanName = floorPlan.FloorPlanName,
-        NumberOfBeds = floorPlan.NumberOfBeds,
-        RoomTypeId = floorPlan.RoomTypeId,
-        ComplexId = floorPlan.ComplexId
+        NumberBeds = floorPlan.NumberOfBeds,
+        RoomTypeID = floorPlan.RoomTypeId,
+        ComplexID = floorPlan.ComplexId
       };
     }
 
@@ -127,11 +127,11 @@ namespace Revature.Lodging.DataAccess
     {
       return new FloorPlan
       {
-        FloorPlanId = floorPlan.FloorPlanId,
+        FloorPlanId = floorPlan.FloorPlanID,
         FloorPlanName = floorPlan.FloorPlanName,
-        NumberOfBeds = floorPlan.NumberOfBeds,
-        RoomTypeId = floorPlan.RoomTypeId,
-        ComplexId = floorPlan.ComplexId
+        NumberOfBeds = floorPlan.NumberBeds,
+        RoomTypeId = floorPlan.RoomTypeID,
+        ComplexId = floorPlan.ComplexID
       };
     }
 
@@ -139,8 +139,8 @@ namespace Revature.Lodging.DataAccess
     {
       return new Entities.Gender
       {
-        GenderId = gender.GenderId,
-        GenderType = gender.GenderType
+        GenderID = gender.GenderId,
+        Type = gender.Type
       };
     }
 
@@ -148,8 +148,8 @@ namespace Revature.Lodging.DataAccess
     {
       return new Gender
       { 
-        GenderId = gender.GenderId,
-        GenderType = gender.GenderType
+        GenderId = gender.GenderID,
+        Type = gender.Type
       };
     }
 
@@ -159,14 +159,14 @@ namespace Revature.Lodging.DataAccess
       {
         RoomId = room.RoomId,
         RoomNumber = room.RoomNumber,
-        NumberBeds = room.NumberBeds,
-        NumberOccupants = room.NumberOccupants,
-        GenderId = room.GenderId,
+        NumberOfBeds = room.NumberBeds,
+        NumberOfOccupants = room.NumberOccupants,
+        Gender = MapGendertoE(room.Gender),
         LeaseStart = room.LeaseStart,
         LeaseEnd = room.LeaseEnd,
-        RoomTypeId = room.RoomTypeId,
+        RoomType = MapRoomTypetoE(room.RoomTypeId),
         ComplexId = room.ComplexId,
-        FloorPlanId = room.FloorPlanId
+        FloorPlanID = room.FloorPlanId
       };
     }
 
@@ -176,12 +176,12 @@ namespace Revature.Lodging.DataAccess
       {
         RoomId = room.RoomId,
         RoomNumber = room.RoomNumber,
-        NumberBeds = room.NumberBeds,
-        NumberOccupants = room.NumberOccupants,
-        GenderId = room.GenderId,
-        RoomTypeId = room.RoomTypeId,
+        NumberBeds = room.NumberOfBeds,
+        NumberOccupants = room.NumberOfOccupants,
+        Gender = MapGendertoLib(room.Gender),
+        RoomTypeId = MapRoomTypetoLib(room.RoomType),
         ComplexId = room.ComplexId,
-        FloorPlanId = room.FloorPlanId
+        FloorPlanId = room.FloorPlanID
       };
       tempRoom.SetLease(room.LeaseStart, room.LeaseEnd);
       return tempRoom;

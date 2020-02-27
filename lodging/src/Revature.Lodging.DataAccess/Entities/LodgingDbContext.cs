@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace Revature.Complex.DataAccess.Entities
+namespace Revature.Lodging.DataAccess.Entities
 {
     public class LodgingDbContext : DbContext
     {
@@ -31,7 +31,7 @@ namespace Revature.Complex.DataAccess.Entities
         {
             modelBuilder.Entity<Amenity>(entity =>
             {
-                entity.HasKey(e => e.AmenityID);
+                entity.HasKey(e => e.AmenityId);
 
                 entity.Property(e => e.AmenityType)
                     .IsRequired();
@@ -42,11 +42,11 @@ namespace Revature.Complex.DataAccess.Entities
 
             modelBuilder.Entity<AmenityComplex>(entity =>
             {
-                entity.HasKey(e => e.AmenityComplexID);
+                entity.HasKey(e => e.AmenityComplexId);
 
                 entity.HasOne(e => e.Amenity)
                     .WithMany(d => d.AmenityComplex)
-                    .HasForeignKey(p => p.AmenityID)
+                    .HasForeignKey(p => p.AmenityId)
                     .IsRequired()
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
@@ -76,17 +76,17 @@ namespace Revature.Complex.DataAccess.Entities
 
             modelBuilder.Entity<AmenityRoom>(entity =>
             {
-                entity.HasKey(e => AmenityRoomID);
+                entity.HasKey(e => e.AmenityRoomId);
                 
                 entity.HasOne(e => e.Amenity)
                     .WithMany(d => d.AmenityRoom)
-                    .HasForeignKey(p => p.AmenityID)
+                    .HasForeignKey(p => p.AmenityId)
                     .IsRequired()
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
                 entity.HasOne(e => e.Room)
                     .WithMany(d => d.AmenityRoom)
-                    .HasForeignKey(p => p.RoomID)
+                    .HasForeignKey(p => p.RoomId)
                     .IsRequired()
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
@@ -95,16 +95,13 @@ namespace Revature.Complex.DataAccess.Entities
             {
                 entity.HasKey(e => e.ComplexId);
 
-                entity.Property(e => e.AddressID)
+                entity.Property(e => e.AddressId)
                     .IsRequired();
                 
-                entity.Property(e => e.ProviderID)
+                entity.Property(e => e.ProviderId)
                     .IsRequired();
                 
                 entity.Property(e => e.ComplexName)
-                    .IsRequired();
-
-                entity.Property(e => ContactNumber)
                     .IsRequired();
             });
 
@@ -139,7 +136,7 @@ namespace Revature.Complex.DataAccess.Entities
 
             modelBuilder.Entity<Room>(entity =>
             {
-                entity.HasKey(e => e.RoomID);
+                entity.HasKey(e => e.RoomId);
 
                 entity.Property(e => e.RoomNumber)
                     .IsRequired();
@@ -154,18 +151,30 @@ namespace Revature.Complex.DataAccess.Entities
 
                 entity.Property(e => e.LeaseEnd);
 
-                entity.HasForeignKey(e => e.GenderID);
+                entity.HasOne(e => e.Gender)
+                  .WithMany(d => d.Room)
+                  .HasForeignKey(p => p.GenderId)
+                  .IsRequired();
 
-                entity.HasForeignKey(e => e.RoomTypeID);
+                entity.HasOne(e => e.RoomType)
+                .WithMany(d => d.Room)
+                .HasForeignKey(p => p.RoomTypeId)
+                .IsRequired();
 
-                entity.HasForeignKey(e => e.ComplexID);
+              entity.HasOne(e => e.Complex)
+                .WithMany(d => d.Room)
+              .HasForeignKey(p => p.ComplexId)
+              .IsRequired();
 
-                entity.HasForeignKey(e => e.FloorPlanID);
+                entity.HasOne(e => e.FloorPlan)
+              .WithMany(d => d.Room)
+              .HasForeignKey(e => e.FloorPlanID)
+              .IsRequired();
             });
 
             modelBuilder.Entity<RoomType>(entity =>
             {
-                entity.HasKey(e => e.RoomTypeID);
+                entity.HasKey(e => e.RoomTypeId);
 
                 entity.Property(e => e.Type)
                     .IsRequired();

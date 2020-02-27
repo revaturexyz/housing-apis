@@ -1,6 +1,6 @@
 using System;
 
-namespace Revature.Complex.DataAccess.Entities
+namespace Revature.Lodging.DataAccess.Entities
 {
   /// <summary>
   /// Entity AmenityRoom model. Repository use it to CRUD complex data from database
@@ -20,5 +20,7 @@ namespace Revature.Complex.DataAccess.Entities
     /// for FK: amenity Id
     /// </summary>
     public Amenity Amenity { get; set; }
+
+    public Room Room { get; set; }
   }
 }
