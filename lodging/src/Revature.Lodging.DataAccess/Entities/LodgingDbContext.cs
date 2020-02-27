@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace Revature.Complex.DataAccess.Entities
+namespace Revature.Lodging.DataAccess.Entities
 {
     public class LodgingDbContext : DbContext
     {

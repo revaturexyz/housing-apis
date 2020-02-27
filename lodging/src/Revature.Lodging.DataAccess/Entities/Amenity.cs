@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Revature.Complex.DataAccess.Entities
+namespace Revature.Lodging.DataAccess.Entities
 {
   /// <summary>
   /// Entity Amenity model. Repository use it to CRUD amenity data from database

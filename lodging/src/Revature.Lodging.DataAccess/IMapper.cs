@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Revature.Lodging.Lib;
+using Revature.Lodging.DataAccess.Entities;
 
 namespace Revature.Lodging.DataAccess
 {
@@ -10,7 +11,7 @@ namespace Revature.Lodging.DataAccess
     //Maps Library Models to Data Access Entities
     public Entities.Amenity MapAmenitytoE(Lib.Models.Amenity amenity);
     public Entities.AmenityComplex MapAmenityComplextoE(Lib.Models.AmenityComplex amenityComplex);
-    public Entities.AmenityFloor MapAmenityFloortoE(Lib.Models.AmenityFloorPlan amenityFloorPlan);
+    public Entities.AmenityFloorPlan MapAmenityFloortoE(Lib.Models.AmenityFloorPlan amenityFloorPlan);
     public Entities.AmenityRoom MapAmenityRoomtoE(Lib.Models.AmenityRoom amenityRoom);
     public Entities.Complex MapComplextoE(Lib.Models.Complex complex);
     public Entities.FloorPlan MapFloorPlantoE(Lib.Models.FloorPlan floorPlan);

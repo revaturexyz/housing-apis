@@ -1,4 +1,4 @@
-namespace Revature.Room.DataAccess.Entities
+namespace Revature.Lodging.DataAccess.Entities
 {
     public class FloorPlan
     {

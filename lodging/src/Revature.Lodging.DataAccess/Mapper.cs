@@ -21,19 +21,19 @@ namespace Revature.Lodging.DataAccess
     {
       return new AmenityComplex
       {
-        AmenityComplexId = amenityComplex.AmenityComnplexId,
+        AmenityComplexId = amenityComplex.AmenityComplexId,
         AmentityId = amenityComplex.AmenityId,
         ComplexId = amenityComplex.ComplexId
       };
     }
 
-    public Entities.AmenityFloor MapAmenityFloortoE(AmenityFloorPlan amenityFloorPlan)
+    public Entities.AmenityFloorPlan MapAmenityFloortoE(AmenityFloorPlan amenityFloorPlan)
     {
-      return new Entities.AmenityFloor
+      return new Entities.AmenityFloorPlan
       {
-        AmenityFloorPlanId = amenityFloorPlan.AmenityFloorPlanId,
-        AmenityId = amenityFloorPlan.AmenityId,
-        FloorPlanId = amenityFloorPlan.FloorPlanId
+        AmenityFloorPlanID = amenityFloorPlan.AmenityFloorPlanId,
+        AmenityID = amenityFloorPlan.AmenityId,
+        FloorPlanID = amenityFloorPlan.FloorPlanId
       };
     }
 
@@ -41,9 +41,9 @@ namespace Revature.Lodging.DataAccess
     {
       return new AmenityFloorPlan
       {
-        AmenityFloorPlanId = amenityFloorPlan.AmenityFloorPlanId,
-        AmenityId = amenityFloorPlan.AmenityId,
-        FloorPlanId = amenityFloorPlan.FloorPlanId
+        AmenityFloorPlanId = amenityFloorPlan.AmenityFloorPlanID,
+        AmenityId = amenityFloorPlan.AmenityID,
+        FloorPlanId = amenityFloorPlan.FloorPlanID
       };
     }
 
@@ -115,11 +115,11 @@ namespace Revature.Lodging.DataAccess
     {
       return new Entities.FloorPlan
       {
-        FloorPlanId = floorPlan.FloorPlanId,
+        FloorPlanID= floorPlan.FloorPlanID,
         FloorPlanName = floorPlan.FloorPlanName,
-        NumberOfBeds = floorPlan.NumberOfBeds,
-        RoomTypeId = floorPlan.RoomTypeId,
-        ComplexId = floorPlan.ComplexId
+        NumberBeds = floorPlan.NumberOfBeds,
+        RoomTypeID = floorPlan.RoomTypeId,
+        ComplexID = floorPlan.ComplexId
       };
     }
 
@@ -129,9 +129,9 @@ namespace Revature.Lodging.DataAccess
       {
         FloorPlanId = floorPlan.FloorPlanId,
         FloorPlanName = floorPlan.FloorPlanName,
-        NumberOfBeds = floorPlan.NumberOfBeds,
-        RoomTypeId = floorPlan.RoomTypeId,
-        ComplexId = floorPlan.ComplexId
+        NumberOfBeds = floorPlan.NumberBeds,
+        RoomTypeId = floorPlan.RoomTypeID,
+        ComplexId = floorPlan.ComplexID
       };
     }
 

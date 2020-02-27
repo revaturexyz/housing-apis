@@ -1,4 +1,4 @@
-namespace Revature.Room.DataAccess.Entities
+namespace Revature.Lodging.DataAccess.Entities
 {
   /// <summary>
   /// Entity for the Gender Types i.e Male, Female
