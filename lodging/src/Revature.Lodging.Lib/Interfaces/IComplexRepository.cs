@@ -50,5 +50,13 @@ namespace Revature.Lodging.Lib.Interfaces
     ///   Persists any changes made to DbContext to the database.
     /// </summary>
     public void SaveChanges();
+
+    /// <summary>
+    ///   Determines whether a Complex object exists in the database,
+    ///   given the Complex ID.
+    /// </summary>
+    /// <param name="complexId"> Used to specify Complex object </param>
+    /// <returns> True if Complex object is found; otherwise False </returns>
+    public bool ComplexExists(int complexId);
   }
 }
