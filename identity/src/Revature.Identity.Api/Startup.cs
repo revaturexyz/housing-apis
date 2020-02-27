@@ -36,9 +36,17 @@ namespace Identity
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllers();
+
+      /*
       services.AddDbContext<IdentityDbContext>(options =>
         options.UseNpgsql(Configuration.GetConnectionString(ConnectionStringName)));
-      services.AddCors(options =>
+        */
+
+     services.AddEntityFrameworkNpgsql().AddDbContext<IdentityDbContext>(opt =>
+        opt.UseNpgsql(Configuration.GetConnectionString("IdentityDb")));
+    
+
+    services.AddCors(options =>
       {
         options.AddPolicy(CorsPolicyName, builder =>
         {
