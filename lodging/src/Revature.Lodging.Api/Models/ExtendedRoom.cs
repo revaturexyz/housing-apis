@@ -13,7 +13,7 @@ namespace Revature.Lodging.Api.Models
 
     public int NumberBeds { get; set; }
 
-    public bool Occupied { get; set; }
+    public int NumberOccupants { get; set; }
 
     public long FloorPlanId { get; set; }
 
