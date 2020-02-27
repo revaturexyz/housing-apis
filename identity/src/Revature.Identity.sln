@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature.Identity.Api", "Revature.Identity.Api\Revature.Identity.Api.csproj", "{70A76D26-994D-4EDD-A406-A5D4A6FB856E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revature.Identity.DataAccess", "Revature.Identity.DataAccess\Revature.Identity.DataAccess.csproj", "{5F33EAA2-B4A4-4A13-B858-21F626A222DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revature.Identity.Lib", "Revature.Identity.Lib\Revature.Identity.Lib.csproj", "{C73DA485-0197-4440-8CB3-CF908FA182D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revature.Identity.Tests", "Revature.Identity.Tests\Revature.Identity.Tests.csproj", "{F99CD2DB-CC56-45A8-9D34-EC809BDF686D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70A76D26-994D-4EDD-A406-A5D4A6FB856E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70A76D26-994D-4EDD-A406-A5D4A6FB856E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70A76D26-994D-4EDD-A406-A5D4A6FB856E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70A76D26-994D-4EDD-A406-A5D4A6FB856E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F33EAA2-B4A4-4A13-B858-21F626A222DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F33EAA2-B4A4-4A13-B858-21F626A222DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F33EAA2-B4A4-4A13-B858-21F626A222DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F33EAA2-B4A4-4A13-B858-21F626A222DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C73DA485-0197-4440-8CB3-CF908FA182D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C73DA485-0197-4440-8CB3-CF908FA182D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C73DA485-0197-4440-8CB3-CF908FA182D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C73DA485-0197-4440-8CB3-CF908FA182D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F99CD2DB-CC56-45A8-9D34-EC809BDF686D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F99CD2DB-CC56-45A8-9D34-EC809BDF686D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F99CD2DB-CC56-45A8-9D34-EC809BDF686D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F99CD2DB-CC56-45A8-9D34-EC809BDF686D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8125E39B-FF6E-435D-AFF1-DF4753DF6728}
+	EndGlobalSection
+EndGlobal
