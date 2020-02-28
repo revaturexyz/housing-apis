@@ -295,16 +295,6 @@ namespace Revature.Account.DataAccess.Repositories
       return tenant != null ? tenant.TenantId : Guid.Empty;
     }
 
-    public Task<List<TenantAccount>> GetAllTenantsByProviderAsync(Guid ProviderId)
-    {
-      throw new NotImplementedException();
-    }
-
-    public Task<List<TenantAccount>> GetAllTenantsByCoordinatorAsync(Guid CoordinatorId)
-    {
-      throw new NotImplementedException();
-    }
-
     public void AddTenantAccount(TenantAccount newTenant)
     {
       var newEntity = _mapper.MapTenant(newTenant);
