@@ -7,7 +7,7 @@ namespace Revature.Lodging.DataAccess
 {
   public class Mapper : IMapper
   {
-    public Entities.AmenityComplex MapAmenityComplextoE(AmenityComplex amenityComplex)
+    public Entities.AmenityComplex Map(AmenityComplex amenityComplex)
     {
       return new Entities.AmenityComplex
       {
@@ -17,7 +17,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public AmenityComplex MapAmenityComplextoLib(Entities.AmenityComplex amenityComplex)
+    public AmenityComplex Map(Entities.AmenityComplex amenityComplex)
     {
       return new AmenityComplex
       {
@@ -27,7 +27,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public Entities.AmenityFloorPlan MapAmenityFloortoE(AmenityFloorPlan amenityFloorPlan)
+    public Entities.AmenityFloorPlan Map(AmenityFloorPlan amenityFloorPlan)
     {
       return new Entities.AmenityFloorPlan
       {
@@ -37,7 +37,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public AmenityFloorPlan MapAmenityFloortoLib(Entities.AmenityFloorPlan amenityFloorPlan)
+    public AmenityFloorPlan Map(Entities.AmenityFloorPlan amenityFloorPlan)
     {
       return new AmenityFloorPlan
       {
@@ -47,7 +47,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public Entities.AmenityRoom MapAmenityRoomtoE(AmenityRoom amenityRoom)
+    public Entities.AmenityRoom Map(AmenityRoom amenityRoom)
     {
       return new Entities.AmenityRoom
       {
@@ -57,7 +57,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public AmenityRoom MapAmenityRoomtoLib(Entities.AmenityRoom amenityRoom)
+    public AmenityRoom Map(Entities.AmenityRoom amenityRoom)
     {
       return new AmenityRoom
       {
@@ -67,7 +67,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public Entities.Amenity MapAmenitytoE(Amenity amenity)
+    public Entities.Amenity Map(Amenity amenity)
     {
       return new Entities.Amenity
       {
@@ -77,7 +77,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public Amenity MapAmenitytoLib(Entities.Amenity amenity)
+    public Amenity Map(Entities.Amenity amenity)
     {
       return new Amenity
       {
@@ -87,7 +87,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public Entities.Complex MapComplextoE(Complex complex)
+    public Entities.Complex Map(Complex complex)
     {
       return new Entities.Complex
       {
@@ -99,7 +99,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public Complex MapComplextoLib(Entities.Complex complex)
+    public Complex Map(Entities.Complex complex)
     {
       return new Complex
       {
@@ -111,7 +111,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public Entities.FloorPlan MapFloorPlantoE(FloorPlan floorPlan)
+    public Entities.FloorPlan Map(FloorPlan floorPlan)
     {
       return new Entities.FloorPlan
       {
@@ -123,7 +123,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public FloorPlan MapFloorPlantoLib(Entities.FloorPlan floorPlan)
+    public FloorPlan Map(Entities.FloorPlan floorPlan)
     {
       return new FloorPlan
       {
@@ -135,7 +135,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public Entities.Gender MapGendertoE(Gender gender)
+    public Entities.Gender Map(Gender gender)
     {
       return new Entities.Gender
       {
@@ -144,7 +144,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public Gender MapGendertoLib(Entities.Gender gender)
+    public Gender Map(Entities.Gender gender)
     {
       return new Gender
       { 
@@ -153,7 +153,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public Entities.Room MapRoomtoE(Room room)
+    public Entities.Room Map(Room room)
     {
       return new Entities.Room
       {
@@ -161,16 +161,16 @@ namespace Revature.Lodging.DataAccess
         RoomNumber = room.RoomNumber,
         NumberOfBeds = room.NumberBeds,
         NumberOfOccupants = room.NumberOccupants,
-        Gender = MapGendertoE(room.Gender),
+        Gender = Map(room.Gender),
         LeaseStart = room.LeaseStart,
         LeaseEnd = room.LeaseEnd,
-        RoomType = MapRoomTypetoE(room.RoomTypeId),
+        RoomType = Map(room.RoomTypeId),
         ComplexId = room.ComplexId,
         FloorPlanID = room.FloorPlanId
       };
     }
 
-    public Room MapRoomtoLib(Entities.Room room)
+    public Room Map(Entities.Room room)
     {
       var tempRoom = new Room
       {
@@ -178,8 +178,8 @@ namespace Revature.Lodging.DataAccess
         RoomNumber = room.RoomNumber,
         NumberBeds = room.NumberOfBeds,
         NumberOccupants = room.NumberOfOccupants,
-        Gender = MapGendertoLib(room.Gender),
-        RoomTypeId = MapRoomTypetoLib(room.RoomType),
+        Gender = Map(room.Gender),
+        RoomTypeId = Map(room.RoomType),
         ComplexId = room.ComplexId,
         FloorPlanId = room.FloorPlanID
       };
@@ -187,7 +187,7 @@ namespace Revature.Lodging.DataAccess
       return tempRoom;
     }
 
-    public Entities.RoomType MapRoomTypetoE(RoomType roomType)
+    public Entities.RoomType Map(RoomType roomType)
     {
       return new Entities.RoomType
       {
@@ -196,7 +196,7 @@ namespace Revature.Lodging.DataAccess
       };
     }
 
-    public RoomType MapRoomTypetoLib(Entities.RoomType roomType)
+    public RoomType Map(Entities.RoomType roomType)
     {
       return new RoomType
       {
