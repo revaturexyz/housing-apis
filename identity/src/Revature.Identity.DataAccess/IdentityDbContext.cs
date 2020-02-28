@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Revature.Account.DataAccess.Entities;
+using Revature.Identity.DataAccess.Entities;
 
 namespace Revature.Account.DataAccess
 {
@@ -24,6 +25,7 @@ namespace Revature.Account.DataAccess
     public virtual DbSet<UpdateAction> UpdateAction { get; set; }
     public virtual DbSet<ProviderAccount> ProviderAccount { get; set; }
     public virtual DbSet<CoordinatorAccount> CoordinatorAccount { get; set; }
+    public virtual DbSet<TenantAccount> TenantAccount { get; set; }
 
     /// <summary>
     /// Defines the features for each and every table.
@@ -31,6 +33,19 @@ namespace Revature.Account.DataAccess
     /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+      modelBuilder.Entity<TenantAccount>(entity =>
+      {
+        entity.HasKey(e => e.TenantId);
+        entity.Property(e => e.Name)
+          .IsRequired()
+          .HasMaxLength(100);
+        entity.Property(e => e.Email)
+          .IsRequired()
+          .HasMaxLength(100);
+
+      });
+
       modelBuilder.Entity<ProviderAccount>(entity =>
       {
         entity.HasKey(e => e.ProviderId);
