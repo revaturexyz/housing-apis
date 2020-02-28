@@ -168,9 +168,8 @@ namespace Revature.Address.Tests.Api.Tests
       mockAddressLogic.Setup(al => al.IsValidAddressAsync(It.IsAny<Address.Lib.Address>())).ReturnsAsync(() => {
         return true;
       });
-      mockAddressLogic.Setup(al => al.NormalizeAddressAsync(It.IsAny<Address.Lib.Address>())).Returns<Address.Lib.Address>(async (address) => {
-        await Task.Yield();
-        return address;
+      mockAddressLogic.Setup(al => al.NormalizeAddressAsync(It.IsAny<Address.Lib.Address>())).ReturnsAsync(() => {
+        return new Address.Lib.Address();
       });
       var options = TestDbContext.TestDbInitalizer("GoodAddress201");
       using var database = TestDbContext.CreateTestDb(options);
@@ -202,10 +201,9 @@ namespace Revature.Address.Tests.Api.Tests
       var mockLogger = new Mock<ILogger<AddressController>>();
       var mockAddressLogic = new Mock<IAddressLogic>();
       var mockDataAccess = new Mock<Address.Lib.Interfaces.IDataAccess>();
-      mockDataAccess.Setup(da => da.GetAddressAsync(null, It.IsAny<Address.Lib.Address>())).Returns<Guid,Address.Lib.Address>(async (id,address) =>
+      mockDataAccess.Setup(da => da.GetAddressAsync(null, It.IsAny<Address.Lib.Address>())).ReturnsAsync(() =>
        {
-         await Task.Yield();
-         return new List<Address.Lib.Address>() { address };
+         return new List<Address.Lib.Address>() { new Address.Lib.Address() };
        });
       var test = new AddressController(mockDataAccess.Object, mockAddressLogic.Object, mockLogger.Object);
       var newAddy = new Address.Api.Models.AddressModel
