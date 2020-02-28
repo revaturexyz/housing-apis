@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Revature.Account.Lib\Revature.Account.Lib.csproj" />
+    <ProjectReference Include="..\Revature.Identity.Lib\Revature.Identity.Lib.csproj" />
   </ItemGroup>
 
 </Project>
