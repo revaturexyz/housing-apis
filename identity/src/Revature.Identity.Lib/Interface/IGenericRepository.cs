@@ -65,6 +65,24 @@ namespace Revature.Account.Lib.Interface
     public Task<bool> DeleteUpdateActionByIdAsync(Guid actionId);
     #endregion
 
+    #region Tenant
+
+    public Task<Guid> GetTenantIdByEmailAsync(string TenantEmail);
+
+    public Task<List<TenantAccount>> GetAllTenantsByProviderAsync(Guid ProviderId);
+
+    public Task<List<TenantAccount>> GetAllTenantsByCoordinatorAsync(Guid CoordinatorId);
+
+    public void AddTenantAccount(TenantAccount newTenant);
+
+    public Task<TenantAccount> GetTenantAccountByIdAsync(Guid TenantId);
+
+    public Task<bool> UpdateTenantAccountAsync(TenantAccount tenantAccount);
+
+    public Task<bool> DeleteTenantAccountAsync(Guid tenantId);
+
+    #endregion
+
     public Task SaveAsync();
   }
 }

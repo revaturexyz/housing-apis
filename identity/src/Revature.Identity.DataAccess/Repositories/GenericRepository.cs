@@ -285,6 +285,45 @@ namespace Revature.Account.DataAccess.Repositories
     }
     #endregion
 
+    #region Tenant
+
+    public Task<Guid> GetTenantIdByEmailAsync(string TenantEmail)
+    {
+      throw new NotImplementedException();
+    }
+
+    public Task<List<TenantAccount>> GetAllTenantsByProviderAsync(Guid ProviderId)
+    {
+      throw new NotImplementedException();
+    }
+
+    public Task<List<TenantAccount>> GetAllTenantsByCoordinatorAsync(Guid CoordinatorId)
+    {
+      throw new NotImplementedException();
+    }
+
+    public void AddTenantAccount(TenantAccount newTenant)
+    {
+      throw new NotImplementedException();
+    }
+
+    public Task<TenantAccount> GetTenantAccountByIdAsync(Guid TenantId)
+    {
+      throw new NotImplementedException();
+    }
+
+    public Task<bool> UpdateTenantAccountAsync(TenantAccount tenantAccount)
+    {
+      throw new NotImplementedException();
+    }
+
+    public Task<bool> DeleteTenantAccountAsync(Guid tenantId)
+    {
+      throw new NotImplementedException();
+    }
+
+    #endregion
+
     /// <summary>
     /// Save changes in context to the database.
     /// </summary>
