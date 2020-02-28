@@ -140,4 +140,34 @@ services:
     networks:
       - locally
 
+##Attempted implementation of Lodging dockerfile.
+# lodging_api:
+#   build:
+#     args:
+#       - DOTNET_VERSION=3.1
+#     context: ./lodging
+#     dockerfile: ../.docker/lodging.dockerfile
+#   depends_on:
+#     - lodging_data
+#   dns:
+#     - 1.1.1.1
+#     - 1.0.0.1
+#   environment:
+#     ConnectionStrings__ComplexDb: 'Host=lodging_data;Database=lodging;Username=postgres;Password=Pass@word'
+#   image: lodging
+#   networks:
+#     - locally
+#   ports:
+#     - 9150:80
+#     - 9151:443
+#   restart: on-failure
+
+# lodging_data:
+#   environment:
+#     POSTGRES_PASSWORD: 'Pass@word'
+#   image: postgres:alpine
+#   networks:
+#     - locally
+##End of the implementation of Lodging dockerfile. Should replace Complex and Room dockerfile implementation.
+
 version: '3.7'
