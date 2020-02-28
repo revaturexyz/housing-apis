@@ -12,7 +12,7 @@ namespace Revature.Account.DataAccess
     Lib.Model.UpdateAction MapUpdateAction(Entities.UpdateAction action);
     Entities.UpdateAction MapUpdateAction(Lib.Model.UpdateAction action);
 
-   // Lib.Model.TenantAccount MapTenant(Entities.TenantAccount tenant);
-   // Entities.TenantAccount MapTenant(Lib.Model.TenantAccount tenant);
+    Lib.Model.TenantAccount MapTenant(Entities.TenantAccount tenant);
+    Entities.TenantAccount MapTenant(Lib.Model.TenantAccount tenant);
   }
 }

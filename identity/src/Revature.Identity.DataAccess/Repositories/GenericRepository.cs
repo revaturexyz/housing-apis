@@ -287,9 +287,12 @@ namespace Revature.Account.DataAccess.Repositories
 
     #region Tenant
 
-    public Task<Guid> GetTenantIdByEmailAsync(string TenantEmail)
+    public async Task<Guid> GetTenantIdByEmailAsync(string TenantEmail)
     {
-      throw new NotImplementedException();
+      var tenant = await _context.TenantAccount
+    .AsNoTracking()
+    .FirstOrDefaultAsync(c => c.Email == TenantEmail);
+      return tenant != null ? tenant.TenantId : Guid.Empty;
     }
 
     public Task<List<TenantAccount>> GetAllTenantsByProviderAsync(Guid ProviderId)
@@ -304,22 +307,38 @@ namespace Revature.Account.DataAccess.Repositories
 
     public void AddTenantAccount(TenantAccount newTenant)
     {
-      throw new NotImplementedException();
+      var newEntity = _mapper.MapTenant(newTenant);
+      _context.Add(newEntity);
     }
 
-    public Task<TenantAccount> GetTenantAccountByIdAsync(Guid TenantId)
+    public async Task<TenantAccount> GetTenantAccountByIdAsync(Guid TenantId)
     {
-      throw new NotImplementedException();
+      var tenant = await _context.TenantAccount
+  .AsNoTracking()
+  .FirstOrDefaultAsync(p => p.TenantId == TenantId);
+      return tenant != null ? _mapper.MapTenant(tenant) : null;
+
     }
 
-    public Task<bool> UpdateTenantAccountAsync(TenantAccount tenantAccount)
+    public async Task<bool> UpdateTenantAccountAsync(TenantAccount tenantAccount)
     {
-      throw new NotImplementedException();
+      var existingEntity = await _context.CoordinatorAccount.FindAsync(tenantAccount.TenantId);
+      if (existingEntity == null)
+        return false;
+
+      var updatedEntity = _mapper.MapTenant(tenantAccount);
+      _context.Entry(existingEntity).CurrentValues.SetValues(updatedEntity);
+      return true;
     }
 
-    public Task<bool> DeleteTenantAccountAsync(Guid tenantId)
+    public async Task<bool> DeleteTenantAccountAsync(Guid tenantId)
     {
-      throw new NotImplementedException();
+      var entityToBeRemoved = await _context.TenantAccount.FindAsync(tenantId);
+      if (entityToBeRemoved == null)
+        return false;
+
+      _context.Remove(entityToBeRemoved);
+      return true;
     }
 
     #endregion
