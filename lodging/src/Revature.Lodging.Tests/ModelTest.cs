@@ -130,7 +130,7 @@ namespace Revature.Lodging.Tests
         AmenityType = "TV",
         Description = "100 channels."
       };
-      DataAccess.Entities.Amenity mappedSubject = mapObject.MapAmenitytoE(subject);
+      DataAccess.Entities.Amenity mappedSubject = mapObject.Map(subject);
       Assert.Equal(temp, mappedSubject.AmenityId);
     }
     [Fact]
@@ -143,8 +143,32 @@ namespace Revature.Lodging.Tests
         AmenityType = "Balcony",
         Description = "Fresh air."
       };
-      Amenity mappedSubject = mapObject.MapAmenitytoLib(subject);
+      Amenity mappedSubject = mapObject.Map(subject);
       Assert.Equal(temp, mappedSubject.AmenityId);
+    }
+    [Fact]
+    public void MapRoomTypeToEntity()
+    {
+      RoomType subject = new RoomType()
+      {
+        RoomTypeId = 4,
+        Type = "Motel"
+      };
+      DataAccess.Entities.RoomType mappedSubject = mapObject.Map(subject);
+      Assert.Equal(4, mappedSubject.RoomTypeId);
+      Assert.Equal(4, subject.RoomTypeId);
+    }
+    [Fact]
+    public void MapRoomTypeToLib()
+    {
+      DataAccess.Entities.RoomType subject = new DataAccess.Entities.RoomType()
+      {
+        RoomTypeId = 3,
+        Type = "Hotel"
+      };
+      RoomType mappedSubject = mapObject.Map(subject);
+      Assert.Equal(3, mappedSubject.RoomTypeId);
+      Assert.Equal(3, subject.RoomTypeId);
     }
   }
 }
