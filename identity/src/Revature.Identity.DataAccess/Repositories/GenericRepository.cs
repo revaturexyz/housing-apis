@@ -15,13 +15,13 @@ namespace Revature.Account.DataAccess.Repositories
   {
 
     //the database
-    private readonly AccountDbContext _context;
+    private readonly IdentityDbContext _context;
 
     //the mapper tool
     private readonly IMapper _mapper;
 
     //constructor
-    public GenericRepository(AccountDbContext db, IMapper mapper)
+    public GenericRepository(IdentityDbContext db, IMapper mapper)
     {
       //inject the database
       _context = db ?? throw new ArgumentNullException(nameof(db), "Context cannot be null.");
