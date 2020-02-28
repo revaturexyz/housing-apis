@@ -23,9 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Revature.Account.Api\Revature.Account.Api.csproj" />
-    <ProjectReference Include="..\Revature.Account.DataAccess\Revature.Account.DataAccess.csproj" />
-    <ProjectReference Include="..\Revature.Account.Lib\Revature.Account.Lib.csproj" />
+    <ProjectReference Include="..\Revature.Account.Api\Revature.Identity.Api.csproj" />
+    <ProjectReference Include="..\Revature.Account.DataAccess\Revature.Identity.DataAccess.csproj" />
+    <ProjectReference Include="..\Revature.Account.Lib\Revature.Identity.Lib.csproj" />
   </ItemGroup>
 
 </Project>

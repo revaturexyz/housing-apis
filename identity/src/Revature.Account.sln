@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revature.Account.Api", "Revature.Account.Api\Revature.Account.Api.csproj", "{31702692-BE95-4638-BBC1-9B034F9EFF5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature.Identity.Api", "Revature.Account.Api\Revature.Identity.Api.csproj", "{31702692-BE95-4638-BBC1-9B034F9EFF5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revature.Account.Lib", "Revature.Account.Lib\Revature.Account.Lib.csproj", "{F92E3341-568D-47D3-B3E8-3108BCF3AC44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature.Identity.Lib", "Revature.Account.Lib\Revature.Identity.Lib.csproj", "{F92E3341-568D-47D3-B3E8-3108BCF3AC44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revature.Account.DataAccess", "Revature.Account.DataAccess\Revature.Account.DataAccess.csproj", "{F7716F2A-E7EA-4572-AB19-4C3B0A714D97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature.Identity.DataAccess", "Revature.Account.DataAccess\Revature.Identity.DataAccess.csproj", "{F7716F2A-E7EA-4572-AB19-4C3B0A714D97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revature.Account.Tests", "Revature.Account.Tests\Revature.Account.Tests.csproj", "{9DC03EB8-9511-4317-884D-25C668DB73C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature.Identity.Tests", "Revature.Account.Tests\Revature.Identity.Tests.csproj", "{9DC03EB8-9511-4317-884D-25C668DB73C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,9 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{31702692-BE95-4638-BBC1-9B034F9EFF5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -72,5 +69,11 @@ Global
 		{9DC03EB8-9511-4317-884D-25C668DB73C5}.Release|x64.Build.0 = Release|Any CPU
 		{9DC03EB8-9511-4317-884D-25C668DB73C5}.Release|x86.ActiveCfg = Release|Any CPU
 		{9DC03EB8-9511-4317-884D-25C668DB73C5}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {373BF871-9153-4BC2-8C70-11F21C9E0AB4}
 	EndGlobalSection
 EndGlobal
