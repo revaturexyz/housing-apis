@@ -12,7 +12,7 @@ namespace Revature.Lodging.DataAccess
       return new Entities.AmenityComplex
       {
         AmenityComplexId = amenityComplex.AmenityComplexId,
-        AmenityId = amenityComplex.AmentityId,
+        AmenityId = amenityComplex.AmenityId,
         ComplexId = amenityComplex.ComplexId
       };
     }
@@ -22,7 +22,7 @@ namespace Revature.Lodging.DataAccess
       return new AmenityComplex
       {
         AmenityComplexId = amenityComplex.AmenityComplexId,
-        AmentityId = amenityComplex.AmenityId,
+        AmenityId = amenityComplex.AmenityId,
         ComplexId = amenityComplex.ComplexId
       };
     }
