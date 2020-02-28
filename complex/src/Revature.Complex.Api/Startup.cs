@@ -78,20 +78,20 @@ namespace Revature.Complex.Api
       // services.AddScoped<IRoomServiceSender, RoomServiceSender>();
       services.AddHttpClient<IAddressRequest, AddressRequest>();
       services.AddHttpClient<IRoomRequest, RoomRequest>();
-      services.AddScoped<ITelemetryInitializer, ComplexTelemetryInitializer>();
+      services.AddSingleton<ITelemetryInitializer, ComplexTelemetryInitializer>();
 
-      services.AddAuthentication(options => 
-          {
-          options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
-          options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
-          options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
-        })
-        .AddOktaWebApi(new OktaWebApiOptions()
-        {
-          OktaDomain = Configuration["Okta:OktaDomain"],
-        }
+      //services.AddAuthentication(options =>
+      //    {
+      //      options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+      //      options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
+      //      options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+      //    })
+      //  .AddOktaWebApi(new OktaWebApiOptions()
+      //  {
+      //    OktaDomain = Configuration["Okta:OktaDomain"],
+      //  }
 
-      );
+      //);
 
       services.AddAuthorization();
 

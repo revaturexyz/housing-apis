@@ -21,25 +21,32 @@ namespace Revature.Complex.Api
     {
       ConfigureLogger();
 
-      try
-      {
-        Log.Information("Building web host");
-        using var host = CreateHostBuilder(args).Build();
-        await EnsureDatabaseCreatedAsync(host);
+      Log.Information("Building web host");
+      using var host = CreateHostBuilder(args).Build();
+      await EnsureDatabaseCreatedAsync(host);
 
-        Log.Information("Starting web host");
-        await host.RunAsync();
-      }
-#pragma warning disable CA1031 // Do not catch general exception types
-      catch (Exception ex)
-      {
-        Log.Fatal(ex, "Host terminated unexpectedly");
-      }
-#pragma warning restore CA1031 // Do not catch general exception types
-      finally
-      {
-        Log.CloseAndFlush();
-      }
+      Log.Information("Starting web host");
+      await host.RunAsync();
+
+//      try
+//      {
+//        Log.Information("Building web host");
+//        using var host = CreateHostBuilder(args).Build();
+//        await EnsureDatabaseCreatedAsync(host);
+
+//        Log.Information("Starting web host");
+//        await host.RunAsync();
+//      }
+//#pragma warning disable CA1031 // Do not catch general exception types
+//      catch (Exception ex)
+//      {
+//        Log.Fatal(ex, "Host terminated unexpectedly");
+//      }
+//#pragma warning restore CA1031 // Do not catch general exception types
+//      finally
+//      {
+//        Log.CloseAndFlush();
+//      }
     }
 
     /// <summary>
