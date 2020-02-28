@@ -1,6 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
+<<<<<<< HEAD
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature.Identity.DataAccess", "Revature.Identity.DataAccess\Revature.Identity.DataAccess.csproj", "{25A69D96-2F01-451B-82F5-1F3721DE1D6D}"
@@ -10,6 +11,17 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature.Identity.Lib", "Revature.Identity.Lib\Revature.Identity.Lib.csproj", "{7D6D1C1A-6277-496D-9BB9-D7DC971E283F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature.Identity.Tests", "Revature.Identity.Tests\Revature.Identity.Tests.csproj", "{62A34BFB-3C44-4D9B-9417-7A64F03828E2}"
+=======
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature.Identity.Api", "Revature.Identity.Api\Revature.Identity.Api.csproj", "{6054680E-44C4-471B-8C2F-4BE86E544394}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature.Identity.DataAccess", "Revature.Identity.DataAccess\Revature.Identity.DataAccess.csproj", "{0306BECE-E365-4031-AE88-F5333BE25F62}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature.Identity.Lib", "Revature.Identity.Lib\Revature.Identity.Lib.csproj", "{2B4C0535-3F5E-45BD-869A-50A02F505360}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revature.Identity.Tests", "Revature.Identity.Tests\Revature.Identity.Tests.csproj", "{5CE97600-9FEC-4A56-B630-4726D6EC92FB}"
+>>>>>>> 2fd4b747e99a6869b57cb98bda7bd0cc122b0714
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +29,7 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< HEAD
 		{25A69D96-2F01-451B-82F5-1F3721DE1D6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{25A69D96-2F01-451B-82F5-1F3721DE1D6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25A69D96-2F01-451B-82F5-1F3721DE1D6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,11 +46,33 @@ Global
 		{62A34BFB-3C44-4D9B-9417-7A64F03828E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62A34BFB-3C44-4D9B-9417-7A64F03828E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62A34BFB-3C44-4D9B-9417-7A64F03828E2}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{6054680E-44C4-471B-8C2F-4BE86E544394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6054680E-44C4-471B-8C2F-4BE86E544394}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6054680E-44C4-471B-8C2F-4BE86E544394}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6054680E-44C4-471B-8C2F-4BE86E544394}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0306BECE-E365-4031-AE88-F5333BE25F62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0306BECE-E365-4031-AE88-F5333BE25F62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0306BECE-E365-4031-AE88-F5333BE25F62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0306BECE-E365-4031-AE88-F5333BE25F62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B4C0535-3F5E-45BD-869A-50A02F505360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B4C0535-3F5E-45BD-869A-50A02F505360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B4C0535-3F5E-45BD-869A-50A02F505360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B4C0535-3F5E-45BD-869A-50A02F505360}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CE97600-9FEC-4A56-B630-4726D6EC92FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CE97600-9FEC-4A56-B630-4726D6EC92FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CE97600-9FEC-4A56-B630-4726D6EC92FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CE97600-9FEC-4A56-B630-4726D6EC92FB}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> 2fd4b747e99a6869b57cb98bda7bd0cc122b0714
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+<<<<<<< HEAD
 		SolutionGuid = {1CCA5BF6-2091-47BC-9866-C31CF53DD6D5}
+=======
+		SolutionGuid = {373BF871-9153-4BC2-8C70-11F21C9E0AB4}
+>>>>>>> 2fd4b747e99a6869b57cb98bda7bd0cc122b0714
 	EndGlobalSection
 EndGlobal
