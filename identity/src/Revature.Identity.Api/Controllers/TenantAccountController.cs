@@ -34,59 +34,6 @@ namespace Revature.Account.Api.Controllers
 
     // GET: api/tenant-accounts/5
     /// <summary>
-    /// Return the All Tenants attatched to a Provider
-    /// </summary>
-    /// <param name="ProviderId"></param>
-    /// <returns></returns>
-    [HttpGet("{tenantId}", Name = "GetTenantByProvider")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize]
-    public async Task<ActionResult> Get(Guid ProviderId)
-    {
-      _logger.LogInformation($"GET - Getting tenant account by Provider: {ProviderId}");
-      var tenant = await _repo.GetAllTenantsByProviderAsync(ProviderId);
-      if (tenant == null)
-      {
-        _logger.LogWarning($"No tenant account found for {ProviderId}");
-        return NotFound();
-      }
-      return Ok(tenant);
-    }
-
-
-
-
-
-    // GET: api/tenant-accounts/5
-    /// <summary>
-    /// return all tenants attatched to a Coordinator
-    /// </summary>
-    /// <param name="CoordinatorId"></param>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    [HttpGet("{tenantId}", Name = "GetTenantByCoordinator")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize]
-    public async Task<ActionResult> Get(Guid CoordinatorId, int? id)
-    {
-      _logger.LogInformation($"GET - Getting tenant account by Coordinator ID: {CoordinatorId}");
-      var tenant = await _repo.GetAllTenantsByCoordinatorAsync(CoordinatorId);
-      if (tenant == null)
-      {
-        _logger.LogWarning($"No tenant account found for {CoordinatorId}");
-        return NotFound();
-      }
-      return Ok(tenant);
-    }
-
-
-
-
-
-    // GET: api/tenant-accounts/5
-    /// <summary>
     /// return a tenant id based on a tenant email.
     /// </summary>
     /// <param name="Email"></param>

@@ -69,10 +69,6 @@ namespace Revature.Account.Lib.Interface
 
     public Task<Guid> GetTenantIdByEmailAsync(string TenantEmail);
 
-    public Task<List<TenantAccount>> GetAllTenantsByProviderAsync(Guid ProviderId);
-
-    public Task<List<TenantAccount>> GetAllTenantsByCoordinatorAsync(Guid CoordinatorId);
-
     public void AddTenantAccount(TenantAccount newTenant);
 
     public Task<TenantAccount> GetTenantAccountByIdAsync(Guid TenantId);
