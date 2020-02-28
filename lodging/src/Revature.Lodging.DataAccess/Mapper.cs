@@ -95,7 +95,7 @@ namespace Revature.Lodging.DataAccess
         AddressId = complex.AddressId,
         ProviderId = complex.ProviderId,
         ComplexName = complex.ComplexName,
-        ContactNumber = complex.ComplexName
+        ContactNumber = complex.ContactNumber
       };
     }
 
@@ -107,7 +107,7 @@ namespace Revature.Lodging.DataAccess
         AddressId = complex.AddressId,
         ProviderId = complex.ProviderId,
         ComplexName = complex.ComplexName,
-        ContactNumber = complex.ComplexName
+        ContactNumber = complex.ContactNumber
       };
     }
 

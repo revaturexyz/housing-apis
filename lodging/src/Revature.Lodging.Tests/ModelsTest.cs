@@ -6,6 +6,9 @@ namespace Revature.Lodging.Tests
 {
   public class ModelsTest
   {
+    /// <summary>
+    /// This test assigns values to the Amenity model to ensure the correct values are used.
+    /// </summary>
     [Fact]
     public void AssignAmentiy()
     {
@@ -18,6 +21,10 @@ namespace Revature.Lodging.Tests
       Assert.Equal("Pool", subject.AmenityType);
       Assert.Equal("Open all year.", subject.Description);
     }
+
+    /// <summary>
+    /// This test assigns values to the AmenityComplex model to ensure the correct values are used.
+    /// </summary>
     [Fact]
     public void AssignAmentiyComplex()
     {
@@ -32,6 +39,10 @@ namespace Revature.Lodging.Tests
       Assert.Equal(aID, subject.AmenityId);
       Assert.Equal(cID, subject.ComplexId);
     }
+
+    /// <summary>
+    /// This test assigns values to the AmenityFloorPlan model to ensure the correct values are used.
+    /// </summary>
     [Fact]
     public void AssignAmentiyFloorPlan()
     {
@@ -46,6 +57,10 @@ namespace Revature.Lodging.Tests
       Assert.Equal(aID, subject.AmenityId);
       Assert.Equal(fpID, subject.FloorPlanId);
     }
+
+    /// <summary>
+    /// This test assigns values to the AmenityRoom model to ensure the correct values are used.
+    /// </summary>
     [Fact]
     public void AmentiyAssignRoom()
     {
@@ -60,6 +75,10 @@ namespace Revature.Lodging.Tests
       Assert.Equal(aID, subject.AmenityId);
       Assert.Equal(rID, subject.RoomId);
     }
+
+    /// <summary>
+    /// This test assigns values to the RoomType model to ensure the correct values are used.
+    /// </summary>
     [Fact]
     public void AssignRoomType()
     {
@@ -69,6 +88,10 @@ namespace Revature.Lodging.Tests
       Assert.Equal(5, subject.RoomTypeId);
       Assert.Equal("Apartment", subject.Type);
     }
+
+    /// <summary>
+    /// This test assigns values to the Complex model to ensure the correct values are used.
+    /// </summary>
     [Fact]
     public void AssignComplex()
     {
@@ -88,6 +111,9 @@ namespace Revature.Lodging.Tests
       Assert.Equal("123-456-7890",subject.ContactNumber);
     }
 
+    /// <summary>
+    /// This test assigns values to the FloorPlan model to ensure the correct values are used.
+    /// </summary>
     [Fact]
     public void AssignFloorPlan()
     {
@@ -106,6 +132,9 @@ namespace Revature.Lodging.Tests
       Assert.Equal(7, subject.RoomTypeId);
     }
 
+    /// <summary>
+    /// This test assigns values to the Room model to ensure the correct values are used.
+    /// </summary>
     [Fact]
     public void AssignRoom()
     {
@@ -139,6 +168,9 @@ namespace Revature.Lodging.Tests
       Assert.Equal(tempEnd, subject.LeaseEnd);
     }
 
+    /// <summary>
+    /// This test assigns values to the Gender model to ensure the correct values are used.
+    /// </summary>
     [Fact]
     public void AssignGender()
     {
