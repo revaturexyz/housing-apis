@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Revature.Lodging.Lib\Revature.Lodging.Lib.csproj" />
+    <Compile Remove="Mappers\**" />
+    <EmbeddedResource Remove="Mappers\**" />
+    <None Remove="Mappers\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mappers\" />
+    <ProjectReference Include="..\Revature.Lodging.Lib\Revature.Lodging.Lib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
