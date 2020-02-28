@@ -6,16 +6,16 @@ ARG DOTNET_VERSION=3.1
 ## stage - restore
 FROM mcr.microsoft.com/dotnet/core/sdk:${DOTNET_VERSION} as restore
 WORKDIR /src
-COPY src/Revature.Address.Api/*.csproj Revature.Address.Api/
-COPY src/Revature.Address.DataAccess/*.csproj Revature.Address.DataAccess/
-COPY src/Revature.Address.Lib/*.csproj Revature.Address.Lib/
+COPY src/Revature.Identity.Api/*.csproj Revature.Identity.Api/
+COPY src/Revature.Identity.DataAccess/*.csproj Revature.Identity.DataAccess/
+COPY src/Revature.Identity.Lib/*.csproj Revature.Identity.Lib/
 RUN dotnet restore *.Api
 
 ## stage - publish
 FROM restore as publish
-COPY src/Revature.Address.Api/ Revature.Address.Api/
-COPY src/Revature.Address.DataAccess/ Revature.Address.DataAccess/
-COPY src/Revature.Address.Lib/ Revature.Address.Lib/
+COPY src/Revature.Identity.Api/ Revature.Identity.Api/
+COPY src/Revature.Identity.DataAccess/ Revature.Identity.DataAccess/
+COPY src/Revature.Identity.Lib/ Revature.Identity.Lib/
 RUN dotnet publish *.Api --configuration Release --no-restore --output /src/dist
 
 ## stage - deploy
