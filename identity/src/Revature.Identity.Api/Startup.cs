@@ -81,7 +81,7 @@ namespace Revature.Account.Api
           })
           .AddOktaWebApi(new OktaWebApiOptions()
           {
-              OktaDomain = Configuration["Okta:OktaDomain"],
+            OktaDomain = Configuration["Okta:OktaDomain"],
           });
 
       services.AddAuthorization();
