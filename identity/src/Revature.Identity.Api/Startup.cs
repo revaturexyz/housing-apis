@@ -19,7 +19,7 @@ namespace Revature.Account.Api
 {
   public class Startup
   {
-    private const string ConnectionStringName = "AccountDb";
+    private const string ConnectionStringName = "IdentityDb";
     private const string CorsPolicyName = "RevatureCorsPolicy";
 
     public Startup(IConfiguration configuration)
@@ -33,7 +33,7 @@ namespace Revature.Account.Api
     {
 
       services.AddControllers();
-      services.AddDbContext<AccountDbContext>(options =>
+      services.AddDbContext<IdentityDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString(ConnectionStringName)));
 
       services.AddCors(options =>
@@ -57,7 +57,7 @@ namespace Revature.Account.Api
       services.AddScoped<IGenericRepository, GenericRepository>();
       services.AddTransient<IOktaHelperFactory, OktaHelperFactory>();
       services.AddSingleton<IAuthorizationHandler, RoleRequirementHandler>();
-      services.AddScoped<ITelemetryInitializer, AccountTelemetryInitializer>();
+      services.AddSingleton<ITelemetryInitializer, AccountTelemetryInitializer>();
 
       services.AddSwaggerGen(c =>
       {
@@ -122,7 +122,7 @@ namespace Revature.Account.Api
       // Found at https://stackoverflow.com/questions/36958318/where-should-i-put-database-ensurecreated
       var serviceScopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
       var serviceScope = serviceScopeFactory.CreateScope();
-      var dbContext = serviceScope.ServiceProvider.GetService<AccountDbContext>();
+      var dbContext = serviceScope.ServiceProvider.GetService<IdentityDbContext>();
       dbContext.Database.EnsureCreated();
     }
   }

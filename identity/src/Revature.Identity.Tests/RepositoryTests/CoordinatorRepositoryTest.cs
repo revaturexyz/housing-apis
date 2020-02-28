@@ -16,15 +16,15 @@ namespace Revature.Account.Tests.Repository_Tests
       // Arrange
       var helper = new TestHelper();
       var mapper = new Mapper();
-      var options = new DbContextOptionsBuilder<AccountDbContext>()
+      var options = new DbContextOptionsBuilder<IdentityDbContext>()
         .UseInMemoryDatabase("GetCoordinatorByIdTest")
         .Options;
-      var arrangeContext = new AccountDbContext(options);
+      var arrangeContext = new IdentityDbContext(options);
       var testCoordinator = helper.Coordinators[0];
       var testId = testCoordinator.CoordinatorId;
       arrangeContext.CoordinatorAccount.Add(mapper.MapCoordinator(testCoordinator));
       arrangeContext.SaveChanges();
-      var actContext = new AccountDbContext(options);
+      var actContext = new IdentityDbContext(options);
       var repo = new GenericRepository(actContext, new Mapper());
 
       // Act

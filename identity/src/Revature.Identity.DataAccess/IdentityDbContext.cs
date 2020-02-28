@@ -3,7 +3,7 @@ using Revature.Account.DataAccess.Entities;
 
 namespace Revature.Account.DataAccess
 {
-  public class AccountDbContext : DbContext
+  public class IdentityDbContext : DbContext
   {
     /// <summary>
     /// Context class that acts to define the structure of a code-first database.
@@ -11,11 +11,11 @@ namespace Revature.Account.DataAccess
     ///
 
     // Defualt constructor
-    public AccountDbContext()
+    public IdentityDbContext()
     { }
 
     // Constructor with options and iheritance from its parent class.
-    public AccountDbContext(DbContextOptions<AccountDbContext> options) : base(options)
+    public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
     {
     }
 
