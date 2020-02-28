@@ -2,19 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Revature.Account.Lib.Model
+namespace Revature.Address.Lib.Model
 {
   public class TenantAccount
   {
 
-    private string _name;
     private string _email;
+    private string _name;
 
 
     /// <summary>
     /// Tenant Name: Required to be a non-empty string
     /// </summary>
-    ///
     public string Name
     {
       get { return _name; }
@@ -46,7 +45,6 @@ namespace Revature.Account.Lib.Model
     }
 
 
-
     /// <summary>
     /// Checks to see if a string is either null (does not exist) or empty ( "" )
     /// </summary>
@@ -64,3 +62,4 @@ namespace Revature.Account.Lib.Model
     }
   }
 }
+
