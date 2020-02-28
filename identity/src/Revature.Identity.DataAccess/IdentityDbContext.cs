@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Revature.Account.DataAccess.Entities;
-using Revature.Identity.DataAccess.Entities;
 
 namespace Revature.Account.DataAccess
 {

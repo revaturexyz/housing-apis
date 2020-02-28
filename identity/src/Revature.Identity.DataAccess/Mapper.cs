@@ -8,6 +8,36 @@ namespace Revature.Account.DataAccess
   public class Mapper : IMapper
   {
     /// <summary>
+    /// Maps db tenant to logic tenant. Maps related coordinator and Status as well.
+    /// </summary>
+    /// <param name="tenant"></param>
+    /// <returns></returns>
+    ///
+    /*
+    public Lib.Model.TenantAccount MapTenant(Entities.TenantAccount tenant)
+    {
+      return new Lib.Model.TenantAccount
+      {
+        TenantId = tenant.TenantId,
+        Name = tenant.Name,
+        Email = tenant.Email
+      };
+    }
+
+    public Entities.TenantAccount MapTenant(Lib.Model.TenantAccount tenant)
+    {
+      return new Entities.TenantAccount
+      {
+        TenantId = tenant.TenantId,
+        Name = tenant.Name,
+        Email = tenant.Email
+      };
+    }
+    */
+
+
+
+    /// <summary>
     /// Maps db Provider to logic Provider. Maps related coordinator and Status as well.
     /// </summary>
     /// <param name="provider"></param>
