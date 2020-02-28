@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Revature.Address.DataAccess.Interfaces
+namespace Revature.Address.Lib.Interfaces
 {
 
   /// <summary>

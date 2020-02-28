@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging.Abstractions;
-using Revature.Address.DataAccess;
+using Revature.Address.Lib;
 using Xunit;
 
 namespace Revature.Address.Tests.DataAccess.Tests
@@ -24,8 +24,8 @@ namespace Revature.Address.Tests.DataAccess.Tests
       var options = TestDbContext.TestDbInitalizer("CanCreate");
       var mapper = new Mapper();
       using var dbcreate = TestDbContext.CreateTestDb(options);
-      var logger = new NullLogger<Address.DataAccess.DataAccess>();
-      var addyrepo = new Address.DataAccess.DataAccess(dbcreate, mapper, logger);
+      var logger = new NullLogger<Address.Lib.DataAccess>();
+      var addyrepo = new Address.Lib.DataAccess(dbcreate, mapper, logger);
       Assert.NotNull(addyrepo);
     }
 
@@ -48,8 +48,8 @@ namespace Revature.Address.Tests.DataAccess.Tests
         ZipCode = "76010"
       };
       var mapper = new Mapper();
-      var logger = new NullLogger<Address.DataAccess.DataAccess>();
-      var successful = await new Address.DataAccess.DataAccess(dbcreate, mapper, logger).AddAddressAsync(newAddy);
+      var logger = new NullLogger<Address.Lib.DataAccess>();
+      var successful = await new Address.Lib.DataAccess(dbcreate, mapper, logger).AddAddressAsync(newAddy);
       Assert.True(successful);
     }
 
@@ -71,8 +71,8 @@ namespace Revature.Address.Tests.DataAccess.Tests
       using (var dbcreate = TestDbContext.CreateTestDb(options))
       {
         var mapper = new Mapper();
-        var logger = new NullLogger<Address.DataAccess.DataAccess>();
-        var repo = new Address.DataAccess.DataAccess(dbcreate, mapper, logger);
+        var logger = new NullLogger<Address.Lib.DataAccess>();
+        var repo = new Address.Lib.DataAccess(dbcreate, mapper, logger);
         var addresses = await repo.GetAddressAsync(saveId);
         var addressResult = addresses.First();
 
@@ -101,8 +101,8 @@ namespace Revature.Address.Tests.DataAccess.Tests
       using (var dbcreate = TestDbContext.CreateTestDb(options))
       {
         var testId = AddressTestData.ValidAddress2().Id;
-        var logger = new NullLogger<Address.DataAccess.DataAccess>();
-        var addressResult = await new Address.DataAccess.DataAccess(dbcreate, mapper, logger).DeleteAddressAsync(testId);
+        var logger = new NullLogger<Address.Lib.DataAccess>();
+        var addressResult = await new Address.Lib.DataAccess(dbcreate, mapper, logger).DeleteAddressAsync(testId);
         Assert.True(addressResult);
       }
     }

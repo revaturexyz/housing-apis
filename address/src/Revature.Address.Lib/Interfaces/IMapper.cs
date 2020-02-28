@@ -1,5 +1,4 @@
-
-namespace Revature.Address.DataAccess.Interfaces
+namespace Revature.Address.Lib.Interfaces
 {
   /// <summary>
   /// Interface for Mapper class to facilitate dependency injection,
@@ -9,7 +8,7 @@ namespace Revature.Address.DataAccess.Interfaces
   public interface IMapper
   {
 
-    public Lib.Address MapAddress(Entities.Address address);
-    public Entities.Address MapAddress(Lib.Address address);
+    public Lib.Address MapAddress(Revature.Address.DataAccess.Entities.Address address);
+    public Revature.Address.DataAccess.Entities.Address MapAddress(Lib.Address address);
   }
 }

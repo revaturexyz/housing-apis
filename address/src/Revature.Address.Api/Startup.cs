@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Revature.Address.Api.Telemetry;
 using Revature.Address.DataAccess.Entities;
-using Revature.Address.DataAccess.Interfaces;
+using Revature.Address.Lib.Interfaces;
 using Revature.Address.Lib.BusinessLogic;
 using Serilog;
 
@@ -49,8 +49,8 @@ namespace Revature.Address.Api
       });
       services.AddDbContext<AddressDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("AddressDb")));
 
-      services.AddScoped<IMapper, DataAccess.Mapper>();
-      services.AddScoped<IDataAccess, DataAccess.DataAccess>();
+      services.AddScoped<IMapper, Lib.Mapper>();
+      services.AddScoped<IDataAccess, Lib.DataAccess>();
       services.AddScoped<IAddressLogic, AddressLogic>();
 
       services.AddSwaggerGen(c =>

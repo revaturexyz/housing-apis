@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Revature.Address.Api.Models;
-using Revature.Address.DataAccess.Interfaces;
+using Revature.Address.Lib.Interfaces;
 using Revature.Address.Lib.BusinessLogic;
 
 namespace Revature.Address.Api.Controllers
@@ -37,6 +37,8 @@ namespace Revature.Address.Api.Controllers
     /// <returns></returns>
     // GET: api/address/5
     [HttpGet("{id}")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<AddressModel>> GetAddressById(Guid id)
     {
 
@@ -69,7 +71,8 @@ namespace Revature.Address.Api.Controllers
     /// <param name="addressLogic"></param>
     /// <returns></returns>
     // GET: api/address/checkdistance
-    [HttpPost("checkdistance")]
+    [HttpGet("checkdistance")]
+    [ProducesResponseType(200)]
     public async Task<ActionResult<bool>> IsInRange([FromBody] List<AddressModel> addresses)
     {
       var start = new Lib.Address
@@ -111,6 +114,9 @@ namespace Revature.Address.Api.Controllers
     /// <returns></returns>
     // GET: api/address
     [HttpPost]
+    [ProducesResponseType(201)]
+    [ProducesResponseType(409)]
+    [ProducesResponseType(400)]
     public async Task<ActionResult<AddressModel>> PostAddress([FromBody] AddressModel address)
     {
       var newAddress = new Lib.Address

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Revature.Address.DataAccess.Entities;
-using Revature.Address.DataAccess.Interfaces;
+using Revature.Address.Lib.Interfaces;
 
-namespace Revature.Address.DataAccess
+namespace Revature.Address.Lib
 {
   /// <summary>
   /// Contain methods for inserting, retrieving, and deleting
@@ -63,7 +63,7 @@ namespace Revature.Address.DataAccess
     /// <returns>Returns an address</returns>
     public async Task<ICollection<Lib.Address>> GetAddressAsync(Guid? id = null, Lib.Address address = null)
     {
-      var addresses = await _context.Addresses.AsNoTracking().ToListAsync();
+      List<Revature.Address.DataAccess.Entities.Address> addresses = await _context.Addresses.AsNoTracking().ToListAsync();
 
       if (id != null)
         addresses = addresses.Where(a => a.Id == id).ToList();
@@ -81,7 +81,7 @@ namespace Revature.Address.DataAccess
     /// <returns>Returns true or false</returns>
     public async Task<bool> DeleteAddressAsync(Guid? id)
     {
-      if (await _context.Addresses.FindAsync(id) is Entities.Address item)
+      if (await _context.Addresses.FindAsync(id) is Revature.Address.DataAccess.Entities.Address item)
       {
         _context.Addresses.Remove(item);
         return true;

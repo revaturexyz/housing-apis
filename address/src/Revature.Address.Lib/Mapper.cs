@@ -1,6 +1,6 @@
-using Revature.Address.DataAccess.Interfaces;
+using Revature.Address.Lib.Interfaces;
 
-namespace Revature.Address.DataAccess
+namespace Revature.Address.Lib
 {
   /// <summary>
   /// Handles mapping between business library and data access address objects
@@ -14,7 +14,7 @@ namespace Revature.Address.DataAccess
     /// </summary>
     /// <param name="address"></param>
     /// <returns>Returns Business Library address object</returns>
-    public Lib.Address MapAddress(Entities.Address address)
+    public Lib.Address MapAddress(Revature.Address.DataAccess.Entities.Address address)
     {
       return new Lib.Address
       {
@@ -32,9 +32,9 @@ namespace Revature.Address.DataAccess
     /// </summary>
     /// <param name="address"></param>
     /// <returns>Returns DataAccess address object</returns>
-    public Entities.Address MapAddress(Lib.Address address)
+    public Revature.Address.DataAccess.Entities.Address MapAddress(Lib.Address address)
     {
-      return new Entities.Address
+      return new Revature.Address.DataAccess.Entities.Address
       {
         Id = address.Id,
         Street = address.Street,
