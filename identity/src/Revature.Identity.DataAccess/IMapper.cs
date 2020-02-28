@@ -1,4 +1,4 @@
-﻿
+
 namespace Revature.Account.DataAccess
 {
   public interface IMapper
@@ -11,5 +11,8 @@ namespace Revature.Account.DataAccess
     Entities.ProviderAccount MapProvider(Lib.Model.ProviderAccount provider);
     Lib.Model.UpdateAction MapUpdateAction(Entities.UpdateAction action);
     Entities.UpdateAction MapUpdateAction(Lib.Model.UpdateAction action);
+
+   // Lib.Model.TenantAccount MapTenant(Entities.TenantAccount tenant);
+   // Entities.TenantAccount MapTenant(Lib.Model.TenantAccount tenant);
   }
 }
