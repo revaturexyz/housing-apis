@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Revature.Account.DataAccess\Revature.Identity.DataAccess.csproj" />
-    <ProjectReference Include="..\Revature.Account.Lib\Revature.Identity.Lib.csproj" />
+    <ProjectReference Include="..\Revature.Identity.DataAccess\Revature.Identity.DataAccess.csproj" />
+    <ProjectReference Include="..\Revature.Identity.Lib\Revature.Identity.Lib.csproj" />
   </ItemGroup>
 
 </Project>
