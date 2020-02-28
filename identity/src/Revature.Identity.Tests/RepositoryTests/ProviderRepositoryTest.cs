@@ -21,10 +21,10 @@ namespace Revature.Account.Test.Repository_Tests
     {
       // Arrange
       var helper = new TestHelper();
-      var options = new DbContextOptionsBuilder<AccountDbContext>()
+      var options = new DbContextOptionsBuilder<IdentityDbContext>()
         .UseInMemoryDatabase("AddNewProviderAccountTest")
         .Options;
-      var actContext = new AccountDbContext(options);
+      var actContext = new IdentityDbContext(options);
       var newProvider = helper.Providers[0];
       var actRepo = new GenericRepository(actContext, new Mapper());
 
@@ -33,7 +33,7 @@ namespace Revature.Account.Test.Repository_Tests
       actContext.SaveChanges();
 
       // Assert
-      var assertContext = new AccountDbContext(options);
+      var assertContext = new IdentityDbContext(options);
       var assertProvider = assertContext.ProviderAccount.FirstOrDefault(p => p.ProviderId == newProvider.ProviderId);
       Assert.NotNull(assertProvider);
     }
@@ -48,10 +48,10 @@ namespace Revature.Account.Test.Repository_Tests
       // Arrange
       var helper = new TestHelper();
       var mapper = new Mapper();
-      var options = new DbContextOptionsBuilder<AccountDbContext>()
+      var options = new DbContextOptionsBuilder<IdentityDbContext>()
         .UseInMemoryDatabase("UpdateProviderAccountTestAsync")
         .Options;
-      var arrangeContext = new AccountDbContext(options);
+      var arrangeContext = new IdentityDbContext(options);
       var arrangeProvider = helper.Providers[0];
       arrangeContext.ProviderAccount.Add(mapper.MapProvider(arrangeProvider));
       arrangeContext.SaveChanges();
@@ -64,7 +64,7 @@ namespace Revature.Account.Test.Repository_Tests
       arrangeContext.SaveChanges();
 
       // Assert
-      var assertContext = new AccountDbContext(options);
+      var assertContext = new IdentityDbContext(options);
       var assertProvider = assertContext.ProviderAccount.First(p => p.ProviderId == arrangeProvider.ProviderId);
       Assert.Equal(arrangeProvider.Name, assertProvider.Name);
     }
@@ -78,15 +78,15 @@ namespace Revature.Account.Test.Repository_Tests
       // Arrange
       var helper = new TestHelper();
       var mapper = new Mapper();
-      var options = new DbContextOptionsBuilder<AccountDbContext>()
+      var options = new DbContextOptionsBuilder<IdentityDbContext>()
         .UseInMemoryDatabase("GetProviderByIdTest")
         .Options;
-      var arrangeContext = new AccountDbContext(options);
+      var arrangeContext = new IdentityDbContext(options);
 
       arrangeContext.CoordinatorAccount.Add(mapper.MapCoordinator(helper.Coordinators[0]));
       arrangeContext.ProviderAccount.Add(mapper.MapProvider(helper.Providers[0]));
       arrangeContext.SaveChanges();
-      var actContext = new AccountDbContext(options);
+      var actContext = new IdentityDbContext(options);
       var repo = new GenericRepository(actContext, new Mapper());
 
       // Act
@@ -106,14 +106,14 @@ namespace Revature.Account.Test.Repository_Tests
       //Assemble
       var helper = new TestHelper();
       var mapper = new Mapper();
-      var options = new DbContextOptionsBuilder<AccountDbContext>()
+      var options = new DbContextOptionsBuilder<IdentityDbContext>()
         .UseInMemoryDatabase("DeleteProviderTestAsync")
         .Options;
-      var assembleContext = new AccountDbContext(options);
+      var assembleContext = new IdentityDbContext(options);
       var deleteProvider = mapper.MapProvider(helper.Providers[2]);
       assembleContext.Add(deleteProvider);
       assembleContext.SaveChanges();
-      var actContext = new AccountDbContext(options);
+      var actContext = new IdentityDbContext(options);
       var repo = new GenericRepository(actContext, new Mapper());
       // Act
       await repo.DeleteProviderAccountAsync(deleteProvider.ProviderId);

@@ -22,16 +22,16 @@ namespace Revature.Account.Tests.Repository_Tests
       var helper = new TestHelper();
       var mapper = new Mapper();
 
-      var options = new DbContextOptionsBuilder<AccountDbContext>()
+      var options = new DbContextOptionsBuilder<IdentityDbContext>()
         .UseInMemoryDatabase("GetNotificationByProviderIdTest")
         .Options;
-      var arrangeContext = new AccountDbContext(options);
+      var arrangeContext = new IdentityDbContext(options);
       arrangeContext.ProviderAccount.Add(mapper.MapProvider(helper.Providers[0]));
       arrangeContext.CoordinatorAccount.Add(mapper.MapCoordinator(helper.Coordinators[0]));
       arrangeContext.UpdateAction.Add(mapper.MapUpdateAction(helper.UpdateActions[0]));
       arrangeContext.Notification.Add(mapper.MapNotification(helper.Notifications[0]));
       arrangeContext.SaveChanges();
-      var actContext = new AccountDbContext(options);
+      var actContext = new IdentityDbContext(options);
       var repo = new GenericRepository(actContext, new Mapper());
 
       // Act
@@ -50,11 +50,11 @@ namespace Revature.Account.Tests.Repository_Tests
       // Arrange
       var helper = new TestHelper();
       var mapper = new Mapper();
-      var options = new DbContextOptionsBuilder<AccountDbContext>()
+      var options = new DbContextOptionsBuilder<IdentityDbContext>()
         .UseInMemoryDatabase("AddNewNotificationTest")
         .Options;
-      var actContext = new AccountDbContext(options);
-      var arrangeContext = new AccountDbContext(options);
+      var actContext = new IdentityDbContext(options);
+      var arrangeContext = new IdentityDbContext(options);
       var actRepo = new GenericRepository(actContext, new Mapper());
       var newNotification = helper.Notifications[0];
 
@@ -63,7 +63,7 @@ namespace Revature.Account.Tests.Repository_Tests
       actContext.SaveChanges();
 
       // Assert
-      var assertContext = new AccountDbContext(options);
+      var assertContext = new IdentityDbContext(options);
       var assertNotification = assertContext.Notification.First(p => p.CoordinatorId == newNotification.CoordinatorId);
       Assert.NotNull(assertNotification);
     }
@@ -78,10 +78,10 @@ namespace Revature.Account.Tests.Repository_Tests
       // Arrange
       var helper = new TestHelper();
       var mapper = new Mapper();
-      var options = new DbContextOptionsBuilder<AccountDbContext>()
+      var options = new DbContextOptionsBuilder<IdentityDbContext>()
         .UseInMemoryDatabase("UpdateNotificationAccountTestAsync")
         .Options;
-      var arrangeContext = new AccountDbContext(options);
+      var arrangeContext = new IdentityDbContext(options);
       arrangeContext.ProviderAccount.Add(mapper.MapProvider(helper.Providers[0]));
       arrangeContext.CoordinatorAccount.Add(mapper.MapCoordinator(helper.Coordinators[0]));
       arrangeContext.UpdateAction.Add(mapper.MapUpdateAction(helper.UpdateActions[0]));
@@ -93,7 +93,7 @@ namespace Revature.Account.Tests.Repository_Tests
       arrangeContext.SaveChanges();
 
       // Assert
-      var assertContext = new AccountDbContext(options);
+      var assertContext = new IdentityDbContext(options);
       var assertNotification = assertContext.Notification.First(p => p.CoordinatorId == helper.Notifications[0].CoordinatorId);
       Assert.Equal(helper.Notifications[0].CoordinatorId, assertNotification.CoordinatorId);
     }
@@ -108,14 +108,14 @@ namespace Revature.Account.Tests.Repository_Tests
       //Assemble
       var helper = new TestHelper();
       var mapper = new Mapper();
-      var options = new DbContextOptionsBuilder<AccountDbContext>()
+      var options = new DbContextOptionsBuilder<IdentityDbContext>()
         .UseInMemoryDatabase("DeleteNotificationTestAsync")
         .Options;
-      var assembleContext = new AccountDbContext(options);
+      var assembleContext = new IdentityDbContext(options);
       var deleteNotification = mapper.MapNotification(helper.Notifications[0]);
       assembleContext.Add(deleteNotification);
       assembleContext.SaveChanges();
-      var actContext = new AccountDbContext(options);
+      var actContext = new IdentityDbContext(options);
       var repo = new GenericRepository(actContext, new Mapper());
 
       // Act
