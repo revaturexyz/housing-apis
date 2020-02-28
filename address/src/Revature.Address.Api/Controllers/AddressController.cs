@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Revature.Address.Api.Models;
+using Revature.Address.DataAccess.Interfaces;
 using Revature.Address.Lib.BusinessLogic;
-using Revature.Address.Lib.Interfaces;
 
 namespace Revature.Address.Api.Controllers
 {
@@ -51,7 +51,6 @@ namespace Revature.Address.Api.Controllers
       _logger.LogInformation("Got Address");
       return Ok(new AddressModel
       {
-        Id = address.Id,
         Street = address.Street,
         City = address.City,
         State = address.State,
@@ -70,12 +69,11 @@ namespace Revature.Address.Api.Controllers
     /// <param name="addressLogic"></param>
     /// <returns></returns>
     // GET: api/address/checkdistance
-    [HttpGet("checkdistance")]
-    public async Task<ActionResult<bool>> IsInRange([FromQuery] List<AddressModel> addresses)
+    [HttpPost("checkdistance")]
+    public async Task<ActionResult<bool>> IsInRange([FromBody] List<AddressModel> addresses)
     {
       var start = new Lib.Address
       {
-        Id = addresses[0].Id,
         Street = addresses[0].Street,
         City = addresses[0].City,
         State = addresses[0].State,
@@ -84,7 +82,6 @@ namespace Revature.Address.Api.Controllers
       };
       var end = new Lib.Address
       {
-        Id = addresses[1].Id,
         Street = addresses[1].Street,
         City = addresses[1].City,
         State = addresses[1].State,
@@ -94,12 +91,12 @@ namespace Revature.Address.Api.Controllers
       if (await _addressLogic.IsInRangeAsync(start, end, 20))
       {
         _logger.LogInformation("These addresses are within range of each other");
-        return true;
+        return Ok(true);
       }
       else
       {
         _logger.LogError("These addresses are not in range of each other");
-        return false;
+        return Ok(false);
       }
     }
 
@@ -113,12 +110,11 @@ namespace Revature.Address.Api.Controllers
     /// <param name="addressLogic"></param>
     /// <returns></returns>
     // GET: api/address
-    [HttpGet]
-    public async Task<ActionResult<Lib.Address>> GetAddress([FromQuery] AddressModel address)
+    [HttpPost]
+    public async Task<ActionResult<AddressModel>> PostAddress([FromBody] AddressModel address)
     {
       var newAddress = new Lib.Address
       {
-        Id = address.Id,
         Street = address.Street,
         City = address.City,
         State = address.State,
@@ -140,25 +136,31 @@ namespace Revature.Address.Api.Controllers
             await _db.AddAddressAsync(normalAddress);
             await _db.SaveAsync();
             _logger.LogInformation("Address successfully created");
-            return newAddress;
+            return CreatedAtAction(nameof(GetAddressById), new { id = newAddress.Id}, new AddressModel(){
+              Street = normalAddress.Street,
+              City = normalAddress.City,
+              State = normalAddress.State,
+              Country = normalAddress.Country,
+              ZipCode = normalAddress.ZipCode
+            });
           }
           catch (Exception ex)
           {
             _logger.LogError("{0}", ex);
-            return BadRequest($"Address entry failed");
+            return BadRequest("Address entry failed");
           }
         }
         else
         {
-          _logger.LogError("Address does not exist");
-          return BadRequest("Address does not exist");
+          _logger.LogError("Address is not a real address");
+          return BadRequest("Address is not a real address");
         }
       }
       else
       {
 
         _logger.LogError("Address already exists in the database");
-        return checkAddress;
+        return Conflict(checkAddress.Id);
       }
     }
   }

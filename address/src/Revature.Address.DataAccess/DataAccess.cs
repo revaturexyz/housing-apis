@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Revature.Address.DataAccess.Entities;
 using Revature.Address.DataAccess.Interfaces;
-using Revature.Address.Lib.Interfaces;
 
 namespace Revature.Address.DataAccess
 {

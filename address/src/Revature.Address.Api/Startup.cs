@@ -10,7 +10,6 @@ using Revature.Address.Api.Telemetry;
 using Revature.Address.DataAccess.Entities;
 using Revature.Address.DataAccess.Interfaces;
 using Revature.Address.Lib.BusinessLogic;
-using Revature.Address.Lib.Interfaces;
 using Serilog;
 
 namespace Revature.Address.Api
@@ -61,7 +60,7 @@ namespace Revature.Address.Api
       services.AddApplicationInsightsTelemetry();
       
       services.AddHealthChecks();
-      services.AddScoped<ITelemetryInitializer, AddressTelemetryInitializer>();
+      services.AddSingleton<ITelemetryInitializer, AddressTelemetryInitializer>();
 
       services.AddControllers();
     }

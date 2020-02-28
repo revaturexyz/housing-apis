@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Revature.Address.Lib.Interfaces
+namespace Revature.Address.DataAccess.Interfaces
 {
 
   /// <summary>
@@ -11,8 +11,8 @@ namespace Revature.Address.Lib.Interfaces
   /// </summary>
   public interface IDataAccess : IDisposable
   {
-    public Task<bool> AddAddressAsync(Address address);
-    public Task<ICollection<Address>> GetAddressAsync(Guid? id = null, Address address = null);
+    public Task<bool> AddAddressAsync(Revature.Address.Lib.Address address);
+    public Task<ICollection<Revature.Address.Lib.Address>> GetAddressAsync(Guid? id = null, Revature.Address.Lib.Address address = null);
     public Task<bool> DeleteAddressAsync(Guid? id);
     public Task SaveAsync();
   }
