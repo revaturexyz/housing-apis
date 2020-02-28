@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Revature.Address.Lib.Model
+namespace Revature.Account.Lib.Model
 {
   public class TenantAccount
   {
