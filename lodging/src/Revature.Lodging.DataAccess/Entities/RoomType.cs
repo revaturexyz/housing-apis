@@ -3,7 +3,8 @@ using System.Collections.Generic;
 namespace Revature.Lodging.DataAccess.Entities
 {
   /// <summary>
-  /// Entity for available Room types: Apartment, Dorm, House, etc
+  /// Entity for available Room types:
+  /// 1 = Dorm, 2 = Apartment, 3 = Townhouse, 4= Hotel/Motel
   /// </summary>
   public class RoomType
   {

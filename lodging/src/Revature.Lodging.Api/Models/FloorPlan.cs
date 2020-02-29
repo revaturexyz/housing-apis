@@ -9,6 +9,8 @@ namespace Revature.Lodging.Api.Models
   {
     public Guid FloorPlanId { get; set; }
 
+    public Guid ComplexId { get; set; }
+
     public string FloorPlanName { get; set; }
 
     public int NumberBeds { get; set; }

@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Revature.Lodging.DataAccess.Entities;
 
 namespace Revature.Lodging.Api
 {
@@ -26,7 +28,14 @@ namespace Revature.Lodging.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-        }
+
+            // Looks for connection string from one of the .json files
+            string connectionString = Configuration.GetConnectionString("LodgingDb");
+
+            // Register the database context
+            services.AddEntityFrameworkNpgsql().AddDbContext<LodgingDbContext>(options =>
+                options.UseNpgsql(connectionString));
+    }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
