@@ -84,15 +84,15 @@ namespace Revature.Tenant.DataAccess.Repository
         .Include(t => t.Batch)
         .AsNoTracking();
 
-      if (string.IsNullOrEmpty(firstName))
+      if (!string.IsNullOrEmpty(firstName))
       {
         tenants = tenants.Where(t => t.FirstName == firstName);
       }
-      if (string.IsNullOrEmpty(lastName))
+      if (!string.IsNullOrEmpty(lastName))
       {
         tenants = tenants.Where(t => t.LastName == lastName);
       }
-      if (string.IsNullOrEmpty(gender))
+      if (!string.IsNullOrEmpty(gender))
       {
         tenants = tenants.Where(t => t.Gender == gender);
       }
