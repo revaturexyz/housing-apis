@@ -69,6 +69,7 @@ namespace Revature.Account.Test.Repository_Tests
       Assert.Equal(arrangeProvider.Name, assertProvider.Name);
     }
 
+
     /// <summary>
     /// Retrieve a provider by way of a Guid Id from the database.
     /// </summary>
@@ -95,6 +96,7 @@ namespace Revature.Account.Test.Repository_Tests
       // Assert
       Assert.NotNull(result);
     }
+
 
     /// <summary>
     /// Test the deletion of a given provider from the database.
