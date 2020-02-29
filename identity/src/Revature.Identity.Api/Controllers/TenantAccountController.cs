@@ -14,18 +14,16 @@ namespace Revature.Account.Api.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class TenantController : ControllerBase
+  public class TenantAccountController : ControllerBase
   {
 
     private readonly IGenericRepository _repo;
-    private readonly ILogger<TenantController> _logger;
-    private readonly IOktaHelperFactory _oktaHelperFactory;
+    private readonly ILogger<TenantAccountController> _logger;
 
-    public TenantController(IGenericRepository repo, ILogger<TenantController> logger, IOktaHelperFactory authHelperFactory)
+    public TenantAccountController(IGenericRepository repo, ILogger<TenantAccountController> logger)
     {
       _repo = repo ?? throw new ArgumentNullException(nameof(repo));
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-      _oktaHelperFactory = authHelperFactory;
     }
 
 

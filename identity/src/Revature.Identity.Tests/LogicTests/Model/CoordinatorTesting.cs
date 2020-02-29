@@ -15,7 +15,6 @@ namespace Revature.Account.Test.Logic_Tests.Model
     /// <summary>
     /// Test if the Coordinator's name is null.
     /// </summary>
-
     [Fact]
     public void CoordinatorNameNullException()
     {
