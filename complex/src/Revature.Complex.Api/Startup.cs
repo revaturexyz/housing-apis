@@ -80,6 +80,7 @@ namespace Revature.Complex.Api
       services.AddHttpClient<IRoomRequest, RoomRequest>();
       services.AddSingleton<ITelemetryInitializer, ComplexTelemetryInitializer>();
 
+      /*
       services.AddAuthentication(options => 
           {
           options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
@@ -94,6 +95,7 @@ namespace Revature.Complex.Api
       );
 
       services.AddAuthorization();
+      */
 
       services.AddControllers();
 
