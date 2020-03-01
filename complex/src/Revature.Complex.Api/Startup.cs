@@ -125,9 +125,9 @@ namespace Revature.Complex.Api
 
       app.UseCors(CorsPolicyName);
 
-      app.UseAuthentication();
+      //app.UseAuthentication();
 
-      app.UseAuthorization();
+      //app.UseAuthorization();
 
       app.UseEndpoints(endpoints =>
       {
