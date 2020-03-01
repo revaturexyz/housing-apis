@@ -19,7 +19,7 @@ namespace Revature.Complex.Api
 {
   public class Startup
   {
-    private const string ConnectionStringName = "ComplexDb";
+    private const string ConnectionStringName = "LodgingDb";
     private const string CorsPolicyName = "RevatureCorsPolicy";
 
     public Startup(IConfiguration configuration)
