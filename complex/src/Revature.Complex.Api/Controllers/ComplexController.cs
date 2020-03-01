@@ -15,7 +15,7 @@ namespace Revature.Complex.Api.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  [Authorize]
+  // [Authorize]
   public class ComplexController : Controller
   {
     private readonly IRepository _complexRepository;
