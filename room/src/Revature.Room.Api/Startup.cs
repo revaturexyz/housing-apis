@@ -64,7 +64,7 @@ namespace Revature.Room.Api
       // The following line enables Application Insights telemetry collection.
       services.AddApplicationInsightsTelemetry();
 
-      services.AddScoped<ITelemetryInitializer, RoomTelemetryInitializer>();
+      services.AddSingleton<ITelemetryInitializer, RoomTelemetryInitializer>();
 
       services.AddHealthChecks();
 

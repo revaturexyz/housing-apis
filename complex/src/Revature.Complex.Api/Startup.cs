@@ -78,7 +78,7 @@ namespace Revature.Complex.Api
       // services.AddScoped<IRoomServiceSender, RoomServiceSender>();
       services.AddHttpClient<IAddressRequest, AddressRequest>();
       services.AddHttpClient<IRoomRequest, RoomRequest>();
-      services.AddScoped<ITelemetryInitializer, ComplexTelemetryInitializer>();
+      services.AddSingleton<ITelemetryInitializer, ComplexTelemetryInitializer>();
 
       services.AddAuthentication(options => 
           {

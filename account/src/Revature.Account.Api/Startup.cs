@@ -57,7 +57,7 @@ namespace Revature.Account.Api
       services.AddScoped<IGenericRepository, GenericRepository>();
       services.AddTransient<IOktaHelperFactory, OktaHelperFactory>();
       services.AddSingleton<IAuthorizationHandler, RoleRequirementHandler>();
-      services.AddScoped<ITelemetryInitializer, AccountTelemetryInitializer>();
+      services.AddSingleton<ITelemetryInitializer, AccountTelemetryInitializer>();
 
       services.AddSwaggerGen(c =>
       {
