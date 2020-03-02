@@ -33,19 +33,17 @@ namespace Revature.Account.Api
 
     public static string Secret { get; private set; }
 
-    public static string ClaimsDomain { get; } = "https://dev-808810.okta.com/";
+    public static string ClaimsDomain { get; } = "https://dev-808810.okta.com";
 
     /// <summary>
     /// Function to set the secret values, intended for use in Startup.
     /// </summary>
     /// <param name="domain"></param>
-    /// <param name="audience"></param>
     /// <param name="clientId"></param>
     /// <param name="secret"></param>
-    public static void SetSecretValues(string domain, string audience, string clientId, string secret)
+    public static void SetSecretValues(string domain, string clientId, string secret)
     {
       Domain = domain;
-      Audience = audience;
       ClientId = clientId;
       Secret = secret;
     }
