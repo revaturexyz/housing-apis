@@ -12,7 +12,7 @@ namespace Revature.Room.Tests
   /// <summary>
   /// Test class for testing all repository methods and general database functions
   /// </summary>
-  public class RepositoryTest
+  public class RoomRepositoryTest
   {
     /* Preset valid Room properties */
     private Guid _newRoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456dd");
