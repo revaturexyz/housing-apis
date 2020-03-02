@@ -11,7 +11,7 @@ namespace Revature.Room.Api.Controllers
   /// <summary>
   /// Controller for commmunicating with the complex service
   /// </summary>
-  [Route("api/rooms/{roomId}")]
+  [Route("api/[controller]")]
   [ApiController]
   public class RoomController : ControllerBase
   {
