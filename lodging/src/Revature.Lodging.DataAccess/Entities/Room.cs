@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Revature.Lodging.DataAccess.Entities
@@ -19,12 +20,34 @@ namespace Revature.Lodging.DataAccess.Entities
     /// </summary>
     public int NumberOfOccupants { get; set; }
 
-    public Gender Gender { get; set; }
-
-    public RoomType RoomType { get; set; }
     public DateTime LeaseStart { get; set; }
     public DateTime LeaseEnd { get; set; }
 
     public Guid ComplexId { get; set; }
+
+    public int GenderId { get; set; }
+
+    public int RoomTypeId { get; set; }
+
+    /// <summary>
+    /// for FK: complex Id
+    /// </summary>
+    public virtual Complex Complex { get; set; }
+
+    /// <summary>
+    /// for FK: gender Id
+    /// </summary>
+    public virtual Gender Gender { get; set; }
+
+    /// <summary>
+    /// for FK: room type Id
+    /// </summary>
+    public virtual RoomType RoomType { get; set; }
+
+    /// <summary>
+    /// The Room model has a collection of Amenity Rooms
+    /// </summary>
+    public IEnumerable<AmenityRoom> AmenityRoom { get; set; }
+
   }
 }

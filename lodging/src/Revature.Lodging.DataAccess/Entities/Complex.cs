@@ -19,9 +19,15 @@ namespace Revature.Lodging.DataAccess.Entities
     public string ContactNumber { get; set; }
 
     /// <summary>
-    /// The Complex model has a collection of Amenityomplex models that
+    /// The Complex model has a collection of AmenityComplex models that
     /// represent the amenities offered by the complex.
     /// </summary>
     public virtual ICollection<AmenityComplex> AmenityComplex { get; set; }
+
+    /// <summary>
+    /// The complex model has a collection of Room models that represent the rooms
+    /// that a single complex contains
+    /// </summary>
+    public virtual ICollection<Room> Room { get; set; }
   }
 }

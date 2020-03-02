@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Revature.Lodging.DataAccess.Entities
 {
@@ -13,10 +14,14 @@ namespace Revature.Lodging.DataAccess.Entities
 
     public Guid RoomId { get; set; }
 
+    /// <summary>
+    /// for FK: room Id
+    /// </summary>
+    public virtual Room Room { get; set; }
 
     /// <summary>
     /// for FK: amenity Id
     /// </summary>
-    public Amenity Amenity { get; set; }
+    public virtual Amenity Amenity { get; set; }
   }
 }
