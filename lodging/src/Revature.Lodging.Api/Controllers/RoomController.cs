@@ -4,21 +4,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Revature.Room.Lib;
+using Revature.Lodging.Lib.Interface;
 
 namespace Revature.Room.Api.Controllers
 {
   /// <summary>
   /// Controller for commmunicating with the complex service
   /// </summary>
-  [Route("api/complexes/{complexId}/rooms")]
+  [Route("api/[controller]")]
   [ApiController]
-  public class ComplexController : ControllerBase
+  public class RoomController : ControllerBase
   {
     private readonly IRepository _repository;
     private readonly ILogger _logger;
 
-    public ComplexController(IRepository repository, ILogger<ComplexController> logger)
+    public RoomController(IRepository repository, ILogger<RoomController> logger)
     {
       _repository = repository;
       _logger = logger;
@@ -196,34 +196,6 @@ namespace Revature.Room.Api.Controllers
         await _repository.SaveAsync();
 
         _logger.LogInformation("Success. Room has been deleted");
-
-        return NoContent();
-      }
-      catch (InvalidOperationException ex)
-      {
-        _logger.LogError("Room to delete was not found in DB", ex);
-        return NotFound();
-      }
-    }
-
-    /// <summary>
-    /// Deletes a complex and deletes all the rooms related to that specified complex roomId
-    /// </summary>
-    /// <param name="complexId"></param>
-    /// <returns></returns>
-    [HttpDelete("DeleteComplex")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteComplexAsync(Guid complexId)
-    {
-      try
-      {
-        _logger.LogInformation("Deleting rooms from complex");
-
-        await _repository.DeleteComplexRoomAsync(complexId);
-        await _repository.SaveAsync();
-
-        _logger.LogInformation("Success! Rooms have been deleted");
 
         return NoContent();
       }

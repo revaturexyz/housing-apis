@@ -7,7 +7,7 @@ using Revature.Room.Lib;
 
 namespace Revature.Room.Api.Controllers
 {
-  [Route("api/rooms")]
+  [Route("api/[controller]")]
   [ApiController]
   public class TenantController : ControllerBase
   {
