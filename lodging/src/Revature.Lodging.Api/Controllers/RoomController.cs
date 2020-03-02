@@ -13,12 +13,12 @@ namespace Revature.Room.Api.Controllers
   /// </summary>
   [Route("api/complexes/{complexId}/rooms")]
   [ApiController]
-  public class ComplexController : ControllerBase
+  public class RoomController : ControllerBase
   {
     private readonly IRepository _repository;
     private readonly ILogger _logger;
 
-    public ComplexController(IRepository repository, ILogger<ComplexController> logger)
+    public RoomController(IRepository repository, ILogger<RoomController> logger)
     {
       _repository = repository;
       _logger = logger;
