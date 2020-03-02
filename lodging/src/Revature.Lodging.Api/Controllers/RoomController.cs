@@ -205,33 +205,5 @@ namespace Revature.Room.Api.Controllers
         return NotFound();
       }
     }
-
-    /// <summary>
-    /// Deletes a complex and deletes all the rooms related to that specified complex roomId
-    /// </summary>
-    /// <param name="complexId"></param>
-    /// <returns></returns>
-    [HttpDelete("DeleteComplex")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteComplexAsync(Guid complexId)
-    {
-      try
-      {
-        _logger.LogInformation("Deleting rooms from complex");
-
-        await _repository.DeleteComplexRoomAsync(complexId);
-        await _repository.SaveAsync();
-
-        _logger.LogInformation("Success! Rooms have been deleted");
-
-        return NoContent();
-      }
-      catch (InvalidOperationException ex)
-      {
-        _logger.LogError("Room to delete was not found in DB", ex);
-        return NotFound();
-      }
-    }
   }
 }
