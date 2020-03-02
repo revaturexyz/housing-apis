@@ -13,20 +13,20 @@ namespace Revature.Identity.Tests.ControllerTests
   public class TenantControllerTest
   {
     /// <summary>
-    /// Test for coordinator retrieval based on their Guid-Id.
+    /// Test for tenant retrieval based on their Guid-Id.
     /// </summary>
     /// <returns></returns>
     [Fact]
     public async Task GetTenantByIdAsync()
     {
       TestHelper helper = new TestHelper();
-      Guid coordinatorId = helper.Coordinators[0].CoordinatorId;
+      Guid tenantId = helper.Tenants[0].TenantId;
 
       helper.Repository
-        .Setup(x => x.GetCoordinatorAccountByIdAsync(It.IsAny<Guid>()))
-        .Returns(Task.Run(() => helper.Coordinators.Where(c => c.CoordinatorId == coordinatorId).FirstOrDefault()));
+        .Setup(x => x.GetTenantAccountByIdAsync(It.IsAny<Guid>()))
+        .Returns(Task.Run(() => helper.Tenants.Where(c => c.TenantId == tenantId).FirstOrDefault()));
 
-      Assert.NotNull(await helper.CoordinatorAccountController.Get(coordinatorId) as OkObjectResult);
+      Assert.NotNull(await helper.TenantAccountController.Get(tenantId) as OkObjectResult);
     }
   }
 }

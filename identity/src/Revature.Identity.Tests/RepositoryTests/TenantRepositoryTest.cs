@@ -14,7 +14,7 @@ namespace Revature.Identity.Tests.RepositoryTests
   public class TenantRepositoryTest
   {
     /// <summary>
-    /// Test for adding a new Provider entry to the database.
+    /// Test for adding a new Tenant entry to the database.
     /// </summary>
     [Fact]
     public void AddNewTenantAccountTest()
@@ -25,7 +25,7 @@ namespace Revature.Identity.Tests.RepositoryTests
         .UseInMemoryDatabase("AddNewTenantAccountTest")
         .Options;
       var actContext = new IdentityDbContext(options);
-      var newTenant = helper.Tenants[0];// .Providers[0];
+      var newTenant = helper.Tenants[0];
       var actRepo = new GenericRepository(actContext, new Mapper());
 
       // Act
@@ -34,12 +34,12 @@ namespace Revature.Identity.Tests.RepositoryTests
 
       // Assert
       var assertContext = new IdentityDbContext(options);
-      var assertTenant = assertContext.TenantAccount.FirstOrDefault(p => p.TenantId == newTenant.TenantId);// .ProviderAccount.FirstOrDefault(p => p.ProviderId == newProvider.ProviderId);
+      var assertTenant = assertContext.TenantAccount.FirstOrDefault(p => p.TenantId == newTenant.TenantId);
       Assert.NotNull(assertTenant);
     }
 
     /// <summary>
-    /// Test for updateing a given Provider's information within the database.
+    /// Test for updateing a given Tenant's information within the database.
     /// </summary>
     /// <returns></returns>
     [Fact]
@@ -69,7 +69,7 @@ namespace Revature.Identity.Tests.RepositoryTests
 
 
     /// <summary>
-    /// Retrieve a provider by way of a Guid Id from the database.
+    /// Retrieve a Tenant by way of a Guid Id from the database.
     /// </summary>
     [Fact]
     public async void GetTenantByIdTest()
@@ -96,7 +96,7 @@ namespace Revature.Identity.Tests.RepositoryTests
 
 
     /// <summary>
-    /// Test the deletion of a given provider from the database.
+    /// Test the deletion of a given tenant from the database.
     /// </summary>
     /// <returns></returns>
     [Fact]
