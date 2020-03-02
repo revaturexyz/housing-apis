@@ -10,6 +10,7 @@ namespace Revature.Account.Lib.Model
   public class ProviderAccount
   {
     private string _name;
+    private string _email;
     public Guid ProviderId { get; set; } = Guid.NewGuid();
     public Guid? CoordinatorId { get; set; }
 
@@ -18,12 +19,11 @@ namespace Revature.Account.Lib.Model
       get { return _name; }
       set
       {
-        NotNullOrEmpty(value);
+        NotNullOrEmptyorWhitespaces(value);
         _name = value;
       }
     }
 
-    private string _email;
     public string Email
     {
       get { return _email; }
@@ -50,18 +50,21 @@ namespace Revature.Account.Lib.Model
     public DateTime AccountExpiresAt { get; set; }
 
     /// <summary>
-    /// Checks to see if a string is either null (does not exist) or empty ( "" )
+    /// Checks to see if a string is either null (does not exist) or empty ( "" ) or whitespaces ("  ")
     /// </summary>
     /// <param name="value"></param>
-    private static void NotNullOrEmpty(string value)
+    private static void NotNullOrEmptyorWhitespaces(string value)
     {
-      if (value == null)
+      if (String.IsNullOrWhiteSpace(value))
       {
-        throw new ArgumentNullException(nameof(value), "Your Input cannot be null");
-      }
-      if (value.Length == 0)
-      {
-        throw new ArgumentException("Your Input cannot be empty string.", nameof(value));
+        if (value == null)
+        {
+          throw new ArgumentNullException(nameof(value), "Your Input cannot be null");
+        }
+        else
+        {
+          throw new ArgumentException("Your Input cannot be empty string.", nameof(value));
+        }
       }
     }
   }

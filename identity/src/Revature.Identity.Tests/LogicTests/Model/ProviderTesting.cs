@@ -24,14 +24,45 @@ namespace Revature.Account.Tests.Logic_Tests.Model
     }
 
     /// <summary>
-    /// Test if the Provider's name is a blank string.
+    /// Test if the Provider's name is a blank ("") or whitespaces ("  ") string.
+    /// </summary>
+    [Theory]
+    [InlineData("")]
+    [InlineData("  ")]
+    public void ProviderNameEmptyException(string value)
+    {
+      Assert.ThrowsAny<ArgumentException>(() => _provider.Name = value);
+    }
+
+    /// <summary>
+    /// Test if the Provider's email is null.
     /// </summary>
     [Fact]
-    public void ProviderNameEmptyException()
+    public void ProviderEmailNullException()
     {
-      var emptyString = "";
+      string nullEmail = null;
+      Assert.ThrowsAny<ArgumentNullException>(() => _provider.Email = nullEmail);
+    }
+    /// <summary>
+    /// Test if the Provider's email is blank.
+    /// </summary>
+    [Fact]
+    public void ProviderEmailEmptyException()
+    {
+      string emptyEmail = "";
+      Assert.ThrowsAny<ArgumentException>(() => _provider.Email = emptyEmail);
+    }
 
-      Assert.ThrowsAny<ArgumentException>(() => _provider.Name = emptyString);
+    /// <summary>
+    /// Test if the Provider's email is not a proper email format.
+    /// </summary>
+    [Theory]
+    [InlineData("  ")]
+    [InlineData("aa")]
+    [InlineData("b@a@c@domain.com")]
+    public void ProviderEmailInvalidFormatException(string value)
+    {
+      Assert.ThrowsAny<FormatException>(() => _provider.Email = value);
     }
   }
 }
