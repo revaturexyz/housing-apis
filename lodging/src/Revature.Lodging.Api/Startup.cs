@@ -80,20 +80,20 @@ namespace Revature.Lodging.Api
       services.AddHttpClient<IRoomRequest, RoomRequest>();
       services.AddSingleton<ITelemetryInitializer, LodgingTelemetryInitializer>();
 
-      services.AddAuthentication(options => 
-          {
-          options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
-          options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
-          options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
-        })
-        .AddOktaWebApi(new OktaWebApiOptions()
-        {
-          OktaDomain = Configuration["Okta:OktaDomain"],
-        }
+      //services.AddAuthentication(options => 
+      //    {
+      //    options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+      //    options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
+      //    options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+      //  })
+      //  .AddOktaWebApi(new OktaWebApiOptions()
+      //  {
+      //    OktaDomain = Configuration["Okta:OktaDomain"],
+      //  }
 
-      );
+      //);
 
-      services.AddAuthorization();
+      //services.AddAuthorization();
 
       services.AddControllers();
 
@@ -123,9 +123,9 @@ namespace Revature.Lodging.Api
 
       app.UseCors(CorsPolicyName);
 
-      app.UseAuthentication();
+      //app.UseAuthentication();
 
-      app.UseAuthorization();
+      //app.UseAuthorization();
 
       app.UseEndpoints(endpoints =>
       {
