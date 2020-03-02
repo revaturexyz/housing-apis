@@ -28,7 +28,6 @@ namespace Revature.Account.Tests
     public CoordinatorAccountController CoordinatorAccountController { get; private set; }
     public NotificationController NotificationController { get; private set; }
     public ProviderAccountController ProviderAccountController { get; private set; }
-    //Tenant
     public TenantAccountController TenantAccountController { get; private set; }
 
     public List<CoordinatorAccount> Coordinators { get; private set; }
@@ -36,7 +35,6 @@ namespace Revature.Account.Tests
     public List<ProviderAccount> Providers { get; private set; }
     public List<Status> Statuses { get; private set; }
     public List<UpdateAction> UpdateActions { get; private set; }
-    //Tenant
     public List<TenantAccount> Tenants { get; private set; }
 
     //for testing expiration times
@@ -46,7 +44,6 @@ namespace Revature.Account.Tests
     public static ILogger<CoordinatorAccountController> LoggerCoord { get; set; }
     public static ILogger<NotificationController> LoggerNoti { get; set; }
     public static ILogger<ProviderAccountController> LoggerProv { get; set; }
-    //Tenant
     public static ILogger<TenantAccountController> LoggerTenant { get; set; }
 
     public TestHelper()
@@ -54,7 +51,6 @@ namespace Revature.Account.Tests
       LoggerCoord = new NullLogger<CoordinatorAccountController>();
       LoggerNoti = new NullLogger<NotificationController>();
       LoggerProv = new NullLogger<ProviderAccountController>();
-      // Tenant
       LoggerTenant = new NullLogger<TenantAccountController>();
 
       SetUpCoordinators();
@@ -63,7 +59,6 @@ namespace Revature.Account.Tests
       SetUpUpdateActions();
       SetUpNotifications();
       SetUpMocks();
-      //Tenant
       SetUpTenantAccount();
 
       Now = DateTime.Now;
@@ -144,18 +139,18 @@ namespace Revature.Account.Tests
       {
         new TenantAccount
         {
-          Name = "Billys Big Discount Dorms",
-          Email = "billy@provider.org"
+          Name = "Stephan",
+          Email = "stephan@tenant.org"
         },
         new TenantAccount
         {
-          Name = "Bobs Townhomes",
-          Email = "bob@provider.org"
+          Name = "Steffan",
+          Email = "Steffan@tenant.org"
         },
         new TenantAccount
         {
-          Name = "Burgundy Hills Barracks",
-          Email = "burgundy@provider.org"
+          Name = "Phteven",
+          Email = "Phteven@tenant.org"
         }
       };
     }
@@ -261,7 +256,7 @@ namespace Revature.Account.Tests
         }
       };
       NotificationController.ControllerContext.HttpContext.Request.Headers["Authorize"] = "Not a token.";
-      // Tenant Test
+
       TenantAccountController = new TenantAccountController(Repository.Object, LoggerTenant)
       {
         ControllerContext = new ControllerContext

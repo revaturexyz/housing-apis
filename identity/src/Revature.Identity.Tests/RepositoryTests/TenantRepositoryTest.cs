@@ -14,114 +14,111 @@ namespace Revature.Identity.Tests.RepositoryTests
   public class TenantRepositoryTest
   {
     /// <summary>
-    /// Test for adding a new Provider entry to the database.
+    /// Test for adding a new Tenant entry to the database.
     /// </summary>
     [Fact]
-    public void AddNewProviderAccountTest()
+    public void AddNewTenantAccountTest()
     {
       // Arrange
       var helper = new TestHelper();
       var options = new DbContextOptionsBuilder<IdentityDbContext>()
-        .UseInMemoryDatabase("AddNewProviderAccountTest")
+        .UseInMemoryDatabase("AddNewTenantAccountTest")
         .Options;
       var actContext = new IdentityDbContext(options);
-      var newProvider = helper.Providers[0];
+      var newTenant = helper.Tenants[0];
       var actRepo = new GenericRepository(actContext, new Mapper());
 
       // Act
-      actRepo.AddProviderAccountAsync(newProvider);
+      actRepo.AddTenantAccount(newTenant);
       actContext.SaveChanges();
 
       // Assert
       var assertContext = new IdentityDbContext(options);
-      var assertProvider = assertContext.ProviderAccount.FirstOrDefault(p => p.ProviderId == newProvider.ProviderId);
-      Assert.NotNull(assertProvider);
+      var assertTenant = assertContext.TenantAccount.FirstOrDefault(p => p.TenantId == newTenant.TenantId);
+      Assert.NotNull(assertTenant);
     }
 
-    ///// <summary>
-    ///// Test for updateing a given Provider's information within the database.
-    ///// </summary>
-    ///// <returns></returns>
-    //[Fact]
-    //public async Task UpdateProviderAccountTestAsync()
-    //{
-    //  // Arrange
-    //  var helper = new TestHelper();
-    //  var mapper = new Mapper();
-    //  var options = new DbContextOptionsBuilder<IdentityDbContext>()
-    //    .UseInMemoryDatabase("UpdateProviderAccountTestAsync")
-    //    .Options;
-    //  var arrangeContext = new IdentityDbContext(options);
-    //  var arrangeProvider = helper.Providers[0];
-    //  arrangeContext.ProviderAccount.Add(mapper.MapProvider(arrangeProvider));
-    //  arrangeContext.SaveChanges();
+    /// <summary>
+    /// Test for updateing a given Tenant's information within the database.
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task UpdateTenantAccountTestAsync()
+    {
+      // Arrange
+      var helper = new TestHelper();
+      var mapper = new Mapper();
+      var options = new DbContextOptionsBuilder<IdentityDbContext>()
+        .UseInMemoryDatabase("UpdateTenantAccountTestAsync")
+        .Options;
+      var arrangeContext = new IdentityDbContext(options);
+      var arrangeTenant = helper.Tenants[0];
+      arrangeContext.TenantAccount.Add(mapper.MapTenant(arrangeTenant));
+      arrangeContext.SaveChanges();
 
-    //  arrangeProvider.Name = "Robby";
+      // Act
+      var repo = new GenericRepository(arrangeContext, new Mapper());
+      await repo.UpdateTenantAccountAsync(arrangeTenant);
+      arrangeContext.SaveChanges();
 
-    //  // Act
-    //  var repo = new GenericRepository(arrangeContext, new Mapper());
-    //  await repo.UpdateProviderAccountAsync(arrangeProvider);
-    //  arrangeContext.SaveChanges();
-
-    //  // Assert
-    //  var assertContext = new IdentityDbContext(options);
-    //  var assertProvider = assertContext.ProviderAccount.First(p => p.ProviderId == arrangeProvider.ProviderId);
-    //  Assert.Equal(arrangeProvider.Name, assertProvider.Name);
-    //}
+      // Assert
+      var assertContext = new IdentityDbContext(options);
+      var assertTenant = assertContext.TenantAccount.First(p => p.TenantId == arrangeTenant.TenantId);
+      Assert.Equal(arrangeTenant.Name, assertTenant.Name);
+    }
 
 
-    ///// <summary>
-    ///// Retrieve a provider by way of a Guid Id from the database.
-    ///// </summary>
-    //[Fact]
-    //public async void GetProviderByIdTest()
-    //{
-    //  // Arrange
-    //  var helper = new TestHelper();
-    //  var mapper = new Mapper();
-    //  var options = new DbContextOptionsBuilder<IdentityDbContext>()
-    //    .UseInMemoryDatabase("GetProviderByIdTest")
-    //    .Options;
-    //  var arrangeContext = new IdentityDbContext(options);
+    /// <summary>
+    /// Retrieve a Tenant by way of a Guid Id from the database.
+    /// </summary>
+    [Fact]
+    public async void GetTenantByIdTest()
+    {
+      // Arrange
+      var helper = new TestHelper();
+      var mapper = new Mapper();
+      var options = new DbContextOptionsBuilder<IdentityDbContext>()
+        .UseInMemoryDatabase("GetTenantByIdTest")
+        .Options;
+      var arrangeContext = new IdentityDbContext(options);
 
-    //  arrangeContext.CoordinatorAccount.Add(mapper.MapCoordinator(helper.Coordinators[0]));
-    //  arrangeContext.ProviderAccount.Add(mapper.MapProvider(helper.Providers[0]));
-    //  arrangeContext.SaveChanges();
-    //  var actContext = new IdentityDbContext(options);
-    //  var repo = new GenericRepository(actContext, new Mapper());
+      arrangeContext.TenantAccount.Add(mapper.MapTenant(helper.Tenants[0]));
+      arrangeContext.SaveChanges();
+      var actContext = new IdentityDbContext(options);
+      var repo = new GenericRepository(actContext, new Mapper());
 
-    //  // Act
-    //  var result = await repo.GetProviderAccountByIdAsync(helper.Providers[0].ProviderId);
+      // Act
+      var result = await repo.GetTenantAccountByIdAsync(helper.Tenants[0].TenantId);
 
-    //  // Assert
-    //  Assert.NotNull(result);
-    //}
+      // Assert
+      Assert.NotNull(result);
+    }
 
 
-    ///// <summary>
-    ///// Test the deletion of a given provider from the database.
-    ///// </summary>
-    ///// <returns></returns>
-    //[Fact]
-    //public async Task DeleteProviderTestAsync()
-    //{
-    //  //Assemble
-    //  var helper = new TestHelper();
-    //  var mapper = new Mapper();
-    //  var options = new DbContextOptionsBuilder<IdentityDbContext>()
-    //    .UseInMemoryDatabase("DeleteProviderTestAsync")
-    //    .Options;
-    //  var assembleContext = new IdentityDbContext(options);
-    //  var deleteProvider = mapper.MapProvider(helper.Providers[2]);
-    //  assembleContext.Add(deleteProvider);
-    //  assembleContext.SaveChanges();
-    //  var actContext = new IdentityDbContext(options);
-    //  var repo = new GenericRepository(actContext, new Mapper());
-    //  // Act
-    //  await repo.DeleteProviderAccountAsync(deleteProvider.ProviderId);
-    //  // Assert
-    //  var provider = actContext.ProviderAccount.ToList();
-    //  Assert.DoesNotContain(deleteProvider, provider);
-    //}
+    /// <summary>
+    /// Test the deletion of a given tenant from the database.
+    /// </summary>
+    /// <returns></returns>
+    [Fact]
+    public async Task DeleteTenantTestAsync()
+    {
+      //Assemble
+      var helper = new TestHelper();
+      var mapper = new Mapper();
+      var options = new DbContextOptionsBuilder<IdentityDbContext>()
+        .UseInMemoryDatabase("DeleteTenantTestAsync")
+        .Options;
+      var assembleContext = new IdentityDbContext(options);
+      var deleteTenant = mapper.MapTenant(helper.Tenants[2]);
+      assembleContext.Add(deleteTenant);
+      assembleContext.SaveChanges();
+      var actContext = new IdentityDbContext(options);
+      var repo = new GenericRepository(actContext, new Mapper());
+      // Act
+      await repo.DeleteTenantAccountAsync(deleteTenant.TenantId);
+      // Assert
+      var tenant = actContext.TenantAccount.ToList();
+      Assert.DoesNotContain(deleteTenant, tenant);
+    }
   }
 }

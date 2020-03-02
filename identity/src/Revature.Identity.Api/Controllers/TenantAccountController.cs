@@ -54,6 +54,35 @@ namespace Revature.Account.Api.Controllers
 
 
 
+    // GET: api/tenant-accounts/5
+    [HttpGet("{tenantId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize]
+    public async Task<ActionResult> Get(Guid tenantId)
+    {
+      try
+      {
+        _logger.LogInformation("GET - Getting tenant with ID: {tenantId}", tenantId);
+        var tenant = await _repo.GetTenantAccountByIdAsync(tenantId);
+
+        if (tenant == null)
+        {
+          _logger.LogWarning("No tenant found for given ID: {tenantId} on GET call.", tenantId);
+          return NotFound();
+        }
+
+        return Ok(tenant);
+      }
+      catch (Exception e)
+      {
+        _logger.LogError("Exception getting tenant: {exceptionMessage}, {exception}", e.Message, e);
+        return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+      }
+    }
+
+
+
 
 
     // PUT: api/tenant-accounts/5
