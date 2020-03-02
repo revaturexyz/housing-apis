@@ -11,7 +11,7 @@ namespace Revature.Lodging.Lib.Models
   public class Amenity
   {
     [Required]
-    public Guid AmenityId { get; set; }
+    public Guid Id { get; set; }
 
     [Required, MaxLength(50)]
     public string AmenityType { get; set; }

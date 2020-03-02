@@ -11,7 +11,7 @@ namespace Revature.Lodging.Lib.Models
   public partial class Complex
   {
     [Required]
-    public Guid ComplexId { get; set; }
+    public Guid Id { get; set; }
 
     [Required]
     public Guid AddressId { get; set; }

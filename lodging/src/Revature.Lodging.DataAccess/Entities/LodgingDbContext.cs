@@ -205,11 +205,9 @@ namespace Revature.Lodging.DataAccess.Entities
         entity.Property(e => e.NumberOfOccupants)
           .IsRequired();
 
-        entity.Property(e => e.LeaseStart)
-          .IsRequired();
+        entity.Property(e => e.LeaseStart);
 
-        entity.Property(e => e.LeaseEnd)
-          .IsRequired();
+        entity.Property(e => e.LeaseEnd);
 
         entity.HasOne(e => e.Complex)
           .WithMany(d => d.Room)
