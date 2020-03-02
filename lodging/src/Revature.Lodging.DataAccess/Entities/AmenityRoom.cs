@@ -7,14 +7,12 @@ namespace Revature.Lodging.DataAccess.Entities
   /// </summary>
   public class AmenityRoom
   {
-    public Guid AmenityRoomId { get; set; }
+    public Guid Id { get; set; }
 
     public Guid AmenityId { get; set; }
 
-    /// <summary>
-    /// This is a Fk representing a room in the Room service
-    /// </summary>
     public Guid RoomId { get; set; }
+
 
     /// <summary>
     /// for FK: amenity Id

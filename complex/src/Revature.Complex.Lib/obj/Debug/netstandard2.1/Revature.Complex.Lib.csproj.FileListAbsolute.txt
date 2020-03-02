@@ -1,0 +1,8 @@
+C:\Users\anton\Documents\Revature\P3\housing-apis\complex\src\Revature.Complex.Lib\bin\Debug\netstandard2.1\Revature.Complex.Lib.deps.json
+C:\Users\anton\Documents\Revature\P3\housing-apis\complex\src\Revature.Complex.Lib\bin\Debug\netstandard2.1\Revature.Complex.Lib.dll
+C:\Users\anton\Documents\Revature\P3\housing-apis\complex\src\Revature.Complex.Lib\bin\Debug\netstandard2.1\Revature.Complex.Lib.pdb
+C:\Users\anton\Documents\Revature\P3\housing-apis\complex\src\Revature.Complex.Lib\obj\Debug\netstandard2.1\Revature.Complex.Lib.csprojAssemblyReference.cache
+C:\Users\anton\Documents\Revature\P3\housing-apis\complex\src\Revature.Complex.Lib\obj\Debug\netstandard2.1\Revature.Complex.Lib.AssemblyInfoInputs.cache
+C:\Users\anton\Documents\Revature\P3\housing-apis\complex\src\Revature.Complex.Lib\obj\Debug\netstandard2.1\Revature.Complex.Lib.AssemblyInfo.cs
+C:\Users\anton\Documents\Revature\P3\housing-apis\complex\src\Revature.Complex.Lib\obj\Debug\netstandard2.1\Revature.Complex.Lib.dll
+C:\Users\anton\Documents\Revature\P3\housing-apis\complex\src\Revature.Complex.Lib\obj\Debug\netstandard2.1\Revature.Complex.Lib.pdb

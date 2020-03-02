@@ -8,7 +8,7 @@ namespace Revature.Lodging.DataAccess.Entities
   public class AmenityComplex
   {
 
-    public Guid AmenityComplexId { get; set; }
+    public Guid Id { get; set; }
 
     public Guid AmenityId { get; set; }
 

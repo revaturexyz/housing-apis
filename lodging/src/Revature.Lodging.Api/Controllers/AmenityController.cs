@@ -13,7 +13,7 @@ namespace Revature.Lodging.Api.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  [Authorize]
+  //[Authorize]
   public class AmenityController : ControllerBase
   {
     private readonly IRepository _complexRepository;
