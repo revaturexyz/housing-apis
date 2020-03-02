@@ -144,18 +144,18 @@ namespace Revature.Account.Tests
       {
         new TenantAccount
         {
-          Name = "Billys Big Discount Dorms",
-          Email = "billy@provider.org"
+          Name = "Stephan",
+          Email = "stephan@tenant.org"
         },
         new TenantAccount
         {
-          Name = "Bobs Townhomes",
-          Email = "bob@provider.org"
+          Name = "Steffan",
+          Email = "Steffan@tenant.org"
         },
         new TenantAccount
         {
-          Name = "Burgundy Hills Barracks",
-          Email = "burgundy@provider.org"
+          Name = "Phteven",
+          Email = "Phteven@tenant.org"
         }
       };
     }
