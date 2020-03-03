@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Revature.Room.Api.Controllers;
-using Revature.Room.Lib;
+using Revature.Lodging.Api.Controllers;
+using Revature.Lodging.Lib;
 using Xunit;
 
-namespace Revature.Room.DataAccess.Tests
+namespace Revature.Lodging.Tests.ApiTests
 {
-  public class ComplexControllerTests
+  public class RoomControllerTests
   {
     /// <summary>
     /// Test for Complex Controller method GetFilteredRooms
@@ -20,8 +20,8 @@ namespace Revature.Room.DataAccess.Tests
     public async Task GetFilteredRoomsShouldFilterByComplexId()
     {
       //arrange
-      var mockRepo = new Mock<IRepository>();
-      var mockLogger = new Mock<ILogger<ComplexController>>();
+      var mockRepo = new Mock<IRoomRepository>();
+      var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.GetFilteredRoomsAsync(
         It.IsAny<Guid>(),
@@ -31,13 +31,13 @@ namespace Revature.Room.DataAccess.Tests
         It.IsAny<string>(),
         It.IsAny<DateTime>(),
         It.IsAny<Guid>()))
-        .Returns(Task.FromResult<IEnumerable<Lib.Room>>(
-          new List<Lib.Room>()
+        .Returns(Task.FromResult<IEnumerable<Lib.Models.Room>>(
+          new List<Lib.Models.Room>()
           {
-            new Lib.Room()
+            new Lib.Models.Room()
           }
         ));
-      var controller = new ComplexController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
 
       //act
       var result = await controller.GetFilteredRoomsAsync(Guid.NewGuid(), "", 1, "", "", DateTime.Now, Guid.NewGuid());
@@ -52,8 +52,8 @@ namespace Revature.Room.DataAccess.Tests
     [Fact]
     public async Task GetFilteredRoomsAsyncShouldReturnKeyNotFoundException()
     {
-      var mockRepo = new Mock<IRepository>();
-      var mockLogger = new Mock<ILogger<ComplexController>>();
+      var mockRepo = new Mock<IRoomRepository>();
+      var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.GetFilteredRoomsAsync(
         It.IsAny<Guid>(),
@@ -65,7 +65,7 @@ namespace Revature.Room.DataAccess.Tests
         It.IsAny<Guid>()))
         .Throws(new KeyNotFoundException());
 
-      var controller = new ComplexController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
 
       var result = await controller.GetFilteredRoomsAsync(Guid.NewGuid(), "", 1, "", "", DateTime.Now, Guid.NewGuid());
 
@@ -80,25 +80,25 @@ namespace Revature.Room.DataAccess.Tests
     public async Task PostRoomShouldCreateRoom()
     {
       //arrange
-      var mockRepo = new Mock<IRepository>();
-      var mockLogger = new Mock<ILogger<ComplexController>>();
+      var mockRepo = new Mock<IRoomRepository>();
+      var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.CreateRoomAsync(
-        It.IsAny<Lib.Room>()
+        It.IsAny<Lib.Models.Room>()
         ));
 
-      var controller = new ComplexController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
 
       //act
-      var roomTest = new Revature.Room.Lib.Room
+      var roomTest = new Revature.Lodging.Lib.Models.Room
       {
         ComplexId = Guid.NewGuid(),
-        RoomId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         RoomNumber = "ABC",
         NumberOfBeds = 4,
         NumberOfOccupants = 4,
-        Gender = "Male",
-        RoomType = "Apartment"
+        //Gender = "Male",
+        //RoomType = "Apartment"
       };
 
       roomTest.SetLease(DateTime.Now, DateTime.Today.AddDays(3));
@@ -116,17 +116,17 @@ namespace Revature.Room.DataAccess.Tests
     public async Task PostRoomShouldReturnBadRequest()
     {
       //arrange
-      var mockRepo = new Mock<IRepository>();
-      var mockLogger = new Mock<ILogger<ComplexController>>();
+      var mockRepo = new Mock<IRoomRepository>();
+      var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.CreateRoomAsync(
-        It.IsAny<Lib.Room>()
+        It.IsAny<Lib.Models.Room>()
         )).Throws(new ArgumentException());
 
-      var controller = new ComplexController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
 
       //act
-      var roomTest = new Lib.Room();
+      var roomTest = new Lib.Models.Room();
 
       var result = await controller.PostRoomAsync(roomTest);
 
@@ -142,26 +142,26 @@ namespace Revature.Room.DataAccess.Tests
     public async Task PutRoomShouldUpdateRoom()
     {
       //arrange
-      var mockRepo = new Mock<IRepository>();
-      var mockLogger = new Mock<ILogger<ComplexController>>();
+      var mockRepo = new Mock<IRoomRepository>();
+      var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.UpdateRoomAsync(
-        It.IsAny<Lib.Room>()
+        It.IsAny<Lib.Models.Room>()
         ));
-      mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Room>(new Lib.Room()));
+      mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Models.Room>(new Lib.Models.Room()));
 
-      var controller = new ComplexController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
 
       //act
-      var roomTest = new Revature.Room.Lib.Room
+      var roomTest = new Revature.Lodging.Lib.Models.Room
       {
         ComplexId = Guid.NewGuid(),
-        RoomId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         RoomNumber = "ABC",
         NumberOfBeds = 4,
         NumberOfOccupants = 4,
-        Gender = "Male",
-        RoomType = "Apartment"
+        //Gender = "Male",
+        //RoomType = "Apartment"
       };
 
       roomTest.SetLease(DateTime.Now, DateTime.Today.AddDays(3));
@@ -179,20 +179,20 @@ namespace Revature.Room.DataAccess.Tests
     public async Task PutRoomShouldReturnNotFound()
     {
       //arrange
-      var mockRepo = new Mock<IRepository>();
+      var mockRepo = new Mock<IRoomRepository>();
 
-      var mockLogger = new Mock<ILogger<ComplexController>>();
+      var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.UpdateRoomAsync(
-        It.IsAny<Lib.Room>()
+        It.IsAny<Lib.Models.Room>()
         )).Throws(new InvalidOperationException());
 
-      mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Room>(new Lib.Room()));
+      mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Models.Room>(new Lib.Models.Room()));
 
-      var controller = new ComplexController(mockRepo.Object, mockLogger.Object); ;
+      var controller = new RoomController(mockRepo.Object, mockLogger.Object); ;
 
       //act
-      var roomTest = new Lib.Room();
+      var roomTest = new Lib.Models.Room();
       //Need to set lease or else we will get an Argument Exception instead of InvalidOperation Exception
       roomTest.SetLease(DateTime.Now, DateTime.Now.AddDays(3));
 
@@ -210,20 +210,20 @@ namespace Revature.Room.DataAccess.Tests
     public async Task PutRoomShouldReturnBadRequest()
     {
       //arrange
-      var mockRepo = new Mock<IRepository>();
+      var mockRepo = new Mock<IRoomRepository>();
 
-      var mockLogger = new Mock<ILogger<ComplexController>>();
+      var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.UpdateRoomAsync(
-        It.IsAny<Lib.Room>()
+        It.IsAny<Lib.Models.Room>()
         )).Throws(new ArgumentException());
 
-      mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Room>(new Lib.Room()));
+      mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Models.Room>(new Lib.Models.Room()));
 
-      var controller = new ComplexController(mockRepo.Object, mockLogger.Object); ;
+      var controller = new RoomController(mockRepo.Object, mockLogger.Object); ;
 
       //act
-      var roomTest = new Lib.Room();
+      var roomTest = new Lib.Models.Room();
 
       var result = await controller.PutRoomAsync(Guid.NewGuid(), roomTest);
 
@@ -239,14 +239,14 @@ namespace Revature.Room.DataAccess.Tests
     public async Task GetRoomShouldReturnRoom()
     {
       //arrange
-      var mockRepo = new Mock<IRepository>();
-      var mockLogger = new Mock<ILogger<ComplexController>>();
+      var mockRepo = new Mock<IRoomRepository>();
+      var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.ReadRoomAsync(
-        It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Room>(
-          new Lib.Room()
+        It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Models.Room>(
+          new Lib.Models.Room()
           ));
-      var controller = new ComplexController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
 
       //act
       var result = await controller.GetRoomAsync(Guid.NewGuid());
@@ -262,13 +262,13 @@ namespace Revature.Room.DataAccess.Tests
     public async Task GetRoomShouldReturnNotFound()
     {
       //arrange
-      var mockRepo = new Mock<IRepository>();
-      var mockLogger = new Mock<ILogger<ComplexController>>();
+      var mockRepo = new Mock<IRoomRepository>();
+      var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.ReadRoomAsync(
         It.IsAny<Guid>())).Throws(new InvalidOperationException());
 
-      var controller = new ComplexController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
       //act
       var result = await controller.GetRoomAsync(Guid.NewGuid());
       //assert
@@ -282,13 +282,13 @@ namespace Revature.Room.DataAccess.Tests
     [Fact]
     public async Task DeleteRoomShouldDelete()
     {
-      var mockRepo = new Mock<IRepository>();
-      var mockLogger = new Mock<ILogger<ComplexController>>();
+      var mockRepo = new Mock<IRoomRepository>();
+      var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.DeleteRoomAsync(
         It.IsAny<Guid>()));
 
-      var controller = new ComplexController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
 
       //act
       var result = await controller.DeleteRoomAsync(Guid.NewGuid());
@@ -305,13 +305,13 @@ namespace Revature.Room.DataAccess.Tests
     public async Task DeleteRoomShouldReturnGuidNotFound()
     {
       //arrange
-      var mockRepo = new Mock<IRepository>();
-      var mockLogger = new Mock<ILogger<ComplexController>>();
+      var mockRepo = new Mock<IRoomRepository>();
+      var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.DeleteRoomAsync(
         It.IsAny<Guid>())).Throws(new InvalidOperationException());
 
-      var controller = new ComplexController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
 
       //act
       var result = await controller.DeleteRoomAsync(Guid.NewGuid());
@@ -324,46 +324,46 @@ namespace Revature.Room.DataAccess.Tests
     /// Checks if when deleting rooms from a complex is successful, returns an appropriate response
     /// </summary>
     /// <returns></returns>
-    [Fact]
-    public async Task DeleteComplexShouldDeleteComplexAndTheirAssociatingRooms()
-    {
-      //arrange
-      var mockRepo = new Mock<IRepository>();
-      var mockLogger = new Mock<ILogger<ComplexController>>();
+    //[Fact]
+    //public async Task DeleteComplexShouldDeleteComplexAndTheirAssociatingRooms()
+    //{
+    //  //arrange
+    //  var mockRepo = new Mock<IRoomRepository>();
+    //  var mockLogger = new Mock<ILogger<RoomController>>();
 
-      mockRepo.Setup(r => r.DeleteComplexRoomAsync(
-        It.IsAny<Guid>()));
+    //  mockRepo.Setup(r => r.DeleteComplexRoomAsync(
+    //    It.IsAny<Guid>()));
 
-      var controller = new ComplexController(mockRepo.Object, mockLogger.Object);
+    //  var controller = new RoomController(mockRepo.Object, mockLogger.Object);
 
-      //act
-      var result = await controller.DeleteComplexAsync(Guid.NewGuid());
+    //  //act
+    //  var result = await controller.DeleteComplexAsync(Guid.NewGuid());
 
-      //assert
-      Assert.IsAssignableFrom<NoContentResult>(result);
-    }
+    //  //assert
+    //  Assert.IsAssignableFrom<NoContentResult>(result);
+    //}
 
     /// <summary>
     /// Checks if deleting rooms of a complex was unsucessful becaue room to be deleted was not found, returns not found
     /// </summary>
     /// <returns></returns>
-    [Fact]
-    public async Task DeleteComplexShouldReturnNotFound()
-    {
-      //arrange
-      var mockRepo = new Mock<IRepository>();
-      var mockLogger = new Mock<ILogger<ComplexController>>();
+    //  [Fact]
+    //  public async Task DeleteComplexShouldReturnNotFound()
+    //  {
+    //    //arrange
+    //    var mockRepo = new Mock<IRoomRepository>();
+    //    var mockLogger = new Mock<ILogger<RoomController>>();
 
-      mockRepo.Setup(r => r.DeleteComplexRoomAsync(
-        It.IsAny<Guid>())).Throws(new InvalidOperationException());
+    //    mockRepo.Setup(r => r.DeleteComplexRoomAsync(
+    //      It.IsAny<Guid>())).Throws(new InvalidOperationException());
 
-      var controller = new ComplexController(mockRepo.Object, mockLogger.Object);
+    //    var controller = new RoomController(mockRepo.Object, mockLogger.Object);
 
-      //act
-      var result = await controller.DeleteComplexAsync(Guid.NewGuid());
+    //    //act
+    //    var result = await controller.DeleteComplexAsync(Guid.NewGuid());
 
-      //assert
-      Assert.IsType<NotFoundResult>(result);
-    }
+    //    //assert
+    //    Assert.IsType<NotFoundResult>(result);
+    //  }
   }
 }

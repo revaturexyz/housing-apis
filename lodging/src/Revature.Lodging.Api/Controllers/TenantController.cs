@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Revature.Lodging.Lib;
 
-namespace Revature.Room.Api.Controllers
+namespace Revature.Lodging.Api.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
