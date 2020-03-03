@@ -1,6 +1,6 @@
 using System;
 
-namespace Revature.Room.Lib.Models
+namespace Revature.Lodging.Lib.Models
 {
   public class TenantMessage
   {
