@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Revature.Lodging.Lib.Interface;
+using Revature.Lodging.Lib;
+using Revature.Lodging.Lib.Models;
 
-namespace Revature.Room.Api.Controllers
+namespace Revature.Lodging.Api.Controllers
 {
   /// <summary>
   /// Controller for commmunicating with the complex service
@@ -15,10 +16,10 @@ namespace Revature.Room.Api.Controllers
   [ApiController]
   public class RoomController : ControllerBase
   {
-    private readonly IRepository _repository;
+    private readonly IRoomRepository _repository;
     private readonly ILogger _logger;
 
-    public RoomController(IRepository repository, ILogger<RoomController> logger)
+    public RoomController(IRoomRepository repository, ILogger<RoomController> logger)
     {
       _repository = repository;
       _logger = logger;
@@ -77,7 +78,7 @@ namespace Revature.Room.Api.Controllers
     /// <param name="roomId"></param>
     /// <returns></returns>
     [HttpGet("{roomId}", Name = "GetRoom")]
-    [ProducesResponseType(typeof(Lib.Room), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Lib.Models.Room), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetRoomAsync(Guid roomId)
     {
@@ -104,24 +105,24 @@ namespace Revature.Room.Api.Controllers
     /// <param name="room"></param>
     /// <returns></returns>
     [HttpPost]
-    [ProducesResponseType(typeof(Lib.Room), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(Lib.Models.Room), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> PostRoomAsync
-      ([FromBody, Bind("ComplexID, RoomID, RoomNumber, NumberOfBeds, NumberOfOccupants, Gender, RoomType, LeaseStart, LeaseEnd")]Lib.Room room)
+      ([FromBody, Bind("ComplexID, RoomID, RoomNumber, NumberOfBeds, NumberOfOccupants, Gender, RoomType, LeaseStart, LeaseEnd")]Lib.Models.Room room)
     {
       try
       {
         _logger.LogInformation("Adding a room");
 
-        var createdRoom = new Lib.Room
+        var createdRoom = new Lib.Models.Room
         {
           ComplexId = room.ComplexId,
-          RoomId = room.RoomId,
+          Id = room.Id,
           RoomNumber = room.RoomNumber,
           NumberOfBeds = room.NumberOfBeds,
           NumberOfOccupants = room.NumberOfOccupants,
-          Gender = room.Gender,
-          RoomType = room.RoomType
+          //Gender = room.Gender,
+          //RoomType = room.RoomType //(03/02/2020) should not update Gender and RoomType and adding new room to database?
         };
         createdRoom.SetLease(room.LeaseStart, room.LeaseEnd);
 
@@ -130,7 +131,7 @@ namespace Revature.Room.Api.Controllers
 
         _logger.LogInformation("Success. Room has been added");
 
-        return CreatedAtRoute("GetRoom", new { RoomID = createdRoom.RoomId }, createdRoom);
+        return CreatedAtRoute("GetRoom", new { RoomID = createdRoom.Id }, createdRoom);
       }
       catch (ArgumentException ex)
       {
@@ -150,7 +151,7 @@ namespace Revature.Room.Api.Controllers
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> PutRoomAsync(Guid roomId, [FromBody] Lib.Room room)
+    public async Task<IActionResult> PutRoomAsync(Guid roomId, [FromBody] Lib.Models.Room room)
     {
       try
       {
