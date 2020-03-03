@@ -3,24 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Revature.Room.DataAccess.Entities;
-using Revature.Room.Lib;
-using Data = Revature.Room.DataAccess.Entities;
+using Revature.Lodging.DataAccess.Entities;
+using Revature.Lodging.Lib;
+using Data = Revature.Lodging.DataAccess.Entities;
 
-namespace Revature.Room.DataAccess
+namespace Revature.Lodging.DataAccess
 {
   /// <summary>
   /// Class in charge of methods that affect the state and data in the Room DB
   /// </summary>
-  public class Repository : IRepository
+  public class RoomRepository : IRoomRepository
   {
-    private readonly RoomServiceContext _context;
-    private readonly IMapper _map;
+    private readonly LodgingDbContext _context;
 
-    public Repository(RoomServiceContext context, IMapper mapper)
+    public RoomRepository(LodgingDbContext context)
     {
       _context = context;
-      _map = mapper;
     }
 
     /// <summary>
@@ -28,9 +26,9 @@ namespace Revature.Room.DataAccess
     /// </summary>
     /// <param name="myRoom"></param>
     /// <returns></returns>
-    public async Task CreateRoomAsync(Lib.Room myRoom)
+    public async Task CreateRoomAsync(Lib.Models.Room myRoom)
     {
-      var roomEntity = _map.ParseRoom(myRoom);
+      var roomEntity = Mapper.Map(myRoom);
       roomEntity.Gender = null;
       roomEntity.RoomType = await _context.RoomType.FirstAsync(r => r.Type == myRoom.RoomType);
       await _context.AddAsync(roomEntity);
@@ -43,9 +41,9 @@ namespace Revature.Room.DataAccess
     /// <param name="roomId"></param>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException">Thrown when room is not found in the database</exception>
-    public async Task<Lib.Room> ReadRoomAsync(Guid roomId)
+    public async Task<Lib.Models.Room> ReadRoomAsync(Guid roomId)
     {
-      return _map.ParseRoom(await _context.Room.Where(r => r.RoomId == roomId).Include(r => r.Gender).Include(r => r.RoomType).FirstAsync());
+      return Mapper.Map(await _context.Room.Where(r => r.Id == roomId).Include(r => r.Gender).Include(r => r.RoomType).FirstAsync());
     }
 
     /// <summary>
@@ -55,9 +53,9 @@ namespace Revature.Room.DataAccess
     /// <returns></returns>
     /// <exception cref="InvalidOperationException">Thrown when room isn't found in DB</exception>
     /// <remarks>Update room method for the complex service</remarks>
-    public async Task UpdateRoomAsync(Lib.Room myRoom)
+    public async Task UpdateRoomAsync(Lib.Models.Room myRoom)
     {
-      var roomEntity = await _context.Room.Where(r => r.RoomId == myRoom.RoomId)
+      var roomEntity = await _context.Room.Where(r => r.Id == myRoom.Id)
         .Include(r => r.Gender)
         .Include(r => r.RoomType)
         .FirstAsync();
@@ -89,7 +87,7 @@ namespace Revature.Room.DataAccess
     /// <exception cref="InvalidOperationException">Thrown when room to be deleted isn't found in DB</exception>
     public async Task<List<Guid>> DeleteComplexRoomAsync(Guid complexId)
     {
-      var roomEntity = await _context.Room.Where(r => r.ComplexId == complexId).Select(r => r.RoomId).ToListAsync();
+      var roomEntity = await _context.Room.Where(r => r.ComplexId == complexId).Select(r => r.Id).ToListAsync();
 
       foreach (var r in roomEntity)
       {
@@ -113,7 +111,7 @@ namespace Revature.Room.DataAccess
     /// <param name="roomId"></param>
     /// <returns></returns>
     /// <exception cref="KeyNotFoundException">Either ComplexId or RoomId is not in the DB</exception>
-    public async Task<IEnumerable<Lib.Room>> GetFilteredRoomsAsync(
+    public async Task<IEnumerable<Lib.Models.Room>> GetFilteredRoomsAsync(
       Guid complexId,
       string roomNumber,
       int? numberOfBeds,
@@ -147,9 +145,10 @@ namespace Revature.Room.DataAccess
       }
       if (roomId != null)
       {
-        rooms = rooms.Where(r => r.RoomId == roomId) ?? throw new KeyNotFoundException("Room Id not found");
+        rooms = rooms.Where(r => r.Id == roomId) ?? throw new KeyNotFoundException("Room Id not found");
       }
-      return _map.ParseRooms(rooms);
+      //return Mapper.Map(rooms);
+      return rooms.Select(Mapper.Map);
     }
 
     /// <summary>
@@ -169,9 +168,9 @@ namespace Revature.Room.DataAccess
     /// <returns></returns>
     public async Task<IList<Tuple<Guid, int>>> GetVacantFilteredRoomsByGenderandEndDateAsync(string gender, DateTime endDate)
     {
-      return await _context.Room
+      return await _context.Room                                      //.ToUpper() IS GOING TO CAUSE A BUG FIX IT
         .Where(r => (r.Gender == null || r.Gender.Type.ToUpper() == gender.ToUpper()) && endDate < r.LeaseEnd && r.NumberOfOccupants < r.NumberOfBeds)
-        .Select(r => new Tuple<Guid, int>(r.RoomId, r.NumberOfBeds))
+        .Select(r => new Tuple<Guid, int>(r.Id, r.NumberOfBeds))
         .ToListAsync();
     }
 
@@ -183,7 +182,7 @@ namespace Revature.Room.DataAccess
     /// <remarks>Sets a room's gender when Gender is null, i.e. when the room was previously unoccupied</remarks>
     public async Task AddRoomOccupantsAsync(Guid roomId, string tenantGender)
     {
-      var roomToUpdate = await _context.Room.Where(r => r.RoomId == roomId).Include(r => r.Gender).FirstAsync();
+      var roomToUpdate = await _context.Room.Where(r => r.Id == roomId).Include(r => r.Gender).FirstAsync();
       roomToUpdate.NumberOfOccupants++;
       if (roomToUpdate.Gender == null)
       {
@@ -201,7 +200,7 @@ namespace Revature.Room.DataAccess
     /// <remarks>Reverts gender of room back to null if updated room is empty</remarks>
     public async Task SubtractRoomOccupantsAsync(Guid roomId)
     {
-      var roomToUpdate = await _context.Room.Where(r => r.RoomId == roomId).Include(r => r.Gender).FirstAsync();
+      var roomToUpdate = await _context.Room.Where(r => r.Id == roomId).Include(r => r.Gender).FirstAsync();
       roomToUpdate.NumberOfOccupants--;
       if (roomToUpdate.NumberOfOccupants == 0)
       {
