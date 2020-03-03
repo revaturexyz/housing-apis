@@ -11,15 +11,11 @@ namespace Revature.Lodging.DataAccess.Entities
     : base(options) { }
 
     public virtual DbSet<Complex> Complex { get; set; }
-
     public virtual DbSet<AmenityComplex> AmenityComplex { get; set; }
     public virtual DbSet<AmenityRoom> AmenityRoom { get; set; }
     public virtual DbSet<Amenity> Amenity { get; set; }
-
     public virtual DbSet<Gender> Gender { get; set; }
-
     public virtual DbSet<Room> Room { get; set; }
-
     public virtual DbSet<RoomType> RoomType { get; set; }
 
     //private Guid cId1 = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606");
