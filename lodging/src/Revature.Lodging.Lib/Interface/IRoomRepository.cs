@@ -1,8 +1,9 @@
+using Revature.Lodging.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Revature.Room.Lib
+namespace Revature.Lodging.Lib
 {
   /// <summary>
   /// Interface for the Repository
@@ -20,7 +21,7 @@ namespace Revature.Room.Lib
     /// <param name="endDate"></param>
     /// <returns></returns
     /// <exception cref="KeyNotFoundException">Either ComplexId or RoomId is not in the DB</exception>
-    Task<IEnumerable<Room>> GetFilteredRoomsAsync(
+    public Task<IEnumerable<Room>> GetFilteredRoomsAsync(
       Guid complexId,
       string roomNumber,
       int? numberOfBeds,
