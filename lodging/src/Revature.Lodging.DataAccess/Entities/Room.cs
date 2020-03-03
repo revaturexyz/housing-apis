@@ -25,7 +25,7 @@ namespace Revature.Lodging.DataAccess.Entities
 
     public Guid ComplexId { get; set; }
 
-    public int GenderId { get; set; }
+    public int? GenderId { get; set; }
 
     public int RoomTypeId { get; set; }
 

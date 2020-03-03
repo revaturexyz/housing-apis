@@ -18,10 +18,14 @@ namespace Revature.Lodging.Lib.Models
     private int _numberOfBeds;
 
     /// <summary>
-    /// Numebr of occupants in a room
+    /// Number of occupants in a room
     /// </summary>
     private int _numberOfOccupants;
 
+    /// <summary>
+    /// room type
+    /// </summary>
+    private string _roomType;
 
     /// <summary>
     /// Unique Identifier for each Room, assigned by complex service
@@ -38,7 +42,7 @@ namespace Revature.Lodging.Lib.Models
       get => _roomNumber;
       set
       {
-        if (string.IsNullOrEmpty(value))
+        if (string.IsNullOrWhiteSpace(value))
         {
           throw new ArgumentException("Room Number should have a value");
         }
@@ -116,14 +120,24 @@ namespace Revature.Lodging.Lib.Models
     /// <summary>
     /// Gender of the Room, when assigning a tenant to a Room, their roommates should be of the same gender
     /// </summary>
-    public int GenderId { get; set; }
+    public string Gender { get; set; } 
+    
 
     /// <summary>
     /// Type of Room, for example: apartment, dorm, house, etc.
     /// </summary>
     /// <exception cref="ArgumentException">Thrown when the gender is null or has no value just whitespace</exception>
-    [Required]
-    public int RoomTypeId { get; set; }
+    public string RoomType {
+      get => _roomType;
+      set
+      {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+          throw new ArgumentException("Room Type must have a value");
+        }
+        _roomType = value;
+      }
+    }
 
    
     

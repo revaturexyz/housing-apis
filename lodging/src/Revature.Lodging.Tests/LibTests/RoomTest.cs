@@ -27,9 +27,9 @@ namespace Revature.Room.Tests.Revature.Room.Lib.Tests
       {
         Id = _newRoomId,
         ComplexId = _newComplexId,
-        //Gender = _newGender,
+        Gender = _newGender,
         RoomNumber = _newRoomNumber,
-        //RoomType = _newRoomType,
+        RoomType = _newRoomType,
         NumberOfBeds = _newNumOfBeds,
         NumberOfOccupants = _newNumOfOccupants
       };
@@ -37,9 +37,9 @@ namespace Revature.Room.Tests.Revature.Room.Lib.Tests
       Assert.NotNull(newRoom);
       Assert.True(newRoom.Id == _newRoomId);
       Assert.True(newRoom.ComplexId == _newComplexId);
-      //Assert.True(newRoom.Gender == _newGender);
+      Assert.True(newRoom.Gender == _newGender);
       Assert.True(newRoom.RoomNumber == _newRoomNumber);
-      //Assert.True(newRoom.RoomType == _newRoomType);
+      Assert.True(newRoom.RoomType == _newRoomType);
       Assert.True(newRoom.NumberOfBeds == _newNumOfBeds);
       Assert.True(newRoom.NumberOfOccupants == _newNumOfOccupants);
       Assert.True(newRoom.LeaseStart == _newLeaseStart);

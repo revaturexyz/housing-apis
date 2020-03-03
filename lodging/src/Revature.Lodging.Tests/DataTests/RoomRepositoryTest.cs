@@ -43,9 +43,9 @@ namespace Revature.Lodging.Tests.DataTests
       {
         Id = _newRoomId,
         ComplexId = _newComplexId,
-        //Gender = _newGender,
+        Gender = _newGender,
         RoomNumber = _newRoomNumber,
-        //RoomType = _newRoomType,
+        RoomType = _newRoomType,
         NumberOfBeds = _newNumOfBeds,
         NumberOfOccupants = _newNumOfOccupants,
       };
@@ -195,7 +195,7 @@ namespace Revature.Lodging.Tests.DataTests
 
       var resultRoom = await repo.ReadRoomAsync(newRoom.Id);
 
-     // Assert.Equal("Male", resultRoom.Gender);
+      Assert.Equal("Male", resultRoom.Gender);
     }
 
     [Fact]
@@ -349,11 +349,11 @@ namespace Revature.Lodging.Tests.DataTests
 
       Assert.Equal(_newRoomNumber, filterRoom1.FirstOrDefault(r => r.RoomNumber == _newRoomNumber).RoomNumber);
 
-      //Assert.Equal(2, filterRoom2.Count(r => r.Gender == "Male"));
+      Assert.Equal(2, filterRoom2.Count(r => r.Gender == "Male"));
 
-      //Assert.Equal("TownHouse", filterRoom3.FirstOrDefault(r => r.RoomType == "TownHouse").RoomType);
+      Assert.Equal("TownHouse", filterRoom3.FirstOrDefault(r => r.RoomType == "TownHouse").RoomType);
 
-      //Assert.Equal(1, filterRoom3.Count(r => r.RoomType == "TownHouse"));
+      Assert.Equal(1, filterRoom3.Count(r => r.RoomType == "TownHouse"));
 
       //Assert.Equal(newComplexId, filterRoom4.FirstOrDefault(r => r.ComplexId == newComplexId).ComplexId);
 
