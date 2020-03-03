@@ -1,4 +1,4 @@
-namespace Revature.Room.Lib.Models
+namespace Revature.Lodging.Lib.Models
 {
   /// <summary>
   /// The operation type is what CRUD operation you are sending to the Room service
