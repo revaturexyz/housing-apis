@@ -14,13 +14,11 @@ namespace Revature.Lodging.DataAccess.Repository
   {
 
     private readonly Entity.LodgingDbContext _context;
-    private readonly IMapper _map;
     private readonly ILogger<Repository> _log;
 
-    public Repository(Entity.LodgingDbContext context, IMapper mapper, ILogger<Repository> logger)
+    public Repository(Entity.LodgingDbContext context, ILogger<Repository> logger)
     {
       _context = context;
-      _map = mapper;
       _log = logger;
     }
 
@@ -31,11 +29,11 @@ namespace Revature.Lodging.DataAccess.Repository
     /// <returns></returns>
     public async Task<bool> CreateComplexAsync(Logic.Complex lComplex)
     {
-      var complex = _map.MapComplextoE(lComplex);
+      var complex = Mapper.Map(lComplex);
 
       await _context.AddAsync(complex);
       await _context.SaveChangesAsync();
-      _log.LogInformation("new complex: {complexId} was inserted ", lComplex.ComplexId);
+      _log.LogInformation("new complex: {complexId} was inserted ", lComplex.Id);
 
       return true;
     }
@@ -51,7 +49,7 @@ namespace Revature.Lodging.DataAccess.Repository
       {
         var complices = await _context.Complex.ToListAsync();
 
-        return complices.Select(_map.MapEtoComplex).ToList();
+        return complices.Select(Mapper.Map).ToList();
       }
       catch (Exception ex)
       {
@@ -71,7 +69,7 @@ namespace Revature.Lodging.DataAccess.Repository
       try
       {
         var complexFind = await _context.Complex.FindAsync(complexId);
-        return _map.MapEtoComplex(complexFind);
+        return Mapper.Map(complexFind);
       }
       catch (ArgumentException ex)
       {
@@ -95,7 +93,7 @@ namespace Revature.Lodging.DataAccess.Repository
           .Where(c => c.ComplexName == name && c.ContactNumber == phone)
           .AsNoTracking()
           .FirstOrDefaultAsync();
-        return _map.MapEtoComplex(complex);
+        return Mapper.Map(complex);
       }
       catch (ArgumentException ex)
       {
@@ -114,7 +112,7 @@ namespace Revature.Lodging.DataAccess.Repository
     {
       try
       {
-        var origin = await _context.Complex.FindAsync(update.ComplexId);
+        var origin = await _context.Complex.FindAsync(update.Id);
 
         if (update.ComplexName != null)
         {
@@ -126,13 +124,13 @@ namespace Revature.Lodging.DataAccess.Repository
         }
 
         await _context.SaveChangesAsync();
-        _log.LogInformation("{complexId} was updated", update.ComplexId);
+        _log.LogInformation("{complexId} was updated", update.Id);
 
         return true;
       }
       catch (ArgumentException ex)
       {
-        _log.LogError("{ex}comlex id: {ComplexId} update failed", ex, update.ComplexId);
+        _log.LogError("{ex}comlex id: {ComplexId} update failed", ex, update.Id);
         throw;
       }
     }
@@ -151,7 +149,7 @@ namespace Revature.Lodging.DataAccess.Repository
 
         _context.Remove(target);
         await _context.SaveChangesAsync();
-        _log.LogInformation("target: {complexId} was deleted", target.ComplexId);
+        _log.LogInformation("target: {complexId} was deleted", target.Id);
 
         return true;
       }
@@ -170,7 +168,7 @@ namespace Revature.Lodging.DataAccess.Repository
     /// <returns></returns>
     public async Task<bool> CreateAmenityRoomAsync(Logic.AmenityRoom ar)
     {
-      var amenityRoom = _map.MapAmenityRoomtoE(ar);
+      var amenityRoom = Mapper.Map(ar);
 
       await _context.AddAsync(amenityRoom);
       await _context.SaveChangesAsync();
@@ -233,11 +231,11 @@ namespace Revature.Lodging.DataAccess.Repository
     /// <returns></returns>
     public async Task<bool> CreateAmenityComplexAsync(Logic.AmenityComplex ac)
     {
-      var amenityComplex = _map.MapAmenityComplextoE(ac);
+      var amenityComplex = Mapper.Map(ac);
 
       await _context.AddAsync(amenityComplex);
       await _context.SaveChangesAsync();
-      _log.LogInformation("new amenity for complex: {AmenityComplexId} was added", ac.AmenityComplexId);
+      _log.LogInformation("new amenity for complex: {AmenityComplexId} was added", ac.Id);
 
       return true;
     }
@@ -249,7 +247,7 @@ namespace Revature.Lodging.DataAccess.Repository
     /// <returns></returns>
     public async Task<bool> CreateAmenityAsync(Logic.Amenity amenity)
     {
-      var newAmenity = _map.MapAmenitytoE(amenity);
+      var newAmenity = Mapper.Map(amenity);
 
       await _context.AddAsync(newAmenity);
       await _context.SaveChangesAsync();
@@ -269,7 +267,7 @@ namespace Revature.Lodging.DataAccess.Repository
       {
         var amenities = await _context.Amenity.ToListAsync();
 
-        return amenities.Select(_map.MapEtoAmenity).ToList();
+        return amenities.Select(Mapper.Map).ToList();
       }
       catch (ArgumentException ex)
       {
@@ -294,7 +292,7 @@ namespace Revature.Lodging.DataAccess.Repository
         var amenities = new List<Logic.Amenity>();
         foreach (var ac in amenityComplices)
         {
-          amenities.Add(_map.MapEtoAmenity(await _context.Amenity.FindAsync(ac.AmenityId)));
+          amenities.Add(Mapper.Map(await _context.Amenity.FindAsync(ac.AmenityId)));
           _log.LogInformation("amenity: {ac.AmenityId} was found and added", ac.AmenityId);
         }
 
@@ -324,7 +322,7 @@ namespace Revature.Lodging.DataAccess.Repository
         var amenities = new List<Logic.Amenity>();
         foreach (var ac in amenityRooms)
         {
-          amenities.Add(_map.MapEtoAmenity(await _context.Amenity.FindAsync(ac.AmenityId)));
+          amenities.Add(Mapper.Map(await _context.Amenity.FindAsync(ac.AmenityId)));
         }
 
         return amenities;
@@ -348,7 +346,7 @@ namespace Revature.Lodging.DataAccess.Repository
       {
         var complices = await _context.Complex.Where(c => c.ProviderId == providerId).ToListAsync();
 
-        return complices.Select(_map.MapEtoComplex).ToList();
+        return complices.Select(Mapper.Map).ToList();
       }
       catch (Exception ex)
       {
@@ -367,7 +365,7 @@ namespace Revature.Lodging.DataAccess.Repository
     {
       try
       {
-        var eAmenity = await _context.Amenity.FindAsync(amenity.AmenityId);
+        var eAmenity = await _context.Amenity.FindAsync(amenity.Id);
 
         if (amenity.AmenityType != null)
         {
@@ -380,7 +378,7 @@ namespace Revature.Lodging.DataAccess.Repository
 
         await _context.SaveChangesAsync();
         _log.LogInformation("amenity: {amenity.AmenityId} {amenity.AmenityType} was updated"
-                                      , amenity.AmenityId, amenity.AmenityType);
+                                      , amenity.Id, amenity.AmenityType);
 
         return true;
       }
@@ -401,12 +399,12 @@ namespace Revature.Lodging.DataAccess.Repository
     {
       try
       {
-        var dAmenity = await _context.Amenity.FindAsync(amenity.AmenityId);
+        var dAmenity = await _context.Amenity.FindAsync(amenity.Id);
 
         _context.Remove(dAmenity);
 
         await _context.SaveChangesAsync();
-        _log.LogInformation("amenity: {dAmenity.AmenityId} {dAmenity.AmenityType} is deleted", dAmenity.AmenityId, dAmenity.AmenityType);
+        _log.LogInformation("amenity: {dAmenity.AmenityId} {dAmenity.AmenityType} is deleted", dAmenity.Id, dAmenity.AmenityType);
 
         return true;
       }
