@@ -63,7 +63,7 @@ namespace Revature.Lodging.Api.Services
       var queryString = addressId.ToString();
 
 
-      using var response = await SendRequestAsync<ApiComplexAddress>(HttpMethod.Get, "api/Address" + queryString);
+      using var response = await SendRequestAsync<ApiComplexAddress>(HttpMethod.Get, "api/Address/" + queryString);
       response.EnsureSuccessStatusCode();
 
       return await ReadResponseBodyAsync<ApiComplexAddress>(response);
