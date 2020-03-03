@@ -1,3 +1,5 @@
+using System;
+
 namespace Revature.Lodging.DataAccess
 {
   public static class Mapper
@@ -134,6 +136,43 @@ namespace Revature.Lodging.DataAccess
     /// <returns></returns>
     public static Entities.Room Map(Lib.Models.Room room)
     {
+      //switch statement to convert gender and room type strings into int that represent primary key from respective tables
+      Nullable<int> genderId = null;
+      int roomTypeId = 0;
+      string gender = room.Gender.ToLower();
+      string roomType = room.RoomType.ToLower();
+
+      if (gender != null)
+      {
+        switch (gender)
+        {
+          case "male":
+            genderId = 1;
+            break;
+          case "female":
+            genderId = 2;
+            break;
+        }
+      }
+
+      
+        switch (roomType)
+        {
+          case "apartment":
+            roomTypeId = 1;
+            break;
+          case "dormitory":
+            roomTypeId = 2;
+            break;
+          case "townhouse":
+            roomTypeId = 3;
+            break;
+          case "hotelmotel":
+            roomTypeId = 4;
+            break;
+        
+        }
+
       return new Entities.Room
       {
         Id = room.Id,
@@ -143,9 +182,11 @@ namespace Revature.Lodging.DataAccess
         LeaseStart = room.LeaseStart,
         LeaseEnd = room.LeaseEnd,
         ComplexId = room.ComplexId,
-        GenderId = room.GenderId,
-        RoomTypeId = room.RoomTypeId
-      }; 
+        GenderId = genderId,
+        RoomTypeId = roomTypeId
+      };
+      
+
     }
 
     /// <summary>
@@ -155,6 +196,39 @@ namespace Revature.Lodging.DataAccess
     /// <returns></returns>
     public static Lib.Models.Room Map(Entities.Room room)
     {
+      //switch statement that converts gender id and room type id from room to strings for Lib.Models.Room
+      string gender = null;
+      string roomType = null;
+
+      if (room.GenderId != null)
+      {
+        switch (room.GenderId)
+        {
+          case 1:
+            gender = "Male";
+            break;
+          case 2:
+            gender = "Female";
+            break;
+        }
+      }
+
+      switch (room.RoomTypeId)
+      {
+        case 1:
+          roomType = "Apartment";
+          break;
+        case 2:
+          roomType = "Dormitory";
+          break;
+        case 3:
+          roomType = "TownHouse";
+          break;
+        case 4:
+          roomType = "HotelMotel";
+          break;
+      }
+
       var rm = new Lib.Models.Room
       {
         Id = room.Id,
@@ -162,8 +236,8 @@ namespace Revature.Lodging.DataAccess
         NumberOfBeds = room.NumberOfBeds,
         NumberOfOccupants = room.NumberOfOccupants,
         ComplexId = room.ComplexId,
-        GenderId = room.GenderId,
-        RoomTypeId = room.RoomTypeId
+        Gender = gender,
+        RoomType = roomType
       };
       rm.SetLease(room.LeaseStart, room.LeaseEnd);
       return rm;
