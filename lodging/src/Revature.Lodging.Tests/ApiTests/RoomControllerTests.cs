@@ -97,8 +97,8 @@ namespace Revature.Lodging.Tests.ApiTests
         RoomNumber = "ABC",
         NumberOfBeds = 4,
         NumberOfOccupants = 4,
-        //Gender = "Male",
-        //RoomType = "Apartment"
+        Gender = "Male",
+        RoomType = "Apartment"
       };
 
       roomTest.SetLease(DateTime.Now, DateTime.Today.AddDays(3));
@@ -160,8 +160,8 @@ namespace Revature.Lodging.Tests.ApiTests
         RoomNumber = "ABC",
         NumberOfBeds = 4,
         NumberOfOccupants = 4,
-        //Gender = "Male",
-        //RoomType = "Apartment"
+        Gender = "Male",
+        RoomType = "Apartment"
       };
 
       roomTest.SetLease(DateTime.Now, DateTime.Today.AddDays(3));
