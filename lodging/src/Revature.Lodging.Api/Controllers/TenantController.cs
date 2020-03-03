@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Revature.Room.Lib;
+using Revature.Lodging.Lib;
 
 namespace Revature.Room.Api.Controllers
 {
