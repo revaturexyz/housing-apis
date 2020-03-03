@@ -1,9 +1,9 @@
 using System;
 
 using Xunit;
-using BL = Revature.Room.Lib;
+using BL = Revature.Lodging.Lib;
 
-namespace Revature.Room.Tests.Revature.Room.Lib.Tests
+namespace Revature.Lodging.Tests.LibTests
 {
   public class TenantMessageTest
   {
