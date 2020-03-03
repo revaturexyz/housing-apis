@@ -9,7 +9,7 @@ using Data = Revature.Lodging.DataAccess.Entities;
 
 namespace Revature.Lodging.DataAccess
 {
-  /// <summary>
+  /// <summary> 
   /// Class in charge of methods that affect the state and data in the Room DB
   /// </summary>
   public class RoomRepository : IRoomRepository
@@ -29,8 +29,8 @@ namespace Revature.Lodging.DataAccess
     public async Task CreateRoomAsync(Lib.Models.Room myRoom)
     {
       var roomEntity = Mapper.Map(myRoom);
-      roomEntity.Gender = null;
-      roomEntity.RoomType = await _context.RoomType.FirstAsync(r => r.Type == myRoom.RoomType);
+      //roomEntity.Gender = null;
+      //roomEntity.RoomType = await _context.RoomType.FirstAsync(r => r.Type == myRoom.RoomType);
       await _context.AddAsync(roomEntity);
       await _context.SaveChangesAsync();
     }
