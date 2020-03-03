@@ -77,7 +77,6 @@ namespace Revature.Account.Api.Controllers
     }
 
     // PUT: api/provider-accounts/approve
-    //TODO: Refactor to enforce coordinator approval of providers
     [HttpPut("{providerId}/approve")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
