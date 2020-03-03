@@ -261,7 +261,7 @@ namespace Revature.Lodging.Api.Controllers
     //Post: api/complex/PostComplex
     public async Task<ActionResult<ApiComplex>> PostComplexAsync([FromBody]ApiComplex apiComplex)
     {
-      var compAddr = new ApiComplexAddress()
+      var compAddr = new ApiAddress()
       {
         StreetAddress = apiComplex.Address.StreetAddress,
         City = apiComplex.Address.City,
@@ -391,7 +391,7 @@ namespace Revature.Lodging.Api.Controllers
     //PUT: api/complex/editcomplex
     public async Task<ActionResult> PutComplexAsync([FromBody]ApiComplex apiComplex)
     {
-      var compAddr = new ApiComplexAddress()
+      var compAddr = new ApiAddress()
       {
         AddressId = apiComplex.Address.AddressId,
         StreetAddress = apiComplex.Address.StreetAddress,

@@ -32,7 +32,7 @@ namespace Revature.Lodging.Tests.ApiTests
     public void ApiComplexAddressTest()
     {
       var aId = Guid.NewGuid();
-      var address = new ApiComplexAddress
+      var address = new ApiAddress
       {
         AddressId = aId,
         StreetAddress = "123 test ave",

@@ -216,7 +216,7 @@ namespace Revature.Lodging.Tests.ApiTests
       var aId = Guid.NewGuid();
       var pId = Guid.NewGuid();
       var amId = Guid.NewGuid();
-      var address = new ApiComplexAddress
+      var address = new ApiAddress
       {
         AddressId = aId,
         StreetAddress = "test ave",
