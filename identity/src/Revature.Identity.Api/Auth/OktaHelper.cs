@@ -14,9 +14,9 @@ namespace Revature.Account.Api
 {
   public class OktaHelper
   {
-    public static readonly string CoordinatorRole = "coordinator";
-    public static readonly string UnapprovedProviderRole = "unapproved_provider";
-    public static readonly string ApprovedProviderRole = "approved_provider";
+    public static readonly string CoordinatorRole = "Coordinator";
+    public static readonly string ApprovedProviderRole = "Provider";
+    public static readonly string TenantRole = "Tenant";
 
     private readonly ILogger _logger;
 

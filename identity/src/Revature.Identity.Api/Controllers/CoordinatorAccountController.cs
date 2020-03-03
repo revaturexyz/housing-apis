@@ -48,31 +48,47 @@ namespace Revature.Account.Api.Controllers
         var oktaRoles = await okta.Client.Groups.ToList();
 
         var id = await _repo.GetCoordinatorIdByEmailAsync(okta.Email);
+        //Update Okta roles based on local Db
         if (id != Guid.Empty)
         {
           // If their roles arent set properly, set them
-          if (!okta.Roles.Contains("coordinator"))
+          if (!okta.Roles.Contains(OktaHelper.CoordinatorRole))
           {
-            await okta.AddRoleAsync(oktaUser.Id, oktaRoles.First(r => r.Profile.Name == "coordinator").Id);
+            await okta.AddRoleAsync(oktaUser.Id, oktaRoles.First(r => r.Profile.Name == OktaHelper.CoordinatorRole).Id);
           }
         }
         else
         {
-          // Check the provider db
-          id = await _repo.GetProviderIdByEmailAsync(okta.Email);
-
-          if (id != Guid.Empty
-            && !okta.Roles.Contains("approved_provider"))
+          // Check the tentant db
+          id = await _repo.GetTenantIdByEmailAsync(okta.Email);
+          if(id != Guid.Empty)
           {
-            // They have no role, so set them as tenant
-            await okta.AddRoleAsync(oktaUser.Id, oktaRoles.First(r => r.Profile.Name == "Tenants").Id);
+            // If their roles arent set properly, set them
+            if (!okta.Roles.Contains(OktaHelper.TenantRole))
+            {
+              await okta.AddRoleAsync(oktaUser.Id, oktaRoles.First(r => r.Profile.Name == OktaHelper.TenantRole).Id);
+            }
+          }
+          else
+          {
+            //check the provider db
+            id = await _repo.GetProviderIdByEmailAsync(okta.Email);
+            if (id != Guid.Empty
+              && !okta.Roles.Contains(OktaHelper.ApprovedProviderRole))
+            {
+              if(_repo.GetProviderAccountByIdAsync(id).Result.Status.StatusText == Status.Approved)
+              {
+                // They have been approved, so set them as Provider
+                await okta.AddRoleAsync(oktaUser.Id, oktaRoles.First(r => r.Profile.Name == OktaHelper.ApprovedProviderRole).Id);
+              }
+            }
           }
         }
-
+        //Update local Db with info from Okta
         if (id == Guid.Empty)
         {
-          // They have no account anywhere - check roles for coordinator role
-          if (okta.Roles.Contains("coordinator"))
+          // They have no account anywhere - check roles for Coordinator role
+          if (okta.Roles.Contains(OktaHelper.CoordinatorRole))
           {
             // They have been set as a coordinator on the okta site, so make a new account
             var coordinator = new CoordinatorAccount
@@ -86,6 +102,19 @@ namespace Revature.Account.Api.Controllers
             };
             // Add them
             _repo.AddCoordinatorAccount(coordinator);
+          }
+          //Check roles for Tenant
+          if (okta.Roles.Contains(OktaHelper.TenantRole))
+          {
+            var tenant = new TenantAccount
+            {
+              Email = okta.Email,
+              Name = oktaUser.Profile.FirstName != null && oktaUser.Profile.LastName != null
+                ? oktaUser.Profile.FirstName + " " + oktaUser.Profile.LastName
+                : "No Name"
+            };
+            //Add them
+            _repo.AddTenantAccount(tenant);
           }
           else
           {
@@ -105,9 +134,6 @@ namespace Revature.Account.Api.Controllers
 
             // No notification is made. This is handled in the frontend when
             // they select a training center and click 'request approval'
-
-            // They have no role, so set them as unapproved
-            await okta.AddRoleAsync(oktaUser.Id, oktaRoles.First(r => r.Profile.Name == "Tenants").Id);
           }
           // Db was modified either way, save changes
           await _repo.SaveAsync();
