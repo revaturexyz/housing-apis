@@ -73,7 +73,6 @@ namespace Revature.Lodging.Api
       services.AddDbContext<LodgingDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString(ConnectionStringName)));
 
       services.AddScoped<IComplexRepository, ComplexRepository>();
-      services.AddScoped<IMapper, Mapper>();
       // services.AddHostedService<RoomServiceReceiver>();
       // services.AddScoped<IRoomServiceSender, RoomServiceSender>();
       services.AddHttpClient<IAddressRequest, AddressRequest>();
