@@ -21,7 +21,7 @@ namespace Revature.Lodging.Tests.ApiTests
     public async void GetAmenitiesAsyncTest()
     {
       //setup
-      var _complexRepo = new Mock<IRepository>();
+      var _complexRepo = new Mock<IComplexRepository>();
       var _logger = new Mock<ILogger<AmenityController>>();
       var res = new List<Amenity>();
       _complexRepo.Setup(r => r.ReadAmenityListAsync())
@@ -42,7 +42,7 @@ namespace Revature.Lodging.Tests.ApiTests
     public async void GetRoomAmenitiesAsyncTest()
     {
       var rId = Guid.NewGuid();
-      var _complexRepo = new Mock<IRepository>();
+      var _complexRepo = new Mock<IComplexRepository>();
       var _logger = new Mock<ILogger<AmenityController>>();
       var res = new List<Amenity>();
       _complexRepo.Setup(r => r.ReadAmenityListByRoomIdAsync(rId))
@@ -63,7 +63,7 @@ namespace Revature.Lodging.Tests.ApiTests
     public async void GetComplexAmenitiesAsyncTest()
     {
       var cId = Guid.NewGuid();
-      var _complexRepo = new Mock<IRepository>();
+      var _complexRepo = new Mock<IComplexRepository>();
       var _logger = new Mock<ILogger<AmenityController>>();
       var res = new List<Amenity>();
       _complexRepo.Setup(r => r.ReadAmenityListByComplexIdAsync(cId))
@@ -83,17 +83,17 @@ namespace Revature.Lodging.Tests.ApiTests
     [Fact]
     public async void PostAmenityAsyncTest()
     {
-      var _complexRepo = new Mock<IRepository>();
+      var _complexRepo = new Mock<IComplexRepository>();
       var _logger = new Mock<ILogger<AmenityController>>();
       var amenity = new Amenity
       {
-        AmenityId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AmenityType = "test1",
         Description = "describe"
       };
       var apiAmenity = new ApiAmenity
       {
-        AmenityId = amenity.AmenityId,
+        AmenityId = amenity.Id,
         AmenityType = "test1",
         Description = "describe"
       };
@@ -115,17 +115,17 @@ namespace Revature.Lodging.Tests.ApiTests
     [Fact]
     public async void PutAmenityAsyncTest()
     {
-      var _complexRepo = new Mock<IRepository>();
+      var _complexRepo = new Mock<IComplexRepository>();
       var _logger = new Mock<ILogger<AmenityController>>();
       var amenity = new Amenity
       {
-        AmenityId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AmenityType = "test1",
         Description = "describe"
       };
       var apiAmenity = new ApiAmenity
       {
-        AmenityId = amenity.AmenityId,
+        AmenityId = amenity.Id,
         AmenityType = "test1",
         Description = "describe"
       };
@@ -147,17 +147,17 @@ namespace Revature.Lodging.Tests.ApiTests
     [Fact]
     public async void DeleteAmenityAsyncTest()
     {
-      var _complexRepo = new Mock<IRepository>();
+      var _complexRepo = new Mock<IComplexRepository>();
       var _logger = new Mock<ILogger<AmenityController>>();
       var amenity = new Amenity
       {
-        AmenityId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AmenityType = "test1",
         Description = "describe"
       };
       var apiAmenity = new ApiAmenity
       {
-        AmenityId = amenity.AmenityId,
+        AmenityId = amenity.Id,
         AmenityType = "test1",
         Description = "describe"
       };

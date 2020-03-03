@@ -3,21 +3,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Revature.Room.Lib;
+using Revature.Lodging.Lib;
 
 namespace Revature.Room.Api.Controllers
 {
-  [Route("api/rooms")]
+  [Route("api/[controller]")]
   [ApiController]
   public class TenantController : ControllerBase
   {
-    private readonly IRepository _repository;
+    private readonly IRoomRepository _repository;
     private readonly ILogger _logger;
 
     /// <summary>
     /// Controller in charge of communicating with the tenant service
     /// </summary>
-    public TenantController(IRepository repository, ILogger<TenantController> logger)
+    public TenantController(IRoomRepository repository, ILogger<TenantController> logger)
     {
       _repository = repository ?? throw new NullReferenceException("Repository cannot be null." + nameof(repository));
       _logger = logger ?? throw new NullReferenceException("Logger cannot be null." + nameof(logger));

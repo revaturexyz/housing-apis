@@ -13,13 +13,13 @@ namespace Revature.Lodging.Api.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  [Authorize]
+  //[Authorize]
   public class AmenityController : ControllerBase
   {
-    private readonly IRepository _complexRepository;
+    private readonly IComplexRepository _complexRepository;
     private readonly ILogger<AmenityController> _log;
 
-    public AmenityController(IRepository complexRepository, ILogger<AmenityController> logger)
+    public AmenityController(IComplexRepository complexRepository, ILogger<AmenityController> logger)
     {
       _complexRepository = complexRepository ?? throw new ArgumentNullException(nameof(complexRepository), "Complex repo cannot be null");
       _log = logger;
@@ -129,7 +129,7 @@ namespace Revature.Lodging.Api.Controllers
     {
       var amen = new Logic.Amenity()
       {
-        AmenityId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AmenityType = apiAmenity.AmenityType,
         Description = apiAmenity.Description
       };
@@ -165,7 +165,7 @@ namespace Revature.Lodging.Api.Controllers
     {
       var amenity = new Logic.Amenity()
       {
-        AmenityId = apiAmenity.AmenityId,
+        Id = apiAmenity.AmenityId,
         AmenityType = apiAmenity.AmenityType,
         Description = apiAmenity.Description
       };
@@ -201,7 +201,7 @@ namespace Revature.Lodging.Api.Controllers
     {
       var amenity = new Logic.Amenity()
       {
-        AmenityId = apiAmenity.AmenityId,
+        Id = apiAmenity.AmenityId,
         AmenityType = apiAmenity.AmenityType,
         Description = apiAmenity.Description
       };

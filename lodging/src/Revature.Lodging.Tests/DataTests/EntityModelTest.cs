@@ -15,12 +15,12 @@ namespace Revature.Lodging.Tests.DataTests
       var amId = Guid.NewGuid();
       var amenity = new Entity.Amenity
       {
-        AmenityId = amId,
+        Id = amId,
         AmenityType = "fridge",
         Description = "to freeze items"
       };
 
-      Assert.Equal(amId, amenity.AmenityId);
+      Assert.Equal(amId, amenity.Id);
       Assert.Equal("fridge", amenity.AmenityType);
       Assert.Equal("to freeze items", amenity.Description);
     }
@@ -37,12 +37,12 @@ namespace Revature.Lodging.Tests.DataTests
 
       var ac = new Entity.AmenityComplex
       {
-        AmenityComplexId = acId,
+        Id = acId,
         AmenityId = amId,
         ComplexId = guid1
       };
 
-      Assert.Equal(acId, ac.AmenityComplexId);
+      Assert.Equal(acId, ac.Id);
       Assert.Equal(amId, ac.AmenityId);
       Assert.Equal(guid1, ac.ComplexId);
     }
@@ -59,12 +59,12 @@ namespace Revature.Lodging.Tests.DataTests
 
       var ar = new Entity.AmenityRoom
       {
-        AmenityRoomId = arId,
+        Id = arId,
         AmenityId = amId,
         RoomId = guid
       };
 
-      Assert.Equal(arId, ar.AmenityRoomId);
+      Assert.Equal(arId, ar.Id);
       Assert.Equal(amId, ar.AmenityId);
       Assert.Equal(guid, ar.RoomId);
     }
@@ -81,14 +81,14 @@ namespace Revature.Lodging.Tests.DataTests
 
       var complex = new Entity.Complex
       {
-        ComplexId = cId,
+        Id = cId,
         AddressId = aId,
         ProviderId = pId,
         ComplexName = "Liv+",
         ContactNumber = "(123)456-7890"
       };
 
-      Assert.Equal(cId, complex.ComplexId);
+      Assert.Equal(cId, complex.Id);
       Assert.Equal(aId, complex.AddressId);
       Assert.Equal(pId, complex.ProviderId);
       Assert.Equal("Liv+", complex.ComplexName);

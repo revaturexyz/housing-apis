@@ -9,7 +9,7 @@ namespace Revature.Lodging.DataAccess.Entities
   public class Amenity
   {
 
-    public Guid AmenityId { get; set; }
+    public Guid Id { get; set; }
     public string AmenityType { get; set; }
     public string Description { get; set; }
 
