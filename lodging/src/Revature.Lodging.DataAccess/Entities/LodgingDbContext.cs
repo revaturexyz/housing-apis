@@ -225,6 +225,45 @@ namespace Revature.Lodging.DataAccess.Entities
           .WithMany(d => d.Room)
           .HasForeignKey(p => p.RoomTypeId)
           .IsRequired();
+
+        entity.HasData(
+          new Room()
+          {
+            RoomTypeId = 1,
+            GenderId = 2,
+            LeaseEnd = DateTime.Today.AddMonths(3),
+            LeaseStart = DateTime.Now,
+            Id = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456fd"),
+            ComplexId = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606"),
+            NumberOfBeds = 4,
+            RoomNumber = "2428B",
+            NumberOfOccupants = 0
+          },
+          new Room()
+          {
+            RoomTypeId = 1,
+            GenderId = 1,
+            LeaseEnd = DateTime.Today.AddMonths(1),
+            LeaseStart = DateTime.Now.AddDays(1),
+            Id = Guid.Parse("fa1d6c6e-9650-44c9-8c6b-5aebd3f9a671"),
+            ComplexId = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606"),
+            NumberOfBeds = 2,
+            RoomNumber = "2422",
+            NumberOfOccupants = 1
+          },
+          new Room()
+          {
+            RoomTypeId = 1,
+            GenderId = 2,
+            LeaseEnd = DateTime.Today.AddMonths(4),
+            LeaseStart = DateTime.Now.AddDays(1),
+            Id = Guid.Parse("0a4d6c61-9650-44c9-8c6b-5aebd3f9a676"),
+            ComplexId = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606"),
+            NumberOfBeds = 3,
+            RoomNumber = "2421",
+            NumberOfOccupants = 1
+          }
+        );
       });
 
       //Room Type
