@@ -23,7 +23,7 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       var complex = new Logic.Complex
       {
-        ComplexId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AddressId = Guid.NewGuid(),
         ProviderId = Guid.NewGuid(),
         ComplexName = "test",
@@ -43,7 +43,7 @@ namespace Revature.Lodging.Tests.ApiTests
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ar.Object, rr.Object);
+      var controller = new ComplexController(complexRepo.Object, logger.Object, /*rss.Object, ar.Object,*/ rr.Object);
       var model = Assert.IsAssignableFrom<ActionResult<IEnumerable<ApiComplex>>>(await controller.GetAllComplexAsync());
 
       //assert
@@ -69,7 +69,7 @@ namespace Revature.Lodging.Tests.ApiTests
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ar.Object, rr.Object);
+      var controller = new ComplexController(complexRepo.Object, logger.Object, /*rss.Object, ar.Object,*/ rr.Object);
       var model = Assert.IsAssignableFrom<ActionResult<ApiComplex>>(await controller.GetComplexByIdAsync(complexId));
 
       //assert
@@ -96,7 +96,7 @@ namespace Revature.Lodging.Tests.ApiTests
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ar.Object, rr.Object);
+      var controller = new ComplexController(complexRepo.Object, logger.Object, /*rss.Object, ar.Object,*/ rr.Object);
       var model = Assert.IsAssignableFrom<ActionResult<ApiComplex>>(await controller.GetComplexByNameAndNumberAsync(name, number));
 
       //assert
@@ -113,7 +113,7 @@ namespace Revature.Lodging.Tests.ApiTests
       var pId = Guid.NewGuid();
       var complex = new Logic.Complex
       {
-        ComplexId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AddressId = Guid.NewGuid(),
         ProviderId = pId,
         ComplexName = "test",
@@ -132,7 +132,7 @@ namespace Revature.Lodging.Tests.ApiTests
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ar.Object, rr.Object);
+      var controller = new ComplexController(complexRepo.Object, logger.Object, /*rss.Object, ar.Object,*/ rr.Object);
       var model = Assert.IsAssignableFrom<ActionResult<IEnumerable<ApiComplex>>>(await controller.GetComplexListByProviderId(pId));
 
       //assert
@@ -168,7 +168,7 @@ namespace Revature.Lodging.Tests.ApiTests
       };
       var ar = new Logic.AmenityRoom
       {
-        AmenityRoomId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AmenityId = amId,
         RoomId = rId
       };
@@ -199,7 +199,7 @@ namespace Revature.Lodging.Tests.ApiTests
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ara.Object, rr.Object);
+      var controller = new ComplexController(complexRepo.Object, logger.Object, /*rss.Object, ara.Object,*/ rr.Object);
       var model = Assert.IsAssignableFrom<StatusCodeResult>(await controller.PostRoomsAsync(apiRooms));
 
       //assert
@@ -227,7 +227,7 @@ namespace Revature.Lodging.Tests.ApiTests
       };
       var amenity = new Logic.Amenity
       {
-        AmenityId = amId,
+        Id = amId,
         AmenityType = "name",
         Description = "description"
       };
@@ -246,7 +246,7 @@ namespace Revature.Lodging.Tests.ApiTests
       };
       var complex = new Logic.Complex
       {
-        ComplexId = cId,
+        Id = cId,
         AddressId = aId,
         ProviderId = pId,
         ComplexName = "Liv+",
@@ -254,7 +254,7 @@ namespace Revature.Lodging.Tests.ApiTests
       };
       var ac = new Logic.AmenityComplex
       {
-        AmenityComplexId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AmenityId = amId,
         ComplexId = cId
       };
@@ -275,7 +275,7 @@ namespace Revature.Lodging.Tests.ApiTests
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ar.Object, rr.Object);
+      var controller = new ComplexController(complexRepo.Object, logger.Object, /*rss.Object, ar.Object,*/ rr.Object);
       var model = Assert.IsAssignableFrom<StatusCodeResult>(await controller.PutComplexAsync(apiComplex));
 
       //assert
@@ -303,7 +303,7 @@ namespace Revature.Lodging.Tests.ApiTests
       };
       var ar = new Logic.AmenityRoom
       {
-        AmenityRoomId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AmenityId = amId,
         RoomId = rId
       };
@@ -331,7 +331,7 @@ namespace Revature.Lodging.Tests.ApiTests
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ara.Object, rr.Object);
+      var controller = new ComplexController(complexRepo.Object, logger.Object, /*rss.Object, ara.Object,*/ rr.Object);
       var model = Assert.IsAssignableFrom<StatusCodeResult>(await controller.PutRoomAsync(room));
 
       //assert
@@ -359,7 +359,7 @@ namespace Revature.Lodging.Tests.ApiTests
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ar.Object, rr.Object);
+      var controller = new ComplexController(complexRepo.Object, logger.Object, /*rss.Object, ar.Object,*/ rr.Object);
       var model = Assert.IsAssignableFrom<StatusCodeResult>(await controller.DeleteComplexAsync(cId));
 
       //assert
@@ -393,7 +393,7 @@ namespace Revature.Lodging.Tests.ApiTests
       rss.Setup(r => r.SendRoomsMessages(roomtoSend));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ar.Object, rr.Object);
+      var controller = new ComplexController(complexRepo.Object, logger.Object, /*rss.Object, ar.Object,*/ rr.Object);
       var model = Assert.IsAssignableFrom<StatusCodeResult>(await controller.DeleteRoomAsync(room));
 
       //assert
