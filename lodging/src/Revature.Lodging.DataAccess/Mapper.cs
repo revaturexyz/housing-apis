@@ -167,7 +167,7 @@ namespace Revature.Lodging.DataAccess
           case "townhouse":
             roomTypeId = 3;
             break;
-          case "hotelmotel":
+          case "hotel/motel":
             roomTypeId = 4;
             break;
         
@@ -225,7 +225,7 @@ namespace Revature.Lodging.DataAccess
           roomType = "TownHouse";
           break;
         case 4:
-          roomType = "HotelMotel";
+          roomType = "Hotel/Motel";
           break;
       }
 

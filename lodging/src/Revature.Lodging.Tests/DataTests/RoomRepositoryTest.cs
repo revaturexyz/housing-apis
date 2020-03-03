@@ -39,7 +39,7 @@ namespace Revature.Lodging.Tests.DataTests
     // Use to set up a valid business logic Room
     private BusinessLogic.Models.Room PresetBLRoom()
     {
-      var room = new BusinessLogic.Models.Room
+      var room = new BusinessLogic.Models.Room 
       {
         Id = _newRoomId,
         ComplexId = _newComplexId,
