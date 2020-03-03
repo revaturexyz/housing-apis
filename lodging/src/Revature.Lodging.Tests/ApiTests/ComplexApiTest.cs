@@ -30,7 +30,7 @@ namespace Revature.Lodging.Tests.ApiTests
         ContactNumber = "1234567892"
       };
       //setup
-      var complexRepo = new Mock<IRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ar = new Mock<IAddressRequest>();
@@ -58,7 +58,7 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       //setup
       var complexId = Guid.NewGuid();
-      var complexRepo = new Mock<IRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ar = new Mock<IAddressRequest>();
@@ -85,7 +85,7 @@ namespace Revature.Lodging.Tests.ApiTests
       //setup
       var name = "test1";
       var number = "1234567890";
-      var complexRepo = new Mock<IRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ar = new Mock<IAddressRequest>();
@@ -119,7 +119,7 @@ namespace Revature.Lodging.Tests.ApiTests
         ComplexName = "test",
         ContactNumber = "1234567892"
       };
-      var complexRepo = new Mock<IRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ar = new Mock<IAddressRequest>();
@@ -188,7 +188,7 @@ namespace Revature.Lodging.Tests.ApiTests
         room
       };
       IEnumerable<ApiRoom> apiRooms = rooms;
-      var complexRepo = new Mock<IRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ara = new Mock<IAddressRequest>();
@@ -258,7 +258,7 @@ namespace Revature.Lodging.Tests.ApiTests
         AmenityId = amId,
         ComplexId = cId
       };
-      var complexRepo = new Mock<IRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ar = new Mock<IAddressRequest>();
@@ -318,7 +318,7 @@ namespace Revature.Lodging.Tests.ApiTests
         LeaseEnd = Convert.ToDateTime("2020/1/1"),
         Amenities = amenities
       };
-      var complexRepo = new Mock<IRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ara = new Mock<IAddressRequest>();
@@ -346,7 +346,7 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       var cId = Guid.NewGuid();
       var aId = Guid.NewGuid();
-      var complexRepo = new Mock<IRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ar = new Mock<IAddressRequest>();
@@ -381,7 +381,7 @@ namespace Revature.Lodging.Tests.ApiTests
       {
         RoomId = rId
       };
-      var complexRepo = new Mock<IRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ar = new Mock<IAddressRequest>();

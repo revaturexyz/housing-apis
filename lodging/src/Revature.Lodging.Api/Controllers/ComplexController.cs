@@ -18,13 +18,13 @@ namespace Revature.Lodging.Api.Controllers
   //[Authorize]
   public class ComplexController : Controller
   {
-    private readonly IRepository _complexRepository;
+    private readonly IComplexRepository _complexRepository;
     private readonly ILogger<ComplexController> _log;
     //private readonly IRoomServiceSender _roomServiceSender;
     //private readonly IAddressRequest _addressRequest;
     private readonly IRoomRequest _roomRequest;
 
-    public ComplexController(IRepository complexRepository, ILogger<ComplexController> logger,
+    public ComplexController(IComplexRepository complexRepository, ILogger<ComplexController> logger,
        /*IRoomServiceSender rss, IAddressRequest ar,*/ IRoomRequest rr)
     {
       _complexRepository = complexRepository ?? throw new ArgumentNullException(nameof(complexRepository), "Complex repo cannot be null");

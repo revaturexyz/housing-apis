@@ -10,13 +10,13 @@ using Logic = Revature.Lodging.Lib.Models;
 
 namespace Revature.Lodging.DataAccess.Repository
 {
-  public class Repository : IRepository
+  public class ComplexRepository : IComplexRepository
   {
 
     private readonly Entity.LodgingDbContext _context;
-    private readonly ILogger<Repository> _log;
+    private readonly ILogger<ComplexRepository> _log;
 
-    public Repository(Entity.LodgingDbContext context, ILogger<Repository> logger)
+    public ComplexRepository(Entity.LodgingDbContext context, ILogger<ComplexRepository> logger)
     {
       _context = context;
       _log = logger;

@@ -129,7 +129,7 @@ namespace Revature.Lodging.Api.Controllers
     {
       var amen = new Logic.Amenity()
       {
-        AmenityId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AmenityType = apiAmenity.AmenityType,
         Description = apiAmenity.Description
       };
@@ -165,7 +165,7 @@ namespace Revature.Lodging.Api.Controllers
     {
       var amenity = new Logic.Amenity()
       {
-        AmenityId = apiAmenity.AmenityId,
+        Id = apiAmenity.AmenityId,
         AmenityType = apiAmenity.AmenityType,
         Description = apiAmenity.Description
       };
@@ -201,7 +201,7 @@ namespace Revature.Lodging.Api.Controllers
     {
       var amenity = new Logic.Amenity()
       {
-        AmenityId = apiAmenity.AmenityId,
+        Id = apiAmenity.AmenityId,
         AmenityType = apiAmenity.AmenityType,
         Description = apiAmenity.Description
       };

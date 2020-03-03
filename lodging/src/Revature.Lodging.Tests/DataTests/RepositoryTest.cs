@@ -136,13 +136,13 @@ namespace Revature.Lodging.Tests.DataTests
     public async void CreateComplexAsyncTest()
     {
 
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("CreateComplexAsyncTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       var result = await repo.CreateComplexAsync(_complex1);
       var checker = testContext.Complex.First().Id;
@@ -156,13 +156,13 @@ namespace Revature.Lodging.Tests.DataTests
     [Fact]
     public async void ReadComplexListAsyncTest()
     {
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("ReadComplexListTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       testContext.Add(_complexE1);
       testContext.Add(_complexE2);
@@ -181,13 +181,13 @@ namespace Revature.Lodging.Tests.DataTests
     public async void ReadComplexAsyncTest()
     {
 
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("ReadComplexAsyncTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       testContext.Add(_complexE1);
 
@@ -202,13 +202,13 @@ namespace Revature.Lodging.Tests.DataTests
     [Fact]
     public async void UpdateComplexAsync()
     {
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("UpdateComplexAsync")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       testContext.Add(_complexE1);
       testContext.SaveChanges();
@@ -233,13 +233,13 @@ namespace Revature.Lodging.Tests.DataTests
     [Fact]
     public async void DeleteComplexAsyncTest()
     {
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("DeleteComplexTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       testContext.Add(_complexE1);
       testContext.Add(_complexE2);
@@ -259,13 +259,13 @@ namespace Revature.Lodging.Tests.DataTests
     [Fact]
     public async void CreateAmenityRoomAsyncTest()
     {
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("CreateAmenityRoomAsyncTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       var result = await repo.CreateAmenityRoomAsync(_ar);
       var check = testContext.AmenityRoom.First().Id;
@@ -279,13 +279,13 @@ namespace Revature.Lodging.Tests.DataTests
     [Fact]
     public async void CreateAmenityComplexAsyncTest()
     {
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("CreateAmenityComplexAsyncTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       var result = await repo.CreateAmenityComplexAsync(_ac);
       var check = testContext.AmenityComplex.First().Id;
@@ -299,13 +299,13 @@ namespace Revature.Lodging.Tests.DataTests
     [Fact]
     public async void CreateAmenityAsyncTest()
     {
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("CreateAmenityAsyncTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       var result = await repo.CreateAmenityAsync(_amenity);
 
@@ -321,13 +321,13 @@ namespace Revature.Lodging.Tests.DataTests
     public async void ReadAmenityListAsyncTest()
     {
 
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("ReadAmenityListTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       testContext.Add(_am1);
       testContext.Add(_am2);
@@ -345,13 +345,13 @@ namespace Revature.Lodging.Tests.DataTests
     [Fact]
     public async void ReadAmenityListByComplexIdAsyncTest()
     {
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("ReadAmenityListByComplexIdTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       testContext.Add(_complexE1);
       testContext.Add(_am1);
@@ -372,13 +372,13 @@ namespace Revature.Lodging.Tests.DataTests
     [Fact]
     public async void ReadAmenityListByRoomIdAsyncTest()
     {
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("ReadAmenityListByRoomIdTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       testContext.Add(_am1);
       testContext.Add(_am2);
@@ -398,13 +398,13 @@ namespace Revature.Lodging.Tests.DataTests
     [Fact]
     public async void ReadComplexByProviderIDAsyncTest()
     {
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("ReadComplexByProviderIDTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       var complexE3 = new Entity.Complex
       {
@@ -432,13 +432,13 @@ namespace Revature.Lodging.Tests.DataTests
     [Fact]
     public async void UpdateAmenityAsyncTest()
     {
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("UpdateAmenityAsyncTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       testContext.Add(_am1);
       testContext.Add(_am2);
@@ -462,13 +462,13 @@ namespace Revature.Lodging.Tests.DataTests
     [Fact]
     public async void DeleteAmenityAsyncTest()
     {
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("DeleteAmenityAsyncTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       var amId3 = Guid.NewGuid();
       var am3 = new Entity.Amenity
@@ -500,13 +500,13 @@ namespace Revature.Lodging.Tests.DataTests
     [Fact]
     public async void ReadComplexByNameAndNumberAsyncTest()
     {
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("DeleteAmenityAsyncTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       var name = "Liv+";
       var phone = "1234567890";
@@ -527,13 +527,13 @@ namespace Revature.Lodging.Tests.DataTests
     public async void DeleteAmenityRoomAsyncTest()
     {
 
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("DeleteAmenityAsyncTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       testContext.Add(_arE1);
       testContext.Add(_arE2);
@@ -550,13 +550,13 @@ namespace Revature.Lodging.Tests.DataTests
     [Fact]
     public async void DeleteAmenityComplexAsyncTest()
     {
-      var log = new NullLogger<Repository>();
+      var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
               .UseInMemoryDatabase("DeleteAmenityAsyncTest")
               .Options;
       using var testContext = new Entity.LodgingDbContext(options);
-      var repo = new Repository(testContext, log);
+      var repo = new ComplexRepository(testContext, log);
 
       testContext.Add(_acE1);
       testContext.Add(_acE2);

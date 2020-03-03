@@ -5,7 +5,7 @@ using Logic = Revature.Lodging.Lib.Models;
 
 namespace Revature.Lodging.Lib.Interface
 {
-  public interface IRepository
+  public interface IComplexRepository
   {
     /// <summary>
     /// Create new single complex in the database by logic complex object
