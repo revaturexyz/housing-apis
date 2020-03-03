@@ -8,7 +8,7 @@ using Revature.Lodging.Api.Controllers;
 using Revature.Lodging.Lib;
 using Xunit;
 
-namespace Revature.Lodging.DataAccess.Tests
+namespace Revature.Lodging.Tests.ApiTests
 {
   public class RoomControllerTests
   {
