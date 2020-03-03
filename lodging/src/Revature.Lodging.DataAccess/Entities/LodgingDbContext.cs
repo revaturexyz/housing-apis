@@ -16,6 +16,12 @@ namespace Revature.Lodging.DataAccess.Entities
     public virtual DbSet<AmenityRoom> AmenityRoom { get; set; }
     public virtual DbSet<Amenity> Amenity { get; set; }
 
+    public virtual DbSet<Gender> Gender { get; set; }
+
+    public virtual DbSet<Room> Room { get; set; }
+
+    public virtual DbSet<RoomType> RoomType { get; set; }
+
     //private Guid cId1 = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606");
     ////cId1 equals to room service seed data: complex Id
     //private Guid cId2 = Guid.Parse("68b7eadd-30ce-49a7-9b8c-bae1d47f46a6");
