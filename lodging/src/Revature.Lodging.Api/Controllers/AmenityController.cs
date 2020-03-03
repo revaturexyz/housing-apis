@@ -16,10 +16,10 @@ namespace Revature.Lodging.Api.Controllers
   //[Authorize]
   public class AmenityController : ControllerBase
   {
-    private readonly IRepository _complexRepository;
+    private readonly IComplexRepository _complexRepository;
     private readonly ILogger<AmenityController> _log;
 
-    public AmenityController(IRepository complexRepository, ILogger<AmenityController> logger)
+    public AmenityController(IComplexRepository complexRepository, ILogger<AmenityController> logger)
     {
       _complexRepository = complexRepository ?? throw new ArgumentNullException(nameof(complexRepository), "Complex repo cannot be null");
       _log = logger;
