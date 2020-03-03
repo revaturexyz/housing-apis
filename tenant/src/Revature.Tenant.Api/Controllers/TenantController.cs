@@ -39,7 +39,7 @@ namespace Revature.Tenant.Api.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IEnumerable<ApiTenant>>> GetAllAsync([FromQuery] string firstName = null, [FromQuery] string lastName = null, [FromQuery] string gender = null, [FromQuery] string trainingCenter = null)
+    public async Task<ActionResult<IEnumerable<ApiTenant>>> GetAllAsync([FromQuery] string firstName = null, [FromQuery] string lastName = null, [FromQuery] string gender = null, [FromQuery] string trainingCenter = null, [FromQuery] string email = null)
     {
       //Parse training center string to guid if it exists
       Guid? trainingCenterGuid;
@@ -50,7 +50,7 @@ namespace Revature.Tenant.Api.Controllers
 
       //Call repository GetAllAsync
       _logger.LogInformation("GET - Getting tenants");
-      var tenants = await _tenantRepository.GetAllAsync(firstName, lastName, gender, trainingCenterGuid);
+      var tenants = await _tenantRepository.GetAllAsync(firstName, lastName, gender, trainingCenterGuid, email);
 
       //Maps batches and cars correctly, based on null or not null
       var newTenants = new List<Lib.Models.Tenant>();

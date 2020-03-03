@@ -17,7 +17,7 @@ namespace Revature.Tenant.DataAccess.Entities
       builder.Entity<Tenant>(entity =>
       {
         entity.HasKey(t => t.Id);
-        entity.Property(t => t.Email).IsRequired();
+        entity.HasIndex(t => t.Email).IsUnique();
         entity.Property(t => t.Gender).IsRequired();
         entity.Property(t => t.FirstName).IsRequired().HasMaxLength(100);
         entity.Property(t => t.LastName).IsRequired().HasMaxLength(100);

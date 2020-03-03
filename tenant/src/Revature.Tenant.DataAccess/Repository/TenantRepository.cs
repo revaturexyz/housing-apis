@@ -77,34 +77,36 @@ namespace Revature.Tenant.DataAccess.Repository
     /// Gets a list of all tenants
     /// </summary>
     /// <returns>The collection of all tenants, including their Car and Batch, if applicable</returns>
-    public async Task<ICollection<Lib.Models.Tenant>> GetAllAsync(string firstName = null, string lastName = null, string gender = null, Guid? trainingCenter = null)
+    public async Task<ICollection<Lib.Models.Tenant>> GetAllAsync(string firstName = null, string lastName = null, string gender = null, Guid? trainingCenter = null, string email = null)
     {
       var tenants = _context.Tenant
         .Include(t => t.Car)
         .Include(t => t.Batch)
         .AsNoTracking();
 
-      if (!string.IsNullOrEmpty(firstName))
+      if (!string.IsNullOrWhiteSpace(firstName))
       {
-        tenants = tenants.Where(t => t.FirstName == firstName);
+        tenants = tenants.Where(t => t.FirstName.ToLower() == firstName.ToLower());
       }
-      if (!string.IsNullOrEmpty(lastName))
+      if (!string.IsNullOrWhiteSpace(lastName))
       {
-        tenants = tenants.Where(t => t.LastName == lastName);
+        tenants = tenants.Where(t => t.LastName.ToLower() == lastName.ToLower());
       }
-      if (!string.IsNullOrEmpty(gender))
+      if (!string.IsNullOrWhiteSpace(gender))
       {
-        tenants = tenants.Where(t => t.Gender == gender);
+        tenants = tenants.Where(t => t.Gender.ToLower() == gender.ToLower());
       }
       if (trainingCenter != null)
       {
         tenants = tenants.Where(t => t.TrainingCenter == trainingCenter);
       }
+      if (!string.IsNullOrWhiteSpace(email))
+      {
+        tenants = tenants.Where(t => t.Email.ToLower() == email.ToLower());
+      }
 
       return (await tenants.ToListAsync()).Select(_mapper.MapTenant).ToList();
     }
-
-
 
     /// <summary>
     /// Gets all batches in a training center
