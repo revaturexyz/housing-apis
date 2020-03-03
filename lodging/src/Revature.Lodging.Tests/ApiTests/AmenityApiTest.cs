@@ -87,13 +87,13 @@ namespace Revature.Lodging.Tests.ApiTests
       var _logger = new Mock<ILogger<AmenityController>>();
       var amenity = new Amenity
       {
-        AmenityId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AmenityType = "test1",
         Description = "describe"
       };
       var apiAmenity = new ApiAmenity
       {
-        AmenityId = amenity.AmenityId,
+        AmenityId = amenity.Id,
         AmenityType = "test1",
         Description = "describe"
       };
@@ -119,13 +119,13 @@ namespace Revature.Lodging.Tests.ApiTests
       var _logger = new Mock<ILogger<AmenityController>>();
       var amenity = new Amenity
       {
-        AmenityId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AmenityType = "test1",
         Description = "describe"
       };
       var apiAmenity = new ApiAmenity
       {
-        AmenityId = amenity.AmenityId,
+        AmenityId = amenity.Id,
         AmenityType = "test1",
         Description = "describe"
       };
@@ -151,13 +151,13 @@ namespace Revature.Lodging.Tests.ApiTests
       var _logger = new Mock<ILogger<AmenityController>>();
       var amenity = new Amenity
       {
-        AmenityId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AmenityType = "test1",
         Description = "describe"
       };
       var apiAmenity = new ApiAmenity
       {
-        AmenityId = amenity.AmenityId,
+        AmenityId = amenity.Id,
         AmenityType = "test1",
         Description = "describe"
       };
