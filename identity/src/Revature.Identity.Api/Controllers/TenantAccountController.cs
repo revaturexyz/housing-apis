@@ -29,33 +29,8 @@ namespace Revature.Account.Api.Controllers
 
 
 
-    // GET: api/tenant-accounts/5
-    /// <summary>
-    /// return a tenant id based on a tenant email.
-    /// </summary>
-    /// <param name="Email"></param>
-    /// <returns></returns>
-    [HttpGet("{tentantId}", Name = "GetTenantByEmail")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize]
-    public async Task<ActionResult> Get(string Email)
-    {
-      TenantAccount tenant;
-      _logger.LogInformation($"GET - Getting tenant id by Email: {Email}");
-      var id = await _repo.GetTenantIdByEmailAsync(Email);
-      if (id == null)
-      {
-        _logger.LogWarning($"No tenant account found for {Email}");
-        return NotFound();
-      }
-      else
-      {
-        tenant = await _repo.GetTenantAccountByIdAsync(id);
-      }
-      return Ok(tenant);
-    }
-    //POST: api/tenantAccount
+    
+    //POST: api/tenantAccount/
     /// <summary>
     /// 
     /// </summary>
@@ -81,7 +56,7 @@ namespace Revature.Account.Api.Controllers
     }
 
 
-    // GET: api/tenant-accounts/5
+    // GET: api/TenantAccount/1a5bae53-cffa-472f-af41-fae9904b9db0
     [HttpGet("{tenantId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -108,11 +83,31 @@ namespace Revature.Account.Api.Controllers
       }
     }
 
+    // GET: api/TenantAccount/1a5bae53-cffa-472f-af41-fae9904b9db0
+    /// <summary>
+    /// return a tenant id based on a tenant email.
+    /// </summary>
+    /// <param name="Email"></param>
+    /// <returns></returns>
+    [HttpGet("{tentantId}", Name = "GetTenantByEmail")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize]
+    public async Task<ActionResult> Get(string Email)
+    {
+      _logger.LogInformation($"GET - Getting tenant id by Email: {Email}");
+      var id = await _repo.GetTenantIdByEmailAsync(Email);
+      if (id == null)
+      {
+        _logger.LogWarning($"No tenant account found for {Email}");
+        return NotFound();
+      }
+      return Ok(id);
+    }
 
 
 
-
-    // PUT: api/tenant-accounts/5
+    // PUT: api/TenantAccount/1a5bae53-cffa-472f-af41-fae9904b9db0
     /// <summary>
     /// 
     /// </summary>
@@ -146,7 +141,7 @@ namespace Revature.Account.Api.Controllers
 
 
 
-    // DELETE: api/provider-accounts/5
+    // DELETE: api/TenantAccount/1a5bae53-cffa-472f-af41-fae9904b9db0
     [HttpDelete("{tenantId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
