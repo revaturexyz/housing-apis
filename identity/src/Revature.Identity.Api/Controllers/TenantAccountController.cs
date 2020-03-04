@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -26,10 +27,34 @@ namespace Revature.Account.Api.Controllers
     }
 
 
+    //[Authorize(Roles = "Coordinator")]
+    [Authorize]
+    [HttpGet]
+    [Route("~/api/messages")]
+    public JsonResult Get()
+    {
+      var principal = HttpContext.User.Identity as ClaimsIdentity;
+
+      var login = principal.Claims
+          .SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
+          ?.Value;
+
+      var roles = principal.Claims.Where(c => c.Type == "Roles").ToList();
+      string.Join(",", roles);
+
+      return new JsonResult(new
+      {
+        messages = new dynamic[]
+                      {
+                    new { Date = DateTime.Now, Text = $"I am a {roles}" },
+                    new { Date = DateTime.Now, Text = "Hello, world!" },
+                      },
+      });
+    }
 
 
 
-    
+
     //POST: api/tenantAccount/
     /// <summary>
     /// 
