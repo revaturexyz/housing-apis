@@ -36,7 +36,7 @@ namespace Revature.Lodging.Api.Controllers
     /// <param name="endDate"></param>
     /// <returns></returns>
 
-    [HttpGet] // /complexes/{complexId}/rooms?roomNumber=a&numberOfBeds=b&roomType=c&gender=d&endDate=e&roomId=f
+    [HttpGet("complex/{complexId}")] // /complexes/{complexId}/rooms?roomNumber=a&numberOfBeds=b&roomType=c&gender=d&endDate=e&roomId=f
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetFilteredRoomsAsync(
@@ -80,7 +80,7 @@ namespace Revature.Lodging.Api.Controllers
     [HttpGet("{roomId}", Name = "GetRoom")]
     [ProducesResponseType(typeof(Lib.Models.Room), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetRoomAsync(Guid roomId)
+    public async Task<IActionResult> GetRoomById(Guid roomId)
     {
       try
       {
@@ -147,7 +147,7 @@ namespace Revature.Lodging.Api.Controllers
     /// <param name="room"></param>
     /// <returns></returns>
     /// <remarks>Update room functionality of complex service</remarks>
-    [HttpPut("{roomId}")]
+    [HttpPut]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -184,7 +184,7 @@ namespace Revature.Lodging.Api.Controllers
     /// </summary>
     /// <param name="roomId"></param>
     /// <returns></returns>
-    [HttpDelete("DeleteRoom")]
+    [HttpDelete]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteRoomAsync(Guid roomId)
