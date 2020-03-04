@@ -20,62 +20,54 @@ namespace Revature.Lodging.Api.Controllers
   {
     private readonly IComplexRepository _complexRepository;
     private readonly ILogger<ComplexController> _log;
-    //private readonly IRoomServiceSender _roomServiceSender;
-    //private readonly IAddressRequest _addressRequest;
-    private readonly IRoomRequest _roomRequest;
+    private readonly IAddressRequest _addressRequest;
 
-    public ComplexController(IComplexRepository complexRepository, ILogger<ComplexController> logger,
-       /*IRoomServiceSender rss, IAddressRequest ar,*/ IRoomRequest rr)
+    public ComplexController(IComplexRepository complexRepository, ILogger<ComplexController> logger, IAddressRequest ar)
     {
       _complexRepository = complexRepository ?? throw new ArgumentNullException(nameof(complexRepository), "Complex repo cannot be null");
       _log = logger;
-      //_roomServiceSender = rss;
-      //_addressRequest = ar;
-      _roomRequest = rr;
+      _addressRequest = ar;
     }
 
     #region GET
 
     /// <summary>
     /// (GET)
-    /// Call Repository to read all existed complices from database
-    /// without anything as parameters
-    /// then return it as enumarable collections of Api Complex model
+    /// Gets all existing Complex objexts from database
     /// </summary>
-    /// <returns></returns>
+    /// <returns> Collection of Complex objects with a list of associated amenities. </returns>
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpGet("Getallcomplex")]
-    //GET: api/complex/Getallcomplex
-    public async Task<ActionResult<IEnumerable<ApiComplex>>> GetAllComplexAsync()
+    [HttpGet]
+    //GET: api/complex/
+    public async Task<ActionResult<IEnumerable<ApiComplex>>> GetAllComplexesAsync()
     {
       try
       {
-        var complices = await _complexRepository.ReadComplexListAsync();
-        var apiComplices = new List<ApiComplex>();
+        var complexes = await _complexRepository.ReadComplexListAsync();
+        var apiComplexes = new List<ApiComplex>();
 
-        //foreach complex, get address from address service
-        //create Apicomplex object for each complex we have
-        //return them.
-        foreach (var com in complices)
+        //foreach Complex object, get Address object from Address service using AddressId
+        //create ApiComplex object for each Complex we have, and add them to a list that will be returned
+        foreach (var complex in complexes)
         {
-          var aId = com.AddressId;
-          //var address = await _addressRequest.GetAddressAsync(aId);
+          var addressId = complex.AddressId;
+          var address = await _addressRequest.GetAddressAsync(addressId);
 
-          var complex = new ApiComplex
+          var apiComplex = new ApiComplex
           {
-            ComplexId = com.Id,
-           // Address = address,
-            ProviderId = com.ProviderId,
-            ComplexName = com.ComplexName,
-            ContactNumber = com.ContactNumber,
-            ComplexAmenity = await _complexRepository.ReadAmenityListByComplexIdAsync(com.Id)
+            ComplexId = complex.Id,
+            Address = address,
+            ProviderId = complex.ProviderId,
+            ComplexName = complex.ComplexName,
+            ContactNumber = complex.ContactNumber,
+            ComplexAmenities = await _complexRepository.ReadAmenityListByComplexIdAsync(complex.Id)
           };
-          _log.LogInformation("a list of amenities for complex Id {com.ComplexId} were found!", com.Id);
-          apiComplices.Add(complex);
+          _log.LogInformation("A list of amenities for complex Id {com.ComplexId} were found!", complex.Id);
+          apiComplexes.Add(apiComplex);
         }
 
-        return Ok(apiComplices);
+        return Ok(apiComplexes);
       }
       catch (Exception ex)
       {

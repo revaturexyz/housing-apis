@@ -19,6 +19,6 @@ namespace Revature.Lodging.Api.Models
     public string ComplexName { get; set; }
     [StringLength(20)]
     public string ContactNumber { get; set; }
-    public List<Amenity> ComplexAmenity { get; set; }
+    public List<Amenity> ComplexAmenities { get; set; }
   }
 }
