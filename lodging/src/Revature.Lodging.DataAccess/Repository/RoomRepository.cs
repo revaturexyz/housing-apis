@@ -118,7 +118,8 @@ namespace Revature.Lodging.DataAccess
       string roomType,
       string gender,
       DateTime? endDate,
-      Guid? roomId)
+      Guid? roomId,
+      bool isVacant = false)
     {
       IEnumerable<Entities.Room> rooms = await _context.Room.Where(r => r.ComplexId == complexId)
                                                             .Include(r => r.Gender).Include(r => r.RoomType)
@@ -146,6 +147,10 @@ namespace Revature.Lodging.DataAccess
       if (roomId != null)
       {
         rooms = rooms.Where(r => r.Id == roomId) ?? throw new KeyNotFoundException("Room Id not found");
+      }
+      if(isVacant)
+      {
+        rooms = rooms.Where(r => r.NumberOfOccupants == 0);
       }
       //return Mapper.Map(rooms);
       return rooms.Select(Mapper.Map);

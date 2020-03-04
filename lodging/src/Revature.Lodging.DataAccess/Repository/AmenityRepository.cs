@@ -11,7 +11,7 @@ using Logic = Revature.Lodging.Lib.Models;
 
 namespace Revature.Lodging.DataAccess.Repository
 {
-  class AmenityRepository : IAmenityRepository
+  public class AmenityRepository : IAmenityRepository
   {
     private readonly Entity.LodgingDbContext _context;
     private readonly ILogger<AmenityRepository> _log;

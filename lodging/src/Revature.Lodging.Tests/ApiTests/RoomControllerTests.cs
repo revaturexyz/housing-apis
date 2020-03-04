@@ -30,7 +30,8 @@ namespace Revature.Lodging.Tests.ApiTests
         It.IsAny<string>(),
         It.IsAny<string>(),
         It.IsAny<DateTime>(),
-        It.IsAny<Guid>()))
+        It.IsAny<Guid>(),
+        It.IsAny<bool>()))
         .Returns(Task.FromResult<IEnumerable<Lib.Models.Room>>(
           new List<Lib.Models.Room>()
           {
@@ -62,7 +63,8 @@ namespace Revature.Lodging.Tests.ApiTests
         It.IsAny<string>(),
         It.IsAny<string>(),
         It.IsAny<DateTime>(),
-        It.IsAny<Guid>()))
+        It.IsAny<Guid>(),
+        It.IsAny<bool>()))
         .Throws(new KeyNotFoundException());
 
       var controller = new RoomController(mockRepo.Object, mockLogger.Object);
