@@ -76,9 +76,10 @@ namespace Revature.Account.Api.Controllers
             if (id != Guid.Empty
               && !okta.Roles.Contains(OktaHelper.ApprovedProviderRole))
             {
-              if(_repo.GetProviderAccountByIdAsync(id).Result.Status.StatusText == Status.Approved)
+              ProviderAccount prov = await _repo.GetProviderAccountByIdAsync(id);
+              if (prov.Status.StatusText == Status.Approved)
               {
-                // They have been approved, so set them as Provider
+                // They have been approved, so assign role Provider
                 await okta.AddRoleAsync(oktaUser.Id, oktaRoles.First(r => r.Profile.Name == OktaHelper.ApprovedProviderRole).Id);
               }
             }
