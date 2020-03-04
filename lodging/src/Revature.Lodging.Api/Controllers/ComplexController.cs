@@ -78,12 +78,10 @@ namespace Revature.Lodging.Api.Controllers
 
     /// <summary>
     /// (GET)
-    /// Call Repository and Address service to get specific complex info
-    /// by complex Id as parameter
-    /// will return single Api complex model
+    /// Get an existing Complex object by a ComplexId from database
     /// </summary>
-    /// <param name="complexGuid"></param>
-    /// <returns></returns>
+    /// <param name="complexId"> Specifies the Complex object </param>
+    /// <returns> Complex object with associated amenities </returns>
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("{complexId}")]
@@ -92,22 +90,22 @@ namespace Revature.Lodging.Api.Controllers
     {
       try
       {
-        var lcomplex = await _complexRepository.ReadComplexByIdAsync(complexId);
-        _log.LogInformation("a complex with Id: {complexId} was found", complexId);
+        var complex = await _complexRepository.ReadComplexByIdAsync(complexId);
+        _log.LogInformation("A complex with Id: {complexId} was found", complexId);
 
-        var aId = lcomplex.AddressId;
-        //var address = await _addressRequest.GetAddressAsync(aId);
+        var addressId = complex.AddressId;
+        var address = await _addressRequest.GetAddressAsync(addressId);
 
         var apiComplex = new ApiComplex
         {
-          ComplexId = lcomplex.Id,
-          //Address = address,
-          ProviderId = lcomplex.ProviderId,
-          ComplexName = lcomplex.ComplexName,
-          ContactNumber = lcomplex.ContactNumber,
-          ComplexAmenity = await _complexRepository.ReadAmenityListByComplexIdAsync(lcomplex.Id)
+          ComplexId = complex.Id,
+          Address = address,
+          ProviderId = complex.ProviderId,
+          ComplexName = complex.ComplexName,
+          ContactNumber = complex.ContactNumber,
+          ComplexAmenities = await _complexRepository.ReadAmenityListByComplexIdAsync(complex.Id)
         };
-        _log.LogInformation("a list of amenities for complex Id {lcomplex.ComplexId} was found!", lcomplex.Id);
+        _log.LogInformation("A list of amenities for complex Id {lcomplex.ComplexId} was found!", complex.Id);
 
         return Ok(apiComplex);
       }
@@ -139,16 +137,16 @@ namespace Revature.Lodging.Api.Controllers
         _log.LogInformation("a complex with name: {complexName} and phone: {ComplexNumber} was found", complexName, complexNumber);
 
         var aId = lcomplex.AddressId;
-        //var address = await _addressRequest.GetAddressAsync(aId);
+        var address = await _addressRequest.GetAddressAsync(aId);
 
         var apiComplex = new ApiComplex
         {
           ComplexId = lcomplex.Id,
-          //Address = address,
+          Address = address,
           ProviderId = lcomplex.ProviderId,
           ComplexName = lcomplex.ComplexName,
           ContactNumber = lcomplex.ContactNumber,
-          ComplexAmenity = await _complexRepository.ReadAmenityListByComplexIdAsync(lcomplex.Id)
+          ComplexAmenities = await _complexRepository.ReadAmenityListByComplexIdAsync(lcomplex.Id)
         };
         _log.LogInformation("a list of amenities for complex Id {lcomplex.ComplexId} were found!", lcomplex.Id);
 
@@ -163,45 +161,43 @@ namespace Revature.Lodging.Api.Controllers
 
     /// <summary>
     /// (GET)
-    /// Call Repository and Address service to get list of complex info
-    /// belongs specific provider by provider Id as parameter
-    /// then return it as enumarable collections of Api Complex model
+    /// Get Complex objects given a ProviderId from database
     /// </summary>
-    /// <param name="providerId"></param>
-    /// <returns></returns>
+    /// <param name="providerId"> Indicates needed Complex objects </param>
+    /// <returns> Collection of Complex objects with associated amenities </returns>
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpGet("provierId/{providerId}")]
-    //GET: api/complex/provierId/{providerID}
-    public async Task<ActionResult<IEnumerable<ApiComplex>>> GetComplexListByProviderId([FromRoute]Guid providerId)
+    [HttpGet("providerId/{providerId}")]
+    //GET: api/complex/providerId/{providerID}
+    public async Task<ActionResult<IEnumerable<ApiComplex>>> GetComplexesByProviderId([FromRoute]Guid providerId)
     {
       try
       {
-        var complices = await _complexRepository.ReadComplexByProviderIdAsync(providerId);
-        _log.LogInformation("a list of complices for provider Id: {providerId} were found", providerId);
+        var complexes = await _complexRepository.ReadComplexByProviderIdAsync(providerId);
+        _log.LogInformation("A list of complexes for provider Id: {providerId} were found", providerId);
 
-        var apiComplices = new List<ApiComplex>();
+        var apiComplexes = new List<ApiComplex>();
 
-        foreach (var complex in complices)
+        foreach (var complex in complexes)
         {
-          var aId = complex.AddressId;
-          //var address = await _addressRequest.GetAddressAsync(aId);
+          var addressId = complex.AddressId;
+          var address = await _addressRequest.GetAddressAsync(addressId);
 
-          var apiComplextoAdd = new ApiComplex
+          var apiComplex = new ApiComplex
           {
             ComplexId = complex.Id,
-            //Address = address,
+            Address = address,
             ProviderId = complex.ProviderId,
             ComplexName = complex.ComplexName,
             ContactNumber = complex.ContactNumber,
-            ComplexAmenity = await _complexRepository.ReadAmenityListByComplexIdAsync(complex.Id)
+            ComplexAmenities = await _complexRepository.ReadAmenityListByComplexIdAsync(complex.Id)
           };
-          _log.LogInformation("a list of amenities for complex Id {complex.ComplexId} was found!", complex.Id);
+          _log.LogInformation("A list of amenities for complex Id {complex.ComplexId} was found!", complex.Id);
 
-          apiComplices.Add(apiComplextoAdd);
+          apiComplexes.Add(apiComplex);
         }
 
-        return Ok(apiComplices);
+        return Ok(apiComplexes);
       }
       catch (Exception ex)
       {
