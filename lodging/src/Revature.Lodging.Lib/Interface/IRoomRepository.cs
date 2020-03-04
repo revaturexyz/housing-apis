@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Revature.Lodging.Lib
+namespace Revature.Lodging.Lib.Interface
 {
   /// <summary>
   /// Interface for the Repository

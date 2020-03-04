@@ -14,11 +14,13 @@ namespace Revature.Lodging.DataAccess.Repository
   {
 
     private readonly Entity.LodgingDbContext _context;
+    private readonly IRoomRepository _roomRepo;
     private readonly ILogger<ComplexRepository> _log;
 
-    public ComplexRepository(Entity.LodgingDbContext context, ILogger<ComplexRepository> logger)
+    public ComplexRepository(Entity.LodgingDbContext context, IRoomRepository roomRepo, ILogger<ComplexRepository> logger)
     {
       _context = context;
+      _roomRepo = roomRepo ?? throw new NullReferenceException("Room repository cannot be null." + nameof(roomRepo));
       _log = logger;
     }
 
@@ -353,6 +355,20 @@ namespace Revature.Lodging.DataAccess.Repository
         _log.LogError(ex, "comlices of provider Id: {pId} were not found", providerId);
         throw;
       }
+    }
+
+    public async Task<List<Guid>> DeleteComplexRoomAsync(Guid complexId)
+    {
+      var roomEntity = await _context.Room.Where(r => r.ComplexId == complexId).Select(r => r.Id).ToListAsync();
+
+      foreach (var r in roomEntity)
+      {
+        await _roomRepo.DeleteRoomAsync(r);
+      }
+
+      await _context.SaveChangesAsync();
+
+      return roomEntity;
     }
 
     /// <summary>

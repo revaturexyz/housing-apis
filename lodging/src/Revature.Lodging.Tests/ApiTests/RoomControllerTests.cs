@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Revature.Lodging.Api.Controllers;
-using Revature.Lodging.Lib;
+using Revature.Lodging.Lib.Interface;
 using Xunit;
 
 namespace Revature.Lodging.Tests.ApiTests

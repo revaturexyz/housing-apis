@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Revature.Lodging.DataAccess.Entities;
-using Revature.Lodging.Lib;
+using Revature.Lodging.Lib.Interface;
 using Data = Revature.Lodging.DataAccess.Entities;
 
 namespace Revature.Lodging.DataAccess

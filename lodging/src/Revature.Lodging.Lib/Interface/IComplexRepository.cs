@@ -50,6 +50,14 @@ namespace Revature.Lodging.Lib.Interface
     public Task<bool> DeleteComplexAsync(Guid complexId);
 
     /// <summary>
+    /// Deletes a complex and deletes all rooms that is connected to that complex
+    /// </summary>
+    /// <param name="complexId"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException">Thrown when room to be deleted isn't found in DB</exception>
+    public Task<List<Guid>> DeleteComplexRoomAsync(Guid complexId);
+
+    /// <summary>
     /// Create new single Amenities of Room in database by amenityroom object
     /// </summary>
     /// <param name="ar"></param>
