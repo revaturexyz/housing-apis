@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Revature.Account.Api;
 using Revature.Account.Lib.Interface;
 using Revature.Account.Lib.Model;
 
@@ -36,22 +35,50 @@ namespace Revature.Account.Api.Controllers
     /// </summary>
     /// <param name="Email"></param>
     /// <returns></returns>
-    [HttpGet("{tenantId}", Name = "GetTenantByEmail")]
+    [HttpGet("{tentantId}", Name = "GetTenantByEmail")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize]
     public async Task<ActionResult> Get(string Email)
     {
+      TenantAccount tenant;
       _logger.LogInformation($"GET - Getting tenant id by Email: {Email}");
-      var tenant = await _repo.GetTenantIdByEmailAsync(Email);
-      if (tenant == null)
+      var id = await _repo.GetTenantIdByEmailAsync(Email);
+      if (id == null)
       {
         _logger.LogWarning($"No tenant account found for {Email}");
         return NotFound();
       }
+      else
+      {
+        tenant = await _repo.GetTenantAccountByIdAsync(id);
+      }
       return Ok(tenant);
     }
+    //POST: api/tenantAccount
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="tenantId"></param>
+    /// <param name="Email"></param>
+    /// <param name="Name"></param>
+    /// <returns></returns>
+    public async Task<ActionResult> Post([FromBody, Bind("TenantId, Name, Email")] TenantAccount tenant)
+    {
+        try
+      {
+        _logger.LogInformation("Post- Creating tenant with ID: {tenant.tenantI}, Name: {tenant.Name}, Email: {tenant.Email}", tenant.TenantId, tenant.Name, tenant.Email);
+        _repo.AddTenantAccount(tenant);
+        await _repo.SaveAsync();
 
+        return Ok(tenant);
+      }
+      catch (Exception e)
+      {
+        _logger.LogError("Exception getting tenant: {exceptionMessage}, {exception}", e.Message, e);
+        return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+      }
+    }
 
 
     // GET: api/tenant-accounts/5
@@ -130,6 +157,7 @@ namespace Revature.Account.Api.Controllers
       var existingProvider = await _repo.GetTenantAccountByIdAsync(tenantId);
       if (existingProvider != null)
       {
+
         await _repo.DeleteTenantAccountAsync(tenantId);
         await _repo.SaveAsync();
         _logger.LogInformation($"Delete request persisted for {tenantId}");
