@@ -205,32 +205,6 @@ namespace Revature.Lodging.Api.Controllers
         return StatusCode(500, ex.Message);
       }
     }
-
-    /// <summary>
-    /// (GET)
-    /// Call Room sevice via HttpRequest to Get list of rooms by complex Id
-    /// then return it as enumarable collections of Api room model
-    /// </summary>
-    /// <param name="providerId"></param>
-    /// <returns></returns>
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpGet("rooms/{complexId}")]
-    //GET: api/complex/provierId/{providerID}
-    public async Task<ActionResult<IEnumerable<ApiComplex>>> GetRoomListByComplexId([FromRoute]Guid complexId)
-    {
-      try
-      {
-        var apiRooms = (await _roomRequest.GetRooms(complexId)).ToList();
-        return Ok(apiRooms);
-      }
-      catch (Exception ex)
-      {
-        _log.LogError("{ex}: Internal Server Error", ex);
-        return StatusCode(500, ex.Message);
-      }
-    }
-
     #endregion
 
     #region POST
