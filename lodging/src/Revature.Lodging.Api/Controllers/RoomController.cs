@@ -26,6 +26,7 @@ namespace Revature.Lodging.Api.Controllers
     }
 
     /// <summary>
+    /// GET:
     /// This controller method is to get rooms based on filters applied (roomNumber, numberOfBeds, etc)
     /// </summary>
     /// <param name="complexId"></param>
@@ -34,8 +35,7 @@ namespace Revature.Lodging.Api.Controllers
     /// <param name="roomType"></param>
     /// <param name="gender"></param>
     /// <param name="endDate"></param>
-    /// <returns></returns>
-
+    /// <returns>IEnumerable of type (Room)</returns>
     [HttpGet("complex/{complexId}")] // /complexes/{complexId}/rooms?roomNumber=a&numberOfBeds=b&roomType=c&gender=d&endDate=e&roomId=f
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -73,10 +73,11 @@ namespace Revature.Lodging.Api.Controllers
     }
 
     /// <summary>
+    /// GET:
     /// Reads/gets a room based given a roomId
     /// </summary>
     /// <param name="roomId"></param>
-    /// <returns></returns>
+    /// <returns>Room</returns>
     [HttpGet("{roomId}", Name = "GetRoomById")]
     [ProducesResponseType(typeof(Lib.Models.Room), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -100,10 +101,11 @@ namespace Revature.Lodging.Api.Controllers
     }
 
     /// <summary>
+    /// POST:
     /// Creates a room based on the complex's needs
     /// </summary>
     /// <param name="room"></param>
-    /// <returns></returns>
+    /// <returns>N/A</returns>
     [HttpPost]
     [ProducesResponseType(typeof(Lib.Models.Room), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -141,13 +143,14 @@ namespace Revature.Lodging.Api.Controllers
     }
 
     /// <summary>
-    /// Update room's lease
+    /// PUT:
+    /// Update a room's information
     /// </summary>
     /// <param name="roomId"></param>
     /// <param name="room"></param>
-    /// <returns></returns>
+    /// <returns>No Content</returns>
     /// <remarks>Update room functionality of complex service</remarks>
-    [HttpPut]
+    [HttpPut("{roomId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -180,11 +183,12 @@ namespace Revature.Lodging.Api.Controllers
     }
 
     /// <summary>
+    /// DELETE:
     /// Delete room based on room Id
     /// </summary>
     /// <param name="roomId"></param>
-    /// <returns></returns>
-    [HttpDelete]
+    /// <returns>No Content</returns>
+    [HttpDelete("{roomId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteRoomAsync(Guid roomId)
