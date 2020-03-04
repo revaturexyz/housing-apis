@@ -85,7 +85,7 @@ namespace Revature.Account.Api.Controllers
             }
           }
         }
-        //Update local Db with info from Okta
+        //Update local Db with info from Okta for coordinators, delete old tenant accounts
         if (id == Guid.Empty)
         {
           // They have no account anywhere - check roles for Coordinator role
@@ -107,15 +107,7 @@ namespace Revature.Account.Api.Controllers
           //Check roles for Tenant
           if (okta.Roles.Contains(OktaHelper.TenantRole))
           {
-            var tenant = new TenantAccount
-            {
-              Email = okta.Email,
-              Name = oktaUser.Profile.FirstName != null && oktaUser.Profile.LastName != null
-                ? oktaUser.Profile.FirstName + " " + oktaUser.Profile.LastName
-                : "No Name"
-            };
-            //Add them
-            _repo.AddTenantAccount(tenant);
+            await okta.RemoveRoleAsync(oktaUser.Id, OktaHelper.TenantRole);
           }
           else
           {
