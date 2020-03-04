@@ -77,10 +77,10 @@ namespace Revature.Lodging.Api.Controllers
     /// </summary>
     /// <param name="roomId"></param>
     /// <returns></returns>
-    [HttpGet("{roomId}", Name = "GetRoom")]
+    [HttpGet("{roomId}", Name = "GetRoomById")]
     [ProducesResponseType(typeof(Lib.Models.Room), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetRoomById(Guid roomId)
+    public async Task<IActionResult> GetRoomByIdAsync(Guid roomId)
     {
       try
       {

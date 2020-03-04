@@ -251,7 +251,7 @@ namespace Revature.Lodging.Tests.ApiTests
       var controller = new RoomController(mockRepo.Object, mockLogger.Object);
 
       //act
-      var result = await controller.GetRoomById(Guid.NewGuid());
+      var result = await controller.GetRoomByIdAsync(Guid.NewGuid());
       //assert
       Assert.IsAssignableFrom<OkObjectResult>(result);
     }
@@ -272,7 +272,7 @@ namespace Revature.Lodging.Tests.ApiTests
 
       var controller = new RoomController(mockRepo.Object, mockLogger.Object);
       //act
-      var result = await controller.GetRoomById(Guid.NewGuid());
+      var result = await controller.GetRoomByIdAsync(Guid.NewGuid());
       //assert
       Assert.IsType<NotFoundResult>(result);
     }
