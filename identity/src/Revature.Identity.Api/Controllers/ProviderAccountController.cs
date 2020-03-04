@@ -126,5 +126,31 @@ namespace Revature.Account.Api.Controllers
       _logger.LogWarning($"Delete request failed for {providerId}");
       return NotFound();
     }
+    // GET: api/provider-accounts/john@gmail.com
+    /// <summary>
+    /// return a provider based on an email.
+    /// </summary>
+    /// <param name="providerEmail"></param>
+    /// <returns></returns>
+    [HttpGet("{providerEmail}", Name = "GetProviderByEmail")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize]
+    public async Task<ActionResult> Get(string providerEmail)
+    {
+      _logger.LogInformation($"GET - Getting provider id by Email: {providerEmail}");
+      ProviderAccount prov;
+      var id = await _repo.GetProviderIdByEmailAsync(providerEmail);
+      if (id == null)
+      {
+        _logger.LogWarning($"No provider account found for {providerEmail}");
+        return NotFound();
+      }
+      else
+      {
+        prov = await _repo.GetProviderAccountByIdAsync(id);
+      }
+      return Ok(prov);
+    }
   }
 }
