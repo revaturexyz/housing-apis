@@ -62,6 +62,7 @@ namespace Revature.Lodging.DataAccess
 
       roomEntity.LeaseStart = myRoom.LeaseStart;
       roomEntity.LeaseEnd = myRoom.LeaseEnd;
+      roomEntity.NumberOfOccupants = myRoom.NumberOfOccupants;
 
       await _context.SaveChangesAsync();
     }

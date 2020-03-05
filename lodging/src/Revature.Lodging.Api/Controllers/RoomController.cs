@@ -159,21 +159,27 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> PutRoomAsync(Guid roomId, [FromBody] Lib.Models.Room room)
+    public async Task<IActionResult> PutRoomAsync(Guid roomId, [FromBody, Bind("ComplexID, RoomNumber, NumberOfBeds, NumberOfOccupants, Gender, RoomType, LeaseStart, LeaseEnd")]Lib.Models.Room room)
     {
       try
       {
         _logger.LogInformation("Updating a room");
 
         var roomFromDb = await _repository.ReadRoomAsync(roomId);
-        roomFromDb.SetLease(room.LeaseStart, room.LeaseEnd);
+        if (/*room.NumberOfOccupants == 0*/true)
+        {
+          roomFromDb.SetLease(room.LeaseStart, room.LeaseEnd);
+          roomFromDb.NumberOfOccupants = room.NumberOfOccupants;
 
-        await _repository.UpdateRoomAsync(roomFromDb);
-        await _repository.SaveAsync();
+          await _repository.UpdateRoomAsync(roomFromDb);
+          await _repository.SaveAsync();
 
-        _logger.LogInformation("Success. Room has been updated");
+          _logger.LogInformation("Success. Room has been updated");
 
-        return NoContent();
+          return NoContent();
+        }
+
+        else { return Unauthorized(); }
       }
       catch (InvalidOperationException ex)
       {
