@@ -20,13 +20,13 @@ namespace Revature.Lodging.Api.Controllers
   {
     private readonly IComplexRepository _complexRepository;
     private readonly ILogger<ComplexController> _log;
-    private readonly IAddressRequest _addressRequest;
+    //private readonly IAddressRequest _addressRequest;
 
-    public ComplexController(IComplexRepository complexRepository, ILogger<ComplexController> logger, IAddressRequest ar)
+    public ComplexController(IComplexRepository complexRepository, ILogger<ComplexController> logger/*, IAddressRequest ar*/)
     {
       _complexRepository = complexRepository ?? throw new ArgumentNullException(nameof(complexRepository), "Complex repo cannot be null");
       _log = logger;
-      _addressRequest = ar;
+     // _addressRequest = ar;
     }
 
     #region GET
@@ -52,12 +52,12 @@ namespace Revature.Lodging.Api.Controllers
         foreach (var complex in complexes)
         {
           var addressId = complex.AddressId;
-          var address = await _addressRequest.GetAddressAsync(addressId);
+        //  var address = await _addressRequest.GetAddressAsync(addressId);
 
           var apiComplex = new ApiComplex
           {
             ComplexId = complex.Id,
-            Address = address,
+          //  Address = address,
             ProviderId = complex.ProviderId,
             ComplexName = complex.ComplexName,
             ContactNumber = complex.ContactNumber,
@@ -94,12 +94,12 @@ namespace Revature.Lodging.Api.Controllers
         _log.LogInformation("A complex with Id: {complexId} was found", complexId);
 
         var addressId = complex.AddressId;
-        var address = await _addressRequest.GetAddressAsync(addressId);
+      //  var address = await _addressRequest.GetAddressAsync(addressId);
 
         var apiComplex = new ApiComplex
         {
           ComplexId = complex.Id,
-          Address = address,
+        //  Address = address,
           ProviderId = complex.ProviderId,
           ComplexName = complex.ComplexName,
           ContactNumber = complex.ContactNumber,
@@ -137,12 +137,12 @@ namespace Revature.Lodging.Api.Controllers
         _log.LogInformation("a complex with name: {complexName} and phone: {ComplexNumber} was found", complexName, complexNumber);
 
         var aId = lcomplex.AddressId;
-        var address = await _addressRequest.GetAddressAsync(aId);
+      //  var address = await _addressRequest.GetAddressAsync(aId);
 
         var apiComplex = new ApiComplex
         {
           ComplexId = lcomplex.Id,
-          Address = address,
+        //  Address = address,
           ProviderId = lcomplex.ProviderId,
           ComplexName = lcomplex.ComplexName,
           ContactNumber = lcomplex.ContactNumber,
@@ -181,12 +181,12 @@ namespace Revature.Lodging.Api.Controllers
         foreach (var complex in complexes)
         {
           var addressId = complex.AddressId;
-          var address = await _addressRequest.GetAddressAsync(addressId);
+        //  var address = await _addressRequest.GetAddressAsync(addressId);
 
           var apiComplex = new ApiComplex
           {
             ComplexId = complex.Id,
-            Address = address,
+          //  Address = address,
             ProviderId = complex.ProviderId,
             ComplexName = complex.ComplexName,
             ContactNumber = complex.ContactNumber,
@@ -223,17 +223,17 @@ namespace Revature.Lodging.Api.Controllers
     public async Task<ActionResult<ApiComplex>> PostComplexAsync([FromBody]ApiComplex apiComplex)
     {
       // Creates an Address object from Address properties in apiComplex object argument
-      var complexAddress = new ApiAddress()
-      {
-        StreetAddress = apiComplex.Address.StreetAddress,
-        City = apiComplex.Address.City,
-        State = apiComplex.Address.State,
-        ZipCode = apiComplex.Address.ZipCode,
-        Country = apiComplex.Address.Country,
-      };
+      //var complexAddress = new ApiAddress()
+      //{
+      //  StreetAddress = apiComplex.Address.StreetAddress,
+      //  City = apiComplex.Address.City,
+      //  State = apiComplex.Address.State,
+      //  ZipCode = apiComplex.Address.ZipCode,
+      //  Country = apiComplex.Address.Country,
+      //};
 
       // Retrieves an Address object using AddressRequest and storing the AddressId
-      var addressId = (await _addressRequest.PostAddressAsync(complexAddress)).AddressId;
+    //  var addressId = (await _addressRequest.PostAddressAsync(complexAddress)).AddressId;
 
       // Generates a new Guid for a ComplexId
       var complexId = Guid.NewGuid();
@@ -242,7 +242,7 @@ namespace Revature.Lodging.Api.Controllers
       var complex = new Logic.Complex()
       {
         Id = complexId,
-        AddressId = addressId,
+      //  AddressId = addressId,
         ProviderId = apiComplex.ProviderId,
         ContactNumber = apiComplex.ContactNumber,
         ComplexName = apiComplex.ComplexName
@@ -313,7 +313,7 @@ namespace Revature.Lodging.Api.Controllers
           await _complexRepository.CreateAmenityComplexAsync(complexAmenity);
         }
 
-        return Created($"api/Complex/{complex.Id}", apiComplex);
+        return Created($"api/Complex/{complex.Id}", apiComplex); //TODO: this needs to return the created complex object with complexId
 
       }
       catch (Exception ex)
@@ -396,7 +396,7 @@ namespace Revature.Lodging.Api.Controllers
       var complex = new Logic.Complex()
       {
         Id = apiComplex.ComplexId,
-        AddressId = apiComplex.Address.AddressId,
+      //  AddressId = apiComplex.Address.AddressId,
         ProviderId = apiComplex.ProviderId,
         ContactNumber = apiComplex.ContactNumber,
         ComplexName = apiComplex.ComplexName
