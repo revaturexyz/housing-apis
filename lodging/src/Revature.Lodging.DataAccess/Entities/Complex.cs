@@ -22,7 +22,7 @@ namespace Revature.Lodging.DataAccess.Entities
     /// The Complex model has a collection of AmenityComplex models that
     /// represent the amenities offered by the complex.
     /// </summary>
-    public virtual ICollection<AmenityComplex> AmenityComplex { get; set; }
+    public virtual ICollection<ComplexAmenity> ComplexAmenity { get; set; }
 
     /// <summary>
     /// The complex model has a collection of Room models that represent the rooms

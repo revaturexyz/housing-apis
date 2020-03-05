@@ -16,11 +16,11 @@ namespace Revature.Lodging.DataAccess.Entities
     /// <summary>
     /// it is for amenity Id to behave as FK in AmenityRoom table
     /// </summary>
-    public virtual ICollection<AmenityRoom> AmenityRoom { get; set; }
+    public virtual ICollection<RoomAmenity> RoomAmenity { get; set; }
 
     /// <summary>
     /// It is for complex Id behave as FK in AmenityRoom table
     /// </summary>
-    public virtual ICollection<AmenityComplex> AmenityComplex { get; set; }
+    public virtual ICollection<ComplexAmenity> ComplexAmenity { get; set; }
   }
 }

@@ -33,7 +33,7 @@ namespace Revature.Lodging.Api.Controllers
 
     /// <summary>
     /// (GET)
-    /// Gets all existing Complex objexts from database
+    /// Gets all existing Complex objects from database
     /// </summary>
     /// <returns> Collection of Complex objects with a list of associated amenities. </returns>
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -211,19 +211,19 @@ namespace Revature.Lodging.Api.Controllers
 
     /// <summary>
     /// (POST)
-    /// Call Repository to insert new complex in the database
-    /// Send complex address to Address Service
-    /// Need to take an Api complex model as parameter
+    /// Adds a new Complex object to the database;
+    /// Sends Complex address to Address service;
     /// </summary>
-    /// <param name="apiComplex"></param>
-    /// <returns></returns>
+    /// <param name="apiComplex"> Indicates the new Complex object to be added </param>
+    /// <returns> Added Complex object </returns>
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpPost("PostComplex")]
-    //Post: api/complex/PostComplex
+    [HttpPost]
+    //POST: api/complex/
     public async Task<ActionResult<ApiComplex>> PostComplexAsync([FromBody]ApiComplex apiComplex)
     {
-      var compAddr = new ApiAddress()
+      // Creates an Address object from Address properties in apiComplex object argument
+      var complexAddress = new ApiAddress()
       {
         StreetAddress = apiComplex.Address.StreetAddress,
         City = apiComplex.Address.City,
@@ -232,43 +232,85 @@ namespace Revature.Lodging.Api.Controllers
         Country = apiComplex.Address.Country,
       };
 
-      //var addressId = (await _addressRequest.PostAddressAsync(compAddr)).AddressId;
+      // Retrieves an Address object using AddressRequest and storing the AddressId
+      var addressId = (await _addressRequest.PostAddressAsync(complexAddress)).AddressId;
+
+      // Generates a new Guid for a ComplexId
       var complexId = Guid.NewGuid();
 
+      // Creates a Complex object with the information in the apiComplex object argument
       var complex = new Logic.Complex()
       {
         Id = complexId,
-        //AddressId = addressId,
+        AddressId = addressId,
         ProviderId = apiComplex.ProviderId,
         ContactNumber = apiComplex.ContactNumber,
         ComplexName = apiComplex.ComplexName
       };
 
-      var amenityComplex = new Logic.AmenityComplex();
+      // Instantiates a blank ComplexAmenity library model
+      //var complexAmenity = new Logic.ComplexAmenity();
 
       try
       {
+        // Adds created Complex object into the database
         await _complexRepository.CreateComplexAsync(complex);
         _log.LogInformation("(API)new complex in the database is inserted");
 
-        var amenities = await _complexRepository.ReadAmenityListAsync();
+        // Gets all existing Amenity objects from database
+        var existingAmenities = await _complexRepository.ReadAmenityListAsync();
         _log.LogInformation("(API)list of Amenity is found");
 
-        amenityComplex.ComplexId = complex.Id;
+        // Sets the ComplexId property of ComplexAmenity object
+        // complexAmenity.ComplexId = complex.Id;
 
-        foreach (var amenity in apiComplex.ComplexAmenity)
+        //foreach (var postedAmenity in apiComplex.ComplexAmenities)
+        //{
+        //  foreach (var existingAmenity in existingAmenities)
+        //  {
+        //    if (existingAmenity.AmenityType == postedAmenity.AmenityType)
+        //    {
+        //      complexAmenity.AmenityId = existingAmenity.Id;
+        //      complexAmenity.Id = Guid.NewGuid();
+        //    }
+        //  }
+
+        //  await _complexRepository.CreateAmenityComplexAsync(complexAmenity);
+        //  _log.LogInformation($"(API)a list of amenities for complex id: {complex.Id} was created");
+        //}
+
+        // Create ComplexAmenity objects from the list of Amenities passed in with apiComplex
+        foreach (var postedAmenity in apiComplex.ComplexAmenities)
         {
-          foreach (var am in amenities)
+          // Instantiates a new ComplexAmenity object
+          Logic.ComplexAmenity complexAmenity = new Logic.ComplexAmenity();
+
+          // if there are any existing Amenity object with a matching AmenityType, link this existing Amenity object
+          // with the new ComplexAmenity object; otherwise, create a new Amenity object with the posted AmenityType and
+          // link this new Amenity object with the new ComplexAmenity object
+          if (existingAmenities.Any(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower()))
           {
-            if (am.AmenityType == amenity.AmenityType)
+            var amenity = existingAmenities.FirstOrDefault(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower());
+
+            complexAmenity.Id = Guid.NewGuid();
+            complexAmenity.ComplexId = complexId;
+            complexAmenity.AmenityId = amenity.Id;
+          } else
+          {
+            Logic.Amenity amenity = new Logic.Amenity()
             {
-              amenityComplex.AmenityId = am.Id;
-              amenityComplex.Id = Guid.NewGuid();
-            }
+              Id = Guid.NewGuid(),
+              AmenityType = postedAmenity.AmenityType,
+              Description = null
+            };
+            await _complexRepository.CreateAmenityAsync(amenity);
+
+            complexAmenity.Id = Guid.NewGuid();
+            complexAmenity.ComplexId = complexId;
+            complexAmenity.AmenityId = amenity.Id;
           }
 
-          await _complexRepository.CreateAmenityComplexAsync(amenityComplex);
-          _log.LogInformation($"(API)a list of amenities for complex id: {complex.Id} was created");
+          await _complexRepository.CreateAmenityComplexAsync(complexAmenity);
         }
 
         return Created($"api/Complex/{complex.Id}", apiComplex);
@@ -296,7 +338,7 @@ namespace Revature.Lodging.Api.Controllers
     public async Task<ActionResult> PostRoomsAsync([FromBody]IEnumerable<ApiRoom> apiRooms)
     {
       var apiRoomtoSends = new List<ApiRoomtoSend>();
-      var amenityRoom = new Logic.AmenityRoom();
+      var amenityRoom = new Logic.RoomAmenity();
 
       try
       {
@@ -342,27 +384,15 @@ namespace Revature.Lodging.Api.Controllers
 
     /// <summary>
     /// (PUT)
-    /// Call Repo to update complex and amenity complex in the database
-    /// Send updated address to Address service
-    /// Needs to take Single Api Complex model as parameter
+    /// Updates an existing Complex object in the database
     /// </summary>
-    /// <param name="apiComplex"></param>
-    /// <returns></returns>
+    /// <param name="apiComplex"> Indicates the updated Complex object </param>
+    /// <returns> Appropriate status code </returns>
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [HttpPut("editcomplex")]
-    //PUT: api/complex/editcomplex
-    public async Task<ActionResult> PutComplexAsync([FromBody]ApiComplex apiComplex)
+    [HttpPut]
+    //PUT: api/complex/
+    public async Task<ActionResult> UpdateComplexAsync([FromBody]ApiComplex apiComplex)
     {
-      var compAddr = new ApiAddress()
-      {
-        AddressId = apiComplex.Address.AddressId,
-        StreetAddress = apiComplex.Address.StreetAddress,
-        City = apiComplex.Address.City,
-        State = apiComplex.Address.State,
-        ZipCode = apiComplex.Address.ZipCode,
-        Country = apiComplex.Address.Country,
-      };
-
       var complex = new Logic.Complex()
       {
         Id = apiComplex.ComplexId,
@@ -373,36 +403,71 @@ namespace Revature.Lodging.Api.Controllers
       };
 
       await _complexRepository.DeleteAmenityComplexAsync(complex.Id);
-      _log.LogInformation($"(API)old amenities for complex id: {apiComplex.ComplexId} is deleted");
+      _log.LogInformation($"(API)old amenities for complex id: {complex.Id} is deleted");
 
-      var amenityComplex = new Logic.AmenityComplex();
+      //var amenityComplex = new Logic.ComplexAmenity();
 
       try
       {
         await _complexRepository.UpdateComplexAsync(complex);
         _log.LogInformation("(API) complex is updated");
 
-        var amenities = await _complexRepository.ReadAmenityListAsync();
+        var existingAmenities = await _complexRepository.ReadAmenityListAsync();
         _log.LogInformation("(API) list of amenity is read");
 
-        Guid amenityComplexId;
-        amenityComplex.ComplexId = complex.Id;
+        //Guid amenityComplexId;
+        //amenityComplex.ComplexId = complex.Id;
 
-        foreach (var amenity in apiComplex.ComplexAmenity)
+        //foreach (var amenity in apiComplex.ComplexAmenity)
+        //{
+        //  foreach (var am in amenities)
+        //  {
+        //    if (am.AmenityType == amenity.AmenityType)
+        //    {
+        //      amenityComplex.AmenityId = am.Id;
+
+        //      amenityComplexId = Guid.NewGuid();
+        //      amenityComplex.Id = amenityComplexId;
+        //    }
+        //  }
+
+        //  await _complexRepository.CreateAmenityComplexAsync(amenityComplex);
+        //  _log.LogInformation("(API)new list of amenity of complex is created");
+        //}
+
+        // Create ComplexAmenity objects from the list of Amenities passed in with apiComplex
+        foreach (var postedAmenity in apiComplex.ComplexAmenities)
         {
-          foreach (var am in amenities)
-          {
-            if (am.AmenityType == amenity.AmenityType)
-            {
-              amenityComplex.AmenityId = am.Id;
+          // Instantiates a new ComplexAmenity object
+          Logic.ComplexAmenity complexAmenity = new Logic.ComplexAmenity();
 
-              amenityComplexId = Guid.NewGuid();
-              amenityComplex.Id = amenityComplexId;
-            }
+          // if there are any existing Amenity object with a matching AmenityType, link this existing Amenity object
+          // with the new ComplexAmenity object; otherwise, create a new Amenity object with the posted AmenityType and
+          // link this new Amenity object with the new ComplexAmenity object
+          if (existingAmenities.Any(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower()))
+          {
+            var amenity = existingAmenities.FirstOrDefault(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower());
+
+            complexAmenity.Id = Guid.NewGuid();
+            complexAmenity.ComplexId = complex.Id;
+            complexAmenity.AmenityId = amenity.Id;
+          }
+          else
+          {
+            Logic.Amenity amenity = new Logic.Amenity()
+            {
+              Id = Guid.NewGuid(),
+              AmenityType = postedAmenity.AmenityType,
+              Description = null
+            };
+            await _complexRepository.CreateAmenityAsync(amenity);
+
+            complexAmenity.Id = Guid.NewGuid();
+            complexAmenity.ComplexId = complex.Id;
+            complexAmenity.AmenityId = amenity.Id;
           }
 
-          await _complexRepository.CreateAmenityComplexAsync(amenityComplex);
-          _log.LogInformation("(API)new list of amenity of complex is created");
+          await _complexRepository.CreateAmenityComplexAsync(complexAmenity);
         }
 
         //send ApiComplexAddress to Address service to update the address
@@ -431,7 +496,7 @@ namespace Revature.Lodging.Api.Controllers
     public async Task<ActionResult> PutRoomAsync([FromBody]ApiRoom apiRoom)
     {
       var arts = new ApiRoomtoSend();
-      var amenityRoom = new Logic.AmenityRoom();
+      var amenityRoom = new Logic.RoomAmenity();
 
       try
       {
@@ -473,31 +538,26 @@ namespace Revature.Lodging.Api.Controllers
     #region DELETE
     /// <summary>
     /// (DELETE)
-    /// Call Repo to delete complex and amenity complex in the database
-    /// Send complex Id to Address service to delete the address
-    /// Needs a complex Id as parameter
+    /// Deletes a Complex object by ComplexId from database
     /// </summary>
-    /// <param name="apiComplex"></param>
-    /// <returns></returns>
+    /// <param name="complexId"> Indicates the Complex object to be deleted</param>
+    /// <returns> Appropriate status code </returns>
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [HttpDelete("deletecomplex/{complexId}")]
-    //PUT: api/complex/deletecomplex/{complexId}
-    public async Task<ActionResult> DeleteComplexAsync([FromRoute]Guid complexId)
+    [HttpDelete("{complexId}")]
+    //DELETE: api/complex/{complexId}
+    public async Task<ActionResult> DeleteComplexByIdAsync([FromRoute]Guid complexId)
     {
       try
       {
-        var arts = new ApiRoomtoSend
-        {
-          ComplexId = complexId,
-          QueOperator = 3
-        };
+        //var arts = new ApiRoomtoSend
+        //{
+        //  ComplexId = complexId,
+        //  QueOperator = 3
+        //};
 
-        //send complexId to toom service to delete all rooms belongs to the complex
-        //receive deleted room ids from room service to delete amenity of rooms
-        //await _roomServiceSender.SendRoomsMessages(arts);
+        //await _complexRepository.DeleteAmenityComplexAsync(complexId);
+        //_log.LogInformation("deleted amenity of complex Id: {complexId}", complexId);
 
-        await _complexRepository.DeleteAmenityComplexAsync(complexId);
-        _log.LogInformation("deleted amenity of complex Id: {complexId}", complexId);
 
         await _complexRepository.DeleteComplexAsync(complexId);
         _log.LogInformation("deleted complex of complex Id: {complexId}", complexId);

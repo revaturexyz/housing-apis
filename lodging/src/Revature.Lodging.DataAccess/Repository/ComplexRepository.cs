@@ -166,7 +166,7 @@ namespace Revature.Lodging.DataAccess.Repository
     /// </summary>
     /// <param name="ar"></param>
     /// <returns></returns>
-    public async Task<bool> CreateAmenityRoomAsync(Logic.AmenityRoom ar)
+    public async Task<bool> CreateAmenityRoomAsync(Logic.RoomAmenity ar)
     {
       var amenityRoom = Mapper.Map(ar);
 
@@ -187,7 +187,7 @@ namespace Revature.Lodging.DataAccess.Repository
     {
       try
       {
-        _context.AmenityRoom.RemoveRange(_context.AmenityRoom.Where(ar => ar.RoomId == roomId));
+        _context.RoomAmenity.RemoveRange(_context.RoomAmenity.Where(ar => ar.RoomId == roomId));
 
         await _context.SaveChangesAsync();
         _log.LogInformation("AmenityRooms with room Id: {roomId} were deleted", roomId);
@@ -211,7 +211,7 @@ namespace Revature.Lodging.DataAccess.Repository
     {
       try
       {
-        _context.AmenityComplex.RemoveRange(_context.AmenityComplex.Where(ar => ar.ComplexId == complexId));
+        _context.ComplexAmenity.RemoveRange(_context.ComplexAmenity.Where(ar => ar.ComplexId == complexId));
 
         await _context.SaveChangesAsync();
 
@@ -229,7 +229,7 @@ namespace Revature.Lodging.DataAccess.Repository
     /// </summary>
     /// <param name="ac"></param>
     /// <returns></returns>
-    public async Task<bool> CreateAmenityComplexAsync(Logic.AmenityComplex ac)
+    public async Task<bool> CreateAmenityComplexAsync(Logic.ComplexAmenity ac)
     {
       var amenityComplex = Mapper.Map(ac);
 
@@ -286,7 +286,7 @@ namespace Revature.Lodging.DataAccess.Repository
     {
       try
       {
-        var amenityComplices = await _context.AmenityComplex
+        var amenityComplices = await _context.ComplexAmenity
           .Where(a => a.ComplexId == complexId).ToListAsync();
 
         var amenities = new List<Logic.Amenity>();
@@ -316,7 +316,7 @@ namespace Revature.Lodging.DataAccess.Repository
     {
       try
       {
-        var amenityRooms = await _context.AmenityRoom
+        var amenityRooms = await _context.RoomAmenity
           .Where(a => a.RoomId == roomId).AsNoTracking().ToListAsync();
 
         var amenities = new List<Logic.Amenity>();

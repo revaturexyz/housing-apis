@@ -47,7 +47,7 @@ namespace Revature.Lodging.DataAccess.Entities
     /// <summary>
     /// The Room model has a collection of Amenity Rooms
     /// </summary>
-    public IEnumerable<AmenityRoom> AmenityRoom { get; set; }
+    public IEnumerable<RoomAmenity> RoomAmenity { get; set; }
 
   }
 }
