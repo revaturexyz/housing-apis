@@ -110,7 +110,7 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(typeof(Lib.Models.Room), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> PostRoomAsync
-      ([FromBody, Bind("ComplexID, RoomID, RoomNumber, NumberOfBeds, NumberOfOccupants, Gender, RoomType, LeaseStart, LeaseEnd")]Lib.Models.Room room)
+      ([FromBody, Bind("ComplexID, RoomNumber, NumberOfBeds, NumberOfOccupants, Gender, RoomType, LeaseStart, LeaseEnd")]Lib.Models.Room room)
     {
       try
       {
@@ -119,12 +119,12 @@ namespace Revature.Lodging.Api.Controllers
         var createdRoom = new Lib.Models.Room
         {
           ComplexId = room.ComplexId,
-          Id = room.Id,
+          Id = Guid.NewGuid(),
           RoomNumber = room.RoomNumber,
           NumberOfBeds = room.NumberOfBeds,
           NumberOfOccupants = room.NumberOfOccupants,
           //Gender = room.Gender,
-          //RoomType = room.RoomType //(03/02/2020) should not update Gender and RoomType and adding new room to database?
+          RoomType = room.RoomType //(03/02/2020) should not update Gender and RoomType and adding new room to database?
         };
         createdRoom.SetLease(room.LeaseStart, room.LeaseEnd);
 
@@ -133,7 +133,12 @@ namespace Revature.Lodging.Api.Controllers
 
         _logger.LogInformation("Success. Room has been added");
 
-        return CreatedAtRoute("GetRoom", new { RoomID = createdRoom.Id }, createdRoom);
+        var test = "GetRoomById";
+
+        return CreatedAtAction(
+          actionName: test,
+          routeValues: new { roomId = createdRoom.Id },
+          value: createdRoom);
       }
       catch (ArgumentException ex)
       {

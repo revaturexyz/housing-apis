@@ -84,12 +84,12 @@ namespace Revature.Lodging.Lib.Models
     /// <summary>
     /// Date for the start of the lease, assigned by complex service
     /// </summary>
-    public DateTime LeaseStart { get; private set; }
+    public DateTime LeaseStart { get; set; }
 
     /// <summary>
     /// Date for end of lease, assgined by complex service
     /// </summary>
-    public DateTime LeaseEnd { get; private set; }
+    public DateTime LeaseEnd { get; set; }
 
     /// <summary>
     /// Method that sets the lease of the room

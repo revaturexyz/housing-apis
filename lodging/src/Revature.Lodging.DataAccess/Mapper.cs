@@ -139,7 +139,7 @@ namespace Revature.Lodging.DataAccess
       //switch statement to convert gender and room type strings into int that represent primary key from respective tables
       Nullable<int> genderId = null;
       int roomTypeId = 0;
-      string gender = room.Gender.ToLower();
+      string gender = room.Gender?.ToLower();
       string roomType = room.RoomType.ToLower();
 
       if (gender != null)
