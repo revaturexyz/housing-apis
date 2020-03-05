@@ -268,7 +268,7 @@ namespace Revature.Lodging.Tests.DataTests
       var repo = new ComplexRepository(testContext, log);
 
       var result = await repo.CreateAmenityRoomAsync(_ar);
-      var check = testContext.AmenityRoom.First().Id;
+      var check = testContext.RoomAmenity.First().Id;
 
       Assert.Equal(check, _ar.Id);
     }
@@ -288,7 +288,7 @@ namespace Revature.Lodging.Tests.DataTests
       var repo = new ComplexRepository(testContext, log);
 
       var result = await repo.CreateAmenityComplexAsync(_ac);
-      var check = testContext.AmenityComplex.First().Id;
+      var check = testContext.ComplexAmenity.First().Id;
 
       Assert.Equal(check, _ac.Id);
     }
@@ -541,7 +541,7 @@ namespace Revature.Lodging.Tests.DataTests
 
       await repo.DeleteAmenityRoomAsync(RId);
 
-      Assert.Null(testContext.AmenityRoom.Find(RId));
+      Assert.Null(testContext.RoomAmenity.Find(RId));
     }
 
     /// <summary>
@@ -564,7 +564,7 @@ namespace Revature.Lodging.Tests.DataTests
 
       await repo.DeleteAmenityRoomAsync(CId1);
 
-      Assert.Null(testContext.AmenityComplex.Find(CId1));
+      Assert.Null(testContext.ComplexAmenity.Find(CId1));
     }
 
 

@@ -54,14 +54,14 @@ namespace Revature.Lodging.Lib.Interface
     /// </summary>
     /// <param name="ar"></param>
     /// <returns></returns>
-    public Task<bool> CreateAmenityRoomAsync(Logic.AmenityRoom ar);
+    public Task<bool> CreateAmenityRoomAsync(Logic.RoomAmenity ar);
 
     /// <summary>
     /// Create new single Amenities of Room in database by logic amenitycomplex object
     /// </summary>
     /// <param name="ac"></param>
     /// <returns></returns>
-    public Task<bool> CreateAmenityComplexAsync(Logic.AmenityComplex ac);
+    public Task<bool> CreateAmenityComplexAsync(Logic.ComplexAmenity ac);
 
 
     /// <summary>

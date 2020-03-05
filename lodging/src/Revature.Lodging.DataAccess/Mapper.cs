@@ -39,9 +39,9 @@ namespace Revature.Lodging.DataAccess
     /// </summary>
     /// <param name="amenityComplex"></param>
     /// <returns></returns>
-    public static Entities.AmenityComplex Map(Lib.Models.AmenityComplex amenityComplex)
+    public static Entities.ComplexAmenity Map(Lib.Models.ComplexAmenity amenityComplex)
     {
-      return new Entities.AmenityComplex
+      return new Entities.ComplexAmenity
       {
         Id = amenityComplex.Id,
         AmenityId = amenityComplex.AmenityId,
@@ -54,9 +54,9 @@ namespace Revature.Lodging.DataAccess
     /// </summary>
     /// <param name="amenityComplex"></param>
     /// <returns></returns>
-    public static Lib.Models.AmenityComplex Map(Entities.AmenityComplex amenityComplex)
+    public static Lib.Models.ComplexAmenity Map(Entities.ComplexAmenity amenityComplex)
     {
-      return new Lib.Models.AmenityComplex
+      return new Lib.Models.ComplexAmenity
       {
         Id = amenityComplex.Id,
         AmenityId = amenityComplex.AmenityId,
@@ -69,9 +69,9 @@ namespace Revature.Lodging.DataAccess
     /// </summary>
     /// <param name="amenityRoom"></param>
     /// <returns></returns>
-    public static Entities.AmenityRoom Map(Lib.Models.AmenityRoom amenityRoom)
+    public static Entities.RoomAmenity Map(Lib.Models.RoomAmenity amenityRoom)
     {
-      return new Entities.AmenityRoom
+      return new Entities.RoomAmenity
       {
         Id = amenityRoom.Id,
         AmenityId = amenityRoom.AmenityId,
@@ -84,9 +84,9 @@ namespace Revature.Lodging.DataAccess
     /// </summary>
     /// <param name="amenityRoom"></param>
     /// <returns></returns>
-    public static Lib.Models.AmenityRoom Map(Entities.AmenityRoom amenityRoom)
+    public static Lib.Models.RoomAmenity Map(Entities.RoomAmenity amenityRoom)
     {
-      return new Lib.Models.AmenityRoom
+      return new Lib.Models.RoomAmenity
       {
         Id = amenityRoom.Id,
         AmenityId = amenityRoom.AmenityId,
