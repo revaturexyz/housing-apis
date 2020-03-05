@@ -6,7 +6,7 @@ namespace Revature.Lodging.DataAccess.Entities
   /// <summary>
   /// Entity AmenityRoom model. Repository use it to CRUD complex data from database
   /// </summary>
-  public class AmenityRoom
+  public class RoomAmenity
   {
     public Guid Id { get; set; }
 

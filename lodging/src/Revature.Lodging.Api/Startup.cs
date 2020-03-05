@@ -74,6 +74,8 @@ namespace Revature.Lodging.Api
 
       services.AddScoped<IComplexRepository, ComplexRepository>();
       services.AddScoped<IAmenityRepository, AmenityRepository>();
+      services.AddScoped<IRoomRepository, RoomRepository>();
+
       // services.AddHostedService<RoomServiceReceiver>();
       // services.AddScoped<IRoomServiceSender, RoomServiceSender>();
       services.AddHttpClient<IAddressRequest, AddressRequest>();

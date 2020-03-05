@@ -35,7 +35,7 @@ namespace Revature.Lodging.Tests.DataTests
       var amId = Guid.NewGuid();
       var guid1 = Guid.NewGuid();
 
-      var ac = new Entity.AmenityComplex
+      var ac = new Entity.ComplexAmenity
       {
         Id = acId,
         AmenityId = amId,
@@ -57,7 +57,7 @@ namespace Revature.Lodging.Tests.DataTests
       var amId = Guid.NewGuid();
       var guid = Guid.NewGuid();
 
-      var ar = new Entity.AmenityRoom
+      var ar = new Entity.RoomAmenity
       {
         Id = arId,
         AmenityId = amId,

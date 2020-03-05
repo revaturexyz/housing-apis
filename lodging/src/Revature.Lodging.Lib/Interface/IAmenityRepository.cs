@@ -59,7 +59,7 @@ namespace Revature.Lodging.Lib.Interface
     /// </summary>
     /// <param name="ac"></param>
     /// <returns></returns>
-    public Task<bool> CreateAmenityComplexAsync(Logic.AmenityComplex ac);
+    public Task<bool> CreateAmenityComplexAsync(Logic.ComplexAmenity ac);
 
     /// <summary>
     /// Delete ALL amenity record from Amenity of complex in database by complex Id
@@ -77,7 +77,7 @@ namespace Revature.Lodging.Lib.Interface
     /// </summary>
     /// <param name="ar"></param>
     /// <returns></returns>
-    public Task<bool> CreateAmenityRoomAsync(Logic.AmenityRoom ar);
+    public Task<bool> CreateAmenityRoomAsync(Logic.RoomAmenity ar);
 
     /// <summary>
     /// Delete ALL amenity record from Amenity of room in database by room Id

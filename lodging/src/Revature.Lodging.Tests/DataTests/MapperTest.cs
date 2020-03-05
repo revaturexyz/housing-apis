@@ -74,7 +74,7 @@ namespace Revature.Lodging.Tests.DataTests
       var amId = Guid.NewGuid();
       var rId = Guid.NewGuid();
 
-      var ar = new Logic.AmenityRoom
+      var ar = new Logic.RoomAmenity
       {
         Id = arId,
         AmenityId = amId,
@@ -98,7 +98,7 @@ namespace Revature.Lodging.Tests.DataTests
       var amId = Guid.NewGuid();
       var rId = Guid.NewGuid();
 
-      var ar = new Entity.AmenityRoom
+      var ar = new Entity.RoomAmenity
       {
         Id = arId,
         AmenityId = amId,
@@ -122,7 +122,7 @@ namespace Revature.Lodging.Tests.DataTests
       var amId = Guid.NewGuid();
       var cId = Guid.NewGuid();
 
-      var ac = new Logic.AmenityComplex
+      var ac = new Logic.ComplexAmenity
       {
         Id = acId,
         AmenityId = amId,
@@ -146,7 +146,7 @@ namespace Revature.Lodging.Tests.DataTests
       var amId = Guid.NewGuid();
       var cId = Guid.NewGuid();
 
-      var ac = new Entity.AmenityComplex
+      var ac = new Entity.ComplexAmenity
       {
         Id = acId,
         AmenityId = amId,

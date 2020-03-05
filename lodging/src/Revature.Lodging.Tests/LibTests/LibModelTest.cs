@@ -35,7 +35,7 @@ namespace Revature.Lodging.Tests.LibTests
       var amId = Guid.NewGuid();
       var cId1 = Guid.NewGuid();
 
-      var ac = new Logic.AmenityComplex
+      var ac = new Logic.ComplexAmenity
       {
         Id = acId1,
         AmenityId = amId,
@@ -57,7 +57,7 @@ namespace Revature.Lodging.Tests.LibTests
       var amId = Guid.NewGuid();
       var rId = Guid.NewGuid();
 
-      var ar = new Logic.AmenityRoom
+      var ar = new Logic.RoomAmenity
       {
         Id = arId,
         AmenityId = amId,

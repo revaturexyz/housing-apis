@@ -65,28 +65,28 @@ namespace Revature.Lodging.Tests.DataTests
       ContactNumber = "9876543210"
     };
 
-    public Logic.AmenityRoom _ar = new Logic.AmenityRoom
+    public Logic.RoomAmenity _ar = new Logic.RoomAmenity
     {
       Id = ArId1,
       RoomId = RId,
       AmenityId = AmId1
     };
 
-    public Logic.AmenityComplex _ac = new Logic.AmenityComplex
+    public Logic.ComplexAmenity _ac = new Logic.ComplexAmenity
     {
       Id = AcId1,
       ComplexId = CId1,
       AmenityId = AmId1
     };
 
-    public Entity.AmenityComplex _acE1 = new Entity.AmenityComplex
+    public Entity.ComplexAmenity _acE1 = new Entity.ComplexAmenity
     {
       Id = AcId1,
       ComplexId = CId1,
       AmenityId = AmId1
     };
 
-    public Entity.AmenityComplex _acE2 = new Entity.AmenityComplex
+    public Entity.ComplexAmenity _acE2 = new Entity.ComplexAmenity
     {
       Id = AcId2,
       ComplexId = CId1,
@@ -114,14 +114,14 @@ namespace Revature.Lodging.Tests.DataTests
       Description = "to heat"
     };
 
-    public Entity.AmenityRoom _arE1 = new Entity.AmenityRoom
+    public Entity.RoomAmenity _arE1 = new Entity.RoomAmenity
     {
       Id = ArId1,
       RoomId = RId,
       AmenityId = AmId1
     };
 
-    public Entity.AmenityRoom _arE2 = new Entity.AmenityRoom
+    public Entity.RoomAmenity _arE2 = new Entity.RoomAmenity
     {
       Id = ArId2,
       RoomId = RId,
@@ -274,7 +274,7 @@ namespace Revature.Lodging.Tests.DataTests
       var repo = new AmenityRepository(testContext, log);
 
       var result = await repo.CreateAmenityRoomAsync(_ar);
-      var check = testContext.AmenityRoom.First().Id;
+      var check = testContext.RoomAmenity.First().Id;
 
       Assert.Equal(check, _ar.Id);
     }
@@ -294,7 +294,7 @@ namespace Revature.Lodging.Tests.DataTests
       var repo = new /*Complex*/AmenityRepository(testContext, log);
 
       var result = await repo.CreateAmenityComplexAsync(_ac);
-      var check = testContext.AmenityComplex.First().Id;
+      var check = testContext.ComplexAmenity.First().Id;
 
       Assert.Equal(check, _ac.Id);
     }
@@ -549,7 +549,7 @@ namespace Revature.Lodging.Tests.DataTests
 
       await repo.DeleteAmenityRoomAsync(RId);
 
-      Assert.Null(testContext.AmenityRoom.Find(RId));
+      Assert.Null(testContext.RoomAmenity.Find(RId));
     }
 
     /// <summary>
@@ -572,7 +572,7 @@ namespace Revature.Lodging.Tests.DataTests
 
       await repo.DeleteAmenityRoomAsync(CId1);
 
-      Assert.Null(testContext.AmenityComplex.Find(CId1));
+      Assert.Null(testContext.ComplexAmenity.Find(CId1));
     }
 
 

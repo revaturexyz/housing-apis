@@ -11,8 +11,8 @@ namespace Revature.Lodging.DataAccess.Entities
     : base(options) { }
 
     public virtual DbSet<Complex> Complex { get; set; }
-    public virtual DbSet<AmenityComplex> AmenityComplex { get; set; }
-    public virtual DbSet<AmenityRoom> AmenityRoom { get; set; }
+    public virtual DbSet<ComplexAmenity> ComplexAmenity { get; set; }
+    public virtual DbSet<RoomAmenity> RoomAmenity { get; set; }
     public virtual DbSet<Amenity> Amenity { get; set; }
     public virtual DbSet<Gender> Gender { get; set; }
     public virtual DbSet<Room> Room { get; set; }
@@ -61,7 +61,7 @@ namespace Revature.Lodging.DataAccess.Entities
       });
 
       //Amenity Complex
-      modelBuilder.Entity<AmenityComplex>(entity =>
+      modelBuilder.Entity<ComplexAmenity>(entity =>
       {
         entity.Property(e => e.Id)
           .IsRequired();
@@ -70,27 +70,27 @@ namespace Revature.Lodging.DataAccess.Entities
           .IsUnique();
 
         entity.HasOne(e => e.Amenity)
-          .WithMany(d => d.AmenityComplex)
+          .WithMany(d => d.ComplexAmenity)
           .HasForeignKey(p => p.AmenityId)
           .IsRequired()
-          .OnDelete(DeleteBehavior.ClientSetNull);
+          .OnDelete(DeleteBehavior.Cascade);
 
         entity.HasOne(e => e.Complex)
-          .WithMany(d => d.AmenityComplex)
+          .WithMany(d => d.ComplexAmenity)
           .HasForeignKey(p => p.ComplexId)
           .IsRequired()
-          .OnDelete(DeleteBehavior.ClientSetNull);
+          .OnDelete(DeleteBehavior.Cascade);
 
         entity.HasData
         (
-          new AmenityComplex { Id = Guid.Parse("58b7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId1, ComplexId = cId1 },
-          new AmenityComplex { Id = Guid.Parse("59b7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, ComplexId = cId1 },
-          new AmenityComplex { Id = Guid.Parse("5ab7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, ComplexId = cId2 },
-          new AmenityComplex { Id = Guid.Parse("5bb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId4, ComplexId = cId2 }
+          new ComplexAmenity { Id = Guid.Parse("58b7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId1, ComplexId = cId1 },
+          new ComplexAmenity { Id = Guid.Parse("59b7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, ComplexId = cId1 },
+          new ComplexAmenity { Id = Guid.Parse("5ab7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, ComplexId = cId2 },
+          new ComplexAmenity { Id = Guid.Parse("5bb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId4, ComplexId = cId2 }
         );
       });
 
-      modelBuilder.Entity<AmenityRoom>(entity =>
+      modelBuilder.Entity<RoomAmenity>(entity =>
       {
         entity.Property(e => e.Id)
           .IsRequired();
@@ -99,24 +99,24 @@ namespace Revature.Lodging.DataAccess.Entities
           .IsUnique();
 
         entity.HasOne(e => e.Amenity)
-          .WithMany(d => d.AmenityRoom)
+          .WithMany(d => d.RoomAmenity)
           .HasForeignKey(p => p.AmenityId)
           .IsRequired()
-          .OnDelete(DeleteBehavior.ClientSetNull);
+          .OnDelete(DeleteBehavior.Cascade);
 
         entity.HasOne(e => e.Room)
-          .WithMany(d => d.AmenityRoom)
+          .WithMany(d => d.RoomAmenity)
           .HasForeignKey(p => p.RoomId)
           .IsRequired()
-          .OnDelete(DeleteBehavior.ClientSetNull);
+          .OnDelete(DeleteBehavior.Cascade);
 
 
         entity.HasData
         (
-          new AmenityRoom { Id = Guid.Parse("5cb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId1, RoomId = rId1 },
-          new AmenityRoom { Id = Guid.Parse("5db7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId4, RoomId = rId1 },
-          new AmenityRoom { Id = Guid.Parse("5eb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId5, RoomId = rId2 },
-          new AmenityRoom { Id = Guid.Parse("5fb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, RoomId = rId2 }
+          new RoomAmenity { Id = Guid.Parse("5cb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId1, RoomId = rId1 },
+          new RoomAmenity { Id = Guid.Parse("5db7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId4, RoomId = rId1 },
+          new RoomAmenity { Id = Guid.Parse("5eb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId5, RoomId = rId2 },
+          new RoomAmenity { Id = Guid.Parse("5fb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, RoomId = rId2 }
         );
       });
 
@@ -215,7 +215,7 @@ namespace Revature.Lodging.DataAccess.Entities
           .WithMany(d => d.Room)
           .HasForeignKey(p => p.ComplexId)
           .IsRequired()
-          .OnDelete(DeleteBehavior.ClientSetNull);
+          .OnDelete(DeleteBehavior.Cascade);
 
         entity.HasOne(e => e.Gender)
           .WithMany(d => d.Room)

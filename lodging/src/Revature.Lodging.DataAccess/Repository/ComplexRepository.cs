@@ -185,6 +185,7 @@ namespace Revature.Lodging.DataAccess.Repository
     /// <param name="roomId"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">list of amenityroom not found</exception>
+
     //public async Task<bool> DeleteAmenityRoomAsync(Guid roomId)
     //{
     //  try
@@ -203,12 +204,14 @@ namespace Revature.Lodging.DataAccess.Repository
     //  }
     //}
 
+
     /// <summary>
     /// Delete ALL amenity record from Amenity of complex in database by complex Id
     /// </summary>
     /// <param name="complexId"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">list of amenitycomplex not found</exception>
+
     //public async Task<bool> DeleteAmenityComplexAsync(Guid complexId)
     //{
     //  try
@@ -231,6 +234,7 @@ namespace Revature.Lodging.DataAccess.Repository
     /// </summary>
     /// <param name="ac"></param>
     /// <returns></returns>
+
     //public async Task<bool> CreateAmenityComplexAsync(Logic.AmenityComplex ac)
     //{
     //  var amenityComplex = Mapper.Map(ac);
@@ -314,6 +318,7 @@ namespace Revature.Lodging.DataAccess.Repository
     /// <param name="roomId"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">list of amenity by room id not found</exception>
+
     //public async Task<List<Logic.Amenity>> ReadAmenityListByRoomIdAsync(Guid roomId)
     //{
     //  try

@@ -33,7 +33,7 @@ namespace Revature.Lodging.DataAccess.Repository
       return true;
     }
 
-    public async Task<bool> CreateAmenityComplexAsync(AmenityComplex ac)
+    public async Task<bool> CreateAmenityComplexAsync(ComplexAmenity ac)
     {
       var amenityComplex = Mapper.Map(ac);
 
@@ -44,7 +44,7 @@ namespace Revature.Lodging.DataAccess.Repository
       return true;
     }
 
-    public async Task<bool> CreateAmenityRoomAsync(AmenityRoom ar)
+    public async Task<bool> CreateAmenityRoomAsync(RoomAmenity ar)
     {
       var amenityRoom = Mapper.Map(ar);
 
@@ -79,7 +79,7 @@ namespace Revature.Lodging.DataAccess.Repository
     {
       try
       {
-        _context.AmenityComplex.RemoveRange(_context.AmenityComplex.Where(ar => ar.ComplexId == complexId));
+        _context.ComplexAmenity.RemoveRange(_context.ComplexAmenity.Where(ar => ar.ComplexId == complexId));
 
         await _context.SaveChangesAsync();
 
@@ -96,7 +96,7 @@ namespace Revature.Lodging.DataAccess.Repository
     {
       try
       {
-        _context.AmenityRoom.RemoveRange(_context.AmenityRoom.Where(ar => ar.RoomId == roomId));
+        _context.RoomAmenity.RemoveRange(_context.RoomAmenity.Where(ar => ar.RoomId == roomId));
 
         await _context.SaveChangesAsync();
         _log.LogInformation("AmenityRooms with room Id: {roomId} were deleted", roomId);
@@ -129,7 +129,7 @@ namespace Revature.Lodging.DataAccess.Repository
     {
       try
       {
-        var amenityComplices = await _context.AmenityComplex
+        var amenityComplices = await _context.ComplexAmenity
           .Where(a => a.ComplexId == complexId).ToListAsync();
 
         var amenities = new List<Logic.Amenity>();
@@ -152,7 +152,7 @@ namespace Revature.Lodging.DataAccess.Repository
     {
       try
       {
-        var amenityRooms = await _context.AmenityRoom
+        var amenityRooms = await _context.RoomAmenity
           .Where(a => a.RoomId == roomId).AsNoTracking().ToListAsync();
 
         var amenities = new List<Logic.Amenity>();
