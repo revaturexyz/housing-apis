@@ -25,11 +25,7 @@ namespace Revature.Account.Api.Controllers
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-
-
-
-
-    
+    //This logic should not be exposed, and is instead implememted in the service bus
     //POST: api/tenant-accounts/
     /// <summary>
     /// 
@@ -38,22 +34,22 @@ namespace Revature.Account.Api.Controllers
     /// <param name="Email"></param>
     /// <param name="Name"></param>
     /// <returns></returns>
-    public async Task<ActionResult> Post([FromBody, Bind("TenantId, Name, Email")] TenantAccount tenant)
-    {
-        try
-      {
-        _logger.LogInformation("Post- Creating tenant with ID: {tenant.tenantI}, Name: {tenant.Name}, Email: {tenant.Email}", tenant.TenantId, tenant.Name, tenant.Email);
-        _repo.AddTenantAccount(tenant);
-        await _repo.SaveAsync();
-
-        return Ok(tenant);
-      }
-      catch (Exception e)
-      {
-        _logger.LogError("Exception getting tenant: {exceptionMessage}, {exception}", e.Message, e);
-        return new StatusCodeResult(StatusCodes.Status500InternalServerError);
-      }
-    }
+    //public async Task<ActionResult> Post([FromBody, Bind("TenantId, Name, Email")] TenantAccount tenant)
+    //{
+    //    try
+    //  {
+    //    _logger.LogInformation("Post- Creating tenant with ID: {tenant.tenantI}, Name: {tenant.Name}, Email: {tenant.Email}", tenant.TenantId, tenant.Name, tenant.Email);
+    //    _repo.AddTenantAccount(tenant);
+    //    await _repo.SaveAsync();
+    //
+    //    return Ok(tenant);
+    //  }
+    //  catch (Exception e)
+    //  {
+    //    _logger.LogError("Exception getting tenant: {exceptionMessage}, {exception}", e.Message, e);
+    //    return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+    //  }
+    //}
 
 
     // GET: api/tenant-accounts/1a5bae53-cffa-472f-af41-fae9904b9db0
@@ -121,13 +117,12 @@ namespace Revature.Account.Api.Controllers
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize]
-    public async Task<IActionResult> Put(Guid tenantId, [FromBody, Bind("TenantId, Name, Email")] TenantAccount tenant)
+    public async Task<IActionResult> Put(Guid tenantId, [FromBody, Bind("Name, Email")] TenantAccount tenant)
     {
       _logger.LogInformation($"PUT - Put request for tenant ID: {tenantId}");
       var existingTenant = await _repo.GetTenantAccountByIdAsync(tenantId);
       if (existingTenant != null)
       {
-        existingTenant.TenantId = tenant.TenantId;
         existingTenant.Name = tenant.Name;
         existingTenant.Email = tenant.Email;
 
@@ -140,25 +135,26 @@ namespace Revature.Account.Api.Controllers
       return NotFound();
     }
 
-    // DELETE: api/tenant-accounts/1a5bae53-cffa-472f-af41-fae9904b9db0
-    [HttpDelete("{tenantId}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize]
-    public async Task<ActionResult> Delete(Guid tenantId)
-    {
-      _logger.LogInformation($"DELETE - Delete request for tenant ID: {tenantId}");
-      var existingProvider = await _repo.GetTenantAccountByIdAsync(tenantId);
-      if (existingProvider != null)
-      {
-
-        await _repo.DeleteTenantAccountAsync(tenantId);
-        await _repo.SaveAsync();
-        _logger.LogInformation($"Delete request persisted for {tenantId}");
-        return NoContent();
-      }
-      _logger.LogWarning($"Delete request failed for {tenantId}");
-      return NotFound();
-    }
+    //This logic should not be exposed, and is instead implememted in the service bus
+    //// DELETE: api/tenant-accounts/1a5bae53-cffa-472f-af41-fae9904b9db0
+    //[HttpDelete("{tenantId}")]
+    //[ProducesResponseType(StatusCodes.Status204NoContent)]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //[Authorize]
+    //public async Task<ActionResult> Delete(Guid tenantId)
+    //{
+    //  _logger.LogInformation($"DELETE - Delete request for tenant ID: {tenantId}");
+    //  var existingProvider = await _repo.GetTenantAccountByIdAsync(tenantId);
+    //  if (existingProvider != null)
+    //  {
+    //
+    //    await _repo.DeleteTenantAccountAsync(tenantId);
+    //    await _repo.SaveAsync();
+    //    _logger.LogInformation($"Delete request persisted for {tenantId}");
+    //    return NoContent();
+    //  }
+    //  _logger.LogWarning($"Delete request failed for {tenantId}");
+    //  return NotFound();
+    //}
   }
 }

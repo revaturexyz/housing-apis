@@ -76,7 +76,7 @@ namespace Revature.Account.Api.Controllers
       return NotFound();
     }
 
-    // PUT: api/provider-accounts/approve
+    // PUT: api/provider-accounts/{id}/approve
     [HttpPut("{providerId}/approve")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

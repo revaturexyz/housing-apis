@@ -196,7 +196,7 @@ namespace Revature.Account.Api.Controllers
     }
     // GET: api/coordinator-accounts/john@gmail.com
     /// <summary>
-    /// return a provider based on an email.
+    /// return a coordinator based on an email.
     /// </summary>
     /// <param name="coordinatorEmail"></param>
     /// <returns></returns>
