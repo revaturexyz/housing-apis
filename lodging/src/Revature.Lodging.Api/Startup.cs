@@ -14,6 +14,7 @@ using Revature.Lodging.Lib.Interface;
 using Serilog;
 using Microsoft.ApplicationInsights.Extensibility;
 using Revature.Lodging.Api.Telemetry;
+using Revature.Lodging.Lib;
 
 namespace Revature.Lodging.Api
 {
@@ -73,9 +74,13 @@ namespace Revature.Lodging.Api
       services.AddDbContext<LodgingDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString(ConnectionStringName)));
 
       services.AddScoped<IComplexRepository, ComplexRepository>();
+<<<<<<< HEAD
       services.AddScoped<IAmenityRepository, AmenityRepository>();
       services.AddScoped<IRoomRepository, RoomRepository>();
 
+=======
+      services.AddScoped<IRoomRepository, RoomRepository>();
+>>>>>>> Dependency injection.
       // services.AddHostedService<RoomServiceReceiver>();
       // services.AddScoped<IRoomServiceSender, RoomServiceSender>();
       services.AddHttpClient<IAddressRequest, AddressRequest>();
