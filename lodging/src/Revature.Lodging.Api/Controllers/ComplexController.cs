@@ -19,15 +19,17 @@ namespace Revature.Lodging.Api.Controllers
   public class ComplexController : Controller
   {
     private readonly IComplexRepository _complexRepository;
+    private readonly IAmenityRepository _amenityRepository;
     private readonly ILogger<ComplexController> _log;
     //private readonly IRoomServiceSender _roomServiceSender;
     //private readonly IAddressRequest _addressRequest;
     private readonly IRoomRequest _roomRequest;
 
-    public ComplexController(IComplexRepository complexRepository, ILogger<ComplexController> logger,
+    public ComplexController(IComplexRepository complexRepository, IAmenityRepository amenityRepository, ILogger<ComplexController> logger,
        /*IRoomServiceSender rss, IAddressRequest ar,*/ IRoomRequest rr)
     {
       _complexRepository = complexRepository ?? throw new ArgumentNullException(nameof(complexRepository), "Complex repo cannot be null");
+      _amenityRepository = amenityRepository ?? throw new ArgumentNullException(nameof(amenityRepository), "Amenity repo cannot be null");
       _log = logger;
       //_roomServiceSender = rss;
       //_addressRequest = ar;
@@ -69,7 +71,7 @@ namespace Revature.Lodging.Api.Controllers
             ProviderId = com.ProviderId,
             ComplexName = com.ComplexName,
             ContactNumber = com.ContactNumber,
-            ComplexAmenity = await _complexRepository.ReadAmenityListByComplexIdAsync(com.Id)
+            ComplexAmenity = await _amenityRepository.ReadAmenityListByComplexIdAsync(com.Id)
           };
           _log.LogInformation("a list of amenities for complex Id {com.ComplexId} were found!", com.Id);
           apiComplices.Add(complex);
@@ -113,7 +115,7 @@ namespace Revature.Lodging.Api.Controllers
           ProviderId = lcomplex.ProviderId,
           ComplexName = lcomplex.ComplexName,
           ContactNumber = lcomplex.ContactNumber,
-          ComplexAmenity = await _complexRepository.ReadAmenityListByComplexIdAsync(lcomplex.Id)
+          ComplexAmenity = await _amenityRepository.ReadAmenityListByComplexIdAsync(lcomplex.Id)
         };
         _log.LogInformation("a list of amenities for complex Id {lcomplex.ComplexId} was found!", lcomplex.Id);
 
@@ -156,7 +158,7 @@ namespace Revature.Lodging.Api.Controllers
           ProviderId = lcomplex.ProviderId,
           ComplexName = lcomplex.ComplexName,
           ContactNumber = lcomplex.ContactNumber,
-          ComplexAmenity = await _complexRepository.ReadAmenityListByComplexIdAsync(lcomplex.Id)
+          ComplexAmenity = await _amenityRepository.ReadAmenityListByComplexIdAsync(lcomplex.Id)
         };
         _log.LogInformation("a list of amenities for complex Id {lcomplex.ComplexId} were found!", lcomplex.Id);
 
@@ -202,7 +204,7 @@ namespace Revature.Lodging.Api.Controllers
             ProviderId = complex.ProviderId,
             ComplexName = complex.ComplexName,
             ContactNumber = complex.ContactNumber,
-            ComplexAmenity = await _complexRepository.ReadAmenityListByComplexIdAsync(complex.Id)
+            ComplexAmenity = await _amenityRepository.ReadAmenityListByComplexIdAsync(complex.Id)
           };
           _log.LogInformation("a list of amenities for complex Id {complex.ComplexId} was found!", complex.Id);
 
@@ -289,7 +291,7 @@ namespace Revature.Lodging.Api.Controllers
         await _complexRepository.CreateComplexAsync(complex);
         _log.LogInformation("(API)new complex in the database is inserted");
 
-        var amenities = await _complexRepository.ReadAmenityListAsync();
+        var amenities = await _amenityRepository.ReadAmenityListAsync();
         _log.LogInformation("(API)list of Amenity is found");
 
         amenityComplex.ComplexId = complex.Id;
@@ -305,7 +307,7 @@ namespace Revature.Lodging.Api.Controllers
             }
           }
 
-          await _complexRepository.CreateAmenityComplexAsync(amenityComplex);
+          await _amenityRepository.CreateAmenityComplexAsync(amenityComplex);
           _log.LogInformation($"(API)a list of amenities for complex id: {complex.Id} was created");
         }
 
@@ -360,7 +362,7 @@ namespace Revature.Lodging.Api.Controllers
           foreach (var amenity in apiRoom.Amenities)
           {
             amenityRoom.AmenityId = amenity.AmenityId;
-            await _complexRepository.CreateAmenityRoomAsync(amenityRoom);
+            await _amenityRepository.CreateAmenityRoomAsync(amenityRoom);
             _log.LogInformation("a list of amenities with room id: {0} was created", arts.RoomId);
           }
         }
@@ -410,7 +412,7 @@ namespace Revature.Lodging.Api.Controllers
         ComplexName = apiComplex.ComplexName
       };
 
-      await _complexRepository.DeleteAmenityComplexAsync(complex.Id);
+      await _amenityRepository.DeleteAmenityComplexAsync(complex.Id);
       _log.LogInformation($"(API)old amenities for complex id: {apiComplex.ComplexId} is deleted");
 
       var amenityComplex = new Logic.AmenityComplex();
@@ -420,7 +422,7 @@ namespace Revature.Lodging.Api.Controllers
         await _complexRepository.UpdateComplexAsync(complex);
         _log.LogInformation("(API) complex is updated");
 
-        var amenities = await _complexRepository.ReadAmenityListAsync();
+        var amenities = await _amenityRepository.ReadAmenityListAsync();
         _log.LogInformation("(API) list of amenity is read");
 
         Guid amenityComplexId;
@@ -439,7 +441,7 @@ namespace Revature.Lodging.Api.Controllers
             }
           }
 
-          await _complexRepository.CreateAmenityComplexAsync(amenityComplex);
+          await _amenityRepository.CreateAmenityComplexAsync(amenityComplex);
           _log.LogInformation("(API)new list of amenity of complex is created");
         }
 
@@ -485,7 +487,7 @@ namespace Revature.Lodging.Api.Controllers
         amenityRoom.Id = Guid.NewGuid();
         amenityRoom.RoomId = arts.RoomId;
 
-        await _complexRepository.DeleteAmenityRoomAsync(apiRoom.RoomId);
+        await _amenityRepository.DeleteAmenityRoomAsync(apiRoom.RoomId);
         _log.LogInformation(")Amenity of Room Id {apiRoom.RoomId} is deleted", apiRoom.RoomId);
 
         //await _roomServiceSender.SendRoomsMessages(arts);
@@ -493,7 +495,7 @@ namespace Revature.Lodging.Api.Controllers
         foreach (var amenity in apiRoom.Amenities)
         {
           amenityRoom.AmenityId = amenity.AmenityId;
-          await _complexRepository.CreateAmenityRoomAsync(amenityRoom);
+          await _amenityRepository.CreateAmenityRoomAsync(amenityRoom);
           _log.LogInformation("list of amenity with room id: {arts.RoomId} is created", arts.RoomId);
         }
 
@@ -534,7 +536,7 @@ namespace Revature.Lodging.Api.Controllers
         //receive deleted room ids from room service to delete amenity of rooms
         //await _roomServiceSender.SendRoomsMessages(arts);
 
-        await _complexRepository.DeleteAmenityComplexAsync(complexId);
+        await _amenityRepository.DeleteAmenityComplexAsync(complexId);
         _log.LogInformation("deleted amenity of complex Id: {complexId}", complexId);
 
         await _complexRepository.DeleteComplexAsync(complexId);
@@ -580,7 +582,7 @@ namespace Revature.Lodging.Api.Controllers
         //send {send} to room service to delete a room
         //await _roomServiceSender.SendRoomsMessages(roomtoDelete);
 
-        await _complexRepository.DeleteAmenityRoomAsync(room.RoomId);
+        await _amenityRepository.DeleteAmenityRoomAsync(room.RoomId);
         _log.LogInformation("deleted amenity of room Id: {Room.RoomId}", room.RoomId);
 
         return StatusCode(200);

@@ -50,18 +50,26 @@ namespace Revature.Lodging.Lib.Interface
     public Task<bool> DeleteComplexAsync(Guid complexId);
 
     /// <summary>
+    /// Deletes a complex and deletes all rooms that is connected to that complex
+    /// </summary>
+    /// <param name="complexId"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException">Thrown when room to be deleted isn't found in DB</exception>
+    public Task<List<Guid>> DeleteComplexRoomAsync(Guid complexId);
+
+    /// <summary>
     /// Create new single Amenities of Room in database by amenityroom object
     /// </summary>
     /// <param name="ar"></param>
     /// <returns></returns>
-    public Task<bool> CreateAmenityRoomAsync(Logic.AmenityRoom ar);
+    //public Task<bool> CreateAmenityRoomAsync(Logic.AmenityRoom ar);
 
     /// <summary>
     /// Create new single Amenities of Room in database by logic amenitycomplex object
     /// </summary>
     /// <param name="ac"></param>
     /// <returns></returns>
-    public Task<bool> CreateAmenityComplexAsync(Logic.AmenityComplex ac);
+    //public Task<bool> CreateAmenityComplexAsync(Logic.AmenityComplex ac);
 
 
     /// <summary>
@@ -69,27 +77,27 @@ namespace Revature.Lodging.Lib.Interface
     /// </summary>
     /// <param name="amenity"></param>
     /// <returns></returns>
-    public Task<bool> CreateAmenityAsync(Logic.Amenity amenity);
+    //public Task<bool> CreateAmenityAsync(Logic.Amenity amenity);
 
     /// <summary>
     /// Read all existed amenities from the database
     /// </summary>
     /// <returns></returns>
-    public Task<List<Logic.Amenity>> ReadAmenityListAsync();
+    //public Task<List<Logic.Amenity>> ReadAmenityListAsync();
 
     /// <summary>
     /// Read amenity list for specific complex from database by complex Id
     /// </summary>
     /// <param name="complexId"></param>
     /// <returns></returns>
-    public Task<List<Logic.Amenity>> ReadAmenityListByComplexIdAsync(Guid complexId);
+    //public Task<List<Logic.Amenity>> ReadAmenityListByComplexIdAsync(Guid complexId);
 
     /// <summary>
     /// Read amenity list for specific room from database by room Id 
     /// </summary>
     /// <param name="roomId"></param>
     /// <returns></returns>
-    public Task<List<Logic.Amenity>> ReadAmenityListByRoomIdAsync(Guid roomId);
+    //public Task<List<Logic.Amenity>> ReadAmenityListByRoomIdAsync(Guid roomId);
 
     /// <summary>
     /// Read complex list for specific provider from database by provider Id
@@ -103,27 +111,27 @@ namespace Revature.Lodging.Lib.Interface
     /// </summary>
     /// <param name="amenity"></param>
     /// <returns></returns>
-    public Task<bool> UpdateAmenityAsync(Logic.Amenity amenity);
+    //public Task<bool> UpdateAmenityAsync(Logic.Amenity amenity);
 
     /// <summary>
     /// Delete existed single amenity info in the database by logic amenity object
     /// </summary>
     /// <param name="amenity"></param>
     /// <returns></returns>
-    public Task<bool> DeleteAmenityAsync(Logic.Amenity amenity);
+    //public Task<bool> DeleteAmenityAsync(Logic.Amenity amenity);
 
     /// <summary>
     /// Delete ALL amenity record from Amenity of room in database by room Id
     /// </summary>
     /// <param name="roomId"></param>
     /// <returns></returns>
-    public Task<bool> DeleteAmenityRoomAsync(Guid roomId);
+    //public Task<bool> DeleteAmenityRoomAsync(Guid roomId);
 
     /// <summary>
     /// Delete ALL amenity record from Amenity of complex in database by complex Id
     /// </summary>
     /// <param name="complexId"></param>
     /// <returns></returns>
-    public Task<bool> DeleteAmenityComplexAsync(Guid complexId);
+    //public Task<bool> DeleteAmenityComplexAsync(Guid complexId);
   }
 }

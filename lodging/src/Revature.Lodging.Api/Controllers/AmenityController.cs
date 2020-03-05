@@ -16,12 +16,14 @@ namespace Revature.Lodging.Api.Controllers
   //[Authorize]
   public class AmenityController : ControllerBase
   {
-    private readonly IComplexRepository _complexRepository;
+    //private readonly IComplexRepository _complexRepository;
+    private readonly IAmenityRepository _amenityRepository;
     private readonly ILogger<AmenityController> _log;
 
-    public AmenityController(IComplexRepository complexRepository, ILogger<AmenityController> logger)
+    public AmenityController(IAmenityRepository amenityRepository, ILogger<AmenityController> logger)
     {
-      _complexRepository = complexRepository ?? throw new ArgumentNullException(nameof(complexRepository), "Complex repo cannot be null");
+      //_complexRepository = complexRepository ?? throw new ArgumentNullException(nameof(complexRepository), "Complex repo cannot be null");
+      _amenityRepository = amenityRepository ?? throw new ArgumentNullException(nameof(amenityRepository), "amenity repo cannot be null");
       _log = logger;
     }
 
@@ -42,7 +44,7 @@ namespace Revature.Lodging.Api.Controllers
 
       try
       {
-        IEnumerable<Logic.Amenity> amenities = await _complexRepository.ReadAmenityListAsync();
+        IEnumerable<Logic.Amenity> amenities = await _amenityRepository.ReadAmenityListAsync();
         _log.LogInformation("a list of all amenities was found");
 
         return Ok(amenities);
@@ -70,7 +72,7 @@ namespace Revature.Lodging.Api.Controllers
     {
       try
       {
-        IEnumerable<Logic.Amenity> amenities = await _complexRepository.ReadAmenityListByRoomIdAsync(roomGuid);
+        IEnumerable<Logic.Amenity> amenities = await _amenityRepository.ReadAmenityListByRoomIdAsync(roomGuid);
         _log.LogInformation("a list of amenities for room Id: {roomGuid} was found", roomGuid);
 
         return Ok(amenities);
@@ -99,7 +101,7 @@ namespace Revature.Lodging.Api.Controllers
     {
       try
       {
-        IEnumerable<Logic.Amenity> amenities = await _complexRepository.ReadAmenityListByComplexIdAsync(complexGuid);
+        IEnumerable<Logic.Amenity> amenities = await _amenityRepository.ReadAmenityListByComplexIdAsync(complexGuid);
         _log.LogInformation("a list of amenities for complex Id: {complexGuid} was found", complexGuid);
 
         return Ok(amenities);
@@ -135,7 +137,7 @@ namespace Revature.Lodging.Api.Controllers
       };
       try
       {
-        await _complexRepository.CreateAmenityAsync(amen);
+        await _amenityRepository.CreateAmenityAsync(amen);
         _log.LogInformation("new amenity: {amen.AmenityType} is added", amen.AmenityType);
 
         return StatusCode(201);
@@ -171,7 +173,7 @@ namespace Revature.Lodging.Api.Controllers
       };
       try
       {
-        await _complexRepository.UpdateAmenityAsync(amenity);
+        await _amenityRepository.UpdateAmenityAsync(amenity);
         _log.LogInformation("new amenity: {amenity.AmenityType} is updated.", amenity.AmenityType);
 
         return StatusCode(201);
@@ -207,7 +209,7 @@ namespace Revature.Lodging.Api.Controllers
       };
       try
       {
-        await _complexRepository.DeleteAmenityAsync(amenity);
+        await _amenityRepository.DeleteAmenityAsync(amenity);
         _log.LogInformation("amenity: {amenity.AmenityType} is deleted", amenity.AmenityType);
 
         return StatusCode(201);
