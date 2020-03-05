@@ -151,7 +151,7 @@ namespace Revature.Account.Api.Controllers
     [HttpGet("{coordinatorId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize]
+    [Authorize(Roles ="Coordinator")]
     public async Task<ActionResult> Get(Guid coordinatorId)
     {
       try
@@ -178,7 +178,7 @@ namespace Revature.Account.Api.Controllers
     [HttpGet("all")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize]
+    [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult> GetAll()
     {
       try
@@ -203,7 +203,7 @@ namespace Revature.Account.Api.Controllers
     [HttpGet("{coordinatorEmail}", Name = "GetCoordinatorByEmail")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize]
+    [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult> Get(string coordinatorEmail)
     {
       _logger.LogInformation($"GET - Getting coordinator id by Email: {coordinatorEmail}");

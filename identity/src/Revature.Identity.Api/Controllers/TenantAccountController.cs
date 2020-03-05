@@ -56,7 +56,7 @@ namespace Revature.Account.Api.Controllers
     [HttpGet("{tenantId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize]
+    [Authorize(Roles = "Coordinator,Tenant")]
     public async Task<ActionResult> Get(Guid tenantId)
     {
       try
@@ -88,7 +88,7 @@ namespace Revature.Account.Api.Controllers
     [HttpGet("{tentantEmail}", Name = "GetTenantByEmail")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize]
+    [Authorize(Roles = "Coordinator,Tenant")]
     public async Task<ActionResult> Get(string tenantEmail)
     {
       _logger.LogInformation($"GET - Getting tenant id by Email: {tenantEmail}");
@@ -116,7 +116,7 @@ namespace Revature.Account.Api.Controllers
     [HttpPut("{tenantId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize]
+    [Authorize(Roles = "Coordinator")]
     public async Task<IActionResult> Put(Guid tenantId, [FromBody, Bind("Name, Email")] TenantAccount tenant)
     {
       _logger.LogInformation($"PUT - Put request for tenant ID: {tenantId}");

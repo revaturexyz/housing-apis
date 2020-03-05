@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Microsoft.IdentityModel.Tokens;
 using Okta.AspNetCore;
 using Revature.Account.Api.Telemetry;
 using Revature.Account.DataAccess;
@@ -74,15 +75,24 @@ namespace Revature.Account.Api
       });
 
       services.AddAuthentication(options =>
+      {
+        options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+        options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+      })
+        .AddJwtBearer(options =>
+        {
+          options.Authority = Configuration["Okta:Domain"] + "/oauth2/default";
+          options.Audience = "api://default";
+          options.RequireHttpsMetadata = true;
+          options.SaveToken = true;
+          options.TokenValidationParameters = new TokenValidationParameters
           {
-              options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
-              options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
-              options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
-          })
-          .AddOktaWebApi(new OktaWebApiOptions()
-          {
-            OktaDomain = Configuration["Okta:OktaDomain"],
-          });
+            RoleClaimType = "groups",
+            ValidateIssuer = true,
+  
+          };
+        });
 
       services.AddAuthorization();
 
