@@ -73,24 +73,26 @@ namespace Revature.Address.Api.Controllers
     [HttpGet("checkdistance")]
     public async Task<ActionResult<bool>> IsInRange([FromQuery] List<AddressModel> addresses)
     {
-      var start = new Lib.Address
-      {
-        Id = addresses[0].Id,
-        Street = addresses[0].Street,
-        City = addresses[0].City,
-        State = addresses[0].State,
-        Country = addresses[0].Country,
-        ZipCode = addresses[0].ZipCode
-      };
-      var end = new Lib.Address
-      {
-        Id = addresses[1].Id,
-        Street = addresses[1].Street,
-        City = addresses[1].City,
-        State = addresses[1].State,
-        Country = addresses[1].Country,
-        ZipCode = addresses[1].ZipCode
-      };
+      //var start = new Lib.Address
+      //{
+      //  Id = addresses[0].Id,
+      //  Street = addresses[0].Street,
+      //  City = addresses[0].City,
+      //  State = addresses[0].State,
+      //  Country = addresses[0].Country,
+      //  ZipCode = addresses[0].ZipCode
+      //};
+      var start = Mapper.Map(addresses[0]);
+      //var end = new Lib.Address
+      //{
+      //  Id = addresses[1].Id,
+      //  Street = addresses[1].Street,
+      //  City = addresses[1].City,
+      //  State = addresses[1].State,
+      //  Country = addresses[1].Country,
+      //  ZipCode = addresses[1].ZipCode
+      //};
+      var end = Mapper.Map(addresses[1]);
       if (await _addressLogic.IsInRangeAsync(start, end, 20))
       {
         _logger.LogInformation("These addresses are within range of each other");
@@ -116,15 +118,16 @@ namespace Revature.Address.Api.Controllers
     [HttpGet]
     public async Task<ActionResult<Lib.Address>> GetAddress([FromQuery] AddressModel address)
     {
-      var newAddress = new Lib.Address
-      {
-        Id = address.Id,
-        Street = address.Street,
-        City = address.City,
-        State = address.State,
-        Country = address.Country,
-        ZipCode = address.ZipCode
-      };
+      //var newAddress = new Lib.Address
+      //{
+      //  Id = address.Id,
+      //  Street = address.Street,
+      //  City = address.City,
+      //  State = address.State,
+      //  Country = address.Country,
+      //  ZipCode = address.ZipCode
+      //};
+      var newAddress = Mapper.Map(address);
       var checkAddress = (await _db.GetAddressAsync(address: newAddress)).FirstOrDefault();
 
       if (checkAddress == null)
