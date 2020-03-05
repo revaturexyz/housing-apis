@@ -280,34 +280,13 @@ namespace Revature.Tenant.Api.Controllers
       {
         _logger.LogInformation("Posting Address to Address Service...");
         var postedAddress = await this._addressService.GetAddressAsync(tenant.ApiAddress);
-
+        tenant.AddressId = postedAddress.AddressId;
         //cast ApiTenant in Logic Tenant
-        var newTenant = new Lib.Models.Tenant
-        {
-          Id = Guid.NewGuid(),
-          Email = tenant.Email,
-          Gender = tenant.Gender,
-          FirstName = tenant.FirstName,
-          LastName = tenant.LastName,
-          AddressId = Guid.NewGuid(),//TODO postedAddress.AddressId,
-          RoomId = null, //Room Service will set this later
-          CarId = null,
-          BatchId = tenant.BatchId,
-          TrainingCenter = tenant.TrainingCenter,
-
-        };
+        var newTenant = ApiMapper.Map(tenant);
 
         if (tenant.ApiCar.LicensePlate != null)
         {
-          newTenant.Car = new Lib.Models.Car
-          {
-            Color = tenant.ApiCar.Color,
-            Make = tenant.ApiCar.Make,
-            Model = tenant.ApiCar.Model,
-            LicensePlate = tenant.ApiCar.LicensePlate,
-            State = tenant.ApiCar.State,
-            Year = tenant.ApiCar.Year
-          };
+          newTenant.Car = ApiMapper.Map(tenant.ApiCar);
           newTenant.CarId = 0;
         }
         else
@@ -358,33 +337,13 @@ namespace Revature.Tenant.Api.Controllers
         _logger.LogInformation("PUT - Updating tenant with tenantid {tenantId}.", tenant.Id);
         _logger.LogInformation("Posting Address to Address Service...");
         var postedAddress = await this._addressService.GetAddressAsync(tenant.ApiAddress);
+        tenant.AddressId = postedAddress.AddressId;
         //cast ApiTenant in Logic Tenant
-        var newTenant = new Lib.Models.Tenant
-        {
-          Id = (Guid)tenant.Id,
-          Email = tenant.Email,
-          Gender = tenant.Gender,
-          FirstName = tenant.FirstName,
-          LastName = tenant.LastName,
-          AddressId = (Guid)tenant.AddressId,
-          RoomId = tenant.RoomId,
-          CarId = tenant.CarId,
-          BatchId = tenant.BatchId,
-          TrainingCenter = tenant.TrainingCenter
-        };
+        var newTenant = ApiMapper.Map(tenant);
 
         if (tenant.ApiCar != null)
         {
-          newTenant.Car = new Lib.Models.Car
-          {
-            Id = tenant.ApiCar.Id,
-            Color = tenant.ApiCar.Color,
-            Make = tenant.ApiCar.Make,
-            Model = tenant.ApiCar.Model,
-            LicensePlate = tenant.ApiCar.LicensePlate,
-            State = tenant.ApiCar.State,
-            Year = tenant.ApiCar.Year
-          };
+          newTenant.Car = ApiMapper.Map(tenant.ApiCar);
         }
 
         //Call repository method Put and Save Async
