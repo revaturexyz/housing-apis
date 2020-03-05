@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Revature.Lodging.Lib
+namespace Revature.Lodging.Lib.Interface
 {
   /// <summary>
   /// Interface for the Repository
@@ -28,7 +28,8 @@ namespace Revature.Lodging.Lib
       string roomType,
       string gender,
       DateTime? endDate,
-      Guid? roomId);
+      Guid? roomId,
+      bool isVacant = false);
 
     /// <summary>
     /// Method that adds a Room to the database
