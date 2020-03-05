@@ -39,6 +39,7 @@ namespace Revature.Tenant.Api.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult<IEnumerable<ApiTenant>>> GetAllAsync([FromQuery] string firstName = null, [FromQuery] string lastName = null, [FromQuery] string gender = null, [FromQuery] string trainingCenter = null)
     {
       //Parse training center string to guid if it exists
@@ -136,6 +137,7 @@ namespace Revature.Tenant.Api.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Roles = "Coordinator,Tenant")]
     public async Task<ActionResult<ApiTenant>> GetByIdAsync([FromRoute] Guid id)
     {
       _logger.LogInformation("GET - Getting notifications by Tenant ID: {TenantId}", id);
@@ -211,6 +213,7 @@ namespace Revature.Tenant.Api.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult<IEnumerable<ApiBatch>>> GetAllBatches([FromQuery] string trainingCenterString)
     {
       try
@@ -245,6 +248,7 @@ namespace Revature.Tenant.Api.Controllers
     [HttpPost("Register", Name = "RegisterTenant")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult<ApiTenant>> PostAsync([FromBody] ApiTenant tenant)
     {
       _logger.LogInformation("POST - Making tenant for tenant ID {tenantId}.", tenant.Id);
@@ -322,6 +326,7 @@ namespace Revature.Tenant.Api.Controllers
     // PUT: api/Tenant/Update
     [HttpPut("Update", Name = "UpdateTenant")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult> UpdateAsync([FromBody] ApiTenant tenant)
     {
       try
@@ -390,6 +395,7 @@ namespace Revature.Tenant.Api.Controllers
     /// <returns>Status Code 204 if successful, or NotFound if not found, or Conflict for Invalid Operations, or Internal Service Error for other exceptions</returns>
     [HttpDelete("Delete/{id}", Name = "DeleteTenant")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult> DeleteAsync([FromRoute] Guid id)
     {
       try
