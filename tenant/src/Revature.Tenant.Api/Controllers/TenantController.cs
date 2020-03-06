@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Revature.Tenant.Api.Models;
 using Revature.Tenant.Lib.Interface;
+using System.Linq;
 
 namespace Revature.Tenant.Api.Controllers
 {
@@ -145,6 +147,28 @@ namespace Revature.Tenant.Api.Controllers
       {
         //Call repository method GetByIdAsync
         var tenant = await _tenantRepository.GetByIdAsync(id);
+
+        /* if role is tenant and tenant.Email != claims email
+         *  return 401Forbidden
+         */
+        try
+        {
+          var principal = HttpContext.User.Identities.SingleOrDefault();
+          var email = principal.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).Single();
+
+          if (email?.ToLower() != tenant?.Email?.ToLower())
+          {
+            _logger.LogWarning("Tenant trying to access other tenant account");
+            return Forbid();
+          }
+        }
+        catch (ArgumentNullException e)
+        {
+          _logger.LogError("Email does not exist in Okta account");
+          return NotFound();
+        }
+
+
 
         //cast tenant into Api Tenant
         var apiTenant = new ApiTenant

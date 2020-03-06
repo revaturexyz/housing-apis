@@ -70,7 +70,7 @@ namespace Revature.Tenant.Api
       services.AddScoped<ITenantRoomRepository, TenantRoomRepository>();
       services.AddScoped<IMapper, Mapper>();
       services.AddScoped<IServiceBusSender, ServiceBusSender>();
-      services.AddScoped<ITelemetryInitializer, TenantTelemetryInitializer>();
+      services.AddSingleton<ITelemetryInitializer, TenantTelemetryInitializer>();
 
       services.AddHttpClient<IAddressService, AddressService>();
 
@@ -89,6 +89,7 @@ namespace Revature.Tenant.Api
         options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
+          NameClaimType = "name",
           RoleClaimType = "groups",
           ValidateIssuer = true,
 
