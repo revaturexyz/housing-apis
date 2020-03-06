@@ -86,7 +86,7 @@ namespace Revature.Address.Lib.BusinessLogic
       var response = await GoogleMaps.AddressGeocode.QueryAsync(request);
       var results = response.Results.ToArray();
 
-      if (results.Length != 0)
+      if (results.Length != 0 && !results[0].PartialMatch)
       {
         return true;
       }

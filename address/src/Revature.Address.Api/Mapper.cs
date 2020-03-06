@@ -1,4 +1,7 @@
 using Revature.Address.Api.Models;
+using Revature.Address.Lib.BusinessLogic;
+using System.Threading.Tasks;
+using System;
 
 namespace Revature.Address.Api
 {
@@ -14,6 +17,8 @@ namespace Revature.Address.Api
     /// <returns>Library model mapped from API model</returns>
     public static Lib.Address Map(AddressModel address)
     {
+      // check if address is real
+      // normalize address
       return new Lib.Address
       {
         Id = address.Id,
@@ -23,6 +28,20 @@ namespace Revature.Address.Api
         Country = address.Country,
         ZipCode = address.ZipCode
       };
+    }
+
+    public static async Task<Lib.Address> MapVerifyAndNormalize(AddressModel address, IAddressLogic addressLogic)
+    {
+      var inputAddress = Map(address);
+      if (await addressLogic.IsValidAddressAsync(inputAddress))
+      {
+        Lib.Address normalizedAddress = await addressLogic.NormalizeAddressAsync(inputAddress);
+        return normalizedAddress;
+      }
+      else
+      {
+        throw new ArgumentException($"Address ({inputAddress}) does not exist in the real world");
+      }
     }
 
     /// <summary>
