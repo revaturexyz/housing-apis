@@ -42,7 +42,7 @@ namespace Revature.Lodging.Api.Services
     public async Task<ApiAddress> PostAddressAsync(ApiAddress item)
     {
       var queryString = "?"
-        + "street=" + item.StreetAddress + "&"
+        + "street=" + item.Street + "&"
         + "city=" + item.City + "&"
         + "state=" + item.State + "&"
         + "zipCode=" + item.ZipCode + "&"

@@ -61,7 +61,7 @@ namespace Revature.Address.Api
       services.AddApplicationInsightsTelemetry();
       
       services.AddHealthChecks();
-      services.AddScoped<ITelemetryInitializer, AddressTelemetryInitializer>();
+      services.AddSingleton<ITelemetryInitializer, AddressTelemetryInitializer>();
 
       services.AddControllers();
     }
