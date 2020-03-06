@@ -35,14 +35,14 @@ namespace Revature.Lodging.Tests.ApiTests
       var address = new ApiAddress
       {
         Id = aId,
-        StreetAddress = "123 test ave",
+        Street = "123 test ave",
         City = "Dallas",
         State = "TX",
         ZipCode = "76010"
       };
 
       Assert.Equal(aId, address.Id);
-      Assert.Equal("123 test ave", address.StreetAddress);
+      Assert.Equal("123 test ave", address.Street);
       Assert.Equal("Dallas", address.City);
       Assert.Equal("TX", address.State);
       Assert.Equal("76010", address.ZipCode);

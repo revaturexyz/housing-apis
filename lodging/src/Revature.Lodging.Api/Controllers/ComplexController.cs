@@ -108,7 +108,19 @@ namespace Revature.Lodging.Api.Controllers
         _log.LogInformation("A complex with Id: {complexId} was found", complexId);
 
         var addressId = complex.AddressId;
-        var address = await _addressRequest.GetAddressAsync(addressId);
+        ApiAddress address;
+
+        try
+        {
+          address = await _addressRequest.GetAddressAsync(addressId);
+        }
+        catch
+        {
+          address = new ApiAddress()
+          {
+            Id = addressId
+          };
+        }
 
         var apiComplex = new ApiComplex
         {
@@ -126,7 +138,7 @@ namespace Revature.Lodging.Api.Controllers
       catch (Exception ex)
       {
         _log.LogError("{ex}: Internal Server Error", ex);
-        return StatusCode(500, ex.Message);
+        return BadRequest();
       }
     }
 
@@ -152,7 +164,19 @@ namespace Revature.Lodging.Api.Controllers
         foreach (var complex in complexes)
         {
           var addressId = complex.AddressId;
-          var address = await _addressRequest.GetAddressAsync(addressId);
+          ApiAddress address;
+
+          try
+          {
+            address = await _addressRequest.GetAddressAsync(addressId);
+          }
+          catch
+          {
+            address = new ApiAddress()
+            {
+              Id = addressId
+            };
+          }
 
           var apiComplex = new ApiComplex
           {
@@ -173,7 +197,7 @@ namespace Revature.Lodging.Api.Controllers
       catch (Exception ex)
       {
         _log.LogError("{ex}: Internal Server Error", ex);
-        return StatusCode(500, ex.Message);
+        return BadRequest();
       }
     }
 
@@ -294,7 +318,7 @@ namespace Revature.Lodging.Api.Controllers
       var complex = new Logic.Complex()
       {
         Id = apiComplex.ComplexId,
-      //  AddressId = apiComplex.Address.AddressId,
+        AddressId = apiComplex.Address.Id,
         ProviderId = apiComplex.ProviderId,
         ContactNumber = apiComplex.ContactNumber,
         ComplexName = apiComplex.ComplexName
@@ -303,8 +327,6 @@ namespace Revature.Lodging.Api.Controllers
       await _amenityRepository.DeleteAmenityComplexAsync(complex.Id);
       _log.LogInformation($"(API)old amenities for complex id: {complex.Id} is deleted");
 
-      //var amenityComplex = new Logic.ComplexAmenity();
-
       try
       {
         await _complexRepository.UpdateComplexAsync(complex);
@@ -312,26 +334,6 @@ namespace Revature.Lodging.Api.Controllers
 
         var existingAmenities = await _amenityRepository.ReadAmenityListAsync();
         _log.LogInformation("(API) list of amenity is read");
-
-        //Guid amenityComplexId;
-        //amenityComplex.ComplexId = complex.Id;
-
-        //foreach (var amenity in apiComplex.ComplexAmenity)
-        //{
-        //  foreach (var am in amenities)
-        //  {
-        //    if (am.AmenityType == amenity.AmenityType)
-        //    {
-        //      amenityComplex.AmenityId = am.Id;
-
-        //      amenityComplexId = Guid.NewGuid();
-        //      amenityComplex.Id = amenityComplexId;
-        //    }
-        //  }
-
-        //  await _complexRepository.CreateAmenityComplexAsync(amenityComplex);
-        //  _log.LogInformation("(API)new list of amenity of complex is created");
-        //}
 
         // Create ComplexAmenity objects from the list of Amenities passed in with apiComplex
         foreach (var postedAmenity in apiComplex.ComplexAmenities)
@@ -368,8 +370,6 @@ namespace Revature.Lodging.Api.Controllers
           await _amenityRepository.CreateAmenityComplexAsync(complexAmenity);
           _log.LogInformation("(API)new list of amenity of complex is created");
         }
-
-        //send ApiComplexAddress to Address service to update the address
 
         return StatusCode(200);
 
