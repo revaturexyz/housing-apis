@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 
-namespace Revature.Account.Api
+namespace Revature.Identity.Api
 {
   /// <summary>
   /// Simple requirement which takes a role.

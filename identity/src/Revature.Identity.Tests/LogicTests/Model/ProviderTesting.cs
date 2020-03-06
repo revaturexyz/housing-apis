@@ -1,8 +1,8 @@
 using System;
-using Revature.Account.Lib.Model;
+using Revature.Identity.Lib.Model;
 using Xunit;
 
-namespace Revature.Account.Tests.Logic_Tests.Model
+namespace Revature.Identity.Tests.Logic_Tests.Model
 {
   /// <summary>
   /// Tests for the business logic layer representation for the Provider.

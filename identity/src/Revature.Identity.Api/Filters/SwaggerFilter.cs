@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Revature.Account.Api
+namespace Revature.Identity.Api
 {
   // allows Swagger to understand that [Authorize] attribute means
   // that Bearer auth is required, or else 401 response.

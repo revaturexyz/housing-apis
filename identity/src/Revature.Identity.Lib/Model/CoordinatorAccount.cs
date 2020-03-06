@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Revature.Account.Lib.Model
+namespace Revature.Identity.Lib.Model
 {
   /// <summary>
   /// Contains individual information for a coordinator tied to a single training center.

@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Revature.Account.Lib.Model;
+using Revature.Identity.Lib.Model;
 using Xunit;
 
-namespace Revature.Account.Tests.ControllerTests
+namespace Revature.Identity.Tests.ControllerTests
 {
   /// <summary>
   /// Tests for the API's Notification Controller.

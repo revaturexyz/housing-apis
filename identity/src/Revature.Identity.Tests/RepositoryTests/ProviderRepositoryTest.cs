@@ -1,12 +1,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Revature.Account.DataAccess;
-using Revature.Account.DataAccess.Repositories;
-using Revature.Account.Tests;
+using Revature.Identity.DataAccess;
+using Revature.Identity.DataAccess.Repositories;
+using Revature.Identity.Tests;
 using Xunit;
 
-namespace Revature.Account.Test.Repository_Tests
+namespace Revature.Identity.Test.Repository_Tests
 {
   /// <summary>
   /// Tests for the Provider's data access layer and it's supporting database negotiation methods.

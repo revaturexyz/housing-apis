@@ -10,13 +10,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using Okta.AspNetCore;
-using Revature.Account.Api.Telemetry;
-using Revature.Account.DataAccess;
-using Revature.Account.DataAccess.Repositories;
-using Revature.Account.Lib.Interface;
+using Revature.Identity.Api.Telemetry;
+using Revature.Identity.DataAccess;
+using Revature.Identity.DataAccess.Repositories;
+using Revature.Identity.Lib.Interface;
 using Serilog;
 
-namespace Revature.Account.Api
+namespace Revature.Identity.Api
 {
   public class Startup
   {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Revature.Account.Lib.Model;
+using Revature.Identity.Lib.Model;
 using Xunit;
 
 namespace Revature.Identity.Tests.LogicTests.Model

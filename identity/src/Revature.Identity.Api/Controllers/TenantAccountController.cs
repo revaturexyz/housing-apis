@@ -1,15 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Revature.Account.Lib.Interface;
-using Revature.Account.Lib.Model;
+using Revature.Identity.Lib.Interface;
+using Revature.Identity.Lib.Model;
 
-namespace Revature.Account.Api.Controllers
+namespace Revature.Identity.Api.Controllers
 {
   [Route("api/tenant-accounts")]
   [ApiController]

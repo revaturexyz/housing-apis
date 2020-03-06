@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Revature.Account.Lib.Interface;
-using Revature.Account.Lib.Model;
+using Revature.Identity.Lib.Interface;
+using Revature.Identity.Lib.Model;
 
-namespace Revature.Account.DataAccess.Repositories
+namespace Revature.Identity.DataAccess.Repositories
 {
   /// <summary>
   /// Describes the methods used to get and manipulate data between the database and business layer.

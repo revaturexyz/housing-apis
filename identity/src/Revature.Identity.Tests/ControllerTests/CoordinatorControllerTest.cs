@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace Revature.Account.Tests.ControllerTests
+namespace Revature.Identity.Tests.ControllerTests
 {
   /// <summary>
   /// Tests the API's Coordinator Controller.

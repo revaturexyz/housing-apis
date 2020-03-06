@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Okta.AspNetCore;
 using Microsoft.Extensions.Logging;
 using RestSharp;
 using Okta.Sdk;
 using Okta.Sdk.Configuration;
 
-namespace Revature.Account.Api
+namespace Revature.Identity.Api
 {
   public class OktaHelper
   {

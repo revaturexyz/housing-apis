@@ -1,5 +1,5 @@
 
-namespace Revature.Account.DataAccess
+namespace Revature.Identity.DataAccess
 {
   public interface IMapper
   {

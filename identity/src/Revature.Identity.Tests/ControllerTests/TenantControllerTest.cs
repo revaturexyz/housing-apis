@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Revature.Account.Tests;
+using Revature.Identity.Tests;
 using System;
 using System.Collections.Generic;
 using System.Linq;

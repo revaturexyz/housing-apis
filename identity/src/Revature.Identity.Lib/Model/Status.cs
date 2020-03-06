@@ -1,6 +1,6 @@
 
 using System;
-namespace Revature.Account.Lib.Model
+namespace Revature.Identity.Lib.Model
 {
   /// <summary>
   /// Represents the current status of a notification. Currently the ids:

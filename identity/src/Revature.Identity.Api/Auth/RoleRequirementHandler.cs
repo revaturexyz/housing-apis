@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 
-namespace Revature.Account.Api
+namespace Revature.Identity.Api
 {
   /// <summary>
   /// Checks that the user has the given role.

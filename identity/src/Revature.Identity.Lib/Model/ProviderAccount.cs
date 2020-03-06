@@ -1,6 +1,6 @@
 using System;
 
-namespace Revature.Account.Lib.Model
+namespace Revature.Identity.Lib.Model
 {
   /// <summary>
   /// Contains information pertaining to a particular provider which

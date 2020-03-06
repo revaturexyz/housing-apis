@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace Revature.Account.DataAccess
+namespace Revature.Identity.DataAccess
 {
   /// <summary>
   /// Maps between the business logic and data access layers.

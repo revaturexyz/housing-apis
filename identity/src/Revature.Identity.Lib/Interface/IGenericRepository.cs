@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Revature.Account.Lib.Model;
+using Revature.Identity.Lib.Model;
 
-namespace Revature.Account.Lib.Interface
+namespace Revature.Identity.Lib.Interface
 {
   /// <summary>
   /// The interface-point for the data-access-layer's interaction with the business-logic-layer.

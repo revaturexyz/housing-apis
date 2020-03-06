@@ -3,7 +3,7 @@ using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Http;
 
-namespace Revature.Account.Api.Telemetry
+namespace Revature.Identity.Api.Telemetry
 {
   internal class AccountTelemetryInitializer : ITelemetryInitializer
   {

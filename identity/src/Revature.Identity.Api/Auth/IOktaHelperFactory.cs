@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace Revature.Account.Api
+namespace Revature.Identity.Api
 {
   public interface IOktaHelperFactory
   {

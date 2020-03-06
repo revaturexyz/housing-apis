@@ -10,19 +10,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
-using Revature.Account.Api;
-using Revature.Account.Api.Controllers;
-using Revature.Account.Lib.Model;
+using Revature.Identity.Api;
+using Revature.Identity.Api.Controllers;
+using Revature.Identity.Lib.Model;
 
-namespace Revature.Account.Tests
+namespace Revature.Identity.Tests
 {
   /// <summary>
   /// Helper methods for the Moq Testing of methods.
   /// </summary>
   public class TestHelper
   {
-    public Mock<Revature.Account.Lib.Interface.IGenericRepository> Repository { get; private set; }
-    public Mock<Revature.Account.Api.IOktaHelperFactory> OktaHelperFactory { get; private set; }
+    public Mock<Revature.Identity.Lib.Interface.IGenericRepository> Repository { get; private set; }
+    public Mock<Revature.Identity.Api.IOktaHelperFactory> OktaHelperFactory { get; private set; }
 
     //API Controller Instantiation
     public CoordinatorAccountController CoordinatorAccountController { get; private set; }

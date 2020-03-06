@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Revature.Account.Lib.Interface;
-using Revature.Account.Lib.Model;
+using Revature.Identity.Lib.Interface;
+using Revature.Identity.Lib.Model;
 
-namespace Revature.Account.Api.Controllers
+namespace Revature.Identity.Api.Controllers
 {
   /// <summary>
   /// RESTful API Controllers for the Coordinator account.

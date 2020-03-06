@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using Revature.Account.DataAccess;
-using Revature.Account.DataAccess.Repositories;
+using Revature.Identity.DataAccess;
+using Revature.Identity.DataAccess.Repositories;
 using Xunit;
 
-namespace Revature.Account.Tests.Repository_Tests
+namespace Revature.Identity.Tests.Repository_Tests
 {
   /// <summary>
   /// Tests for the Coordinator's data access layer and it's supporting database negotiation methods.

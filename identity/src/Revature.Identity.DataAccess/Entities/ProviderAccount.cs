@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Revature.Account.DataAccess.Entities
+namespace Revature.Identity.DataAccess.Entities
 {
   public class ProviderAccount
   {
