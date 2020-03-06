@@ -162,7 +162,7 @@ namespace Revature.Tenant.Api.Controllers
             return Forbid();
           }
         }
-        catch (ArgumentNullException e)
+        catch (ArgumentNullException)
         {
           _logger.LogError("Email does not exist in Okta account");
           return NotFound();
