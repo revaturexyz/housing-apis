@@ -176,7 +176,7 @@ namespace Revature.Lodging.Tests.ApiTests
 
       var result = await controller.PutRoomAsync(Guid.NewGuid(), roomTest);
       //assert
-      Assert.IsAssignableFrom<NoContentResult>(result);
+      Assert.IsAssignableFrom<StatusCodeResult>(result);
     }
 
     /// <summary>

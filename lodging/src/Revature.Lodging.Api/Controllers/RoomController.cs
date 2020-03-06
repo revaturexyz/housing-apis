@@ -65,9 +65,34 @@ namespace Revature.Lodging.Api.Controllers
         endDate,
         roomId);
 
+        var apiRooms = new List<ApiRoom>();
+
+        foreach(var room in rooms)
+        {
+          var apiRoom = new ApiRoom()
+          {
+            RoomId = room.Id,
+            RoomNumber = room.RoomNumber,
+            ComplexId = room.ComplexId,
+            NumberOfBeds = room.NumberOfBeds,
+            ApiRoomType = room.RoomType,
+            LeaseStart = room.LeaseStart,
+            LeaseEnd = room.LeaseEnd,
+            Amenities = (from amenity in await _amenityRepo.ReadAmenityListByRoomIdAsync(room.Id)
+                         select new ApiAmenity()
+                         {
+                           AmenityId = amenity.Id,
+                           AmenityType = amenity.AmenityType,
+                           Description = amenity.Description
+                         }).ToList()
+          };
+
+          apiRooms.Add(apiRoom);
+        }
+
         _logger.LogInformation("Success.");
 
-        return Ok(rooms);
+        return Ok(apiRooms);
       }
       catch (KeyNotFoundException ex)
       {
@@ -141,6 +166,7 @@ namespace Revature.Lodging.Api.Controllers
           Id = Guid.NewGuid(),
           RoomNumber = room.RoomNumber,
           NumberOfBeds = room.NumberOfBeds,
+          NumberOfOccupants = 0,
           //Gender = room.Gender,
           RoomType = room.ApiRoomType //(03/02/2020) should not update Gender and RoomType and adding new room to database?
         };
@@ -173,7 +199,7 @@ namespace Revature.Lodging.Api.Controllers
             await _amenityRepo.CreateAmenityAsync(amenity);
 
             roomAmenity.Id = Guid.NewGuid();
-            roomAmenity.RoomId = room.RoomId;
+            roomAmenity.RoomId = createdRoom.Id;
             roomAmenity.AmenityId = amenity.Id;
           }
           await _amenityRepo.CreateAmenityRoomAsync(roomAmenity);
@@ -211,7 +237,7 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> PutRoomAsync(Guid roomId,
-      [FromBody, Bind("ComplexID, RoomNumber, NumberOfBeds, NumberOfOccupants, Gender, RoomType, LeaseStart, LeaseEnd, Amenities")]ApiRoom room)
+      [FromBody]ApiRoom room)
     {
       try
       {
@@ -228,6 +254,11 @@ namespace Revature.Lodging.Api.Controllers
 
           await _repository.UpdateRoomAsync(roomFromDb);
           var existingAmenities = await _amenityRepo.ReadAmenityListAsync();
+
+          if(room.Amenities == null)
+          {
+            room.Amenities = new List<ApiAmenity>();
+          }
 
           foreach(var postedAmenity in room.Amenities)
           {
