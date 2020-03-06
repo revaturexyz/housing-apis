@@ -194,31 +194,5 @@ namespace Revature.Identity.Api.Controllers
         return new StatusCodeResult(StatusCodes.Status500InternalServerError);
       }
     }
-    // GET: api/coordinator-accounts/john@gmail.com
-    /// <summary>
-    /// return a coordinator based on an email.
-    /// </summary>
-    /// <param name="coordinatorEmail"></param>
-    /// <returns></returns>
-    [HttpGet("{coordinatorEmail}", Name = "GetCoordinatorByEmail")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize(Roles = "Coordinator")]
-    public async Task<ActionResult> Get(string coordinatorEmail)
-    {
-      _logger.LogInformation($"GET - Getting coordinator id by Email: {coordinatorEmail}");
-      CoordinatorAccount coord;
-      var id = await _repo.GetCoordinatorIdByEmailAsync(coordinatorEmail);
-      if (id == null)
-      {
-        _logger.LogWarning($"No tenant account found for {coordinatorEmail}");
-        return NotFound();
-      }
-      else
-      {
-        coord = await _repo.GetCoordinatorAccountByIdAsync(id);
-      }
-      return Ok(coord);
-    }
   }
 }

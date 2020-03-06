@@ -77,33 +77,6 @@ namespace Revature.Identity.Api.Controllers
       }
     }
 
-    // GET: api/tenant-accounts/john@gmail.com
-    /// <summary>
-    /// return a tenant based on an email.
-    /// </summary>
-    /// <param name="tenantEmail"></param>
-    /// <returns></returns>
-    [HttpGet("{tentantEmail}", Name = "GetTenantByEmail")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize(Roles = "Coordinator,Tenant")]
-    public async Task<ActionResult> Get(string tenantEmail)
-    {
-      _logger.LogInformation($"GET - Getting tenant id by Email: {tenantEmail}");
-      TenantAccount tenant;
-      var id = await _repo.GetTenantIdByEmailAsync(tenantEmail);
-      if (id == null)
-      {
-        _logger.LogWarning($"No tenant account found for {tenantEmail}");
-        return NotFound();
-      }
-      else
-      {
-        tenant = await _repo.GetTenantAccountByIdAsync(id);
-      }
-      return Ok(tenant);
-    }
-
     // PUT: api/tenant-accounts/1a5bae53-cffa-472f-af41-fae9904b9db0
     /// <summary>
     /// 
