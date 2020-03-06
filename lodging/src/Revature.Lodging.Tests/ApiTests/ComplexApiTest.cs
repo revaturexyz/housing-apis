@@ -5,6 +5,7 @@ using Revature.Lodging.Api.Controllers;
 using Revature.Lodging.Api.Models;
 using Revature.Lodging.Api.Services;
 using Revature.Lodging.Lib.Interface;
+using Revature.Lodging.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

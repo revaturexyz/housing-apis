@@ -85,22 +85,37 @@ namespace Revature.Lodging.Api.Controllers
     [HttpGet("{roomId}", Name = "GetRoomById")]
     [ProducesResponseType(typeof(Lib.Models.Room), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetRoomByIdAsync(Guid roomId)
+    public async Task<ActionResult<ApiRoom>> GetRoomByIdAsync([FromRoute]Guid roomId)
     {
       try
       {
         _logger.LogInformation("Getting room ready...");
 
         var result = await _repository.ReadRoomAsync(roomId);
+        var apiRoom = new ApiRoom
+        {
+          RoomId = result.Id,
+          RoomNumber = result.RoomNumber,
+          ComplexId = result.ComplexId,
+          NumberOfBeds = result.NumberOfBeds,
+          ApiRoomType = result.RoomType,
+          LeaseStart = result.LeaseStart,
+          LeaseEnd = result.LeaseEnd,
+          Amenities = (from amenity in await _amenityRepo.ReadAmenityListByRoomIdAsync(roomId) select new ApiAmenity() {
+            AmenityId = amenity.Id,
+            AmenityType = amenity.AmenityType,
+            Description = amenity.Description
+          }).ToList()
+        };
 
         _logger.LogInformation("Success");
 
-        return Ok(result);
+        return Ok(apiRoom);
       }
-      catch (InvalidOperationException ex)
+      catch (Exception ex)
       {
-        _logger.LogError("Room was not found in DB", ex);
-        return NotFound();
+        _logger.LogError("Error occurred.", ex);
+        return BadRequest();
       }
     }
 
@@ -196,7 +211,7 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> PutRoomAsync(Guid roomId,
-      [FromBody, Bind("ComplexID, RoomNumber, NumberOfBeds, NumberOfOccupants, Gender, RoomType, LeaseStart, LeaseEnd, Amenities")]Api.Models.ApiRoom room)
+      [FromBody, Bind("ComplexID, RoomNumber, NumberOfBeds, NumberOfOccupants, Gender, RoomType, LeaseStart, LeaseEnd, Amenities")]ApiRoom room)
     {
       try
       {

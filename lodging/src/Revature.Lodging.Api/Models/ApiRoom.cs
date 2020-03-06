@@ -18,9 +18,24 @@ namespace Revature.Lodging.Api.Models
     public Guid ComplexId { get; set; }
     [Range(1, 10)]
     public int NumberOfBeds { get; set; }
-    public List<Amenity> Amenities { get; set; }
+    public List<ApiAmenity> Amenities { get; set; }
     public string ApiRoomType { get; set; }
     public DateTime LeaseStart { get; set; }
     public DateTime LeaseEnd { get; set; }
+
+    public void SetLease(DateTime start, DateTime end)
+    {
+      if (start == null || end == null)
+      {
+        return;
+      }
+
+      if (start.CompareTo(end) >= 0)
+      {
+        throw new ArgumentException("Lease should start before it ends");
+      }
+      LeaseEnd = end;
+      LeaseStart = start;
+    }
   }
 }
