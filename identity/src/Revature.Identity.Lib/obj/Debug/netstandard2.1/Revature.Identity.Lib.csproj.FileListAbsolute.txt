@@ -1,8 +1,0 @@
-C:\Users\dyjam\OneDrive\Documents\Revature\housing-apis\identity\src\Revature.Identity.Lib\bin\Debug\netstandard2.1\Revature.Identity.Lib.deps.json
-C:\Users\dyjam\OneDrive\Documents\Revature\housing-apis\identity\src\Revature.Identity.Lib\bin\Debug\netstandard2.1\Revature.Identity.Lib.dll
-C:\Users\dyjam\OneDrive\Documents\Revature\housing-apis\identity\src\Revature.Identity.Lib\bin\Debug\netstandard2.1\Revature.Identity.Lib.pdb
-C:\Users\dyjam\OneDrive\Documents\Revature\housing-apis\identity\src\Revature.Identity.Lib\obj\Debug\netstandard2.1\Revature.Identity.Lib.csprojAssemblyReference.cache
-C:\Users\dyjam\OneDrive\Documents\Revature\housing-apis\identity\src\Revature.Identity.Lib\obj\Debug\netstandard2.1\Revature.Identity.Lib.AssemblyInfoInputs.cache
-C:\Users\dyjam\OneDrive\Documents\Revature\housing-apis\identity\src\Revature.Identity.Lib\obj\Debug\netstandard2.1\Revature.Identity.Lib.AssemblyInfo.cs
-C:\Users\dyjam\OneDrive\Documents\Revature\housing-apis\identity\src\Revature.Identity.Lib\obj\Debug\netstandard2.1\Revature.Identity.Lib.dll
-C:\Users\dyjam\OneDrive\Documents\Revature\housing-apis\identity\src\Revature.Identity.Lib\obj\Debug\netstandard2.1\Revature.Identity.Lib.pdb
