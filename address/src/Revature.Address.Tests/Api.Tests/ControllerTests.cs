@@ -69,14 +69,9 @@ namespace Revature.Address.Tests.Api.Tests
         Country = "US",
         ZipCode = "80112"
       };
-      var list = new List<Address.Api.Models.AddressModel>
-      {
-        validAddress1,
-        validAddress2
-      };
 
       // act (get check distance between addresses)
-      var result = await test.IsInRange(list);
+      var result = await test.IsInRange(validAddress1, validAddress2);
 
       // Assert correct address was receive
 
