@@ -76,56 +76,5 @@ namespace Revature.Identity.Api.Controllers
         return new StatusCodeResult(StatusCodes.Status500InternalServerError);
       }
     }
-
-    // PUT: api/tenant-accounts/1a5bae53-cffa-472f-af41-fae9904b9db0
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="tenantId"></param>
-    /// <param name="tenant"></param>
-    /// <returns></returns>
-    [HttpPut("{tenantId}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize(Roles = "Coordinator")]
-    public async Task<IActionResult> Put(Guid tenantId, [FromBody, Bind("Name, Email")] TenantAccount tenant)
-    {
-      _logger.LogInformation($"PUT - Put request for tenant ID: {tenantId}");
-      var existingTenant = await _repo.GetTenantAccountByIdAsync(tenantId);
-      if (existingTenant != null)
-      {
-        existingTenant.Name = tenant.Name;
-        existingTenant.Email = tenant.Email;
-
-        await _repo.UpdateTenantAccountAsync(existingTenant);
-        await _repo.SaveAsync();
-        _logger.LogInformation($"Put request persisted for {tenantId}");
-        return NoContent();
-      }
-      _logger.LogWarning($"Put request failed for {tenantId}");
-      return NotFound();
-    }
-
-    //This logic should not be exposed, and is instead implememted in the service bus
-    //// DELETE: api/tenant-accounts/1a5bae53-cffa-472f-af41-fae9904b9db0
-    //[HttpDelete("{tenantId}")]
-    //[ProducesResponseType(StatusCodes.Status204NoContent)]
-    //[ProducesResponseType(StatusCodes.Status404NotFound)]
-    //[Authorize]
-    //public async Task<ActionResult> Delete(Guid tenantId)
-    //{
-    //  _logger.LogInformation($"DELETE - Delete request for tenant ID: {tenantId}");
-    //  var existingProvider = await _repo.GetTenantAccountByIdAsync(tenantId);
-    //  if (existingProvider != null)
-    //  {
-    //
-    //    await _repo.DeleteTenantAccountAsync(tenantId);
-    //    await _repo.SaveAsync();
-    //    _logger.LogInformation($"Delete request persisted for {tenantId}");
-    //    return NoContent();
-    //  }
-    //  _logger.LogWarning($"Delete request failed for {tenantId}");
-    //  return NotFound();
-    //}
   }
 }
