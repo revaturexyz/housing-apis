@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Revature.Lodging.Api.Models;
 using Revature.Lodging.Lib.Interface;
-using Revature.Lodging.Lib.Models;
+using Logic = Revature.Lodging.Lib.Models;
 
 namespace Revature.Lodging.Api.Controllers
 {
@@ -17,11 +19,13 @@ namespace Revature.Lodging.Api.Controllers
   public class RoomController : ControllerBase
   {
     private readonly IRoomRepository _repository;
+    private readonly IAmenityRepository _amenityRepo;
     private readonly ILogger _logger;
 
-    public RoomController(IRoomRepository repository, ILogger<RoomController> logger)
+    public RoomController(IRoomRepository repository, IAmenityRepository amenityRepo, ILogger<RoomController> logger)
     {
       _repository = repository;
+      _amenityRepo = amenityRepo;
       _logger = logger;
     }
 
@@ -110,7 +114,7 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(typeof(Lib.Models.Room), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> PostRoomAsync
-      ([FromBody, Bind("ComplexID, RoomNumber, NumberOfBeds, NumberOfOccupants, Gender, RoomType, LeaseStart, LeaseEnd")]Lib.Models.Room room)
+      ([FromBody]ApiRoom room)
     {
       try
       {
@@ -122,13 +126,45 @@ namespace Revature.Lodging.Api.Controllers
           Id = Guid.NewGuid(),
           RoomNumber = room.RoomNumber,
           NumberOfBeds = room.NumberOfBeds,
-          NumberOfOccupants = room.NumberOfOccupants,
           //Gender = room.Gender,
-          RoomType = room.RoomType //(03/02/2020) should not update Gender and RoomType and adding new room to database?
+          RoomType = room.ApiRoomType //(03/02/2020) should not update Gender and RoomType and adding new room to database?
         };
         createdRoom.SetLease(room.LeaseStart, room.LeaseEnd);
 
         await _repository.CreateRoomAsync(createdRoom);
+
+        var existingAmenities = await _amenityRepo.ReadAmenityListAsync();
+
+        foreach(var postedAmenity in room.Amenities)
+        {
+          Logic.RoomAmenity roomAmenity = new Logic.RoomAmenity();
+
+          if(existingAmenities.Any(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower()))
+          {
+            var amenity = existingAmenities.FirstOrDefault(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower());
+
+            roomAmenity.Id = Guid.NewGuid();
+            roomAmenity.RoomId = createdRoom.Id;
+            roomAmenity.AmenityId = amenity.Id;
+          }
+          else
+          {
+            Logic.Amenity amenity = new Logic.Amenity()
+            {
+              Id = Guid.NewGuid(),
+              AmenityType = postedAmenity.AmenityType,
+              Description = null
+            };
+            await _amenityRepo.CreateAmenityAsync(amenity);
+
+            roomAmenity.Id = Guid.NewGuid();
+            roomAmenity.RoomId = room.RoomId;
+            roomAmenity.AmenityId = amenity.Id;
+          }
+          await _amenityRepo.CreateAmenityRoomAsync(roomAmenity);
+
+        }
+
         await _repository.SaveAsync();
 
         _logger.LogInformation("Success. Room has been added");
@@ -159,24 +195,60 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> PutRoomAsync(Guid roomId, [FromBody, Bind("ComplexID, RoomNumber, NumberOfBeds, NumberOfOccupants, Gender, RoomType, LeaseStart, LeaseEnd")]Lib.Models.Room room)
+    public async Task<IActionResult> PutRoomAsync(Guid roomId,
+      [FromBody, Bind("ComplexID, RoomNumber, NumberOfBeds, NumberOfOccupants, Gender, RoomType, LeaseStart, LeaseEnd, Amenities")]Api.Models.ApiRoom room)
     {
       try
       {
         _logger.LogInformation("Updating a room");
 
         var roomFromDb = await _repository.ReadRoomAsync(roomId);
+        var amenitiesFromDb = await _amenityRepo.ReadAmenityListByRoomIdAsync(roomId);
         if (/*room.NumberOfOccupants == 0*/true)
         {
           roomFromDb.SetLease(room.LeaseStart, room.LeaseEnd);
-          roomFromDb.NumberOfOccupants = room.NumberOfOccupants;
+          await _amenityRepo.DeleteAmenityRoomAsync(roomId);
+          _logger.LogInformation($"(API)old amenities for room id: {room.RoomId} is deleted.");
+
 
           await _repository.UpdateRoomAsync(roomFromDb);
+          var existingAmenities = await _amenityRepo.ReadAmenityListAsync();
+
+          foreach(var postedAmenity in room.Amenities)
+          {
+            Logic.RoomAmenity roomAmenity = new Logic.RoomAmenity();
+
+            if (existingAmenities.Any(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower()))
+            {
+              var amenity = existingAmenities.FirstOrDefault(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower());
+
+              roomAmenity.Id = Guid.NewGuid();
+              roomAmenity.RoomId = roomId;
+              roomAmenity.AmenityId = amenity.Id;
+            }
+            else
+            {
+              Logic.Amenity amenity = new Logic.Amenity()
+              {
+                Id = Guid.NewGuid(),
+                AmenityType = postedAmenity.AmenityType,
+                Description = null
+              };
+              await _amenityRepo.CreateAmenityAsync(amenity);
+
+              roomAmenity.Id = Guid.NewGuid();
+              roomAmenity.RoomId = roomId;
+              roomAmenity.AmenityId = amenity.Id;
+            }
+
+            await _amenityRepo.CreateAmenityRoomAsync(roomAmenity);
+          }
+
           await _repository.SaveAsync();
 
           _logger.LogInformation("Success. Room has been updated");
 
-          return NoContent();
+          return StatusCode(200);
         }
 
         else { return Unauthorized(); }

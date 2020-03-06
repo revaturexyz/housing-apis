@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Revature.Lodging.Lib.Models;
 
 namespace Revature.Lodging.Api.Models
 {
@@ -17,7 +18,7 @@ namespace Revature.Lodging.Api.Models
     public Guid ComplexId { get; set; }
     [Range(1, 10)]
     public int NumberOfBeds { get; set; }
-    public List<ApiAmenity> Amenities { get; set; }
+    public List<Amenity> Amenities { get; set; }
     public string ApiRoomType { get; set; }
     public DateTime LeaseStart { get; set; }
     public DateTime LeaseEnd { get; set; }
