@@ -18,23 +18,19 @@ namespace Revature.Address.Lib.BusinessLogic
   /// </summary>
   public class AddressLogic : IAddressLogic
   {
-    private readonly ILogger _logger;
-    private readonly string _key;
 
+    private readonly IGoogleApiAccess _googleApiAccess;
     // Configures JsonSerializer with a snake case naming policy
-    private readonly JsonSerializerOptions _distanceMatrixSerializerOptions = new JsonSerializerOptions
-    {
-      PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy()
-    };
+    
 
     /// <summary>
     /// Constructor for AddressLogic object
     /// </summary>
     /// <param name="logger"></param>
-    public AddressLogic(IConfiguration configuration, ILogger<AddressLogic> logger = null)
+    public AddressLogic( IGoogleApiAccess googleApiAccess)
     {
-      _logger = logger;
-      _key = configuration["GoogleApiKey"];
+      
+      _googleApiAccess = googleApiAccess;
     }
 
     /// <summary>
@@ -47,74 +43,9 @@ namespace Revature.Address.Lib.BusinessLogic
     /// <returns>Return true or false</returns>
     public async Task<bool> IsInRangeAsync(Address origin, Address destination, int distance)
     {
-      if (_key == null)
-      {
-        _logger.LogError("Google Cloud Platform API key has not been set");
-      }
-      // formatted address to be used with Google API
-      var formattedOrigin = FormatAddress(origin);
-      var formattedDestination = FormatAddress(destination);
-      // added parameters to the Google API url
-      var googleApiUrlParameter = GetGoogleApiUrl(formattedOrigin, formattedDestination);
-      var googleBaseUrl = "https://maps.googleapis.com/maps/api/distancematrix/json";
 
-      Response deserialized;
-
-      using var client = new HttpClient { BaseAddress = new Uri(googleBaseUrl) };
-      // Add an Accept header for JSON format.
-      client.DefaultRequestHeaders.Accept.Add(
-        new MediaTypeWithQualityHeaderValue("application/json"));
-
-      // await for async call and get response.
-      using var response = await client.GetAsync(googleApiUrlParameter + _key).ConfigureAwait(false);
-      if (response.IsSuccessStatusCode)
-      {
-        deserialized = JsonSerializer.Deserialize<Response>(
-          await response.Content.ReadAsStringAsync().ConfigureAwait(false), _distanceMatrixSerializerOptions);
-        // Parse the response body.
-        var distanceValueString = deserialized.Rows[0].Elements[0].Distance.Text;
-        // convert the response to a double
-        var distanceValueDouble = double.Parse(distanceValueString[0..^2]);
-        if (distanceValueDouble <= distance)
-        {
-          return true;
-        }
-        else
-        {
-          return false;
-        }
-      }
-      else
-      {
-        _logger.LogWarning("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
-        if ((int)response.StatusCode >= 400 && (int)response.StatusCode < 500)
-        {
-          throw new ArgumentException($"User input error {response.StatusCode}");
-        }
-        if ((int)response.StatusCode >= 500 && (int)response.StatusCode < 600)
-        {
-          throw new ArgumentException($"Google API returned internal server-side error {response.StatusCode}");
-        }
-        throw new ArgumentException($"Google API call was unsuccessful {response.StatusCode}");
-      }
-    }
-
-    /// <summary>
-    /// Makes a call to Google's Geocode API to check if a given address exists
-    /// </summary>
-    /// <param name="address"></param>
-    /// <returns>Returns true or false</returns>
-    public async Task<bool> IsValidAddressAsync(Address address)
-    {
-      var request = new AddressGeocodeRequest
-      {
-        Address = $"{address.Street} {address.City}, {address.State} {address.ZipCode} {address.Country}",
-        Key = _key
-      };
-      var response = await GoogleMaps.AddressGeocode.QueryAsync(request);
-      var results = response.Results.ToArray();
-
-      if (results.Length != 0)
+      var distanceValueDouble = await _googleApiAccess.GetDistance(origin, destination, distance);
+      if (distanceValueDouble <= distance)
       {
         return true;
       }
@@ -124,39 +55,21 @@ namespace Revature.Address.Lib.BusinessLogic
       }
     }
 
+
+    /// <summary>
+    /// Makes a call to Google's Geocode API to check if a given address exists
+    /// </summary>
+    /// <param name="address"></param>
+    /// <returns>Returns true or false</returns>
+    public async Task<bool> IsValidAddressAsync(Address address)
+    {
+      return await _googleApiAccess.IsValidAddressAsync(address);
+    }
+
     public async Task<Address> NormalizeAddressAsync(Address address)
     {
-      var request = new AddressGeocodeRequest
-      {
-        Address = $"{address.Street} {address.City}, {address.State} {address.ZipCode} {address.Country}",
-        Key = _key
-      };
-      var response = await GoogleMaps.AddressGeocode.QueryAsync(request);
-      var results = response.Results.ToList();
-
-      var addressComponents = results[0].AddressComponents.ToList();
-      var streetNum = addressComponents.
-        FirstOrDefault(t => t.Types.Contains(GoogleApi.Entities.Common.Enums.AddressComponentType.Street_Number));
-      var street = addressComponents.
-        FirstOrDefault(t => t.Types.Contains(GoogleApi.Entities.Common.Enums.AddressComponentType.Route));
-      var city = addressComponents.
-        FirstOrDefault(t => t.Types.Contains(GoogleApi.Entities.Common.Enums.AddressComponentType.Locality));
-      var state = addressComponents.
-        FirstOrDefault(t => t.Types.Contains(GoogleApi.Entities.Common.Enums.AddressComponentType.Administrative_Area_Level_1));
-      var country = addressComponents.
-        FirstOrDefault(t => t.Types.Contains(GoogleApi.Entities.Common.Enums.AddressComponentType.Country));
-      var zipCode = addressComponents.
-        FirstOrDefault(t => t.Types.Contains(GoogleApi.Entities.Common.Enums.AddressComponentType.Postal_Code));
-
-      var normalized = new Address
-      {
-        Id = address.Id,
-        Street = $"{streetNum.LongName} {street.LongName}",
-        City = city.LongName,
-        State = state.LongName,
-        Country = country.ShortName,
-        ZipCode = zipCode.LongName
-      };
+      var normalized = await _googleApiAccess.NormalizeAddressAsync(address);
+      normalized.Id = address.Id;
       return normalized;
     }
 
