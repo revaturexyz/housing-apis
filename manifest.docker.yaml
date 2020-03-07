@@ -4,19 +4,19 @@ networks:
   locally:
 
 services:
-  account_api:
+  identity_api:
     build:
       args:
         - DOTNET_VERSION=3.1
-      context: ./account
-      dockerfile: ../.docker/account.dockerfile
+      context: ./identity
+      dockerfile: ../.docker/identity.dockerfile
     depends_on:
-      - account_data
+      - identity_data
     dns:
       - 1.1.1.1
       - 1.0.0.1
     environment:
-      ConnectionStrings__AccountDb: 'Host=account_data;Database=account;Username=postgres;Password=Pass@word'
+      ConnectionStrings__AccountDb: 'Host=identity_data;Database=account;Username=postgres;Password=Pass@word'
     image: account
     networks:
       - locally
@@ -25,7 +25,7 @@ services:
       - 9101:443
     restart: on-failure
 
-  account_data:
+  identity_data:
     environment:
       POSTGRES_PASSWORD: 'Pass@word'
     image: postgres:alpine
