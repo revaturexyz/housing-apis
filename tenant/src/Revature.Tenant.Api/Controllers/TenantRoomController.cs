@@ -42,6 +42,7 @@ namespace Revature.Tenant.Api.Controllers
     [HttpGet]
     [Route("Unassigned")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [Authorize(Roles = "Coordinator")]
     public async Task<IActionResult> GetTenantsNotAssignedRoom()
     {
       _logger.LogInformation("Getting roomless tenants...");
@@ -61,6 +62,7 @@ namespace Revature.Tenant.Api.Controllers
     [Route("Assign/AvailableRooms")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Coordinator")]
     public async Task<IActionResult> GetTenantsByRoomId([FromQuery] string gender, [FromQuery] DateTime endDate)
     {
       _logger.LogInformation("Requesting room id + total beds from Room Service...");
@@ -105,6 +107,7 @@ namespace Revature.Tenant.Api.Controllers
     [Route("Assign/{tenantId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Roles = "Coordinator")]
     public async Task<IActionResult> AssignTenantToRoom(Guid tenantId, [FromQuery] Guid roomId)
     {
       try

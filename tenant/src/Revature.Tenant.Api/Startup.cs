@@ -1,11 +1,13 @@
 using System;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Okta.AspNetCore;
 using Revature.Tenant.Api.ServiceBus;
@@ -68,20 +70,31 @@ namespace Revature.Tenant.Api
       services.AddScoped<ITenantRoomRepository, TenantRoomRepository>();
       services.AddScoped<IMapper, Mapper>();
       services.AddScoped<IServiceBusSender, ServiceBusSender>();
-      services.AddScoped<ITelemetryInitializer, TenantTelemetryInitializer>();
+      services.AddSingleton<ITelemetryInitializer, TenantTelemetryInitializer>();
 
       services.AddHttpClient<IAddressService, AddressService>();
 
       services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
-                options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
-                options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
-            })
-            .AddOktaWebApi(new OktaWebApiOptions()
-            {
-                OktaDomain = Configuration["Okta:OktaDomain"],
-            });
+      {
+        //options.DefaultScheme = OktaDefaults.ApiAuthenticationScheme;
+        options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+        options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+      })
+      .AddJwtBearer(options =>
+      {
+        options.Authority = Configuration["Okta:Domain"] + "/oauth2/default";
+        options.Audience = "api://default";
+        options.RequireHttpsMetadata = true;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+          NameClaimType = "name",
+          RoleClaimType = "groups",
+          ValidateIssuer = true,
+
+        };
+      });
 
       services.AddAuthorization();
 

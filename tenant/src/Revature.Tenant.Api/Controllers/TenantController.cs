@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Revature.Tenant.Api.Models;
 using Revature.Tenant.Lib.Interface;
+using System.Linq;
 
 namespace Revature.Tenant.Api.Controllers
 {
@@ -39,6 +41,7 @@ namespace Revature.Tenant.Api.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult<IEnumerable<ApiTenant>>> GetAllAsync([FromQuery] string firstName = null, [FromQuery] string lastName = null, [FromQuery] string gender = null, [FromQuery] string trainingCenter = null)
     {
       //Parse training center string to guid if it exists
@@ -136,6 +139,7 @@ namespace Revature.Tenant.Api.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Roles = "Coordinator,Tenant")]
     public async Task<ActionResult<ApiTenant>> GetByIdAsync([FromRoute] Guid id)
     {
       _logger.LogInformation("GET - Getting notifications by Tenant ID: {TenantId}", id);
@@ -143,6 +147,28 @@ namespace Revature.Tenant.Api.Controllers
       {
         //Call repository method GetByIdAsync
         var tenant = await _tenantRepository.GetByIdAsync(id);
+
+        /* if role is tenant and tenant.Email != claims email
+         *  return 401Forbidden
+         */
+        try
+        {
+          var principal = HttpContext.User.Identities.SingleOrDefault();
+          var email = principal.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).Single();
+
+          if (email?.ToLower() != tenant?.Email?.ToLower())
+          {
+            _logger.LogWarning("Tenant trying to access other tenant account");
+            return Forbid();
+          }
+        }
+        catch (ArgumentNullException)
+        {
+          _logger.LogError("Email does not exist in Okta account");
+          return NotFound();
+        }
+
+
 
         //cast tenant into Api Tenant
         var apiTenant = new ApiTenant
@@ -211,6 +237,7 @@ namespace Revature.Tenant.Api.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult<IEnumerable<ApiBatch>>> GetAllBatches([FromQuery] string trainingCenterString)
     {
       try
@@ -245,6 +272,7 @@ namespace Revature.Tenant.Api.Controllers
     [HttpPost("Register", Name = "RegisterTenant")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult<ApiTenant>> PostAsync([FromBody] ApiTenant tenant)
     {
       _logger.LogInformation("POST - Making tenant for tenant ID {tenantId}.", tenant.Id);
@@ -322,6 +350,7 @@ namespace Revature.Tenant.Api.Controllers
     // PUT: api/Tenant/Update
     [HttpPut("Update", Name = "UpdateTenant")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult> UpdateAsync([FromBody] ApiTenant tenant)
     {
       try
@@ -390,6 +419,7 @@ namespace Revature.Tenant.Api.Controllers
     /// <returns>Status Code 204 if successful, or NotFound if not found, or Conflict for Invalid Operations, or Internal Service Error for other exceptions</returns>
     [HttpDelete("Delete/{id}", Name = "DeleteTenant")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult> DeleteAsync([FromRoute] Guid id)
     {
       try
