@@ -49,15 +49,7 @@ namespace Revature.Address.Api.Controllers
       }
 
       _logger.LogInformation("Got Address");
-      return Ok(new AddressModel
-      {
-        Id = address.Id,
-        Street = address.Street,
-        City = address.City,
-        State = address.State,
-        Country = address.Country,
-        ZipCode = address.ZipCode
-      });
+      return Ok(Mapper.Map(address));
     }
 
     /// <summary>
@@ -71,35 +63,25 @@ namespace Revature.Address.Api.Controllers
     /// <returns></returns>
     // GET: api/address/checkdistance
     [HttpGet("checkdistance")]
-    public async Task<ActionResult<bool>> IsInRange([FromQuery] List<AddressModel> addresses)
+    public async Task<ActionResult<bool>> IsInRange([FromQuery] AddressModel from, [FromQuery] AddressModel to, [FromQuery] int distance = 20)
     {
-      var start = new Lib.Address
-      {
-        Id = addresses[0].Id,
-        Street = addresses[0].Street,
-        City = addresses[0].City,
-        State = addresses[0].State,
-        Country = addresses[0].Country,
-        ZipCode = addresses[0].ZipCode
-      };
-      var end = new Lib.Address
-      {
-        Id = addresses[1].Id,
-        Street = addresses[1].Street,
-        City = addresses[1].City,
-        State = addresses[1].State,
-        Country = addresses[1].Country,
-        ZipCode = addresses[1].ZipCode
-      };
-      if (await _addressLogic.IsInRangeAsync(start, end, 20))
+      try {
+      var start = Mapper.Map(from);
+      var end = Mapper.Map(to);
+      if (await _addressLogic.IsInRangeAsync(start, end, distance))
       {
         _logger.LogInformation("These addresses are within range of each other");
-        return true;
+        return Ok(true);
       }
       else
       {
         _logger.LogError("These addresses are not in range of each other");
-        return false;
+        return Ok(false);
+      }
+      } catch (Exception e)
+      {
+        _logger.LogError(e.Message);
+        return BadRequest();
       }
     }
 
@@ -116,15 +98,7 @@ namespace Revature.Address.Api.Controllers
     [HttpGet]
     public async Task<ActionResult<Lib.Address>> GetAddress([FromQuery] AddressModel address)
     {
-      var newAddress = new Lib.Address
-      {
-        Id = address.Id,
-        Street = address.Street,
-        City = address.City,
-        State = address.State,
-        Country = address.Country,
-        ZipCode = address.ZipCode
-      };
+      var newAddress = Mapper.Map(address);
       var checkAddress = (await _db.GetAddressAsync(address: newAddress)).FirstOrDefault();
 
       if (checkAddress == null)
