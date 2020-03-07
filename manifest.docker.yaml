@@ -16,8 +16,8 @@ services:
       - 1.1.1.1
       - 1.0.0.1
     environment:
-      ConnectionStrings__AccountDb: 'Host=identity_data;Database=account;Username=postgres;Password=Pass@word'
-    image: account
+      ConnectionStrings__IdentityDb: 'Host=identity_data;Database=identity;Username=postgres;Password=Pass@word'
+    image: identity
     networks:
       - locally
     ports:
