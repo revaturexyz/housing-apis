@@ -7,17 +7,18 @@ using Microsoft.Extensions.Logging;
 using RestSharp;
 using Okta.Sdk;
 using Okta.Sdk.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace Revature.Identity.Api
 {
   public class OktaHelper
   {
-    public static readonly string CoordinatorRole = "Coordinator";
-    public static readonly string ApprovedProviderRole = "Provider";
-    public static readonly string TenantRole = "Tenant";
+    public static readonly string CoordinatorRole = "00g2qoe8fD5otteWj4x6";
+    public static readonly string ApprovedProviderRole = "00g2sl5lo8uAc4h7I4x6";
+    public static readonly string TenantRole = "00g2skdaoGOwpGSHj4x6";
 
+    public static string _token { get; set; }
     private readonly ILogger _logger;
-
     public OktaClient Client { get; private set; }
     public string Email { get; private set; }
     public IEnumerable<string> Roles { get; private set; }
@@ -39,25 +40,26 @@ namespace Revature.Identity.Api
     /// <param name="domain"></param>
     /// <param name="clientId"></param>
     /// <param name="secret"></param>
-    public static void SetSecretValues(string domain, string clientId, string secret)
+    public static void SetSecretValues(string domain, string clientId, string secret, string token)
     {
       Domain = domain;
       ClientId = clientId;
       Secret = secret;
+      _token = token;
     }
 
     public OktaHelper(Microsoft.AspNetCore.Http.HttpRequest request, ILogger logger)
     {
       string jwt = request.Headers["Authorization"];
       // Remove 'Bearer '
-      jwt = jwt.Replace("Bearer", "");
+      jwt = jwt.Replace("Bearer ", "");
       var handler = new JwtSecurityTokenHandler();
-      var token = handler.ReadJwtToken(jwt);
+      var token = handler.ReadJwtToken(jwt) as JwtSecurityToken;
 
-      Email = (string)token.Payload[ClaimsDomain + "email"];
-      Roles = JsonSerializer.Deserialize<string[]>(token.Payload[ClaimsDomain + "roles"].ToString());
+      Email = (string)token.Payload["sub"];
+      Roles = JsonSerializer.Deserialize<string[]>(token.Payload["groups"].ToString());
       // Will only need the id field from the app metadata
-      AppMetadata = JsonSerializer.Deserialize<dynamic>(token.Payload[ClaimsDomain + "app_metadata"].ToString());
+      //AppMetadata = JsonSerializer.Deserialize<dynamic>(token.Payload[ClaimsDomain + "app_metadata"].ToString());
       _logger = logger;
     }
 
@@ -72,8 +74,9 @@ namespace Revature.Identity.Api
       var client = new RestClient($"{Domain}");
       var request = new RestRequest(Method.POST);
 
-      request.AddHeader("content-type", "application/json");
-      request.AddParameter("application/json", $"{{\"client_id\":\"{ClientId}\",\"client_secret\":\"{Secret}\",\"audience\":\"https://{Domain}/api/v2/\",\"grant_type\":\"client_credentials\"}}", ParameterType.RequestBody);
+      request.AddHeader("Accept", "application/json");
+      request.AddHeader("Content-Type", "application/json");
+      request.AddParameter("application/json", $"{{\"client_id\":\"0oa2p2u6gCt9qrjbT4x6\",\"client_secret\":\"MZGag-k-r4Kq9Ei8VYwxl7JkTbqDRIhrozb0Kd5l\",\"audience\":\"https://{Domain}/api/v1/\",\"grant_type\":\"client_credentials\"}}", ParameterType.RequestBody);
 
       var response = client.Execute(request);
 
@@ -84,12 +87,12 @@ namespace Revature.Identity.Api
       }
       try
       {
-        var deserializedResponse = JsonSerializer.Deserialize<JsonElement>(response.Content);
-        var managementToken = deserializedResponse.GetProperty("access_token").GetString();
+        //var deserializedResponse = JsonSerializer.Deserialize<JsonElement>(response.Content);
+        //var managementToken = deserializedResponse.GetProperty("access_token").GetString();
         Client = new OktaClient(new OktaClientConfiguration 
         {
           OktaDomain = Domain,
-          Token = managementToken
+          Token = _token          
         });
       }
       catch (JsonException ex)

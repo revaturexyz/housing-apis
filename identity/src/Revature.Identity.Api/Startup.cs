@@ -134,7 +134,7 @@ namespace Revature.Identity.Api
       var serviceScope = serviceScopeFactory.CreateScope();
       var dbContext = serviceScope.ServiceProvider.GetService<IdentityDbContext>();
       dbContext.Database.EnsureCreated();
-      OktaHelper.SetSecretValues(Configuration["Okta:OktaDomain"], Configuration["Okta:ClientId"], Configuration["Okta:ClientSecret"]);
+      OktaHelper.SetSecretValues(Configuration["Okta:Domain"], Configuration["Okta:ClientId"], Configuration["Okta:ClientSecret"], Configuration["Okta:Token"]);
     }
   }
 }
