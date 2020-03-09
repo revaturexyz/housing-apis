@@ -54,7 +54,7 @@ namespace Revature.Tenant.Api.ServiceBus
       try
       {
         var queryString = "?"
-          + "street=" + item.Street + "&"
+          + "street=" + item.StreetAddress + "&"
           + "city=" + item.City + "&"
           + "state=" + item.State + "&"
           + "zipCode=" + item.ZipCode + "&"
