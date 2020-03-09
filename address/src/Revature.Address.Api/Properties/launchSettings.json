@@ -3,7 +3,7 @@
   "profiles": {
     "Revature.Address.Api": {
       "commandName": "Project",
-      "applicationUrl": "http://localhost:12080",
+      "applicationUrl": "http://localhost:9110",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

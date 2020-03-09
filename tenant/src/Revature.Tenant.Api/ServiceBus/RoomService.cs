@@ -19,7 +19,7 @@ namespace Revature.Tenant.Api.ServiceBus
 
     public RoomService(HttpClient client, ILogger<RoomService> logger, IConfiguration configuration)
     {
-      client.BaseAddress = new Uri(configuration["AppServices:Room"]);
+      client.BaseAddress = new Uri(configuration["AppServices:Lodging"]);
       _client = client;
       _logger = logger;
     }
