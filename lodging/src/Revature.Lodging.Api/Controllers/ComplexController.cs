@@ -335,40 +335,43 @@ namespace Revature.Lodging.Api.Controllers
         var existingAmenities = await _amenityRepository.ReadAmenityListAsync();
         _log.LogInformation("(API) list of amenity is read");
 
-        // Create ComplexAmenity objects from the list of Amenities passed in with apiComplex
-        foreach (var postedAmenity in apiComplex.ComplexAmenities)
+        if (apiComplex.ComplexAmenities != null)
         {
-          // Instantiates a new ComplexAmenity object
-          Logic.ComplexAmenity complexAmenity = new Logic.ComplexAmenity();
-
-          // if there are any existing Amenity object with a matching AmenityType, link this existing Amenity object
-          // with the new ComplexAmenity object; otherwise, create a new Amenity object with the posted AmenityType and
-          // link this new Amenity object with the new ComplexAmenity object
-          if (existingAmenities.Any(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower()))
+          // Create ComplexAmenity objects from the list of Amenities passed in with apiComplex
+          foreach (var postedAmenity in apiComplex.ComplexAmenities)
           {
-            var amenity = existingAmenities.FirstOrDefault(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower());
+            // Instantiates a new ComplexAmenity object
+            Logic.ComplexAmenity complexAmenity = new Logic.ComplexAmenity();
 
-            complexAmenity.Id = Guid.NewGuid();
-            complexAmenity.ComplexId = complex.Id;
-            complexAmenity.AmenityId = amenity.Id;
-          }
-          else
-          {
-            Logic.Amenity amenity = new Logic.Amenity()
+            // if there are any existing Amenity object with a matching AmenityType, link this existing Amenity object
+            // with the new ComplexAmenity object; otherwise, create a new Amenity object with the posted AmenityType and
+            // link this new Amenity object with the new ComplexAmenity object
+            if (existingAmenities.Any(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower()))
             {
-              Id = Guid.NewGuid(),
-              AmenityType = postedAmenity.AmenityType,
-              Description = null
-            };
-            await _amenityRepository.CreateAmenityAsync(amenity);
+              var amenity = existingAmenities.FirstOrDefault(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower());
 
-            complexAmenity.Id = Guid.NewGuid();
-            complexAmenity.ComplexId = complex.Id;
-            complexAmenity.AmenityId = amenity.Id;
+              complexAmenity.Id = Guid.NewGuid();
+              complexAmenity.ComplexId = complex.Id;
+              complexAmenity.AmenityId = amenity.Id;
+            }
+            else
+            {
+              Logic.Amenity amenity = new Logic.Amenity()
+              {
+                Id = Guid.NewGuid(),
+                AmenityType = postedAmenity.AmenityType,
+                Description = null
+              };
+              await _amenityRepository.CreateAmenityAsync(amenity);
+
+              complexAmenity.Id = Guid.NewGuid();
+              complexAmenity.ComplexId = complex.Id;
+              complexAmenity.AmenityId = amenity.Id;
+            }
+
+            await _amenityRepository.CreateAmenityComplexAsync(complexAmenity);
+            _log.LogInformation("(API)new list of amenity of complex is created");
           }
-
-          await _amenityRepository.CreateAmenityComplexAsync(complexAmenity);
-          _log.LogInformation("(API)new list of amenity of complex is created");
         }
 
         return StatusCode(200);

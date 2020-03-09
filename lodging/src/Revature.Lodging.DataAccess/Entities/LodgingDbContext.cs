@@ -242,6 +242,18 @@ namespace Revature.Lodging.DataAccess.Entities
           new Room()
           {
             RoomTypeId = 1,
+            GenderId = 2,
+            LeaseEnd = DateTime.Today.AddMonths(3),
+            LeaseStart = DateTime.Now,
+            Id = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456ee"),
+            ComplexId = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606"),
+            NumberOfBeds = 4,
+            RoomNumber = "2127E",
+            NumberOfOccupants = 4
+          },
+          new Room()
+          {
+            RoomTypeId = 1,
             GenderId = 1,
             LeaseEnd = DateTime.Today.AddMonths(1),
             LeaseStart = DateTime.Now.AddDays(1),

@@ -124,7 +124,7 @@ namespace Revature.Lodging.Lib.Models
     
 
     /// <summary>
-    /// Type of Room, for example: apartment, dorm, house, etc.
+    /// Type of Room, for example: apartment, dorm, townhouse, hotel/motel.
     /// </summary>
     /// <exception cref="ArgumentException">Thrown when the gender is null or has no value just whitespace</exception>
     public string RoomType {

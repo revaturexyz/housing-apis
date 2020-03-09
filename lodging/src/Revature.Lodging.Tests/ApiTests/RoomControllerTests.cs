@@ -33,6 +33,7 @@ namespace Revature.Lodging.Tests.ApiTests
         It.IsAny<string>(),
         It.IsAny<DateTime>(),
         It.IsAny<Guid>(),
+        It.IsAny<bool>(),
         It.IsAny<bool>()))
         .Returns(Task.FromResult<IEnumerable<Lib.Models.Room>>(
           new List<Lib.Models.Room>()
@@ -43,7 +44,7 @@ namespace Revature.Lodging.Tests.ApiTests
       var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
 
       //act
-      var result = await controller.GetFilteredRoomsAsync(Guid.NewGuid(), "", 1, "", "", DateTime.Now, Guid.NewGuid());
+      var result = await controller.GetFilteredRoomsAsync(Guid.NewGuid(), "", 1, "", "", DateTime.Now, Guid.NewGuid(), true, true);
 
       //assert
       Assert.IsAssignableFrom<OkObjectResult>(result);
@@ -67,12 +68,13 @@ namespace Revature.Lodging.Tests.ApiTests
         It.IsAny<string>(),
         It.IsAny<DateTime>(),
         It.IsAny<Guid>(),
+        It.IsAny<bool>(),
         It.IsAny<bool>()))
         .Throws(new KeyNotFoundException());
 
       var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
 
-      var result = await controller.GetFilteredRoomsAsync(Guid.NewGuid(), "", 1, "", "", DateTime.Now, Guid.NewGuid());
+      var result = await controller.GetFilteredRoomsAsync(Guid.NewGuid(), "", 1, "", "", DateTime.Now, Guid.NewGuid(), true, true);
 
       Assert.IsType<NotFoundObjectResult>(result);
     }
@@ -108,7 +110,7 @@ namespace Revature.Lodging.Tests.ApiTests
       };
 
       roomTest.SetLease(DateTime.Now, DateTime.Today.AddDays(3));
-      var result = await controller.PostRoomAsync(roomTest);
+      var result = await controller.AddRoomAsync(roomTest);
 
       //assert
       Assert.IsAssignableFrom<CreatedAtRouteResult>(result);
@@ -135,7 +137,7 @@ namespace Revature.Lodging.Tests.ApiTests
       //act
       var roomTest = new ApiRoom();
 
-      var result = await controller.PostRoomAsync(roomTest);
+      var result = await controller.AddRoomAsync(roomTest);
 
       //assert
       Assert.IsType<BadRequestResult>(result);
@@ -174,7 +176,7 @@ namespace Revature.Lodging.Tests.ApiTests
 
       roomTest.SetLease(DateTime.Now, DateTime.Today.AddDays(3));
 
-      var result = await controller.PutRoomAsync(Guid.NewGuid(), roomTest);
+      var result = await controller.UpdateRoomAsync(Guid.NewGuid(), roomTest);
       //assert
       Assert.IsAssignableFrom<StatusCodeResult>(result);
     }
@@ -204,7 +206,7 @@ namespace Revature.Lodging.Tests.ApiTests
       //Need to set lease or else we will get an Argument Exception instead of InvalidOperation Exception
       roomTest.SetLease(DateTime.Now, DateTime.Now.AddDays(3));
 
-      var result = await controller.PutRoomAsync(Guid.NewGuid(), roomTest);
+      var result = await controller.UpdateRoomAsync(Guid.NewGuid(), roomTest);
 
       //assert
       Assert.IsType<NotFoundResult>(result);
@@ -233,7 +235,7 @@ namespace Revature.Lodging.Tests.ApiTests
       //act
       var roomTest = new ApiRoom();
 
-      var result = await controller.PutRoomAsync(Guid.NewGuid(), roomTest);
+      var result = await controller.UpdateRoomAsync(Guid.NewGuid(), roomTest);
 
       //assert
       Assert.IsType<BadRequestResult>(result);
