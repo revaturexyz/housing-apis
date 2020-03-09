@@ -24,12 +24,14 @@ namespace Revature.Tenant.Api.Controllers
     private readonly ITenantRepository _tenantRepository;
     private readonly ILogger _logger;
     private readonly IAddressService _addressService;
+    private readonly ServiceBus.IIdentityService _tenantService;
 
-    public TenantController(ITenantRepository tenantRepository, IAddressService addressService, ILogger<TenantController> logger = null)
+    public TenantController(ITenantRepository tenantRepository, IAddressService addressService, ServiceBus.IIdentityService tenantService, ILogger<TenantController> logger = null)
     {
       _tenantRepository = tenantRepository ?? throw new ArgumentNullException(nameof(tenantRepository), "Tenant cannot be null");
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
       _addressService = addressService ?? throw new ArgumentNullException(nameof(addressService));
+      _tenantService = tenantService ?? throw new ArgumentNullException(nameof(tenantService));
     }
 
     /// <summary>
@@ -280,11 +282,11 @@ namespace Revature.Tenant.Api.Controllers
       {
         _logger.LogInformation("Posting Address to Address Service...");
         var postedAddress = await this._addressService.GetAddressAsync(tenant.ApiAddress);
-
+        Guid sharedId = Guid.NewGuid();
         //cast ApiTenant in Logic Tenant
         var newTenant = new Lib.Models.Tenant
         {
-          Id = Guid.NewGuid(),
+          Id = sharedId,
           Email = tenant.Email,
           Gender = tenant.Gender,
           FirstName = tenant.FirstName,
@@ -296,7 +298,7 @@ namespace Revature.Tenant.Api.Controllers
           TrainingCenter = tenant.TrainingCenter,
 
         };
-
+        
         if (tenant.ApiCar.LicensePlate != null)
         {
           newTenant.Car = new Lib.Models.Car
@@ -315,12 +317,17 @@ namespace Revature.Tenant.Api.Controllers
           newTenant.Car = null;
           newTenant.CarId = null;
         }
-
+        
 
         //Call Repository Methods AddAsync and SaveAsync
         await _tenantRepository.AddAsync(newTenant);
         await _tenantRepository.SaveAsync();
         _logger.LogInformation("POST Persisted to dB");
+
+        //Send the create message to Identity
+
+        string Name = tenant.FirstName + " " + tenant.LastName;
+        await _tenantService.CreateAccount(sharedId, tenant.Email, Name);
 
         //Return Created and the model of the new tenant
         return Created($"api/Tenant/{newTenant.Id}", newTenant);
@@ -392,6 +399,9 @@ namespace Revature.Tenant.Api.Controllers
         await _tenantRepository.SaveAsync();
         _logger.LogInformation("PUT persisted to dB");
 
+        string Name = tenant.FirstName + " " + tenant.LastName;
+        await _tenantService.UpdateAccount((Guid)tenant.Id, tenant.Email, Name);
+
         //Return NoContent
         return StatusCode(StatusCodes.Status204NoContent);
       }
@@ -426,6 +436,8 @@ namespace Revature.Tenant.Api.Controllers
       {
         await _tenantRepository.DeleteByIdAsync(id);
         await _tenantRepository.SaveAsync();
+        await _tenantService.DeleteAccount(id, "unused", "unused");
+
         return StatusCode(StatusCodes.Status204NoContent);
       }
       catch (ArgumentException)

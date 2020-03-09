@@ -25,14 +25,14 @@ namespace Revature.Tenant.Api.ServiceBus
     /// <summary>
     /// Method that creates new tenant accounts
     /// </summary>
-    public async Task CreateTenantAccount(Guid TenantId, string Email, string Name, int OperationType = 1)
+    public async Task CreateAccount(Guid TenantId, string Email, string Name)
     {
       Models.TenantAccountMessage tenantMessage = new Models.TenantAccountMessage
       {
         Name = Name,
         TenantId = TenantId,
         Email = Email,
-        OperationType = OperationType
+        OperationType = 0
       };
       var data = JsonSerializer.Serialize(tenantMessage);
       var message = new Message(Encoding.UTF8.GetBytes(data));
@@ -42,14 +42,14 @@ namespace Revature.Tenant.Api.ServiceBus
     /// <summary>
     /// Method that deletes tenant accounts
     /// </summary>
-    public async Task DeleteTenantAccount(Guid TenantId, string Email, string Name, int OperationType = 0)
+    public async Task DeleteAccount(Guid TenantId, string Email, string Name)
     {
       Models.TenantAccountMessage tenantMessage = new Models.TenantAccountMessage
       {
         Name = Name,
         TenantId = TenantId,
         Email = Email,
-        OperationType = OperationType
+        OperationType = 1
       };
       var data = JsonSerializer.Serialize(tenantMessage);
       var message = new Message(Encoding.UTF8.GetBytes(data));
@@ -59,14 +59,14 @@ namespace Revature.Tenant.Api.ServiceBus
     /// <summary>
     /// Method that modifies existing tenant accounts
     /// </summary>
-    public async Task UpdateTenantAccount(Guid TenantId, string Email, string Name, int OperationType = 2)
+    public async Task UpdateAccount(Guid TenantId, string Email, string Name)
     {
       Models.TenantAccountMessage tenantMessage = new Models.TenantAccountMessage
       {
         Name = Name,
         TenantId = TenantId,
         Email = Email,
-        OperationType = OperationType
+        OperationType = 2
       };
       var data = JsonSerializer.Serialize(tenantMessage);
       var message = new Message(Encoding.UTF8.GetBytes(data));
