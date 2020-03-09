@@ -4,17 +4,17 @@ using System.ComponentModel.DataAnnotations;
 namespace Revature.Lodging.Lib.Models
 {
   /// <summary>
-  /// This model serves to connect the Amenity with the Room that has that amenity. Both are FK's
+  /// This model serves to connect the Amenity with the Complex that has that amenity. Both FK's
   /// </summary>
-  public class AmenityRoom
+  public class ComplexAmenity
   {
     [Required]
-    public Guid AmenityRoomId { get; set; }
+    public Guid Id { get; set; }
 
     [Required]
     public Guid AmenityId { get; set; }
 
     [Required]
-    public Guid RoomId { get; set; }
+    public Guid ComplexId { get; set; }
   }
 }

@@ -13,12 +13,12 @@ namespace Revature.Lodging.Api.Models
   public class ApiComplex
   {
     public Guid ComplexId { get; set; }
-    public ApiComplexAddress Address { get; set; }
+    public ApiAddress Address { get; set; }
     public Guid ProviderId { get; set; }
     [StringLength(100)]
     public string ComplexName { get; set; }
     [StringLength(20)]
     public string ContactNumber { get; set; }
-    public List<Amenity> ComplexAmenity { get; set; }
+    public List<Amenity> ComplexAmenities { get; set; }
   }
 }

@@ -15,12 +15,12 @@ namespace Revature.Lodging.Tests.LibTests
       var aId = Guid.NewGuid();
       var amenity = new Logic.Amenity
       {
-        AmenityId = aId,
+        Id = aId,
         AmenityType = "fridge",
         Description = "to freeze items"
       };
 
-      Assert.Equal(aId, amenity.AmenityId);
+      Assert.Equal(aId, amenity.Id);
       Assert.Equal("fridge", amenity.AmenityType);
       Assert.Equal("to freeze items", amenity.Description);
     }
@@ -35,14 +35,14 @@ namespace Revature.Lodging.Tests.LibTests
       var amId = Guid.NewGuid();
       var cId1 = Guid.NewGuid();
 
-      var ac = new Logic.AmenityComplex
+      var ac = new Logic.ComplexAmenity
       {
-        AmenityComplexId = acId1,
+        Id = acId1,
         AmenityId = amId,
         ComplexId = cId1
       };
 
-      Assert.Equal(acId1, ac.AmenityComplexId);
+      Assert.Equal(acId1, ac.Id);
       Assert.Equal(amId, ac.AmenityId);
       Assert.Equal(cId1, ac.ComplexId);
     }
@@ -57,14 +57,14 @@ namespace Revature.Lodging.Tests.LibTests
       var amId = Guid.NewGuid();
       var rId = Guid.NewGuid();
 
-      var ar = new Logic.AmenityRoom
+      var ar = new Logic.RoomAmenity
       {
-        AmenityRoomId = arId,
+        Id = arId,
         AmenityId = amId,
         RoomId = rId
       };
 
-      Assert.Equal(arId, ar.AmenityRoomId);
+      Assert.Equal(arId, ar.Id);
       Assert.Equal(amId, ar.AmenityId);
       Assert.Equal(rId, ar.RoomId);
     }
@@ -81,14 +81,14 @@ namespace Revature.Lodging.Tests.LibTests
 
       var complex = new Logic.Complex
       {
-        ComplexId = cId,
+        Id = cId,
         AddressId = aId,
         ProviderId = pId,
         ComplexName = "Liv+",
         ContactNumber = "(123)456-7890"
       };
 
-      Assert.Equal(cId, complex.ComplexId);
+      Assert.Equal(cId, complex.Id);
       Assert.Equal(aId, complex.AddressId);
       Assert.Equal(pId, complex.ProviderId);
       Assert.Equal("Liv+", complex.ComplexName);

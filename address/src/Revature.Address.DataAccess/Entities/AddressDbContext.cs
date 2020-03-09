@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Revature.Address.DataAccess.Entities
 {
@@ -31,6 +32,24 @@ namespace Revature.Address.DataAccess.Entities
         entity.Property(e => e.State).IsRequired();
         entity.Property(e => e.Country).IsRequired();
         entity.Property(e => e.ZipCode).IsRequired().HasMaxLength(5);
+        entity.HasData(new Address()
+        {
+          Id = Guid.Parse("50b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
+          Street = "404 Texas Street",
+          City = "Texas City",
+          State = "Texas",
+          Country = "USA",
+          ZipCode = "12345"
+        },
+        new Address()
+        {
+          Id = Guid.Parse("52b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
+          Street = "405 Raccoon Street",
+          City = "Raccoon City",
+          State = "Raccoon",
+          Country = "USA",
+          ZipCode = "54321"
+        });
       });
     }
   }

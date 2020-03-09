@@ -5,6 +5,7 @@ using Revature.Lodging.Api.Controllers;
 using Revature.Lodging.Api.Models;
 using Revature.Lodging.Api.Services;
 using Revature.Lodging.Lib.Interface;
+using Revature.Lodging.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -23,14 +24,15 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       var complex = new Logic.Complex
       {
-        ComplexId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AddressId = Guid.NewGuid(),
         ProviderId = Guid.NewGuid(),
         ComplexName = "test",
         ContactNumber = "1234567892"
       };
       //setup
-      var complexRepo = new Mock<IRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
+      var amenityRepo = new Mock<IAmenityRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ar = new Mock<IAddressRequest>();
@@ -43,8 +45,8 @@ namespace Revature.Lodging.Tests.ApiTests
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ar.Object, rr.Object);
-      var model = Assert.IsAssignableFrom<ActionResult<IEnumerable<ApiComplex>>>(await controller.GetAllComplexAsync());
+      var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
+      var model = Assert.IsAssignableFrom<ActionResult<IEnumerable<ApiComplex>>>(await controller.GetAllComplexesAsync());
 
       //assert
       Assert.IsAssignableFrom<ActionResult<IEnumerable<ApiComplex>>>(model);
@@ -58,7 +60,8 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       //setup
       var complexId = Guid.NewGuid();
-      var complexRepo = new Mock<IRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
+      var amenityRepo = new Mock<IAmenityRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ar = new Mock<IAddressRequest>();
@@ -69,7 +72,7 @@ namespace Revature.Lodging.Tests.ApiTests
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ar.Object, rr.Object);
+      var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
       var model = Assert.IsAssignableFrom<ActionResult<ApiComplex>>(await controller.GetComplexByIdAsync(complexId));
 
       //assert
@@ -85,7 +88,8 @@ namespace Revature.Lodging.Tests.ApiTests
       //setup
       var name = "test1";
       var number = "1234567890";
-      var complexRepo = new Mock<IRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
+      var amenityRepo = new Mock<IAmenityRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ar = new Mock<IAddressRequest>();
@@ -96,7 +100,8 @@ namespace Revature.Lodging.Tests.ApiTests
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ar.Object, rr.Object);
+
+      var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
       var model = Assert.IsAssignableFrom<ActionResult<ApiComplex>>(await controller.GetComplexByNameAndNumberAsync(name, number));
 
       //assert
@@ -113,13 +118,14 @@ namespace Revature.Lodging.Tests.ApiTests
       var pId = Guid.NewGuid();
       var complex = new Logic.Complex
       {
-        ComplexId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AddressId = Guid.NewGuid(),
         ProviderId = pId,
         ComplexName = "test",
         ContactNumber = "1234567892"
       };
-      var complexRepo = new Mock<IRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
+      var amenityRepo = new Mock<IAmenityRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ar = new Mock<IAddressRequest>();
@@ -132,8 +138,8 @@ namespace Revature.Lodging.Tests.ApiTests
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ar.Object, rr.Object);
-      var model = Assert.IsAssignableFrom<ActionResult<IEnumerable<ApiComplex>>>(await controller.GetComplexListByProviderId(pId));
+      var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
+      var model = Assert.IsAssignableFrom<ActionResult<IEnumerable<ApiComplex>>>(await controller.GetComplexesByProviderId(pId));
 
       //assert
       Assert.IsAssignableFrom<ActionResult<IEnumerable<ApiComplex>>>(model);
@@ -166,9 +172,9 @@ namespace Revature.Lodging.Tests.ApiTests
       {
         amenity
       };
-      var ar = new Logic.AmenityRoom
+      var roomAmenity = new Logic.RoomAmenity
       {
-        AmenityRoomId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AmenityId = amId,
         RoomId = rId
       };
@@ -188,18 +194,20 @@ namespace Revature.Lodging.Tests.ApiTests
         room
       };
       IEnumerable<ApiRoom> apiRooms = rooms;
-      var complexRepo = new Mock<IRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
+      var amenityRepo = new Mock<IAmenityRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
-      var ara = new Mock<IAddressRequest>();
+      var ar = new Mock<IAddressRequest>();
       var rr = new Mock<IRoomRequest>();
       var res = true;
 
-      complexRepo.Setup(r => r.CreateAmenityRoomAsync(ar))
+      /*complexRepo*/amenityRepo.Setup(r => r.CreateAmenityRoomAsync(roomAmenity))
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ara.Object, rr.Object);
+
+      var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
       var model = Assert.IsAssignableFrom<StatusCodeResult>(await controller.PostRoomsAsync(apiRooms));
 
       //assert
@@ -216,10 +224,10 @@ namespace Revature.Lodging.Tests.ApiTests
       var aId = Guid.NewGuid();
       var pId = Guid.NewGuid();
       var amId = Guid.NewGuid();
-      var address = new ApiComplexAddress
+      var address = new ApiAddress
       {
-        AddressId = aId,
-        StreetAddress = "test ave",
+        Id = aId,
+        Street = "test ave",
         City = "dallas",
         State = "TX",
         Country = "USA",
@@ -227,7 +235,7 @@ namespace Revature.Lodging.Tests.ApiTests
       };
       var amenity = new Logic.Amenity
       {
-        AmenityId = amId,
+        Id = amId,
         AmenityType = "name",
         Description = "description"
       };
@@ -242,41 +250,42 @@ namespace Revature.Lodging.Tests.ApiTests
         ProviderId = pId,
         ComplexName = "Liv+",
         ContactNumber = "1234567890",
-        ComplexAmenity = amenities
+        ComplexAmenities = amenities
       };
       var complex = new Logic.Complex
       {
-        ComplexId = cId,
+        Id = cId,
         AddressId = aId,
         ProviderId = pId,
         ComplexName = "Liv+",
         ContactNumber = "1234567890"
       };
-      var ac = new Logic.AmenityComplex
+      var ac = new Logic.ComplexAmenity
       {
-        AmenityComplexId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AmenityId = amId,
         ComplexId = cId
       };
-      var complexRepo = new Mock<IRepository>();
+      var amenityRepo = new Mock<IAmenityRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ar = new Mock<IAddressRequest>();
       var rr = new Mock<IRoomRequest>();
       var res = true;
 
-      complexRepo.Setup(r => r.DeleteAmenityComplexAsync(cId))
+      /*complex*/amenityRepo.Setup(r => r.DeleteAmenityComplexAsync(cId))
         .Returns(Task.FromResult(res));
       complexRepo.Setup(r => r.UpdateComplexAsync(complex))
         .Returns(Task.FromResult(res));
-      complexRepo.Setup(c => c.ReadAmenityListAsync())
+      /*complex*/amenityRepo.Setup(c => c.ReadAmenityListAsync())
         .Returns(Task.FromResult(amenities));
-      complexRepo.Setup(p => p.CreateAmenityComplexAsync(ac))
+      /*complex*/amenityRepo.Setup(p => p.CreateAmenityComplexAsync(ac))
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ar.Object, rr.Object);
-      var model = Assert.IsAssignableFrom<StatusCodeResult>(await controller.PutComplexAsync(apiComplex));
+      var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
+      var model = Assert.IsAssignableFrom<StatusCodeResult>(await controller.UpdateComplexAsync(apiComplex));
 
       //assert
       Assert.IsAssignableFrom<StatusCodeResult>(model);
@@ -301,9 +310,9 @@ namespace Revature.Lodging.Tests.ApiTests
       {
         amenity
       };
-      var ar = new Logic.AmenityRoom
+      var ar = new Logic.RoomAmenity
       {
-        AmenityRoomId = Guid.NewGuid(),
+        Id = Guid.NewGuid(),
         AmenityId = amId,
         RoomId = rId
       };
@@ -318,20 +327,21 @@ namespace Revature.Lodging.Tests.ApiTests
         LeaseEnd = Convert.ToDateTime("2020/1/1"),
         Amenities = amenities
       };
-      var complexRepo = new Mock<IRepository>();
+      var amenityRepo = new Mock<IAmenityRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ara = new Mock<IAddressRequest>();
       var rr = new Mock<IRoomRequest>();
       var res = true;
 
-      complexRepo.Setup(r => r.DeleteAmenityRoomAsync(rId))
+      amenityRepo.Setup(r => r.DeleteAmenityRoomAsync(rId))
         .Returns(Task.FromResult(res));
-      complexRepo.Setup(r => r.CreateAmenityRoomAsync(ar))
+      amenityRepo.Setup(r => r.CreateAmenityRoomAsync(ar))
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ara.Object, rr.Object);
+      var controller = new ComplexController(complexRepo.Object, logger.Object, ara.Object, amenityRepo.Object);
       var model = Assert.IsAssignableFrom<StatusCodeResult>(await controller.PutRoomAsync(room));
 
       //assert
@@ -346,21 +356,22 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       var cId = Guid.NewGuid();
       var aId = Guid.NewGuid();
-      var complexRepo = new Mock<IRepository>();
+      var amenityRepo = new Mock<IAmenityRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ar = new Mock<IAddressRequest>();
       var rr = new Mock<IRoomRequest>();
       var res = true;
 
-      complexRepo.Setup(r => r.DeleteAmenityComplexAsync(cId))
+      /*complex*/amenityRepo.Setup(r => r.DeleteAmenityComplexAsync(cId))
         .Returns(Task.FromResult(res));
       complexRepo.Setup(r => r.DeleteComplexAsync(cId))
         .Returns(Task.FromResult(res));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ar.Object, rr.Object);
-      var model = Assert.IsAssignableFrom<StatusCodeResult>(await controller.DeleteComplexAsync(cId));
+      var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
+      var model = Assert.IsAssignableFrom<StatusCodeResult>(await controller.DeleteComplexByIdAsync(cId));
 
       //assert
       Assert.IsAssignableFrom<StatusCodeResult>(model);
@@ -381,19 +392,20 @@ namespace Revature.Lodging.Tests.ApiTests
       {
         RoomId = rId
       };
-      var complexRepo = new Mock<IRepository>();
+      var amenityRepo = new Mock<IAmenityRepository>();
+      var complexRepo = new Mock<IComplexRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
       var rss = new Mock<IRoomServiceSender>();
       var ar = new Mock<IAddressRequest>();
       var rr = new Mock<IRoomRequest>();
       var res = true;
 
-      complexRepo.Setup(r => r.DeleteAmenityRoomAsync(rId))
+      /*complex*/amenityRepo.Setup(r => r.DeleteAmenityRoomAsync(rId))
         .Returns(Task.FromResult(res));
       rss.Setup(r => r.SendRoomsMessages(roomtoSend));
 
       //act
-      var controller = new ComplexController(complexRepo.Object, logger.Object, rss.Object, ar.Object, rr.Object);
+      var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
       var model = Assert.IsAssignableFrom<StatusCodeResult>(await controller.DeleteRoomAsync(room));
 
       //assert

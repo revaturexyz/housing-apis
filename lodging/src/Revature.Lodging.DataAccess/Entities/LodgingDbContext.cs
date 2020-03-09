@@ -11,10 +11,12 @@ namespace Revature.Lodging.DataAccess.Entities
     : base(options) { }
 
     public virtual DbSet<Complex> Complex { get; set; }
-
-    public virtual DbSet<AmenityComplex> AmenityComplex { get; set; }
-    public virtual DbSet<AmenityRoom> AmenityRoom { get; set; }
+    public virtual DbSet<ComplexAmenity> ComplexAmenity { get; set; }
+    public virtual DbSet<RoomAmenity> RoomAmenity { get; set; }
     public virtual DbSet<Amenity> Amenity { get; set; }
+    public virtual DbSet<Gender> Gender { get; set; }
+    public virtual DbSet<Room> Room { get; set; }
+    public virtual DbSet<RoomType> RoomType { get; set; }
 
     private Guid cId1 = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606");
     //cId1 equals to room service seed data: complex Id
@@ -32,9 +34,95 @@ namespace Revature.Lodging.DataAccess.Entities
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+      //Amenity
+      modelBuilder.Entity<Amenity>(entity =>
+      {
+        entity.Property(e => e.Id)
+          .IsRequired();
+
+        entity.HasIndex(e => e.Id)
+          .IsUnique();
+
+        entity.Property(e => e.AmenityType)
+          .IsRequired()
+          .HasMaxLength(50);
+
+        entity.Property(e => e.Description)
+          .HasMaxLength(100);
+
+        entity.HasData
+        (
+          new Amenity { Id = amId1, AmenityType = "fridge", Description = "to keep food fresh" },
+          new Amenity { Id = amId2, AmenityType = "microwave", Description = "" },
+          new Amenity { Id = amId3, AmenityType = "pool", Description = "swimming" },
+          new Amenity { Id = amId4, AmenityType = "kitchen", Description = "cook" },
+          new Amenity { Id = amId5, AmenityType = "gym", Description = "work out" }
+        );
+      });
+
+      //Amenity Complex
+      modelBuilder.Entity<ComplexAmenity>(entity =>
+      {
+        entity.Property(e => e.Id)
+          .IsRequired();
+
+        entity.HasIndex(c => c.Id)
+          .IsUnique();
+
+        entity.HasOne(e => e.Amenity)
+          .WithMany(d => d.ComplexAmenity)
+          .HasForeignKey(p => p.AmenityId)
+          .IsRequired()
+          .OnDelete(DeleteBehavior.Cascade);
+
+        entity.HasOne(e => e.Complex)
+          .WithMany(d => d.ComplexAmenity)
+          .HasForeignKey(p => p.ComplexId)
+          .IsRequired()
+          .OnDelete(DeleteBehavior.Cascade);
+
+        entity.HasData
+        (
+          new ComplexAmenity { Id = Guid.Parse("58b7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId1, ComplexId = cId1 },
+          new ComplexAmenity { Id = Guid.Parse("59b7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, ComplexId = cId1 },
+          new ComplexAmenity { Id = Guid.Parse("5ab7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, ComplexId = cId2 },
+          new ComplexAmenity { Id = Guid.Parse("5bb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId4, ComplexId = cId2 }
+        );
+      });
+
+      modelBuilder.Entity<RoomAmenity>(entity =>
+      {
+        entity.Property(e => e.Id)
+          .IsRequired();
+
+        entity.HasIndex(c => c.Id)
+          .IsUnique();
+
+        entity.HasOne(e => e.Amenity)
+          .WithMany(d => d.RoomAmenity)
+          .HasForeignKey(p => p.AmenityId)
+          .IsRequired()
+          .OnDelete(DeleteBehavior.Cascade);
+
+        entity.HasOne(e => e.Room)
+          .WithMany(d => d.RoomAmenity)
+          .HasForeignKey(p => p.RoomId)
+          .IsRequired()
+          .OnDelete(DeleteBehavior.Cascade);
+
+
+        entity.HasData
+        (
+          new RoomAmenity { Id = Guid.Parse("5cb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId1, RoomId = rId1 },
+          new RoomAmenity { Id = Guid.Parse("5db7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId4, RoomId = rId1 },
+          new RoomAmenity { Id = Guid.Parse("5eb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId5, RoomId = rId2 },
+          new RoomAmenity { Id = Guid.Parse("5fb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, RoomId = rId2 }
+        );
+      });
+
       modelBuilder.Entity<Complex>(entity =>
       {
-        entity.HasKey(e => e.ComplexId);
+        entity.HasKey(e => e.Id);
 
         entity.Property(e => e.AddressId)
           .IsRequired();
@@ -52,7 +140,7 @@ namespace Revature.Lodging.DataAccess.Entities
         entity.HasData(
           new Complex
           {
-            ComplexId = cId1,
+            Id = cId1,
             AddressId = Guid.Parse("50b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
             ProviderId = Guid.Parse("51b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
             ComplexName = "Liv+",
@@ -60,7 +148,7 @@ namespace Revature.Lodging.DataAccess.Entities
           },
           new Complex
           {
-            ComplexId = cId2,
+            Id = cId2,
             AddressId = Guid.Parse("52b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
             ProviderId = Guid.Parse("53b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
             ComplexName = "SampleComplex",
@@ -68,7 +156,7 @@ namespace Revature.Lodging.DataAccess.Entities
           },
           new Complex
           {
-            ComplexId = cId3,
+            Id = cId3,
             AddressId = Guid.Parse("54b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
             ProviderId = Guid.Parse("55b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
             ComplexName = "Complex",
@@ -76,7 +164,7 @@ namespace Revature.Lodging.DataAccess.Entities
           },
           new Complex
           {
-            ComplexId = cId4,
+            Id = cId4,
             AddressId = Guid.Parse("56b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
             ProviderId = Guid.Parse("57b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
             ComplexName = "ComplexNearMe",
@@ -85,85 +173,131 @@ namespace Revature.Lodging.DataAccess.Entities
         );
       });
 
-      modelBuilder.Entity<Amenity>(entity =>
+      //Gender
+      modelBuilder.Entity<Gender>(entity =>
       {
-        entity.Property(e => e.AmenityId)
-          .IsRequired();
+        entity.HasKey(e => e.Id);
 
-        entity.HasIndex(e => e.AmenityId)
+        entity.HasIndex(e => e.Id)
           .IsUnique();
 
-        entity.Property(e => e.AmenityType)
+        entity.Property(e => e.Type)
           .IsRequired()
           .HasMaxLength(50);
 
-        entity.Property(e => e.Description)
-          .HasMaxLength(100);
+        entity.HasData(
+         new Gender() { Id = 1, Type = "Male" },
+         new Gender() { Id = 2, Type = "Female" }
+         );
 
-        entity.HasData
-        (
-          new Amenity { AmenityId = amId1, AmenityType = "fridge", Description = "to keep food fresh" },
-          new Amenity { AmenityId = amId2, AmenityType = "microwave", Description = "" },
-          new Amenity { AmenityId = amId3, AmenityType = "pool", Description = "swimming" },
-          new Amenity { AmenityId = amId4, AmenityType = "kitchen", Description = "cook" },
-          new Amenity { AmenityId = amId5, AmenityType = "gym", Description = "work out" }
-        );
       });
 
-      modelBuilder.Entity<AmenityComplex>(entity =>
+      //Room
+      modelBuilder.Entity<Room>(entity =>
       {
-        entity.Property(e => e.AmenityComplexId)
+        entity.HasKey(e => e.Id);
+
+        entity.Property(e => e.RoomNumber)
+          .IsRequired()
+          .HasMaxLength(50);
+
+        entity.Property(e => e.NumberOfBeds)
           .IsRequired();
 
-        entity.HasIndex(c => c.AmenityComplexId)
-          .IsUnique();
+        entity.Property(e => e.NumberOfOccupants)
+          .IsRequired();
 
-        entity.HasOne(e => e.Amenity)
-          .WithMany(d => d.AmenityComplex)
-          .HasForeignKey(p => p.AmenityId)
-          .IsRequired()
-          .OnDelete(DeleteBehavior.ClientSetNull);
+        entity.Property(e => e.LeaseStart);
+
+        entity.Property(e => e.LeaseEnd);
 
         entity.HasOne(e => e.Complex)
-          .WithMany(d => d.AmenityComplex)
+          .WithMany(d => d.Room)
           .HasForeignKey(p => p.ComplexId)
           .IsRequired()
-          .OnDelete(DeleteBehavior.ClientSetNull);
+          .OnDelete(DeleteBehavior.Cascade);
 
-        entity.HasData
-        (
-          new AmenityComplex { AmenityComplexId = Guid.Parse("58b7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId1, ComplexId = cId1 },
-          new AmenityComplex { AmenityComplexId = Guid.Parse("59b7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, ComplexId = cId1 },
-          new AmenityComplex { AmenityComplexId = Guid.Parse("5ab7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, ComplexId = cId2 },
-          new AmenityComplex { AmenityComplexId = Guid.Parse("5bb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId4, ComplexId = cId2 }
+        entity.HasOne(e => e.Gender)
+          .WithMany(d => d.Room)
+          .HasForeignKey(p => p.GenderId);
+
+        entity.HasOne(e => e.RoomType)
+          .WithMany(d => d.Room)
+          .HasForeignKey(p => p.RoomTypeId)
+          .IsRequired();
+
+        entity.HasData(
+          new Room()
+          {
+            RoomTypeId = 1,
+            GenderId = 2,
+            LeaseEnd = DateTime.Today.AddMonths(3),
+            LeaseStart = DateTime.Now,
+            Id = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456fd"),
+            ComplexId = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606"),
+            NumberOfBeds = 4,
+            RoomNumber = "2428B",
+            NumberOfOccupants = 0
+          },
+          new Room()
+          {
+            RoomTypeId = 1,
+            GenderId = 2,
+            LeaseEnd = DateTime.Today.AddMonths(3),
+            LeaseStart = DateTime.Now,
+            Id = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456ee"),
+            ComplexId = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606"),
+            NumberOfBeds = 4,
+            RoomNumber = "2127E",
+            NumberOfOccupants = 4
+          },
+          new Room()
+          {
+            RoomTypeId = 1,
+            GenderId = 1,
+            LeaseEnd = DateTime.Today.AddMonths(1),
+            LeaseStart = DateTime.Now.AddDays(1),
+            Id = Guid.Parse("fa1d6c6e-9650-44c9-8c6b-5aebd3f9a671"),
+            ComplexId = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606"),
+            NumberOfBeds = 2,
+            RoomNumber = "2422",
+            NumberOfOccupants = 1
+          },
+          new Room()
+          {
+            RoomTypeId = 1,
+            GenderId = 2,
+            LeaseEnd = DateTime.Today.AddMonths(4),
+            LeaseStart = DateTime.Now.AddDays(1),
+            Id = Guid.Parse("0a4d6c61-9650-44c9-8c6b-5aebd3f9a676"),
+            ComplexId = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606"),
+            NumberOfBeds = 3,
+            RoomNumber = "2421",
+            NumberOfOccupants = 1
+          }
         );
       });
 
-      modelBuilder.Entity<AmenityRoom>(entity =>
+      //Room Type
+      modelBuilder.Entity<RoomType>(entity =>
       {
-        entity.Property(e => e.AmenityRoomId)
-          .IsRequired();
+        entity.HasKey(e => e.Id);
 
-        entity.HasIndex(c => c.AmenityRoomId)
-          .IsUnique();
-
-        entity.HasOne(e => e.Amenity)
-          .WithMany(d => d.AmenityRoom)
-          .HasForeignKey(p => p.AmenityId)
+        entity.Property(e => e.Type)
           .IsRequired()
-          .OnDelete(DeleteBehavior.ClientSetNull);
+          .HasMaxLength(50);
 
-        entity.Property(e => e.RoomId)
-          .IsRequired();
-
-        entity.HasData
-        (
-          new AmenityRoom { AmenityRoomId = Guid.Parse("5cb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId1, RoomId = rId1 },
-          new AmenityRoom { AmenityRoomId = Guid.Parse("5db7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId4, RoomId = rId1 },
-          new AmenityRoom { AmenityRoomId = Guid.Parse("5eb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId5, RoomId = rId2 },
-          new AmenityRoom { AmenityRoomId = Guid.Parse("5fb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, RoomId = rId2 }
+        entity.HasData(
+           new RoomType() { Id = 1, Type = "Apartment" },
+           new RoomType() { Id = 2, Type = "Dormitory" },
+           new RoomType() { Id = 3, Type = "TownHouse" },
+           new RoomType() { Id = 4, Type = "Hotel/Motel" }
         );
       });
+
     }
+
   }
+
+      
 }

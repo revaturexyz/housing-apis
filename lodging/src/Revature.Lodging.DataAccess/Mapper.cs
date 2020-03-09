@@ -1,134 +1,246 @@
-using Entity = Revature.Lodging.DataAccess.Entities;
-using Logic = Revature.Lodging.Lib.Models;
+using System;
 
 namespace Revature.Lodging.DataAccess
 {
-  public class Mapper : IMapper
+  public static class Mapper
   {
     /// <summary>
-    /// Logic.Amenity => Entity.Amenity
-    /// All properties are mapped. Logic.amenity has no Lists
+    /// Lib.Models.Amenity => Entities.Amenities
     /// </summary>
     /// <param name="amenity"></param>
     /// <returns></returns>
-    public Entity.Amenity MapAmenitytoE(Logic.Amenity amenity)
+    public static Entities.Amenity Map(Lib.Models.Amenity amenity)
     {
-      return new Entity.Amenity
+      return new Entities.Amenity
       {
-        AmenityId = amenity.AmenityId,
+        Id = amenity.Id,
         AmenityType = amenity.AmenityType,
         Description = amenity.Description
       };
     }
 
     /// <summary>
-    /// Entity.Amenity => Logic.Amenity
+    /// Entities.Amenity => Lib.Models.Amenity
     /// </summary>
     /// <param name="amenity"></param>
     /// <returns></returns>
-    public Logic.Amenity MapEtoAmenity(Entity.Amenity amenity)
+    public static Lib.Models.Amenity Map(Entities.Amenity amenity)
     {
-      return new Logic.Amenity
+      return new Lib.Models.Amenity
       {
-        AmenityId = amenity.AmenityId,
+        Id = amenity.Id,
         AmenityType = amenity.AmenityType,
         Description = amenity.Description
       };
     }
 
     /// <summary>
-    /// Logic.AmenityComplex => Entity.AmenityComplex
+    /// Lib.Models.AmenityComplex => Entities.AmenityComplex
     /// </summary>
-    /// <param name="ac"></param>
+    /// <param name="amenityComplex"></param>
     /// <returns></returns>
-    public Entity.AmenityComplex MapAmenityComplextoE(Logic.AmenityComplex ac)
+    public static Entities.ComplexAmenity Map(Lib.Models.ComplexAmenity amenityComplex)
     {
-      return new Entity.AmenityComplex
+      return new Entities.ComplexAmenity
       {
-        AmenityComplexId = ac.AmenityComplexId,
-        AmenityId = ac.AmenityId,
-        ComplexId = ac.ComplexId
+        Id = amenityComplex.Id,
+        AmenityId = amenityComplex.AmenityId,
+        ComplexId = amenityComplex.ComplexId
       };
     }
 
     /// <summary>
-    /// Entity.AmenityComplex => Logic.AmenityComplex
+    /// Entities.AmenityComplex => Lib.Models.AmenityComplex
     /// </summary>
-    /// <param name="ac"></param>
+    /// <param name="amenityComplex"></param>
     /// <returns></returns>
-    public Logic.AmenityComplex MapEtoAmenityComplex(Entity.AmenityComplex ac)
+    public static Lib.Models.ComplexAmenity Map(Entities.ComplexAmenity amenityComplex)
     {
-      return new Logic.AmenityComplex
+      return new Lib.Models.ComplexAmenity
       {
-        AmenityComplexId = ac.AmenityComplexId,
-        AmenityId = ac.AmenityId,
-        ComplexId = ac.ComplexId
+        Id = amenityComplex.Id,
+        AmenityId = amenityComplex.AmenityId,
+        ComplexId = amenityComplex.ComplexId
       };
     }
 
     /// <summary>
-    /// Logic.AmenityRoom => Entity.AmenityRoom
+    /// Lib.Models.AmenityRoom => Entities.AmenityRoom
     /// </summary>
-    /// <param name="ar"></param>
+    /// <param name="amenityRoom"></param>
     /// <returns></returns>
-    public Entity.AmenityRoom MapAmenityRoomtoE(Logic.AmenityRoom ar)
+    public static Entities.RoomAmenity Map(Lib.Models.RoomAmenity amenityRoom)
     {
-      return new Entity.AmenityRoom
+      return new Entities.RoomAmenity
       {
-        AmenityRoomId = ar.AmenityRoomId,
-        AmenityId = ar.AmenityId,
-        RoomId = ar.RoomId
+        Id = amenityRoom.Id,
+        AmenityId = amenityRoom.AmenityId,
+        RoomId = amenityRoom.RoomId
       };
     }
 
     /// <summary>
-    /// Entity.AmenityRoom => Logic.AmenityRoom
+    /// Entities.AmenityRoom => Lib.Models.AmenityRoom
     /// </summary>
-    /// <param name="ar"></param>
+    /// <param name="amenityRoom"></param>
     /// <returns></returns>
-    public Logic.AmenityRoom MapEtoAmenityRoom(Entity.AmenityRoom ar)
+    public static Lib.Models.RoomAmenity Map(Entities.RoomAmenity amenityRoom)
     {
-      return new Logic.AmenityRoom
+      return new Lib.Models.RoomAmenity
       {
-        AmenityRoomId = ar.AmenityRoomId,
-        AmenityId = ar.AmenityId,
-        RoomId = ar.RoomId
+        Id = amenityRoom.Id,
+        AmenityId = amenityRoom.AmenityId,
+        RoomId = amenityRoom.RoomId
       };
     }
 
     /// <summary>
-    /// Logic.Complex => Entity.Complex
+    /// Lib.Models.Complex => Entities.Complex
     /// </summary>
-    /// <param name="c"></param>
+    /// <param name="complex"></param>
     /// <returns></returns>
-    public Entity.Complex MapComplextoE(Logic.Complex c)
+    public static Entities.Complex Map(Lib.Models.Complex complex)
     {
-      return new Entity.Complex
+      return new Entities.Complex
       {
-        ComplexId = c.ComplexId,
-        AddressId = c.AddressId,
-        ProviderId = c.ProviderId,
-        ComplexName = c.ComplexName,
-        ContactNumber = c.ContactNumber
+        Id = complex.Id,
+        AddressId = complex.AddressId,
+        ProviderId = complex.ProviderId,
+        ComplexName = complex.ComplexName,
+        ContactNumber = complex.ContactNumber
       };
     }
 
     /// <summary>
-    /// Entity.Complex => Logic.Complex
+    /// Entities.Complex => Lib.Models.Complex
     /// </summary>
-    /// <param name="c"></param>
+    /// <param name="complex"></param>
     /// <returns></returns>
-    public Logic.Complex MapEtoComplex(Entity.Complex c)
+    public static Lib.Models.Complex Map(Entities.Complex complex)
     {
-      return new Logic.Complex
+      return new Lib.Models.Complex
       {
-        ComplexId = c.ComplexId,
-        AddressId = c.AddressId,
-        ProviderId = c.ProviderId,
-        ComplexName = c.ComplexName,
-        ContactNumber = c.ContactNumber
+        Id = complex.Id,
+        AddressId = complex.AddressId,
+        ProviderId = complex.ProviderId,
+        ComplexName = complex.ComplexName,
+        ContactNumber = complex.ContactNumber
       };
 
+    }
+
+    /// <summary>
+    /// Lib.Models.Room => Entities.Room
+    /// </summary>
+    /// <param name="room"></param>
+    /// <returns></returns>
+    public static Entities.Room Map(Lib.Models.Room room)
+    {
+      //switch statement to convert gender and room type strings into int that represent primary key from respective tables
+      Nullable<int> genderId = null;
+      int roomTypeId = 0;
+      string gender = room.Gender?.ToLower();
+      string roomType = room.RoomType.ToLower();
+
+      if (gender != null)
+      {
+        switch (gender)
+        {
+          case "male":
+            genderId = 1;
+            break;
+          case "female":
+            genderId = 2;
+            break;
+        }
+      }
+
+      
+        switch (roomType)
+        {
+          case "apartment":
+            roomTypeId = 1;
+            break;
+          case "dormitory":
+            roomTypeId = 2;
+            break;
+          case "townhouse":
+            roomTypeId = 3;
+            break;
+          case "hotel/motel":
+            roomTypeId = 4;
+            break;
+        
+        }
+
+      return new Entities.Room
+      {
+        Id = room.Id,
+        RoomNumber = room.RoomNumber,
+        NumberOfBeds = room.NumberOfBeds,
+        NumberOfOccupants = room.NumberOfOccupants,
+        LeaseStart = room.LeaseStart,
+        LeaseEnd = room.LeaseEnd,
+        ComplexId = room.ComplexId,
+        GenderId = genderId,
+        RoomTypeId = roomTypeId
+      };
+      
+
+    }
+
+    /// <summary>
+    /// Entities.Room => Lib.Models.Room
+    /// </summary>
+    /// <param name="room"></param>
+    /// <returns></returns>
+    public static Lib.Models.Room Map(Entities.Room room)
+    {
+      //switch statement that converts gender id and room type id from room to strings for Lib.Models.Room
+      string gender = null;
+      string roomType = null;
+
+      if (room.GenderId != null)
+      {
+        switch (room.GenderId)
+        {
+          case 1:
+            gender = "Male";
+            break;
+          case 2:
+            gender = "Female";
+            break;
+        }
+      }
+
+      switch (room.RoomTypeId)
+      {
+        case 1:
+          roomType = "Apartment";
+          break;
+        case 2:
+          roomType = "Dormitory";
+          break;
+        case 3:
+          roomType = "TownHouse";
+          break;
+        case 4:
+          roomType = "Hotel/Motel";
+          break;
+      }
+
+      var rm = new Lib.Models.Room
+      {
+        Id = room.Id,
+        RoomNumber = room.RoomNumber,
+        NumberOfBeds = room.NumberOfBeds,
+        NumberOfOccupants = room.NumberOfOccupants,
+        ComplexId = room.ComplexId,
+        Gender = gender,
+        RoomType = roomType
+      };
+      rm.SetLease(room.LeaseStart, room.LeaseEnd);
+      return rm;
     }
   }
 }

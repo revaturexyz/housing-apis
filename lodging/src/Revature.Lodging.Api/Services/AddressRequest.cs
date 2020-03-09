@@ -39,34 +39,34 @@ namespace Revature.Lodging.Api.Services
     /// </summary>
     /// <param name="item">A model of an Address</param>
     /// <returns>A model of the formal Address entry in Address Services Database, including it GUID</returns>
-    public async Task<ApiComplexAddress> PostAddressAsync(ApiComplexAddress item)
+    public async Task<ApiAddress> PostAddressAsync(ApiAddress item)
     {
       var queryString = "?"
-        + "street=" + item.StreetAddress + "&"
+        + "street=" + item.Street + "&"
         + "city=" + item.City + "&"
         + "state=" + item.State + "&"
         + "zipCode=" + item.ZipCode + "&"
         + "country=" + item.Country;
 
-      using var response = await SendRequestAsync<ApiComplexAddress>(HttpMethod.Get, "api/Address" + queryString);
+      using var response = await SendRequestAsync<ApiAddress>(HttpMethod.Get, "api/Address" + queryString);
       response.EnsureSuccessStatusCode();
 
-      return await ReadResponseBodyAsync<ApiComplexAddress>(response);
+      return await ReadResponseBodyAsync<ApiAddress>(response);
     }
 
     /// <summary>
     /// </summary>
     /// <param name="item">A model of an Address</param>
     /// <returns></returns>
-    public async Task<ApiComplexAddress> GetAddressAsync(Guid addressId)
+    public async Task<ApiAddress> GetAddressAsync(Guid addressId)
     {
       var queryString = addressId.ToString();
 
 
-      using var response = await SendRequestAsync<ApiComplexAddress>(HttpMethod.Get, "api/Address" + queryString);
+      using var response = await SendRequestAsync<ApiAddress>(HttpMethod.Get, "api/Address/" + queryString);
       response.EnsureSuccessStatusCode();
 
-      return await ReadResponseBodyAsync<ApiComplexAddress>(response);
+      return await ReadResponseBodyAsync<ApiAddress>(response);
     }
 
     /// <summary>

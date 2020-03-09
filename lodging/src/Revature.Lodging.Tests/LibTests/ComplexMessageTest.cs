@@ -1,8 +1,8 @@
 using System;
-using Revature.Room.Lib.Models;
+using Revature.Lodging.Lib.Models;
 using Xunit;
 
-namespace Revature.Room.Tests.Revature.Room.Lib.Tests
+namespace Revature.Lodging.Tests.LibTests
 {
   public class ComplexMessageTest
   {

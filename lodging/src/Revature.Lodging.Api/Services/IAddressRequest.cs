@@ -6,8 +6,8 @@ namespace Revature.Lodging.Api.Services
 {
   public interface IAddressRequest
   {
-    public Task<ApiComplexAddress> PostAddressAsync(ApiComplexAddress item);
+    public Task<ApiAddress> PostAddressAsync(ApiAddress item);
 
-    public Task<ApiComplexAddress> GetAddressAsync(Guid addressId);
+    public Task<ApiAddress> GetAddressAsync(Guid addressId);
   }
 }

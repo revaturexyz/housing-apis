@@ -61,7 +61,7 @@ namespace Revature.Lodging.Api.Services
       // Dispose of this scope after done using repository service
       // Necessary due to singleton service (bus service) consuming a scoped service (repo)
       using var scope = _services.CreateScope();
-      var repo = scope.ServiceProvider.GetRequiredService<IRepository>();
+      var repo = scope.ServiceProvider.GetRequiredService</*IComplex*/IAmenityRepository>();
       try
       {
         _log.LogInformation("Attempting to deserialize message from service bus consumer", message.Body);
