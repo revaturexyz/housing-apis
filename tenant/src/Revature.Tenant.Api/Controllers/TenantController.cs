@@ -151,21 +151,26 @@ namespace Revature.Tenant.Api.Controllers
         /* if role is tenant and tenant.Email != claims email
          *  return 401Forbidden
          */
-        try
-        {
-          var principal = HttpContext.User.Identities.SingleOrDefault();
-          var email = principal.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).Single();
+        var principal = HttpContext.User.Identities.SingleOrDefault();
+        var roles = principal.Claims.Where(c => c.Type == "groups").Select(c => c.Value).ToList();
 
-          if (email?.ToLower() != tenant?.Email?.ToLower())
-          {
-            _logger.LogWarning("Tenant trying to access other tenant account");
-            return Forbid();
-          }
-        }
-        catch (ArgumentNullException)
+        if (roles.Contains("Tenant"))
         {
-          _logger.LogError("Email does not exist in Okta account");
-          return NotFound();
+          try
+          {
+            var email = principal.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).Single();
+
+            if (email?.ToLower() != tenant?.Email?.ToLower())
+            {
+              _logger.LogWarning("Tenant trying to access other tenant account");
+              return Forbid();
+            }
+          }
+          catch (ArgumentNullException)
+          {
+            _logger.LogError("Email does not exist in Okta account");
+            return NotFound();
+          }
         }
 
 
