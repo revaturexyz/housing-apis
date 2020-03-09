@@ -109,9 +109,13 @@ namespace Revature.Tenant.Api
     /// <returns>A Model Tenant</returns>
     public static Lib.Models.Tenant Map(ApiTenant tenant)
     {
+      if(tenant.Id == null)
+      {
+        throw new ArgumentNullException("Tenant Id must be set");
+      }
       return new Lib.Models.Tenant
       {
-        Id = (tenant.Id == null) ? Guid.NewGuid() : (Guid)tenant.Id,
+        Id = (Guid)tenant.Id,
         Email = tenant.Email,
         Gender = tenant.Gender,
         FirstName = tenant.FirstName,
