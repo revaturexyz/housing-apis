@@ -47,7 +47,7 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Method that updates the lease start and end of a Room
+    /// Method that updates room
     /// </summary>
     /// <param name="myRoom"></param>
     /// <returns></returns>
@@ -62,6 +62,41 @@ namespace Revature.Lodging.DataAccess
 
       roomEntity.LeaseStart = myRoom.LeaseStart;
       roomEntity.LeaseEnd = myRoom.LeaseEnd;
+      roomEntity.RoomNumber = myRoom.RoomNumber;
+      roomEntity.NumberOfBeds = myRoom.NumberOfBeds;
+      roomEntity.NumberOfOccupants = myRoom.NumberOfOccupants;
+
+      string roomType = myRoom.RoomType.ToLower();
+      switch (roomType)
+      {
+        case "apartment":
+          roomEntity.RoomTypeId = 1;
+          break;
+        case "dormitory":
+          roomEntity.RoomTypeId = 2;
+          break;
+        case "townhouse":
+          roomEntity.RoomTypeId = 3;
+          break;
+        case "hotel/motel":
+          roomEntity.RoomTypeId = 4;
+          break;
+        default:
+          break;
+      }
+
+      string gender = myRoom.Gender.ToLower();
+      switch (gender)
+      {
+        case "male":
+          roomEntity.GenderId = 1;
+          break;
+        case "female":
+          roomEntity.GenderId = 2;
+          break;
+        default:
+          break;
+      }
 
       await _context.SaveChangesAsync();
     }
@@ -119,7 +154,8 @@ namespace Revature.Lodging.DataAccess
       string gender,
       DateTime? endDate,
       Guid? roomId,
-      bool isVacant = false)
+      bool? empty = null,
+      bool? vacancy = null)
     {
       IEnumerable<Entities.Room> rooms = await _context.Room.Where(r => r.ComplexId == complexId)
                                                             .Include(r => r.Gender).Include(r => r.RoomType)
@@ -148,9 +184,20 @@ namespace Revature.Lodging.DataAccess
       {
         rooms = rooms.Where(r => r.Id == roomId) ?? throw new KeyNotFoundException("Room Id not found");
       }
-      if(isVacant)
+      if(empty == true)
       {
         rooms = rooms.Where(r => r.NumberOfOccupants == 0);
+      } else if (empty == false)
+      {
+        rooms = rooms.Where(r => r.NumberOfOccupants > 0);
+      }
+      if (vacancy == true)
+      {
+        rooms = rooms.Where(r => r.NumberOfOccupants < r.NumberOfBeds);
+      }
+      else if (vacancy == false)
+      {
+        rooms = rooms.Where(r => r.NumberOfOccupants >= r.NumberOfBeds);
       }
       //return Mapper.Map(rooms);
       return rooms.Select(Mapper.Map);

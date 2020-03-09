@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Revature.Lodging.Api.Controllers;
+using Revature.Lodging.Api.Models;
 using Revature.Lodging.Lib.Interface;
 using Xunit;
 
@@ -21,6 +22,7 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       //arrange
       var mockRepo = new Mock<IRoomRepository>();
+      var mockAmenityRepo = new Mock<IAmenityRepository>();
       var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.GetFilteredRoomsAsync(
@@ -31,6 +33,7 @@ namespace Revature.Lodging.Tests.ApiTests
         It.IsAny<string>(),
         It.IsAny<DateTime>(),
         It.IsAny<Guid>(),
+        It.IsAny<bool>(),
         It.IsAny<bool>()))
         .Returns(Task.FromResult<IEnumerable<Lib.Models.Room>>(
           new List<Lib.Models.Room>()
@@ -38,10 +41,10 @@ namespace Revature.Lodging.Tests.ApiTests
             new Lib.Models.Room()
           }
         ));
-      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
 
       //act
-      var result = await controller.GetFilteredRoomsAsync(Guid.NewGuid(), "", 1, "", "", DateTime.Now, Guid.NewGuid());
+      var result = await controller.GetFilteredRoomsAsync(Guid.NewGuid(), "", 1, "", "", DateTime.Now, Guid.NewGuid(), true, true);
 
       //assert
       Assert.IsAssignableFrom<OkObjectResult>(result);
@@ -54,6 +57,7 @@ namespace Revature.Lodging.Tests.ApiTests
     public async Task GetFilteredRoomsAsyncShouldReturnKeyNotFoundException()
     {
       var mockRepo = new Mock<IRoomRepository>();
+      var mockAmenityRepo = new Mock<IAmenityRepository>();
       var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.GetFilteredRoomsAsync(
@@ -64,12 +68,13 @@ namespace Revature.Lodging.Tests.ApiTests
         It.IsAny<string>(),
         It.IsAny<DateTime>(),
         It.IsAny<Guid>(),
+        It.IsAny<bool>(),
         It.IsAny<bool>()))
         .Throws(new KeyNotFoundException());
 
-      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
 
-      var result = await controller.GetFilteredRoomsAsync(Guid.NewGuid(), "", 1, "", "", DateTime.Now, Guid.NewGuid());
+      var result = await controller.GetFilteredRoomsAsync(Guid.NewGuid(), "", 1, "", "", DateTime.Now, Guid.NewGuid(), true, true);
 
       Assert.IsType<NotFoundObjectResult>(result);
     }
@@ -83,28 +88,29 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       //arrange
       var mockRepo = new Mock<IRoomRepository>();
+      var mockAmenityRepo = new Mock<IAmenityRepository>();
       var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.CreateRoomAsync(
         It.IsAny<Lib.Models.Room>()
         ));
 
-      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
 
       //act
-      var roomTest = new Revature.Lodging.Lib.Models.Room
+      var roomTest = new ApiRoom
       {
         ComplexId = Guid.NewGuid(),
-        Id = Guid.NewGuid(),
+        RoomId = Guid.NewGuid(),
         RoomNumber = "ABC",
-        NumberOfBeds = 4,
+        NumberOfBeds = 4/*,
         NumberOfOccupants = 4,
         Gender = "Male",
-        RoomType = "Apartment"
+        RoomType = "Apartment"*/
       };
 
       roomTest.SetLease(DateTime.Now, DateTime.Today.AddDays(3));
-      var result = await controller.PostRoomAsync(roomTest);
+      var result = await controller.AddRoomAsync(roomTest);
 
       //assert
       Assert.IsAssignableFrom<CreatedAtRouteResult>(result);
@@ -119,18 +125,19 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       //arrange
       var mockRepo = new Mock<IRoomRepository>();
+      var mockAmenityRepo = new Mock<IAmenityRepository>();
       var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.CreateRoomAsync(
         It.IsAny<Lib.Models.Room>()
         )).Throws(new ArgumentException());
 
-      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
 
       //act
-      var roomTest = new Lib.Models.Room();
+      var roomTest = new ApiRoom();
 
-      var result = await controller.PostRoomAsync(roomTest);
+      var result = await controller.AddRoomAsync(roomTest);
 
       //assert
       Assert.IsType<BadRequestResult>(result);
@@ -145,6 +152,7 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       //arrange
       var mockRepo = new Mock<IRoomRepository>();
+      var mockAmenityRepo = new Mock<IAmenityRepository>();
       var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.UpdateRoomAsync(
@@ -152,25 +160,25 @@ namespace Revature.Lodging.Tests.ApiTests
         ));
       mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Models.Room>(new Lib.Models.Room()));
 
-      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
 
       //act
-      var roomTest = new Revature.Lodging.Lib.Models.Room
+      var roomTest = new ApiRoom
       {
         ComplexId = Guid.NewGuid(),
-        Id = Guid.NewGuid(),
+        RoomId = Guid.NewGuid(),
         RoomNumber = "ABC",
-        NumberOfBeds = 4,
+        NumberOfBeds = 4/*,
         NumberOfOccupants = 4,
         Gender = "Male",
-        RoomType = "Apartment"
+        RoomType = "Apartment"*/
       };
 
       roomTest.SetLease(DateTime.Now, DateTime.Today.AddDays(3));
 
-      var result = await controller.PutRoomAsync(Guid.NewGuid(), roomTest);
+      var result = await controller.UpdateRoomAsync(Guid.NewGuid(), roomTest);
       //assert
-      Assert.IsAssignableFrom<NoContentResult>(result);
+      Assert.IsAssignableFrom<StatusCodeResult>(result);
     }
 
     /// <summary>
@@ -182,7 +190,7 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       //arrange
       var mockRepo = new Mock<IRoomRepository>();
-
+      var mockAmenityRepo = new Mock<IAmenityRepository>();
       var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.UpdateRoomAsync(
@@ -191,14 +199,14 @@ namespace Revature.Lodging.Tests.ApiTests
 
       mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Models.Room>(new Lib.Models.Room()));
 
-      var controller = new RoomController(mockRepo.Object, mockLogger.Object); ;
+      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object); ;
 
       //act
-      var roomTest = new Lib.Models.Room();
+      var roomTest = new ApiRoom();
       //Need to set lease or else we will get an Argument Exception instead of InvalidOperation Exception
       roomTest.SetLease(DateTime.Now, DateTime.Now.AddDays(3));
 
-      var result = await controller.PutRoomAsync(Guid.NewGuid(), roomTest);
+      var result = await controller.UpdateRoomAsync(Guid.NewGuid(), roomTest);
 
       //assert
       Assert.IsType<NotFoundResult>(result);
@@ -213,7 +221,7 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       //arrange
       var mockRepo = new Mock<IRoomRepository>();
-
+      var mockAmenityRepo = new Mock<IAmenityRepository>();
       var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.UpdateRoomAsync(
@@ -222,12 +230,12 @@ namespace Revature.Lodging.Tests.ApiTests
 
       mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Models.Room>(new Lib.Models.Room()));
 
-      var controller = new RoomController(mockRepo.Object, mockLogger.Object); ;
+      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object); ;
 
       //act
-      var roomTest = new Lib.Models.Room();
+      var roomTest = new ApiRoom();
 
-      var result = await controller.PutRoomAsync(Guid.NewGuid(), roomTest);
+      var result = await controller.UpdateRoomAsync(Guid.NewGuid(), roomTest);
 
       //assert
       Assert.IsType<BadRequestResult>(result);
@@ -242,18 +250,22 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       //arrange
       var mockRepo = new Mock<IRoomRepository>();
+      var mockAmenityRepo = new Mock<IAmenityRepository>();
       var mockLogger = new Mock<ILogger<RoomController>>();
+      var roomId = Guid.NewGuid();
+      var res = new Lib.Models.Room();
 
-      mockRepo.Setup(r => r.ReadRoomAsync(
-        It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Models.Room>(
-          new Lib.Models.Room()
-          ));
-      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
+      mockRepo.Setup(r => r.ReadRoomAsync(roomId))
+      .Returns(Task.FromResult(res));
+
+      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
+
 
       //act
-      var result = await controller.GetRoomAsync(Guid.NewGuid());
+      //var result = await controller.GetRoomByIdAsync(Guid.NewGuid());
+      var model = Assert.IsAssignableFrom<ActionResult<ApiRoom>>(await controller.GetRoomByIdAsync(roomId));
       //assert
-      Assert.IsAssignableFrom<OkObjectResult>(result);
+      Assert.IsAssignableFrom<ActionResult<ApiRoom>>(model);
     }
 
     /// <summary>
@@ -265,14 +277,15 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       //arrange
       var mockRepo = new Mock<IRoomRepository>();
+      var mockAmenityRepo = new Mock<IAmenityRepository>();
       var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.ReadRoomAsync(
         It.IsAny<Guid>())).Throws(new InvalidOperationException());
 
-      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
       //act
-      var result = await controller.GetRoomAsync(Guid.NewGuid());
+      var result = await controller.GetRoomByIdAsync(Guid.NewGuid());
       //assert
       Assert.IsType<NotFoundResult>(result);
     }
@@ -285,12 +298,13 @@ namespace Revature.Lodging.Tests.ApiTests
     public async Task DeleteRoomShouldDelete()
     {
       var mockRepo = new Mock<IRoomRepository>();
+      var mockAmenityRepo = new Mock<IAmenityRepository>();
       var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.DeleteRoomAsync(
         It.IsAny<Guid>()));
 
-      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
 
       //act
       var result = await controller.DeleteRoomAsync(Guid.NewGuid());
@@ -308,12 +322,13 @@ namespace Revature.Lodging.Tests.ApiTests
     {
       //arrange
       var mockRepo = new Mock<IRoomRepository>();
+      var mockAmenityRepo = new Mock<IAmenityRepository>();
       var mockLogger = new Mock<ILogger<RoomController>>();
 
       mockRepo.Setup(r => r.DeleteRoomAsync(
         It.IsAny<Guid>())).Throws(new InvalidOperationException());
 
-      var controller = new RoomController(mockRepo.Object, mockLogger.Object);
+      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
 
       //act
       var result = await controller.DeleteRoomAsync(Guid.NewGuid());

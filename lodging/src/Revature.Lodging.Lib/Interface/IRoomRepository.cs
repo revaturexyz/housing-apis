@@ -29,7 +29,8 @@ namespace Revature.Lodging.Lib.Interface
       string gender,
       DateTime? endDate,
       Guid? roomId,
-      bool isVacant = false);
+      bool? empty = null,
+      bool? vacancy = null);
 
     /// <summary>
     /// Method that adds a Room to the database

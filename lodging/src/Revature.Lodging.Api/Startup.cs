@@ -14,6 +14,7 @@ using Revature.Lodging.Lib.Interface;
 using Serilog;
 using Microsoft.ApplicationInsights.Extensibility;
 using Revature.Lodging.Api.Telemetry;
+using Revature.Lodging.Lib;
 
 namespace Revature.Lodging.Api
 {
