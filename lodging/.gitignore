@@ -1,3 +1,19 @@
+<<<<<<< HEAD
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+nupkg/
+
+# Visual Studio Code
+.vscode
+
+# Rider
+.idea
+
+# User-specific files
+=======
 # complex :: gitignore
 
 ## angular
@@ -52,16 +68,20 @@ node_modules/
 
 # User-specific files
 *.rsuser
+>>>>>>> b4132deed8b14f6cb7a545b03f7bf916574509d4
 *.suo
 *.user
 *.userosscache
 *.sln.docstates
 
+<<<<<<< HEAD
+=======
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
 # Mono auto generated files
 mono_crash.*
+>>>>>>> b4132deed8b14f6cb7a545b03f7bf916574509d4
 
 # Build results
 [Dd]ebug/
@@ -70,6 +90,19 @@ mono_crash.*
 [Rr]eleases/
 x64/
 x86/
+<<<<<<< HEAD
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# Visual Studio 2015
+.vs/
+=======
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
@@ -563,3 +596,4 @@ MigrationBackup/
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 
 # End of https://www.gitignore.io/api/csharp,visualstudio,visualstudiocode
+>>>>>>> b4132deed8b14f6cb7a545b03f7bf916574509d4
