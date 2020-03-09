@@ -15,6 +15,9 @@ services:
     dns:
       - 1.1.1.1
       - 1.0.0.1
+    env_file:
+      - .oktaSecrets
+      - .commonConfig
     environment:
       ConnectionStrings__IdentityDb: 'Host=identity_data;Database=identity;Username=postgres;Password=Pass@word'
     image: identity
@@ -42,6 +45,8 @@ services:
     dns:
       - 1.1.1.1
       - 1.0.0.1
+    env_file:
+      - .addressAPIKey
     environment:
       ConnectionStrings__AddressDb: 'Host=address_data;Database=address;Username=postgres;Password=Pass@word'
     image: address
@@ -58,6 +63,7 @@ services:
     image: postgres:alpine
     networks:
       - locally
+      
   lodging_api:
     build:
       args:
@@ -66,9 +72,13 @@ services:
       dockerfile: ../.docker/lodging.dockerfile
     depends_on:
       - lodging_data
+      - address_api
     dns:
       - 1.1.1.1
       - 1.0.0.1
+    env_file:
+      - .oktaSecrets
+      - .commonConfig
     environment:
       ConnectionStrings__LodgingDb: 'Host=lodging_data;Database=lodging;Username=postgres;Password=Pass@word'
     image: lodging
@@ -85,33 +95,7 @@ services:
     image: postgres:alpine
     networks:
       - locally
-  room_api:
-    build:
-      args:
-        - DOTNET_VERSION=3.1
-      context: ./room
-      dockerfile: ../.docker/room.dockerfile
-    depends_on:
-      - room_data
-    dns:
-      - 1.1.1.1
-      - 1.0.0.1
-    environment:
-      ConnectionStrings__RoomDb: 'Host=room_data;Database=room;Username=postgres;Password=Pass@word'
-    image: room
-    networks:
-      - locally
-    ports:
-      - 9130:80
-      - 9131:443
-    restart: on-failure
 
-  room_data:
-    environment:
-      POSTGRES_PASSWORD: 'Pass@word'
-    image: postgres:alpine
-    networks:
-      - locally
   tenant_api:
     build:
       args:
@@ -120,9 +104,15 @@ services:
       dockerfile: ../.docker/tenant.dockerfile
     depends_on:
       - tenant_data
+      - address_api
+      - lodging_api
+      - identity_api
     dns:
       - 1.1.1.1
       - 1.0.0.1
+    env_file:
+      - .oktaSecrets
+      - .commonConfig
     environment:
       ConnectionStrings__TenantDb: 'Host=tenant_data;Database=tenant;Username=postgres;Password=Pass@word'
     image: tenant

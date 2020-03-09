@@ -12,3 +12,6 @@ node_modules/
 ## rule :: vscode
 .vs/
 .vs*/
+
+.oktaSecrets
+.addressAPIKey
