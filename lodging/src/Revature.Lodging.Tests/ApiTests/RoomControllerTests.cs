@@ -103,17 +103,18 @@ namespace Revature.Lodging.Tests.ApiTests
         ComplexId = Guid.NewGuid(),
         RoomId = Guid.NewGuid(),
         RoomNumber = "ABC",
-        NumberOfBeds = 4/*,
+        NumberOfBeds = 4,/*,
         NumberOfOccupants = 4,
-        Gender = "Male",
-        RoomType = "Apartment"*/
+        Gender = "Male",*/
+        ApiRoomType = "Apartment",
+        Amenities = new List<ApiAmenity>()
       };
 
       roomTest.SetLease(DateTime.Now, DateTime.Today.AddDays(3));
       var result = await controller.AddRoomAsync(roomTest);
 
       //assert
-      Assert.IsAssignableFrom<CreatedAtRouteResult>(result);
+      Assert.IsAssignableFrom<CreatedAtActionResult>(result);
     }
 
     /// <summary>
@@ -168,16 +169,17 @@ namespace Revature.Lodging.Tests.ApiTests
         ComplexId = Guid.NewGuid(),
         RoomId = Guid.NewGuid(),
         RoomNumber = "ABC",
-        NumberOfBeds = 4/*,
+        NumberOfBeds = 4,/*,
         NumberOfOccupants = 4,
-        Gender = "Male",
-        RoomType = "Apartment"*/
+        Gender = "Male",*/
+        ApiRoomType = "Apartment"
       };
 
       roomTest.SetLease(DateTime.Now, DateTime.Today.AddDays(3));
 
       var result = await controller.UpdateRoomAsync(Guid.NewGuid(), roomTest);
       //assert
+      Assert.IsType<StatusCodeResult>(result);
       Assert.IsAssignableFrom<StatusCodeResult>(result);
     }
 
@@ -199,10 +201,20 @@ namespace Revature.Lodging.Tests.ApiTests
 
       mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Models.Room>(new Lib.Models.Room()));
 
-      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object); ;
+      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
 
       //act
-      var roomTest = new ApiRoom();
+     // var roomTest = new ApiRoom();
+      var roomTest = new ApiRoom
+      {
+        ComplexId = Guid.NewGuid(),
+        RoomId = Guid.NewGuid(),
+        RoomNumber = "ABC",
+        NumberOfBeds = 4,/*,
+        NumberOfOccupants = 4,
+        Gender = "Male",*/
+        ApiRoomType = "Apartment"
+      };
       //Need to set lease or else we will get an Argument Exception instead of InvalidOperation Exception
       roomTest.SetLease(DateTime.Now, DateTime.Now.AddDays(3));
 
@@ -287,7 +299,7 @@ namespace Revature.Lodging.Tests.ApiTests
       //act
       var result = await controller.GetRoomByIdAsync(Guid.NewGuid());
       //assert
-      Assert.IsType<NotFoundResult>(result);
+      Assert.IsType<BadRequestResult>(result.Result);
     }
 
     /// <summary>

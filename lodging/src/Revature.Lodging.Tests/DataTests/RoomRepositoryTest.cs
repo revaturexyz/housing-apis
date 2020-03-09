@@ -398,10 +398,44 @@ namespace Revature.Lodging.Tests.DataTests
       //But we have 3 seeded room in our database that aren't in the same complex
       //so even after delete all the created rooms
       //we still have our seeded data.
-      Assert.Equal(3, assertContext.Room.Count());
+      Assert.Equal(4, assertContext.Room.Count());
 
     }
+    [Fact]
+    public async Task RepoDeleteComplexRoomShouldDeleteNoRoomsInComplex()
+    {
+      var options = new DbContextOptionsBuilder<LodgingDbContext>()
+      .UseInMemoryDatabase("RepoDeleteComplexRoomShouldDeleteNoAllRoomsInComplex")
+      .Options;
 
+      using var assembleContext = new LodgingDbContext(options);
+      assembleContext.Database.EnsureCreated();
+      //var mapper = new DBMapper(assembleContext);
+
+
+      var newRoom = PresetEntityRoom(assembleContext);
+      var newRoom2 = PresetEntityRoom2(assembleContext);
+      var newRoom3 = PresetEntityRoom3(assembleContext);
+
+      assembleContext.Add(newRoom);
+      assembleContext.Add(newRoom2);
+      assembleContext.Add(newRoom3);
+      assembleContext.SaveChanges();
+
+      using var actContext = new LodgingDbContext(options);
+      var repo = new RoomRepository(actContext);
+
+      var deleteComplexRooms = await repo.DeleteComplexRoomAsync(Guid.Parse("349e5358-169a-4bc6-aa0f-c054952456de"));
+      await actContext.SaveChangesAsync();
+
+      var assertContext = new LodgingDbContext(options);
+
+      //The DeleteComplexRoomAsync method deletes all rooms based on the complex, it works
+      //But we have 3 seeded room in our database that aren't in the same complex
+      //so even after delete all the created rooms
+      //we still have our seeded data.
+      Assert.Equal(7, assertContext.Room.Count());
+    }
     [Fact]
     public async Task AddRoomOccupantsShouldUpdateAsync()
     {
