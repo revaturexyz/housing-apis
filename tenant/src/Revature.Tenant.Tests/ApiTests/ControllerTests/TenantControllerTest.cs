@@ -172,7 +172,7 @@ namespace Revature.Tenant.Tests.ApiTests
           AddressId = Guid.Parse("fa4d6c6e-9650-44c9-8c6b-5aebd3f9a67d"),
           City = "l",
           Country = "l",
-          Street = "s",
+          StreetAddress = "s",
           ZipCode = "l"
         }
       };
