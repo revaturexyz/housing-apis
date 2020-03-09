@@ -53,6 +53,7 @@ namespace Revature.Address.Api
       services.AddScoped<IMapper, DataAccess.Mapper>();
       services.AddScoped<IDataAccess, DataAccess.DataAccess>();
       services.AddScoped<IAddressLogic, AddressLogic>();
+      services.AddScoped<IGoogleApiAccess, GoogleApiAccess>();
 
       services.AddSwaggerGen(c =>
       {

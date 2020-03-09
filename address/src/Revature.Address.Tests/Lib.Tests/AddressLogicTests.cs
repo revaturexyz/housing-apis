@@ -12,7 +12,7 @@ namespace Revature.Address.Tests.Lib.Tests
     [Fact]
     public void CheckAddressFormatting()
     {
-      var mockConfig = new Mock<IConfiguration>();
+      var mockConfig = new Mock<IGoogleApiAccess>();
       var validator = new AddressLogic(mockConfig.Object);
 
       var newAddy = new Address.Lib.Address
@@ -32,7 +32,7 @@ namespace Revature.Address.Tests.Lib.Tests
     [Fact]
     public void CreateGoogleApiUrl()
     {
-      var mockConfig = new Mock<IConfiguration>();
+      var mockConfig = new Mock<IGoogleApiAccess>();
       var validator = new AddressLogic(mockConfig.Object);
 
       var newAddy = new Address.Lib.Address

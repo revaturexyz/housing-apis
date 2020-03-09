@@ -12,7 +12,7 @@ namespace Revature.Tenant.Api.Models
     public Guid AddressId { get; set; }
 
     [Required]
-    public string Street { get; set; }
+    public string StreetAddress { get; set; }
 
     [Required]
     public string City { get; set; }
