@@ -10,10 +10,6 @@ module "aks" {
   source = "./modules/aks"
 }
 
-module "provider" {
-  source = "./modules/provider"
-}
-
 terraform {
   backend "remote" {}
   required_version = "~> 0.12.0"
