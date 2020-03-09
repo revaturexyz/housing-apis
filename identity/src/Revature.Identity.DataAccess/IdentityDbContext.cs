@@ -42,7 +42,15 @@ namespace Revature.Identity.DataAccess
         entity.Property(e => e.Email)
           .IsRequired()
           .HasMaxLength(100);
-
+        entity.HasData(new Entities.TenantAccount[]
+        {
+          new TenantAccount()
+          {
+            TenantId = new System.Guid("5a64ba93-5f78-4972-9e80-ad3cb4678923"),
+            Name = "Test_Four",
+            Email = "revtestfour2020@gmail.com"
+          },
+        });
       });
 
       modelBuilder.Entity<ProviderAccount>(entity =>
@@ -61,6 +69,25 @@ namespace Revature.Identity.DataAccess
         entity.Property(e => e.StatusText);
         entity.Property(e => e.AccountCreatedAt)
           .IsRequired();
+        entity.HasData(new Entities.ProviderAccount[]
+        {
+          new ProviderAccount()
+          {
+            ProviderId = new System.Guid("dfc872fc-b708-4caf-b3f1-3c842c8d3078"),
+            Name = "Test_Three",
+            StatusText = "Approved",
+            Email = "revtestthree2020@gmail.com",
+            AccountCreatedAt = System.DateTime.Now
+          },
+          new ProviderAccount()
+          {
+            ProviderId = new System.Guid("68b95c3a-af06-44ac-8ba0-4d3ea2d53c39"),
+            Name = "Test_Two",
+            StatusText = "Pending",
+            Email = "revtesttwo2020@gmail.com",
+            AccountCreatedAt = System.DateTime.Now
+          },
+        });
       });
 
       modelBuilder.Entity<CoordinatorAccount>(entity =>
@@ -102,7 +129,15 @@ namespace Revature.Identity.DataAccess
             Email = "jacob.marquez.davis@hotmail.com",
             TrainingCenterName = "UTA",
             TrainingCenterAddress = "300 W Martin Luther King Jr Blvd, Austin, TX 78705"
-          }
+          },
+          new CoordinatorAccount()
+          {
+            CoordinatorId = new System.Guid("5d7189a2-5f16-461a-a81e-27bb1c8b4074"),
+            Name = "Test_One",
+            Email = "revtestone2020@gmail.com",
+            TrainingCenterName = "UTA",
+            TrainingCenterAddress = "300 W Martin Luther King Jr Blvd, Austin, TX 78705"
+          },
         });
       });
 
