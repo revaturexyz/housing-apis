@@ -17,38 +17,38 @@ namespace Revature.Lodging.Tests.ApiTests
     /// Test for Complex Controller method GetFilteredRooms
     /// </summary>
     /// <returns></returns>
-    [Fact]
-    public async Task GetFilteredRoomsShouldFilterByComplexId()
-    {
-      //arrange
-      var mockRepo = new Mock<IRoomRepository>();
-      var mockAmenityRepo = new Mock<IAmenityRepository>();
-      var mockLogger = new Mock<ILogger<RoomController>>();
+    //[Fact]
+    //public async Task GetFilteredRoomsShouldFilterByComplexId()
+    //{
+    //  //arrange
+    //  var mockRepo = new Mock<IRoomRepository>();
+    //  var mockAmenityRepo = new Mock<IAmenityRepository>();
+    //  var mockLogger = new Mock<ILogger<RoomController>>();
 
-      mockRepo.Setup(r => r.GetFilteredRoomsAsync(
-        It.IsAny<Guid>(),
-        It.IsAny<string>(),
-        It.IsAny<int>(),
-        It.IsAny<string>(),
-        It.IsAny<string>(),
-        It.IsAny<DateTime>(),
-        It.IsAny<Guid>(),
-        It.IsAny<bool>(),
-        It.IsAny<bool>()))
-        .Returns(Task.FromResult<IEnumerable<Lib.Models.Room>>(
-          new List<Lib.Models.Room>()
-          {
-            new Lib.Models.Room()
-          }
-        ));
-      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
+    //  mockRepo.Setup(r => r.GetFilteredRoomsAsync(
+    //    It.IsAny<Guid>(),
+    //    It.IsAny<string>(),
+    //    It.IsAny<int>(),
+    //    It.IsAny<string>(),
+    //    It.IsAny<string>(),
+    //    It.IsAny<DateTime>(),
+    //    It.IsAny<Guid>(),
+    //    It.IsAny<bool>(),
+    //    It.IsAny<bool>()))
+    //    .Returns(Task.FromResult<IEnumerable<Lib.Models.Room>>(
+    //      new List<Lib.Models.Room>()
+    //      {
+    //        new Lib.Models.Room()
+    //      }
+    //    ));
+    //  var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
 
-      //act
-      var result = await controller.GetFilteredRoomsAsync(Guid.NewGuid(), "", 1, "", "", DateTime.Now, Guid.NewGuid(), true, true);
+    //  //act
+    //  var result = await controller.GetFilteredRoomsAsync(Guid.NewGuid(), "", 1, "", "", DateTime.Now, Guid.NewGuid(), true, true);
 
-      //assert
-      Assert.IsAssignableFrom<OkObjectResult>(result);
-    }
+    //  //assert
+    //  Assert.IsAssignableFrom<OkObjectResult>(result);
+    //}
 
     /// <summary>
     /// Unit test for try/catch block for Complex Controller GetFilteredRoomsAsync.

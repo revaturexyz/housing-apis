@@ -83,21 +83,16 @@ namespace Revature.Lodging.Api.Controllers
             Gender = room.Gender,
             ApiRoomType = room.RoomType,
             LeaseStart = room.LeaseStart,
-            LeaseEnd = room.LeaseEnd
+            LeaseEnd = room.LeaseEnd,
+            Amenities = (from amenity in await _amenityRepo.ReadAmenityListByRoomIdAsync(room.Id)
+                         select new ApiAmenity()
+                         {
+                           AmenityId = amenity.Id,
+                           AmenityType = amenity.AmenityType,
+                           Description = amenity.Description
+                         }).ToList()
           };
-          var tempAmenities = await _amenityRepo.ReadAmenityListByRoomIdAsync(room.Id);
-          if (tempAmenities != null)
-          {
-            foreach (Logic.Amenity a in tempAmenities)
-            {
-              apiRoom.Amenities.Add(new ApiAmenity()
-              {
-                AmenityId = a.Id,
-                AmenityType = a.AmenityType,
-                Description = a.Description
-              });
-            }
-          }       
+
           apiRooms.Add(apiRoom);
         }
 
@@ -138,22 +133,14 @@ namespace Revature.Lodging.Api.Controllers
           Gender = result.Gender,
           ApiRoomType = result.RoomType,
           LeaseStart = result.LeaseStart,
-          LeaseEnd = result.LeaseEnd
+          LeaseEnd = result.LeaseEnd,
+          Amenities = (from amenity in await _amenityRepo.ReadAmenityListByRoomIdAsync(roomId) select new ApiAmenity() {
+            AmenityId = amenity.Id,
+            AmenityType = amenity.AmenityType,
+            Description = amenity.Description
+          }).ToList()
         };
 
-        var tempAmenities = await _amenityRepo.ReadAmenityListByRoomIdAsync(roomId);
-        if (tempAmenities != null)
-        {
-          foreach (Logic.Amenity a in tempAmenities)
-          {
-            apiRoom.Amenities.Add(new ApiAmenity()
-            {
-              AmenityId = a.Id,
-              AmenityType = a.AmenityType,
-              Description = a.Description
-            });
-          }
-        }
         _logger.LogInformation("Success");
 
         return Ok(apiRoom);
@@ -269,27 +256,16 @@ namespace Revature.Lodging.Api.Controllers
 
         //roomFromDb.SetLease(room.LeaseStart, room.LeaseEnd);
 
-
-        //var newRoom = new Logic.Room()
-        //{
-        //  Id = room.RoomId,
-        //  RoomNumber = room.RoomNumber,
-        //  ComplexId = room.ComplexId,
-        //  NumberOfBeds = room.NumberOfBeds,
-        //  NumberOfOccupants = room.NumberOfOccupants,
-        //  Gender = room.Gender,
-        //  RoomType = room.ApiRoomType
-        //};
-
-        var newRoom = new Logic.Room();
-
-        newRoom.Id = room.RoomId;
-        newRoom.RoomNumber = room.RoomNumber;
-        newRoom.ComplexId = room.ComplexId;
-        newRoom.NumberOfBeds = room.NumberOfBeds;
-        newRoom.NumberOfOccupants = room.NumberOfOccupants;
-        newRoom.Gender = room.Gender;
-        newRoom.RoomType = room.ApiRoomType;
+        Logic.Room newRoom = new Logic.Room()
+        {
+          Id = room.RoomId,
+          RoomNumber = room.RoomNumber,
+          ComplexId = room.ComplexId,
+          NumberOfBeds = room.NumberOfBeds,
+          NumberOfOccupants = room.NumberOfOccupants,
+          Gender = room.Gender,
+          RoomType = room.ApiRoomType
+        };
 
         newRoom.SetLease(room.LeaseStart, room.LeaseEnd);
 
