@@ -98,44 +98,36 @@ namespace Revature.Address.Api.Controllers
     /// <returns></returns>
     // GET: api/address
     [HttpGet]
-    public async Task<ActionResult<Lib.Address>> GetAddress([FromQuery] AddressModel address)
+    public async Task<ActionResult<AddressModel>> GetAddress([FromQuery] AddressModel address)
     {
-      var newAddress = Mapper.Map(address);
-      var checkAddress = (await _db.GetAddressAsync(address: newAddress)).FirstOrDefault();
-
-      if (checkAddress == null)
+      try
       {
-        _logger.LogInformation("Address does not exist in the database");
-        newAddress.Id = Guid.NewGuid();
-        if (await _addressLogic.IsValidAddressAsync(newAddress))
-        {
-          try
-          {
-            var normalAddress = await _addressLogic.NormalizeAddressAsync(newAddress);
+        var newAddress = await Mapper.MapVerifyAndNormalize(address, _addressLogic);
+        var checkAddress = (await _db.GetAddressAsync(address: newAddress)).FirstOrDefault();
 
-            await _db.AddAddressAsync(normalAddress);
-            await _db.SaveAsync();
-            _logger.LogInformation("Address successfully created");
-            return newAddress;
-          }
-          catch (Exception ex)
-          {
-            _logger.LogError("{0}", ex);
-            return BadRequest($"Address entry failed");
-          }
+        if (checkAddress == null)
+        {
+          _logger.LogInformation("Address does not exist in the database");
+          newAddress.Id = Guid.NewGuid();
+          await _db.AddAddressAsync(newAddress);
+          await _db.SaveAsync();
+          _logger.LogInformation("Address successfully created");
+          return Mapper.Map(newAddress);
         }
         else
         {
-          _logger.LogError("Address does not exist");
-          return BadRequest("Address does not exist");
+
+          _logger.LogError("Address already exists in the database");
+          return Mapper.Map(checkAddress);
         }
       }
-      else
+      catch (ArgumentException e)
       {
 
-        _logger.LogError("Address already exists in the database");
-        return checkAddress;
+        _logger.LogError(e.Message);
+        return BadRequest(e.Message);
       }
+      
     }
   }
 }
