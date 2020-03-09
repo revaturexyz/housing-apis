@@ -1,9 +1,9 @@
 {
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "Revature.Account.Api": {
+    "Revature.Identity.Api": {
       "commandName": "Project",
-      "applicationUrl": "http://localhost:11080",
+      "applicationUrl": "http://localhost:9100",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

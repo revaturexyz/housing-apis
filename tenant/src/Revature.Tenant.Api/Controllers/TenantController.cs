@@ -153,21 +153,26 @@ namespace Revature.Tenant.Api.Controllers
         /* if role is tenant and tenant.Email != claims email
          *  return 401Forbidden
          */
-        try
-        {
-          var principal = HttpContext.User.Identities.SingleOrDefault();
-          var email = principal.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).Single();
+        var principal = HttpContext.User.Identities.SingleOrDefault();
+        var roles = principal.Claims.Where(c => c.Type == "groups").Select(c => c.Value).ToList();
 
-          if (email?.ToLower() != tenant?.Email?.ToLower())
-          {
-            _logger.LogWarning("Tenant trying to access other tenant account");
-            return Forbid();
-          }
-        }
-        catch (ArgumentNullException)
+        if (roles.Contains("Tenant"))
         {
-          _logger.LogError("Email does not exist in Okta account");
-          return NotFound();
+          try
+          {
+            var email = principal.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).Single();
+
+            if (email?.ToLower() != tenant?.Email?.ToLower())
+            {
+              _logger.LogWarning("Tenant trying to access other tenant account");
+              return Forbid();
+            }
+          }
+          catch (ArgumentNullException)
+          {
+            _logger.LogError("Email does not exist in Okta account");
+            return NotFound();
+          }
         }
 
 
@@ -277,39 +282,20 @@ namespace Revature.Tenant.Api.Controllers
     [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult<ApiTenant>> PostAsync([FromBody] ApiTenant tenant)
     {
-      _logger.LogInformation("POST - Making tenant for tenant ID {tenantId}.", tenant.Id);
+      _logger.LogInformation("POST - Making tenant.");
       try
       {
         _logger.LogInformation("Posting Address to Address Service...");
-        var postedAddress = await this._addressService.GetAddressAsync(tenant.ApiAddress);
+        var postedAddress = await _addressService.GetAddressAsync(tenant.ApiAddress);
         Guid sharedId = Guid.NewGuid();
+        tenant.Id = sharedId;
+        tenant.AddressId = postedAddress.AddressId;
         //cast ApiTenant in Logic Tenant
-        var newTenant = new Lib.Models.Tenant
-        {
-          Id = sharedId,
-          Email = tenant.Email,
-          Gender = tenant.Gender,
-          FirstName = tenant.FirstName,
-          LastName = tenant.LastName,
-          AddressId = Guid.NewGuid(),//TODO postedAddress.AddressId,
-          RoomId = null, //Room Service will set this later
-          CarId = null,
-          BatchId = tenant.BatchId,
-          TrainingCenter = tenant.TrainingCenter,
+        var newTenant = ApiMapper.Map(tenant);
 
-        };
-        
         if (tenant.ApiCar.LicensePlate != null)
         {
-          newTenant.Car = new Lib.Models.Car
-          {
-            Color = tenant.ApiCar.Color,
-            Make = tenant.ApiCar.Make,
-            Model = tenant.ApiCar.Model,
-            LicensePlate = tenant.ApiCar.LicensePlate,
-            State = tenant.ApiCar.State,
-            Year = tenant.ApiCar.Year
-          };
+          newTenant.Car = ApiMapper.Map(tenant.ApiCar);
           newTenant.CarId = 0;
         }
         else
@@ -365,33 +351,13 @@ namespace Revature.Tenant.Api.Controllers
         _logger.LogInformation("PUT - Updating tenant with tenantid {tenantId}.", tenant.Id);
         _logger.LogInformation("Posting Address to Address Service...");
         var postedAddress = await this._addressService.GetAddressAsync(tenant.ApiAddress);
+        tenant.AddressId = postedAddress.AddressId;
         //cast ApiTenant in Logic Tenant
-        var newTenant = new Lib.Models.Tenant
-        {
-          Id = (Guid)tenant.Id,
-          Email = tenant.Email,
-          Gender = tenant.Gender,
-          FirstName = tenant.FirstName,
-          LastName = tenant.LastName,
-          AddressId = (Guid)tenant.AddressId,
-          RoomId = tenant.RoomId,
-          CarId = tenant.CarId,
-          BatchId = tenant.BatchId,
-          TrainingCenter = tenant.TrainingCenter
-        };
+        var newTenant = ApiMapper.Map(tenant);
 
         if (tenant.ApiCar != null)
         {
-          newTenant.Car = new Lib.Models.Car
-          {
-            Id = tenant.ApiCar.Id,
-            Color = tenant.ApiCar.Color,
-            Make = tenant.ApiCar.Make,
-            Model = tenant.ApiCar.Model,
-            LicensePlate = tenant.ApiCar.LicensePlate,
-            State = tenant.ApiCar.State,
-            Year = tenant.ApiCar.Year
-          };
+          newTenant.Car = ApiMapper.Map(tenant.ApiCar);
         }
 
         //Call repository method Put and Save Async
