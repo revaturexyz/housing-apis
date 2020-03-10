@@ -73,7 +73,7 @@ namespace Revature.Identity.Api
       var request = new RestRequest(Method.POST);
 
       request.AddHeader("content-type", "application/json");
-      request.AddParameter("application/json", $"{{\"client_id\":\"{ClientId}\",\"client_secret\":\"{Secret}\",\"audience\":\"https://{Domain}/api/v2/\",\"grant_type\":\"client_credentials\"}}", ParameterType.RequestBody);
+      request.AddParameter("application/json", $"{{\"client_id\":\"{ClientId}\",\"client_secret\":\"{Secret}\",\"audience\":\"https://{Domain}/api/v1/\",\"grant_type\":\"client_credentials\"}}", ParameterType.RequestBody);
 
       var response = client.Execute(request);
 
