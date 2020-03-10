@@ -46,16 +46,22 @@ namespace Revature.Lodging.Api.Controllers
     {
       try
       {
+
+        // Gets all the existing complexes from the database
         var complexes = await _complexRepository.ReadComplexListAsync();
+
+        // Initializes an empty list that will hold all complexes and their associated complex amenities
         var apiComplexes = new List<ApiComplex>();
 
-        //foreach Complex object, get Address object from Address service using AddressId
-        //create ApiComplex object for each Complex we have, and add them to a list that will be returned
+        // For each complex, use the addressId to get address from Address service 
+        // Create ApiComplex object for each Complex we have, and add them to a list that will be returned
         foreach (var complex in complexes)
         {
           var addressId = complex.AddressId;
           ApiAddress address;
 
+          // Try to get an address with an addressId
+          // If it doesn't exist, it will create an address object with just the Id property set
           try
           {
             address = await _addressRequest.GetAddressAsync(addressId);
@@ -68,6 +74,7 @@ namespace Revature.Lodging.Api.Controllers
             };
           }
 
+          //Creates a complex with its associated amenities that will be added to the list
           var apiComplex = new ApiComplex
           {
             ComplexId = complex.Id,
@@ -104,12 +111,15 @@ namespace Revature.Lodging.Api.Controllers
     {
       try
       {
+        // Gets an existing Complex associated with the complexId
         var complex = await _complexRepository.ReadComplexByIdAsync(complexId);
         _log.LogInformation("A complex with Id: {complexId} was found", complexId);
 
         var addressId = complex.AddressId;
         ApiAddress address;
 
+        // Try to get an address with an addressId
+        // If it doesn't exist, it will create an address object with just the Id property
         try
         {
           address = await _addressRequest.GetAddressAsync(addressId);
@@ -122,6 +132,7 @@ namespace Revature.Lodging.Api.Controllers
           };
         }
 
+        // Creates a complex with its associated Amenities 
         var apiComplex = new ApiComplex
         {
           ComplexId = complex.Id,
@@ -156,11 +167,15 @@ namespace Revature.Lodging.Api.Controllers
     {
       try
       {
+        // Gets all existing complexes associated with the given providerId
         var complexes = await _complexRepository.ReadComplexByProviderIdAsync(providerId);
         _log.LogInformation("A list of complexes for provider Id: {providerId} were found", providerId);
 
+        // Initializes an empty list that will hold all complexes and their associated complex amenities
         var apiComplexes = new List<ApiComplex>();
 
+        // For each complex, use the addressId to get address from Address service 
+        // Create ApiComplex object for each Complex we have, and add them to a list that will be returned
         foreach (var complex in complexes)
         {
           var addressId = complex.AddressId;
@@ -218,7 +233,7 @@ namespace Revature.Lodging.Api.Controllers
     //POST: api/complex/
     public async Task<ActionResult<ApiComplex>> PostComplexAsync([FromBody]ApiComplex apiComplex)
     {
-      // Creates an Address object from Address properties in apiComplex object argument
+      // Creates an address from address properties in apiComplex object argument
       var complexAddress = new ApiAddress()
       {
         Street = apiComplex.Address.Street,
@@ -228,17 +243,28 @@ namespace Revature.Lodging.Api.Controllers
         Country = apiComplex.Address.Country,
       };
 
-      // Retrieves an Address object using AddressRequest and storing the AddressId
-      var addressId = (await _addressRequest.PostAddressAsync(complexAddress)).Id;
+      // Retrieves a normalized address using AddressRequest 
+      var normalizedAddress = await _addressRequest.PostAddressAsync(complexAddress);
+
+      // Normalizes the address in the Complex object that is passed in
+      apiComplex.Address.Id = normalizedAddress.Id;
+      apiComplex.Address.Street = normalizedAddress.Street;
+      apiComplex.Address.City = normalizedAddress.City;
+      apiComplex.Address.State = normalizedAddress.State;
+      apiComplex.Address.Country = normalizedAddress.Country;
+      apiComplex.Address.ZipCode = normalizedAddress.ZipCode;
 
       // Generates a new Guid for a ComplexId
       var complexId = Guid.NewGuid();
+
+      // Sets the Id of the Complex object that is passed in
+      apiComplex.ComplexId = complexId;
 
       // Creates a Complex object with the information in the apiComplex object argument
       var complex = new Logic.Complex()
       {
         Id = complexId,
-        AddressId = addressId,
+        AddressId = normalizedAddress.Id,
         ProviderId = apiComplex.ProviderId,
         ContactNumber = apiComplex.ContactNumber,
         ComplexName = apiComplex.ComplexName
@@ -260,8 +286,8 @@ namespace Revature.Lodging.Api.Controllers
           // Instantiates a new ComplexAmenity object
           Logic.ComplexAmenity complexAmenity = new Logic.ComplexAmenity();
 
-          // if there are any existing Amenity object with a matching AmenityType, link this existing Amenity object
-          // with the new ComplexAmenity object; otherwise, create a new Amenity object with the posted AmenityType and
+          // If there are any existing amenities with a matching AmenityType, link this existing amenity
+          // with the new ComplexAmenity object; otherwise, create a new amenity with the posted AmenityType and
           // link this new Amenity object with the new ComplexAmenity object
           if (existingAmenities.Any(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower()))
           {
@@ -290,7 +316,7 @@ namespace Revature.Lodging.Api.Controllers
 
         }
 
-        return Created($"api/Complex/{complex.Id}", apiComplex); //TODO: this needs to return the created complex object with complexId
+        return Created($"api/Complex/{complex.Id}", apiComplex);
 
       }
       catch (Exception ex)
@@ -315,6 +341,7 @@ namespace Revature.Lodging.Api.Controllers
     //PUT: api/complex/
     public async Task<ActionResult> UpdateComplexAsync([FromBody]ApiComplex apiComplex)
     {
+      // Maps the apiComplex to a Complex Library model
       var complex = new Logic.Complex()
       {
         Id = apiComplex.ComplexId,
@@ -324,14 +351,17 @@ namespace Revature.Lodging.Api.Controllers
         ComplexName = apiComplex.ComplexName
       };
 
+      // Deletes all the complex amenities with an associated complexId
       await _amenityRepository.DeleteAmenityComplexAsync(complex.Id);
       _log.LogInformation($"(API)old amenities for complex id: {complex.Id} is deleted");
 
       try
       {
+        // Updates the complex with the new information passed in 
         await _complexRepository.UpdateComplexAsync(complex);
         _log.LogInformation("(API) complex is updated");
 
+        // Gets all existing amenities from the database
         var existingAmenities = await _amenityRepository.ReadAmenityListAsync();
         _log.LogInformation("(API) list of amenity is read");
 
@@ -400,6 +430,7 @@ namespace Revature.Lodging.Api.Controllers
     {
       try
       {
+        // Deletes an existing complex associated the complexId in the database 
         await _complexRepository.DeleteComplexAsync(complexId);
         _log.LogInformation("deleted complex of complex Id: {complexId}", complexId);
 
