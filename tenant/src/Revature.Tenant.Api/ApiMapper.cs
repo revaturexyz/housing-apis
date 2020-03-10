@@ -128,18 +128,5 @@ namespace Revature.Tenant.Api
         TrainingCenter = tenant.TrainingCenter
       };
     }
-
-    internal static ApiAddress Map(Address address)
-    {
-      return new ApiAddress()
-      {
-        AddressId = address.AddressId,
-        StreetAddress = address.Street,
-        City = address.City,
-        Country = address.Country,
-        State = address.State,
-        ZipCode = address.ZipCode
-      };
-    }
   }
 }

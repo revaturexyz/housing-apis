@@ -55,7 +55,7 @@ namespace Revature.Tenant.Api.ServiceBus
       try
       {
         var queryString = "?"
-          + "street=" + item.StreetAddress + "&"
+          + "street=" + item.Street + "&"
           + "city=" + item.City + "&"
           + "state=" + item.State + "&"
           + "zipCode=" + item.ZipCode + "&"
@@ -77,7 +77,7 @@ namespace Revature.Tenant.Api.ServiceBus
     /// </summary>
     /// <param name="item">A model of an Address</param>
     /// <returns></returns>
-    public async Task<Address> GetAddressAsync(Guid addressId)
+    public async Task<ApiAddress> GetAddressAsync(Guid addressId)
     {
       var queryString = addressId.ToString();
 
@@ -85,7 +85,7 @@ namespace Revature.Tenant.Api.ServiceBus
       using var response = await SendRequestAsync<ApiAddress>(HttpMethod.Get, "api/Address/" + queryString);
       response.EnsureSuccessStatusCode();
 
-      return await ReadResponseBodyAsync<Address>(response);
+      return await ReadResponseBodyAsync<ApiAddress>(response);
     }
 
     /// <summary>

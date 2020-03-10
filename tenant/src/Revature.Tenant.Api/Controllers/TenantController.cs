@@ -175,7 +175,7 @@ namespace Revature.Tenant.Api.Controllers
             return NotFound();
           }
         }
-        Address address;
+        ApiAddress address;
         try
         {
           address = await _addressService.GetAddressAsync(tenant.AddressId);
@@ -183,8 +183,6 @@ namespace Revature.Tenant.Api.Controllers
         {
           address = null;
         }
-
-        ApiAddress apiAddress = ApiMapper.Map(address);
 
         //cast tenant into Api Tenant
         var apiTenant = new ApiTenant
@@ -226,7 +224,7 @@ namespace Revature.Tenant.Api.Controllers
             TrainingCenter = tenant.Batch.TrainingCenter
           };
         }
-        apiTenant.ApiAddress = apiAddress;
+        apiTenant.ApiAddress = address;
         //return OK with the ApiTenant Model, including car and batch if applicable
         return Ok(apiTenant);
       }

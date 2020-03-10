@@ -18,6 +18,6 @@ namespace Revature.Tenant.Api
     /// </summary>
     /// <param name="item">A model of an Address</param>
     /// <returns></returns>
-    public Task<Address> GetAddressAsync(Guid addressId);
+    public Task<ApiAddress> GetAddressAsync(Guid addressId);
   }
 }
