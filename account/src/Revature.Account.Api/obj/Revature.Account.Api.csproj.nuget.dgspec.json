@@ -1,0 +1,272 @@
+{
+  "format": 1,
+  "restore": {
+    "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.Api\\Revature.Account.Api.csproj": {}
+  },
+  "projects": {
+    "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.Api\\Revature.Account.Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.Api\\Revature.Account.Api.csproj",
+        "projectName": "Revature.Account.Api",
+        "projectPath": "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.Api\\Revature.Account.Api.csproj",
+        "packagesPath": "C:\\Users\\Matt\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.Api\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Matt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\revature\\project3\\Belt-Knight-Liner-Rouse-Project3\\REFramework Template\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.DataAccess\\Revature.Account.DataAccess.csproj": {
+                "projectPath": "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.DataAccess\\Revature.Account.DataAccess.csproj"
+              },
+              "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.Lib\\Revature.Account.Lib.csproj": {
+                "projectPath": "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.Lib\\Revature.Account.Lib.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Auth0.Core": {
+              "target": "Package",
+              "version": "[6.5.5, )"
+            },
+            "Auth0.ManagementApi": {
+              "target": "Package",
+              "version": "[6.5.5, )"
+            },
+            "Microsoft.ApplicationInsights.AspNetCore": {
+              "target": "Package",
+              "version": "[2.12.0, )"
+            },
+            "Microsoft.ApplicationInsights.PerfCounterCollector": {
+              "target": "Package",
+              "version": "[2.12.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[4.1.2, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL.Design": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "Okta.AspNetCore": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Okta.Sdk": {
+              "target": "Package",
+              "version": "[1.4.1, )"
+            },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[106.6.10, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[3.2.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.0.0-rc4, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[5.6.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.DataAccess\\Revature.Account.DataAccess.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.DataAccess\\Revature.Account.DataAccess.csproj",
+        "projectName": "Revature.Account.DataAccess",
+        "projectPath": "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.DataAccess\\Revature.Account.DataAccess.csproj",
+        "packagesPath": "C:\\Users\\Matt\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.DataAccess\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Matt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\revature\\project3\\Belt-Knight-Liner-Rouse-Project3\\REFramework Template\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "projectReferences": {
+              "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.Lib\\Revature.Account.Lib.csproj": {
+                "projectPath": "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.Lib\\Revature.Account.Lib.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.Lib\\Revature.Account.Lib.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.Lib\\Revature.Account.Lib.csproj",
+        "projectName": "Revature.Account.Lib",
+        "projectPath": "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.Lib\\Revature.Account.Lib.csproj",
+        "packagesPath": "C:\\Users\\Matt\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\Matt\\Desktop\\Project3\\housing-apis\\account\\src\\Revature.Account.Lib\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Matt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\revature\\project3\\Belt-Knight-Liner-Rouse-Project3\\REFramework Template\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "dependencies": {
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
