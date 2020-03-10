@@ -16,6 +16,9 @@ using Microsoft.ApplicationInsights.Extensibility;
 using Revature.Lodging.Api.Telemetry;
 using Revature.Lodging.Lib;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer; // OktaSetup
+using Microsoft.IdentityModel.Tokens; // OktaSetup
+
 namespace Revature.Lodging.Api
 {
   public class Startup
@@ -61,6 +64,29 @@ namespace Revature.Lodging.Api
             .AllowCredentials();
         });
       });
+
+      #region OktaSetup
+      services.AddAuthentication(options =>
+      {
+        //options.DefaultScheme = OktaDefaults.ApiAuthenticationScheme;
+        options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+        options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+      })
+      .AddJwtBearer(options =>
+      {
+        options.Authority = Configuration["Okta:Domain"] + "/oauth2/default";
+        options.Audience = "api://default";
+        options.RequireHttpsMetadata = true;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+          NameClaimType = "name",
+          RoleClaimType = "groups",
+          ValidateIssuer = true,
+        };
+      });
+      #endregion
 
       services.AddApplicationInsightsTelemetry();
       
