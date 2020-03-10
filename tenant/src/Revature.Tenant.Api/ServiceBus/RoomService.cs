@@ -23,6 +23,9 @@ namespace Revature.Tenant.Api.ServiceBus
       _client = client;
       _logger = logger;
     }
+
+   
+
     /// <summary>
     /// Method that gets vacant rooms from the room service (lodging api)
     /// </summary>
@@ -45,6 +48,32 @@ namespace Revature.Tenant.Api.ServiceBus
       else
       {
         _logger.LogError("Unable to receive rooms from room service");
+        _logger.LogError(response.StatusCode.ToString());
+        _logger.LogError(await response.Content.ReadAsStringAsync());
+        throw new HttpRequestException("Unable to receive response from room service");
+      }
+
+    }
+
+    public async Task<bool> CheckRoomAvailable(Guid Id, string gender, DateTime endDate)
+    {
+      var resourceURI = "api/room/" + Id;
+      _logger.LogInformation($"Getting room with id {Id}");
+      using var response = await _client.GetAsync(resourceURI);
+      if (response.IsSuccessStatusCode)
+      {
+        _logger.LogInformation("Success! Room retrieved");
+        var contentAsString = await response.Content.ReadAsStringAsync();
+        var room = JsonSerializer.Deserialize<Room>(contentAsString);
+        if (room.NumberOfOccupants < room.NumberOfBeds && (room.Gender == gender || room.Gender == null) && (room.LeaseEnd == null || endDate < room.LeaseEnd))
+        {
+          return true;
+        }
+        return false;
+      }
+      else
+      {
+        _logger.LogError("Unable to receive room from lodging service");
         _logger.LogError(response.StatusCode.ToString());
         _logger.LogError(await response.Content.ReadAsStringAsync());
         throw new HttpRequestException("Unable to receive response from room service");

@@ -18,5 +18,7 @@ namespace Revature.Tenant.Api.ServiceBus
     /// <returns></returns>
     /// <exception cref="HttpRequestException">Thrown when the response from the room service isn't successful</exception>
     Task<List<AvailRoom>> GetVacantRoomsAsync(string gender, DateTime endDate);
+
+    Task<bool> CheckRoomAvailable(Guid Id, string gender, DateTime endDate);
   }
 }
