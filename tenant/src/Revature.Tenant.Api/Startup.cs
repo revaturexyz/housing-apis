@@ -70,6 +70,7 @@ namespace Revature.Tenant.Api
       services.AddScoped<ITenantRoomRepository, TenantRoomRepository>();
       services.AddScoped<IMapper, Mapper>();
       services.AddScoped<IServiceBusSender, ServiceBusSender>();
+      services.AddScoped<IIdentityService, IdentityService>();
       services.AddSingleton<ITelemetryInitializer, TenantTelemetryInitializer>();
 
       services.AddHttpClient<IAddressService, AddressService>();

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Revature.Tenant.Api.Models;
 using Revature.Tenant.Lib.Interface;
 using System.Linq;
+using Revature.Tenant.Lib.Models;
 
 namespace Revature.Tenant.Api.Controllers
 {
@@ -174,8 +175,14 @@ namespace Revature.Tenant.Api.Controllers
             return NotFound();
           }
         }
-
-
+        ApiAddress address;
+        try
+        {
+          address = await _addressService.GetAddressAsync(tenant.AddressId);
+        } catch
+        {
+          address = null;
+        }
 
         //cast tenant into Api Tenant
         var apiTenant = new ApiTenant
@@ -217,6 +224,7 @@ namespace Revature.Tenant.Api.Controllers
             TrainingCenter = tenant.Batch.TrainingCenter
           };
         }
+        apiTenant.ApiAddress = address;
         //return OK with the ApiTenant Model, including car and batch if applicable
         return Ok(apiTenant);
       }

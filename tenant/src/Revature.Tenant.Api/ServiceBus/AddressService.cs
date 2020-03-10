@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Revature.Tenant.Api.Models;
+using Revature.Tenant.Lib.Models;
 
 namespace Revature.Tenant.Api.ServiceBus
 {
@@ -54,7 +55,7 @@ namespace Revature.Tenant.Api.ServiceBus
       try
       {
         var queryString = "?"
-          + "street=" + item.StreetAddress + "&"
+          + "street=" + item.Street + "&"
           + "city=" + item.City + "&"
           + "state=" + item.State + "&"
           + "zipCode=" + item.ZipCode + "&"
@@ -70,6 +71,21 @@ namespace Revature.Tenant.Api.ServiceBus
         item.AddressId = Guid.NewGuid();
         return item;
       }
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <param name="item">A model of an Address</param>
+    /// <returns></returns>
+    public async Task<ApiAddress> GetAddressAsync(Guid addressId)
+    {
+      var queryString = addressId.ToString();
+
+
+      using var response = await SendRequestAsync<ApiAddress>(HttpMethod.Get, "api/Address/" + queryString);
+      response.EnsureSuccessStatusCode();
+
+      return await ReadResponseBodyAsync<ApiAddress>(response);
     }
 
     /// <summary>

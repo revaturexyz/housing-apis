@@ -49,6 +49,42 @@ namespace Revature.Address.DataAccess.Entities
           State = "Raccoon",
           Country = "USA",
           ZipCode = "54321"
+        },
+        new Address()
+        {
+          Id = Guid.Parse("1a4d6c6e-9640-44c9-8c6b-5aebd3f9a67e"),
+          Street = "406 Raccoon Street",
+          City = "Raccoon City",
+          State = "Raccoon",
+          Country = "USA",
+          ZipCode = "54321"
+        },
+        new Address()
+        {
+          Id = Guid.Parse("0a4d616e-9650-44c9-8c6b-5aebd3f9a67e"),
+          Street = "407 Raccoon Street",
+          City = "Raccoon City",
+          State = "Raccoon",
+          Country = "USA",
+          ZipCode = "54321"
+        },
+        new Address()
+        {
+          Id = Guid.Parse("280905b8-63ce-4372-b204-8cb764d6f271"),
+          Street = "408 Raccoon Street",
+          City = "Raccoon City",
+          State = "Raccoon",
+          Country = "USA",
+          ZipCode = "54321"
+        },
+        new Address()
+        {
+          Id = Guid.Parse("837c3248-1685-4d08-934a-0f17a6d1836a"),
+          Street = "409 Raccoon Street",
+          City = "Raccoon City",
+          State = "Raccoon",
+          Country = "USA",
+          ZipCode = "54321"
         });
       });
     }
