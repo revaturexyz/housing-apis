@@ -35,57 +35,66 @@ namespace Revature.Address.DataAccess.Entities
         entity.HasData(new Address()
         {
           Id = Guid.Parse("50b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
-          Street = "404 Texas Street",
-          City = "Texas City",
-          State = "Texas",
+          Street = "2905 Brattleboro Ave",
+          City = "Des Moines",
+          State = "IA",
           Country = "USA",
-          ZipCode = "12345"
-        },
+          ZipCode = "50311"
+        },//Used by 2nd tenant
         new Address()
         {
           Id = Guid.Parse("52b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
-          Street = "405 Raccoon Street",
-          City = "Raccoon City",
-          State = "Raccoon",
+          Street = "11730 Plaza America Dr.",
+          City = "Reston",
+          State = "VA",
           Country = "USA",
-          ZipCode = "54321"
-        },
+          ZipCode = "20190"
+        }, //Used by 3rd tenant
         new Address()
         {
           Id = Guid.Parse("1a4d6c6e-9640-44c9-8c6b-5aebd3f9a67e"),
-          Street = "406 Raccoon Street",
-          City = "Raccoon City",
-          State = "Raccoon",
+          Street = "920 S Mesquite St",
+          City = "Arlington",
+          State = "TX",
           Country = "USA",
-          ZipCode = "54321"
-        },
+          ZipCode = "76010"
+        }, //Used by first tenant
         new Address()
         {
           Id = Guid.Parse("0a4d616e-9650-44c9-8c6b-5aebd3f9a67e"),
-          Street = "407 Raccoon Street",
-          City = "Raccoon City",
-          State = "Raccoon",
+          Street = "2020 E Randol Mill Rd",
+          City = "Arlington",
+          State = "TX",
           Country = "USA",
-          ZipCode = "54321"
-        },
+          ZipCode = "76011"
+        },//Used by first complex
         new Address()
         {
           Id = Guid.Parse("280905b8-63ce-4372-b204-8cb764d6f271"),
-          Street = "408 Raccoon Street",
-          City = "Raccoon City",
-          State = "Raccoon",
+          Street = "1311 Murdock Rd",
+          City = "Dallas",
+          State = "TX",
           Country = "USA",
-          ZipCode = "54321"
-        },
+          ZipCode = "75217"
+        }, //Used by second complex
         new Address()
         {
           Id = Guid.Parse("837c3248-1685-4d08-934a-0f17a6d1836a"),
-          Street = "409 Raccoon Street",
-          City = "Raccoon City",
-          State = "Raccoon",
+          Street = "430 18th Ave E",
+          City = "Seattle",
+          State = "WA",
           Country = "USA",
-          ZipCode = "54321"
-        });
+          ZipCode = "98112"
+        }, //Used by third complex
+        new Address()
+        {
+          Id = Guid.Parse("56b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
+          Street = "424 Riverside Ave, South",
+          City = "Sartell",
+          State = "MN",
+          Country = "USA",
+          ZipCode = "56377"
+        }); //Used by 4th complex
       });
     }
   }

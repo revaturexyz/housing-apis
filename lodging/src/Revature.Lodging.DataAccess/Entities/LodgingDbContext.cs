@@ -23,8 +23,6 @@ namespace Revature.Lodging.DataAccess.Entities
     private Guid cId2 = Guid.Parse("68b7eadd-30ce-49a7-9b8c-bae1d47f46a6");
     private Guid cId3 = Guid.Parse("78b7eadd-30ce-49a7-9b8c-bae1d47f46a6");
     private Guid cId4 = Guid.Parse("88b7eadd-30ce-49a7-9b8c-bae1d47f46a6");
-    private Guid rId1 = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456fd");
-    private Guid rId2 = Guid.Parse("fa1d6c6e-9650-44c9-8c6b-5aebd3f9a671");
     //rId1, rId2 equals to room service: room id#1 & room id#2
     private Guid amId1 = Guid.Parse("b8b7eadd-30ce-49a7-9b8c-bae1d47f46a6");
     private Guid amId2 = Guid.Parse("c8b7eadd-30ce-49a7-9b8c-bae1d47f46a6");
@@ -113,10 +111,10 @@ namespace Revature.Lodging.DataAccess.Entities
 
         entity.HasData
         (
-          new RoomAmenity { Id = Guid.Parse("5cb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId1, RoomId = rId1 },
-          new RoomAmenity { Id = Guid.Parse("5db7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId4, RoomId = rId1 },
-          new RoomAmenity { Id = Guid.Parse("5eb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId5, RoomId = rId2 },
-          new RoomAmenity { Id = Guid.Parse("5fb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, RoomId = rId2 }
+          new RoomAmenity { Id = Guid.Parse("5cb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId1, RoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456fd") },
+          new RoomAmenity { Id = Guid.Parse("5db7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId4, RoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456fd") },
+          new RoomAmenity { Id = Guid.Parse("5eb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId5, RoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456ee") },
+          new RoomAmenity { Id = Guid.Parse("5fb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, RoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456ee") }
         );
       });
 
@@ -141,24 +139,24 @@ namespace Revature.Lodging.DataAccess.Entities
           new Complex
           {
             Id = cId1,
-            AddressId = Guid.Parse("50b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
-            ProviderId = Guid.Parse("51b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
+            AddressId = Guid.Parse("0a4d616e-9650-44c9-8c6b-5aebd3f9a67e"),
+            ProviderId = Guid.Parse("dfc872fc-b708-4caf-b3f1-3c842c8d3078"),
             ComplexName = "Liv+",
             ContactNumber = "8177517911"
           },
           new Complex
           {
             Id = cId2,
-            AddressId = Guid.Parse("52b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
-            ProviderId = Guid.Parse("53b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
+            AddressId = Guid.Parse("280905b8-63ce-4372-b204-8cb764d6f271"),
+            ProviderId = Guid.Parse("dfc872fc-b708-4caf-b3f1-3c842c8d3078"),
             ComplexName = "SampleComplex",
             ContactNumber = "4445550506"
           },
           new Complex
           {
             Id = cId3,
-            AddressId = Guid.Parse("54b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
-            ProviderId = Guid.Parse("55b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
+            AddressId = Guid.Parse("837c3248-1685-4d08-934a-0f17a6d1836a"),
+            ProviderId = Guid.Parse("f7631719-b74b-46c4-bb89-6b3a3681ac06"),
             ComplexName = "Complex",
             ContactNumber = "7771112222"
           },
@@ -166,7 +164,7 @@ namespace Revature.Lodging.DataAccess.Entities
           {
             Id = cId4,
             AddressId = Guid.Parse("56b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
-            ProviderId = Guid.Parse("57b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
+            ProviderId = Guid.Parse("f7631719-b74b-46c4-bb89-6b3a3681ac06"),
             ComplexName = "ComplexNearMe",
             ContactNumber = "3332221111"
           }
@@ -234,7 +232,7 @@ namespace Revature.Lodging.DataAccess.Entities
             LeaseEnd = DateTime.Today.AddMonths(3),
             LeaseStart = DateTime.Now,
             Id = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456fd"),
-            ComplexId = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606"),
+            ComplexId = cId1,
             NumberOfBeds = 4,
             RoomNumber = "2428B",
             NumberOfOccupants = 0
@@ -246,10 +244,10 @@ namespace Revature.Lodging.DataAccess.Entities
             LeaseEnd = DateTime.Today.AddMonths(3),
             LeaseStart = DateTime.Now,
             Id = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456ee"),
-            ComplexId = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606"),
+            ComplexId = cId1,
             NumberOfBeds = 4,
             RoomNumber = "2127E",
-            NumberOfOccupants = 4
+            NumberOfOccupants = 1
           },
           new Room()
           {
@@ -258,7 +256,7 @@ namespace Revature.Lodging.DataAccess.Entities
             LeaseEnd = DateTime.Today.AddMonths(1),
             LeaseStart = DateTime.Now.AddDays(1),
             Id = Guid.Parse("fa1d6c6e-9650-44c9-8c6b-5aebd3f9a671"),
-            ComplexId = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606"),
+            ComplexId = cId2,
             NumberOfBeds = 2,
             RoomNumber = "2422",
             NumberOfOccupants = 1
@@ -270,7 +268,7 @@ namespace Revature.Lodging.DataAccess.Entities
             LeaseEnd = DateTime.Today.AddMonths(4),
             LeaseStart = DateTime.Now.AddDays(1),
             Id = Guid.Parse("0a4d6c61-9650-44c9-8c6b-5aebd3f9a676"),
-            ComplexId = Guid.Parse("b5e050aa-6bfc-46ad-9a69-90b1f99ed606"),
+            ComplexId = cId3,
             NumberOfBeds = 3,
             RoomNumber = "2421",
             NumberOfOccupants = 1

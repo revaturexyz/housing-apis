@@ -32,55 +32,41 @@ namespace Revature.Tenant.DataAccess.Entities
           {
             AddressId = Guid.Parse("1a4d6c6e-9640-44c9-8c6b-5aebd3f9a67e"),
             BatchId = 1,
-            CarId = -2,
-            Email = "nick@revature.com",
-            FirstName = "Nick",
+            CarId = null,
+            Email = "revtestfour2020@gmail.com",
+            FirstName = "Test",
             Gender = "Male",
-            Id = Guid.Parse("f14d6c6e-9650-44c9-8c6b-5aebd3f9a67f"),
-            LastName = "Escalona",
+            Id = Guid.Parse("5a64ba93-5f78-4972-9e80-ad3cb4678923"),
+            LastName = "Four",
             RoomId = Guid.Parse("fa1d6c6e-9650-44c9-8c6b-5aebd3f9a671"),
             TrainingCenter = Guid.Parse("837c3248-1685-4d08-934a-0f17a6d1836a")
           },
           new Tenant()
           {
-            AddressId = Guid.Parse("0a4d616e-9650-44c9-8c6b-5aebd3f9a67e"),
+            AddressId = Guid.Parse("50b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
             BatchId = 2,
-            CarId = -1,
-            Email = "sue@revature.com",
-            FirstName = "Sue",
+            CarId = -2,
+            Email = "revtestfour2020+1@gmail.com",
+            FirstName = "Test",
             Gender = "Female",
-            Id = Guid.Parse("0a4d6c1e-9650-44c9-8c6b-5aebd3f9a67f"),
-            LastName = "Lemons",
+            Id = Guid.Parse("9f055e5f-92be-4ccc-85f4-b98288981822"),
+            LastName = "Seven",
             RoomId = Guid.Parse("0a4d6c61-9650-44c9-8c6b-5aebd3f9a676"),
             TrainingCenter = Guid.Parse("837c3248-1685-4d08-934a-0f17a6d1836a")
           },
           new Tenant()
           {
-            AddressId = Guid.Parse("280905b8-63ce-4372-b204-8cb764d6f271"),
+            AddressId = Guid.Parse("52b7eadd-30ce-49a7-9b8c-bae1d47f46a6"),
             BatchId = 2,
             CarId = -1,
-            Email = "jpojeremyortega@live.com",
-            FirstName = "Jeremy",
+            Email = "revtestfour2020+2@gmail.com",
+            FirstName = "Test",
             Gender = "Female",
-            Id = Guid.Parse("280905b8-63ce-4372-b204-8cb764d6f271"),
-            LastName = "Lemons",
-            RoomId = Guid.Parse("0a4d6c61-9650-44c9-8c6b-5aebd3f9a676"),
+            Id = Guid.Parse("f4154445-51eb-4303-998c-38e9fb817063"),
+            LastName = "Eight",
+            RoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456ee"),
             TrainingCenter = Guid.Parse("837c3248-1685-4d08-934a-0f17a6d1836a")
-          },
-           new Tenant()
-           {
-             AddressId = Guid.Parse("837c3248-1685-4d08-934a-0f17a6d1836a"),
-             BatchId = 2,
-             CarId = -1,
-             Email = "Shanaiah@revature.com",
-             FirstName = "Shanaia",
-             Gender = "Female",
-             Id = Guid.Parse("837c3248-1685-4d08-934a-0f17a6d1836a"),
-             LastName = "Twain",
-             RoomId = null,
-             TrainingCenter = Guid.Parse("837c3248-1685-4d08-934a-0f17a6d1836a")
-           }
-
+          }
         );
 
       });
