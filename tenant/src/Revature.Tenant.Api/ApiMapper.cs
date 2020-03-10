@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Revature.Tenant.Api.Models;
+using Revature.Tenant.Lib.Models;
 
 namespace Revature.Tenant.Api
 {
@@ -125,6 +126,19 @@ namespace Revature.Tenant.Api
         CarId = tenant.CarId,
         BatchId = tenant.BatchId,
         TrainingCenter = tenant.TrainingCenter
+      };
+    }
+
+    internal static ApiAddress Map(Address address)
+    {
+      return new ApiAddress()
+      {
+        AddressId = address.AddressId,
+        StreetAddress = address.Street,
+        City = address.City,
+        Country = address.Country,
+        State = address.State,
+        ZipCode = address.ZipCode
       };
     }
   }

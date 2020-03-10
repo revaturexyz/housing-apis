@@ -41,14 +41,11 @@ namespace Revature.Address.Api.Controllers
     {
 
       var address = (await _db.GetAddressAsync(id: id)).FirstOrDefault();
-      if (await _addressLogic.IsValidAddressAsync(address))
-      {
-        _logger.LogInformation("Got Address");
+      if(address!= null)
         return Ok(Mapper.Map(address));
-      }
       else
       {
-        throw new ArgumentException("Address does not exist in the real world");
+        return NotFound("Address does not exist in address service");
       }
 
       

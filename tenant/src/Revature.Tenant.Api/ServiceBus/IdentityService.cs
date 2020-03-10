@@ -19,7 +19,7 @@ namespace Revature.Tenant.Api.ServiceBus
 
     public IdentityService(ILogger<RoomService> logger, IConfiguration configuration)
     {
-      _TenantQueue = new QueueClient(configuration.GetConnectionString("ConnectionStrings: ServiceBus"), configuration["Queues:TenantCUD"]);
+      _TenantQueue = new QueueClient(configuration.GetConnectionString("ServiceBus"), configuration["Queues:TenantCUD"]);
       _logger = logger;
     }
     /// <summary>

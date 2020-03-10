@@ -1,5 +1,7 @@
+using System;
 using System.Threading.Tasks;
 using Revature.Tenant.Api.Models;
+using Revature.Tenant.Lib.Models;
 
 namespace Revature.Tenant.Api
 {
@@ -12,5 +14,10 @@ namespace Revature.Tenant.Api
     /// <param name="item">A model of an Address</param>
     /// <returns>A model of the formal Address entry in Address Services Database, including it GUID</returns>
     public Task<ApiAddress> GetAddressAsync(ApiAddress item);
+    /// <summary>
+    /// </summary>
+    /// <param name="item">A model of an Address</param>
+    /// <returns></returns>
+    public Task<Address> GetAddressAsync(Guid addressId);
   }
 }
