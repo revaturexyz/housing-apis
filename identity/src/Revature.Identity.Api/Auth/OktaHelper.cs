@@ -58,8 +58,6 @@ namespace Revature.Identity.Api
 
       Email = (string) token.Payload["sub"];
       Roles = JsonSerializer.Deserialize<string[]>(token.Payload["groups"].ToString());
-      // Will only need the id field from the app metadata
-      //AppMetadata = JsonSerializer.Deserialize<dynamic>(token.Payload[ClaimsDomain + "app_metadata"].ToString());
       _logger = logger;
     }
 
