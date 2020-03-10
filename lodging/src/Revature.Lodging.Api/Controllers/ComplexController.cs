@@ -41,6 +41,7 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet]
+    [Authorize(Roles = "Coordinator, Provider")] // OktaSetup
     //GET: api/complex/
     public async Task<ActionResult<IEnumerable<ApiComplex>>> GetAllComplexesAsync()
     {
@@ -106,6 +107,7 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("{complexId}")]
+    [Authorize(Roles = "Coordinator, Provider")] // OktaSetup
     //GET: api/complex/{complexId}
     public async Task<ActionResult<ApiComplex>> GetComplexByIdAsync([FromRoute]Guid complexId)
     {
@@ -162,6 +164,7 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("providerId/{providerId}")]
+    [Authorize(Roles = "Coordinator, Provider")] // OktaSetup
     //GET: api/complex/providerId/{providerID}
     public async Task<ActionResult<IEnumerable<ApiComplex>>> GetComplexesByProviderId([FromRoute]Guid providerId)
     {
@@ -230,6 +233,7 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpPost]
+    [Authorize(Roles = "Provider")] // OktaSetup
     //POST: api/complex/
     public async Task<ActionResult<ApiComplex>> PostComplexAsync([FromBody]ApiComplex apiComplex)
     {
@@ -338,6 +342,7 @@ namespace Revature.Lodging.Api.Controllers
     /// <returns> Appropriate status code </returns>
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [HttpPut]
+    [Authorize(Roles = "Provider")] // OktaSetup
     //PUT: api/complex/
     public async Task<ActionResult> UpdateComplexAsync([FromBody]ApiComplex apiComplex)
     {
@@ -425,6 +430,7 @@ namespace Revature.Lodging.Api.Controllers
     /// <returns> Appropriate status code </returns>
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [HttpDelete("{complexId}")]
+    [Authorize(Roles = "Provider")] // OktaSetup
     //DELETE: api/complex/{complexId}
     public async Task<ActionResult> DeleteComplexByIdAsync([FromRoute]Guid complexId)
     {
@@ -457,6 +463,7 @@ namespace Revature.Lodging.Api.Controllers
     /// <returns></returns>
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [HttpDelete("deleteroom")]
+    [Authorize(Roles = "Provider")] // OktaSetup
     //PUT: api/complex/deleteroom
     public async Task<ActionResult> DeleteRoomAsync([FromBody]ApiRoom room)
     {
@@ -499,6 +506,7 @@ namespace Revature.Lodging.Api.Controllers
     /// <returns></returns>
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [HttpPut("editroom")]
+    [Authorize(Roles = "Provider")] // OktaSetup
     //PUT: api/complex/editroom
     public async Task<ActionResult> PutRoomAsync([FromBody]ApiRoom apiRoom)
     {
@@ -551,6 +559,7 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpPost("PostRooms")]
+    [Authorize(Roles = "Provider")] // OktaSetup
     //POST: api/complex/PostRooms
     public async Task<ActionResult> PostRoomsAsync([FromBody]IEnumerable<ApiRoom> apiRooms)
     {
@@ -607,6 +616,7 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("{complexName}/{ComplexNumber}")]
+    [Authorize(Roles = "Coordinator, Provider")] // OktaSetup
     //GET: api/complex/{complexName/ComplexNumber}
     public async Task<ActionResult<ApiComplex>> GetComplexByNameAndNumberAsync([FromRoute]string complexName, string complexNumber)
     {

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -26,6 +27,7 @@ namespace Revature.Lodging.Api.Controllers
     // GET: api/rooms?gender=g&endDate=e
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [Authorize(Roles = "Coordinator")] // OktaSetup
     public async Task<IActionResult> GetAsync(
           [FromQuery] string gender,
           [FromQuery] DateTime endDate
