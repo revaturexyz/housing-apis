@@ -45,7 +45,7 @@ namespace Revature.Identity.Api.Controllers
       {
         var okta = _oktaHelperFactory.Create(Request);
         var oktaUser = await okta.Client.Users.GetUserAsync(okta.Email);
-        var oktaRoles = await okta.Client.Groups.ToList();
+        var oktaRoles =  okta.Roles.ToList();
 
         var id = await _repo.GetCoordinatorIdByEmailAsync(okta.Email);
         //Update Okta roles based on local Db
@@ -54,7 +54,7 @@ namespace Revature.Identity.Api.Controllers
           // If their roles arent set properly, set them
           if (!okta.Roles.Contains(OktaHelper.CoordinatorRole))
           {
-            await okta.AddRoleAsync(oktaUser.Id, oktaRoles.First(r => r.Profile.Name == OktaHelper.CoordinatorRole).Id);
+            await okta.AddRoleAsync(oktaUser.Id, OktaHelper.CoordinatorRole);
           }
         }
         else
@@ -66,7 +66,7 @@ namespace Revature.Identity.Api.Controllers
             // If their roles arent set properly, set them
             if (!okta.Roles.Contains(OktaHelper.TenantRole))
             {
-              await okta.AddRoleAsync(oktaUser.Id, oktaRoles.First(r => r.Profile.Name == OktaHelper.TenantRole).Id);
+              await okta.AddRoleAsync(oktaUser.Id, OktaHelper.TenantRole);
             }
           }
           else
@@ -80,7 +80,7 @@ namespace Revature.Identity.Api.Controllers
               if (prov.Status.StatusText == Status.Approved)
               {
                 // They have been approved, so assign role Provider
-                await okta.AddRoleAsync(oktaUser.Id, oktaRoles.First(r => r.Profile.Name == OktaHelper.ApprovedProviderRole).Id);
+                await okta.AddRoleAsync(oktaUser.Id, OktaHelper.ApprovedProviderRole);
               }
             }
           }
