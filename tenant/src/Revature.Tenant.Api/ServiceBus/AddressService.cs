@@ -68,7 +68,7 @@ namespace Revature.Tenant.Api.ServiceBus
       }
       catch
       {
-        item.AddressId = Guid.NewGuid();
+        item.Id = Guid.NewGuid();
         return item;
       }
     }

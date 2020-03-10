@@ -175,7 +175,7 @@ namespace Revature.Tenant.Tests.ApiTests
         ApiAddress = new ApiAddress
         {
           State = "sdl",
-          AddressId = Guid.Parse("fa4d6c6e-9650-44c9-8c6b-5aebd3f9a67d"),
+          Id = Guid.Parse("fa4d6c6e-9650-44c9-8c6b-5aebd3f9a67d"),
           City = "l",
           Country = "l",
           Street = "s",
