@@ -113,8 +113,8 @@ namespace Revature.Lodging.DataAccess.Entities
         (
           new RoomAmenity { Id = Guid.Parse("5cb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId1, RoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456fd") },
           new RoomAmenity { Id = Guid.Parse("5db7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId4, RoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456fd") },
-          new RoomAmenity { Id = Guid.Parse("5eb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId5, RoomId = Guid.Parse("249e5358 - 169a - 4bc6 - aa0f - c054952456ee") },
-          new RoomAmenity { Id = Guid.Parse("5fb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, RoomId = Guid.Parse("249e5358 - 169a - 4bc6 - aa0f - c054952456ee") }
+          new RoomAmenity { Id = Guid.Parse("5eb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId5, RoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456ee") },
+          new RoomAmenity { Id = Guid.Parse("5fb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId2, RoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456ee") }
         );
       });
 
