@@ -27,10 +27,16 @@ namespace Revature.Lodging.Api.Services
     /// <param name="addressConfiguration">Configuration file with base URI.</param>
     public AddressRequest(HttpClient client, IConfiguration addressConfiguration)
     {
-      client.BaseAddress = new Uri(addressConfiguration.GetSection("AppServices")["Address"]);
-      client.DefaultRequestHeaders.Add("Accept", "application/json");
+      try
+      {
+        client.BaseAddress = new Uri(addressConfiguration.GetSection("AppServices")["Address"]);
+        client.DefaultRequestHeaders.Add("Accept", "application/json");
 
-      _client = client;
+        _client = client;
+      } catch
+      {
+        _client = null;
+      }
     }
 
     /// <summary>
