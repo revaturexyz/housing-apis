@@ -18,6 +18,7 @@ services:
     env_file:
       - .oktaSecrets
       - .commonConfig
+      - .identitySecret
     environment:
       ConnectionStrings__IdentityDb: 'Host=identity_data;Database=identity;Username=postgres;Password=Pass@word'
     image: identity

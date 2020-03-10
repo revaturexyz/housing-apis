@@ -2,3 +2,6 @@ AppServices__Address=address_api
 AppServices__Identity=identity_api
 AppServices__Lodging=lodging_api
 AppServices__Tenant=tenant_api
+Queues__AddAddress=AddAddress
+Queues__AssignedRoom=AssignedRoom
+Queues__TenantCUD=TenantCUD
