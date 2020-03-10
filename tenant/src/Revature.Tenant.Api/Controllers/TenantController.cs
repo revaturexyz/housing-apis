@@ -27,14 +27,16 @@ namespace Revature.Tenant.Api.Controllers
     private readonly IAddressService _addressService;
     private readonly ServiceBus.IIdentityService _tenantService;
     private readonly ServiceBus.IServiceBusSender _serviceBusSender;
+    private readonly ServiceBus.IRoomService _roomService;
 
-    public TenantController(ITenantRepository tenantRepository, IAddressService addressService, ServiceBus.IIdentityService tenantService, ServiceBus.IServiceBusSender serviceBusSender, ILogger<TenantController> logger = null)
+    public TenantController(ITenantRepository tenantRepository, IAddressService addressService, ServiceBus.IIdentityService tenantService, ServiceBus.IServiceBusSender serviceBusSender, ServiceBus.IRoomService roomService, ILogger<TenantController> logger = null)
     {
       _tenantRepository = tenantRepository ?? throw new ArgumentNullException(nameof(tenantRepository), "Tenant cannot be null");
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
       _addressService = addressService ?? throw new ArgumentNullException(nameof(addressService));
       _tenantService = tenantService ?? throw new ArgumentNullException(nameof(tenantService));
       _serviceBusSender = serviceBusSender ?? throw new ArgumentNullException(nameof(serviceBusSender));
+      _roomService = roomService ?? throw new ArgumentNullException(nameof(roomService));
     }
 
     /// <summary>
@@ -387,14 +389,20 @@ namespace Revature.Tenant.Api.Controllers
         { 
           if (newTenant.RoomId != currRoomId)
           {
-            roomMessage = new Lib.Models.RoomMessage
+            Guid roomId = (Guid)newTenant.RoomId;
+            bool roomAvailable = await _roomService.CheckRoomAvailable(roomId, newTenant.Gender, newTenant.Batch.EndDate);
+            if (roomAvailable)
             {
-              RoomId = (Guid)newTenant.RoomId,
-              Gender = newTenant.Gender,
-              OperationType = 0
-            };
-            await _serviceBusSender.SendRoomIdMessage(roomMessage);
-            roomMessage = null;
+              roomMessage = new Lib.Models.RoomMessage
+              {
+                RoomId = (Guid)newTenant.RoomId,
+                Gender = newTenant.Gender,
+                OperationType = 0
+              };
+              await _serviceBusSender.SendRoomIdMessage(roomMessage);
+              roomMessage = null;
+            }
+           
           }
         }
         //Call repository method Put and Save Async
