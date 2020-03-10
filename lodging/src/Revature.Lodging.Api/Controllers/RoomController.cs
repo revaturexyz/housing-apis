@@ -58,7 +58,7 @@ namespace Revature.Lodging.Api.Controllers
       {
         _logger.LogInformation("Getting filtered rooms...");
 
-        var rooms = await _repository.GetFilteredRoomsAsync(
+        var rooms = await _repository.GetFilteredRoomsAsync(  // Return rooms matching criteria
         complexId,
         roomNumber,
         numberOfBeds,
@@ -124,7 +124,7 @@ namespace Revature.Lodging.Api.Controllers
       {
         _logger.LogInformation("Getting room ready...");
 
-        var result = await _repository.ReadRoomAsync(roomId);
+        var result = await _repository.ReadRoomAsync(roomId); //Return Room matching the incoming roomId
         
         // Map the library model to an API model
         var apiRoom = new ApiRoom
@@ -184,8 +184,9 @@ namespace Revature.Lodging.Api.Controllers
         };
         createdRoom.SetLease(room.LeaseStart, room.LeaseEnd);
 
-        await _repository.CreateRoomAsync(createdRoom);
+        await _repository.CreateRoomAsync(createdRoom);   // Create a new Room entry in the database
 
+        // Read a list of all amenities in the database.
         var existingAmenities = await _amenityRepo.ReadAmenityListAsync();
 
         // Check whether the amenities in the posted room already exist or not. If not, add them to Amenities list.
@@ -212,6 +213,7 @@ namespace Revature.Lodging.Api.Controllers
               AmenityType = postedAmenity.AmenityType,
               Description = null
             };
+            // Post the amenity to the database.
             await _amenityRepo.CreateAmenityAsync(amenity);
 
             // Create a new entry in the RoomAmenity table.
@@ -219,11 +221,12 @@ namespace Revature.Lodging.Api.Controllers
             roomAmenity.RoomId = createdRoom.Id;
             roomAmenity.AmenityId = amenity.Id;
           }
+          // Post a new entry for AmenityRoom in the database.
           await _amenityRepo.CreateAmenityRoomAsync(roomAmenity);
 
         }
 
-        await _repository.SaveAsync();
+        await _repository.SaveAsync();    // Save changes to the database.
 
         _logger.LogInformation("Success. Room has been added");
 
@@ -272,16 +275,18 @@ namespace Revature.Lodging.Api.Controllers
           RoomType = room.ApiRoomType
         };
 
-        newRoom.SetLease(room.LeaseStart, room.LeaseEnd);
+        newRoom.SetLease(room.LeaseStart, room.LeaseEnd);   // Set lease for the room.
 
         // Delete amenities from the retrieved room for the purpose of replacing them easily.
         await _amenityRepo.DeleteAmenityRoomAsync(roomId);
         _logger.LogInformation($"(API)old amenities for room id: {room.RoomId} is deleted.");
 
-
+        // Updates room to match input parameters.
         await _repository.UpdateRoomAsync(newRoom);
+        // Read list of all amenities in the database.
         var existingAmenities = await _amenityRepo.ReadAmenityListAsync();
 
+        // If the room has no amenities, assign an empty list to prevent errors.
         if (room.Amenities == null)
         {
           room.Amenities = new List<ApiAmenity>();
@@ -311,16 +316,17 @@ namespace Revature.Lodging.Api.Controllers
               AmenityType = postedAmenity.AmenityType,
               Description = null
             };
+            // Add the Amenity object to the database.
             await _amenityRepo.CreateAmenityAsync(amenity);
 
             roomAmenity.Id = Guid.NewGuid();
             roomAmenity.RoomId = roomId;
             roomAmenity.AmenityId = amenity.Id;
           }
-
+          // Add the AmenityRoom object to the database.
           await _amenityRepo.CreateAmenityRoomAsync(roomAmenity);
         }
-
+        // Save changes to the database.
         await _repository.SaveAsync();
 
         _logger.LogInformation("Success. Room has been updated");
@@ -354,8 +360,8 @@ namespace Revature.Lodging.Api.Controllers
       {
         _logger.LogInformation("Deleting room");
 
-        await _repository.DeleteRoomAsync(roomId);
-        await _repository.SaveAsync();
+        await _repository.DeleteRoomAsync(roomId);  // Deletes room by roomId
+        await _repository.SaveAsync();              // Save changes to the database.
 
         _logger.LogInformation("Success. Room has been deleted");
 
