@@ -10,7 +10,7 @@ using Revature.Tenant.Lib.Models;
 namespace Revature.Tenant.Api.ServiceBus
 {
   /// <summary>
-  /// Service that communicates with the room service
+  /// Service that communicates with the room service (lodging api)
   /// </summary>
   public class RoomService : IRoomService
   {
@@ -24,7 +24,7 @@ namespace Revature.Tenant.Api.ServiceBus
       _logger = logger;
     }
     /// <summary>
-    /// Method that gets vacant rooms from the room service
+    /// Method that gets vacant rooms from the room service (lodging api)
     /// </summary>
     /// <param name="gender"></param>
     /// <param name="endDate"></param>

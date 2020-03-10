@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Revature.Tenant.Api.Models;
 using Revature.Tenant.Lib.Interface;
 using System.Linq;
-using Revature.Tenant.Lib.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Revature.Tenant.Api.Controllers
 {
@@ -19,20 +19,22 @@ namespace Revature.Tenant.Api.Controllers
   // root uri: api/Tenant
   [Route("api/[controller]")]
   [ApiController]
-  [Authorize]
+  //[Authorize]
   public class TenantController : ControllerBase
   {
     private readonly ITenantRepository _tenantRepository;
     private readonly ILogger _logger;
     private readonly IAddressService _addressService;
     private readonly ServiceBus.IIdentityService _tenantService;
+    private readonly ServiceBus.IServiceBusSender _serviceBusSender;
 
-    public TenantController(ITenantRepository tenantRepository, IAddressService addressService, ServiceBus.IIdentityService tenantService, ILogger<TenantController> logger = null)
+    public TenantController(ITenantRepository tenantRepository, IAddressService addressService, ServiceBus.IIdentityService tenantService, ServiceBus.IServiceBusSender serviceBusSender, ILogger<TenantController> logger = null)
     {
       _tenantRepository = tenantRepository ?? throw new ArgumentNullException(nameof(tenantRepository), "Tenant cannot be null");
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
       _addressService = addressService ?? throw new ArgumentNullException(nameof(addressService));
       _tenantService = tenantService ?? throw new ArgumentNullException(nameof(tenantService));
+      _serviceBusSender = serviceBusSender ?? throw new ArgumentNullException(nameof(serviceBusSender));
     }
 
     /// <summary>
@@ -44,7 +46,7 @@ namespace Revature.Tenant.Api.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize(Roles = "Coordinator")]
+    //[Authorize(Roles = "Coordinator")]
     public async Task<ActionResult<IEnumerable<ApiTenant>>> GetAllAsync([FromQuery] string firstName = null, [FromQuery] string lastName = null, [FromQuery] string gender = null, [FromQuery] string trainingCenter = null)
     {
       //Parse training center string to guid if it exists
@@ -142,7 +144,7 @@ namespace Revature.Tenant.Api.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize(Roles = "Coordinator,Tenant")]
+    //[Authorize(Roles = "Coordinator,Tenant")]
     public async Task<ActionResult<ApiTenant>> GetByIdAsync([FromRoute] Guid id)
     {
       _logger.LogInformation("GET - Getting notifications by Tenant ID: {TenantId}", id);
@@ -352,26 +354,77 @@ namespace Revature.Tenant.Api.Controllers
     [HttpPut("Update", Name = "UpdateTenant")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Authorize(Roles = "Coordinator")]
-    public async Task<ActionResult> UpdateAsync([FromBody] ApiTenant tenant)
+    public async Task<ActionResult> UpdateAsync([FromQuery]Guid Id, [FromBody] ApiTenant tenant)
     {
       try
       {
-        _logger.LogInformation("PUT - Updating tenant with tenantid {tenantId}.", tenant.Id);
+        _logger.LogInformation("PUT - Updating tenant with tenantid {tenantId}.", Id);
         _logger.LogInformation("Posting Address to Address Service...");
-        var postedAddress = await this._addressService.GetAddressAsync(tenant.ApiAddress);
-        tenant.AddressId = postedAddress.Id;
+        var currTenant = await _tenantRepository.GetByIdAsync(Id); //tenant in the database
+        Lib.Models.RoomMessage roomMessage;
+        if (tenant.ApiAddress != null)
+        {
+          var postedAddress = await this._addressService.GetAddressAsync(tenant.ApiAddress);
+          tenant.AddressId = postedAddress.Id;
+        }
         //cast ApiTenant in Logic Tenant
-        var newTenant = ApiMapper.Map(tenant);
+        var newTenant = ApiMapper.Map(tenant); //tenant object that has every thing to be updated
 
         if (tenant.ApiCar != null)
         {
           newTenant.Car = ApiMapper.Map(tenant.ApiCar);
+          newTenant.CarId = newTenant.Car.Id;
+        }
+        if (tenant.ApiBatch != null)
+        {
+          newTenant.Batch = ApiMapper.Map(tenant.ApiBatch);
+          newTenant.BatchId = newTenant.Batch.Id;
         }
 
+        var currRoomId = currTenant.RoomId;
+        //Assign the new room to the tenant
+        if (newTenant.RoomId != null)
+        { 
+          if (newTenant.RoomId != currRoomId)
+          {
+            roomMessage = new Lib.Models.RoomMessage
+            {
+              RoomId = (Guid)newTenant.RoomId,
+              Gender = newTenant.Gender,
+              OperationType = 0
+            };
+            await _serviceBusSender.SendRoomIdMessage(roomMessage);
+            roomMessage = null;
+          }
+        }
         //Call repository method Put and Save Async
-        _tenantRepository.Put(newTenant);
-        await _tenantRepository.SaveAsync();
-        _logger.LogInformation("PUT persisted to dB");
+        try
+        {
+          _tenantRepository.Put(newTenant);
+          await _tenantRepository.SaveAsync();
+          _logger.LogInformation("PUT persisted to dB");
+        }
+        catch (DbUpdateException e)
+        {
+          roomMessage = new Lib.Models.RoomMessage
+          {
+            RoomId = (Guid)newTenant.RoomId,
+            Gender = newTenant.Gender,
+            OperationType = 1
+          };
+          await _serviceBusSender.SendRoomIdMessage(roomMessage);
+          return Conflict(e.Message);
+        }
+       
+
+        //send a message to delete the user from the room
+        roomMessage = new Lib.Models.RoomMessage
+        {
+          RoomId = (Guid)currRoomId,
+          Gender = newTenant.Gender,
+          OperationType = 1
+        };
+        await _serviceBusSender.SendRoomIdMessage(roomMessage);
 
         string Name = tenant.FirstName + " " + tenant.LastName;
         await _tenantService.UpdateAccount((Guid)tenant.Id, tenant.Email, Name);
@@ -408,6 +461,18 @@ namespace Revature.Tenant.Api.Controllers
     {
       try
       {
+        var tenant = await _tenantRepository.GetByIdAsync(id); //We need the room Id of the tenant
+        if (tenant.RoomId != null)
+        {
+          var roomMessage = new Lib.Models.RoomMessage
+          {
+            RoomId = (Guid)tenant.RoomId,
+            Gender = tenant.Gender,
+            OperationType = 1
+          };
+          await _serviceBusSender.SendRoomIdMessage(roomMessage);
+        }
+        
         await _tenantRepository.DeleteByIdAsync(id);
         await _tenantRepository.SaveAsync();
         await _tenantService.DeleteAccount(id, "unused", "unused");

@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Revature.Tenant.Api.Models
 {
@@ -9,14 +10,19 @@ namespace Revature.Tenant.Api.Models
   public class ApiTenant
   {
     public Guid? Id { get; set; }
+    [Required]
     public string Email { get; set; }
+    [Required]
     public string Gender { get; set; }
+    [Required]
     public string FirstName { get; set; }
+    [Required]
     public string LastName { get; set; }
     public Guid? AddressId { get; set; }
     public Guid? RoomId { get; set; }
     public int? CarId { get; set; }
     public int? BatchId { get; set; }
+    [Required]
     public Guid TrainingCenter { get; set; }
     public ApiBatch ApiBatch { get; set; }
     public ApiCar ApiCar { get; set; }
