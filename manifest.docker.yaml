@@ -114,6 +114,7 @@ services:
     env_file:
       - .oktaSecrets
       - .commonConfig
+      - .commonSecret
     environment:
       ConnectionStrings__TenantDb: 'Host=tenant_data;Database=tenant;Username=postgres;Password=Pass@word'
     image: tenant
