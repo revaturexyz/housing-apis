@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization; // OktaSetup
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -43,6 +44,7 @@ namespace Revature.Lodging.Api.Controllers
     [HttpGet("complexId/{complexId}")] // /complexId/{complexId}?roomNumber=a&numberOfBeds=b&roomType=c&gender=d&endDate=e&roomId=f
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Roles = "Coordinator, Provider")] // OktaSetup
     public async Task<IActionResult> GetFilteredRoomsAsync(
       Guid complexId,
       [FromQuery] string roomNumber,
@@ -71,19 +73,25 @@ namespace Revature.Lodging.Api.Controllers
 
         var apiRooms = new List<ApiRoom>();
 
-        foreach(var room in rooms)
+        var principal = HttpContext.User.Identities.SingleOrDefault();
+        var roles = principal.Claims.Where(c => c.Type == "groups").Select(c => c.Value).ToList();
+
+        foreach (var room in rooms)
         {
+          // filter the api room model based on the user's role
+          var filteredRoom = ApiMapper.FilterRoomByRole(room, roles.Contains("Coordinator") ? true : false);
+
           var apiRoom = new ApiRoom()
           {
-            RoomId = room.Id,
-            RoomNumber = room.RoomNumber,
-            ComplexId = room.ComplexId,
-            NumberOfBeds = room.NumberOfBeds,
-            NumberOfOccupants = room.NumberOfOccupants,
-            Gender = room.Gender,
-            ApiRoomType = room.RoomType,
-            LeaseStart = room.LeaseStart,
-            LeaseEnd = room.LeaseEnd,
+            RoomId = /*room*/filteredRoom.Id,
+            RoomNumber = /*room*/filteredRoom.RoomNumber,
+            ComplexId = /*room*/filteredRoom.ComplexId,
+            NumberOfBeds = /*room*/filteredRoom.NumberOfBeds,
+            NumberOfOccupants = /*room*/filteredRoom.NumberOfOccupants,
+            Gender = /*room*/filteredRoom.Gender,
+            ApiRoomType = /*room*/filteredRoom.RoomType,
+            LeaseStart = /*room*/filteredRoom.LeaseStart,
+            LeaseEnd = /*room*/filteredRoom.LeaseEnd,
             Amenities = (from amenity in await _amenityRepo.ReadAmenityListByRoomIdAsync(room.Id)
                          select new ApiAmenity()
                          {
@@ -116,6 +124,7 @@ namespace Revature.Lodging.Api.Controllers
     [HttpGet("{roomId}", Name = "GetRoomById")]
     [ProducesResponseType(typeof(Lib.Models.Room), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Roles = "Coordinator, Provider")] // OktaSetup
     public async Task<ActionResult<ApiRoom>> GetRoomByIdAsync([FromRoute]Guid roomId)
     {
       try
@@ -123,6 +132,13 @@ namespace Revature.Lodging.Api.Controllers
         _logger.LogInformation("Getting room ready...");
 
         var result = await _repository.ReadRoomAsync(roomId);
+
+        var principal = HttpContext.User.Identities.SingleOrDefault();
+        var roles = principal.Claims.Where(c => c.Type == "groups").Select(c => c.Value).ToList();
+
+        // filter room by role
+        result = ApiMapper.FilterRoomByRole(result, roles.Contains("Coordinator") ? true : false);
+
         var apiRoom = new ApiRoom
         {
           RoomId = result.Id,
@@ -152,6 +168,19 @@ namespace Revature.Lodging.Api.Controllers
       }
     }
 
+    //Logic.Room FilterRoomByRole(Logic.Room room, bool isCoordinator)
+    //{
+    //  var filteredRoom = room;
+
+    //  if(!isCoordinator)
+    //  {
+    //    filteredRoom.NumberOfOccupants = 0;
+    //    filteredRoom.Gender = null;
+    //  }
+
+    //  return filteredRoom;
+    //}
+
     /// <summary>
     /// POST:
     /// Creates a room based on the complex's needs
@@ -161,6 +190,7 @@ namespace Revature.Lodging.Api.Controllers
     [HttpPost]
     [ProducesResponseType(typeof(Lib.Models.Room), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Provider")] // OktaSetup
     public async Task<IActionResult> AddRoomAsync
       ([FromBody]ApiRoom room)
     {
@@ -244,6 +274,7 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Provider")] // OktaSetup
     public async Task<IActionResult> UpdateRoomAsync(Guid roomId,
       [FromBody]ApiRoom room)
     {
@@ -338,6 +369,7 @@ namespace Revature.Lodging.Api.Controllers
     [HttpDelete("{roomId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Roles = "Provider")] // OktaSetup
     public async Task<IActionResult> DeleteRoomAsync(Guid roomId)
     {
       try

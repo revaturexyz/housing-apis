@@ -74,6 +74,25 @@ namespace Revature.Lodging.Api
     }
 
     /// <summary>
+    /// Filters and returns a given room based on the user's role
+    /// </summary>
+    /// <param name="room"></param>
+    /// <param name="isCoordinator"></param>
+    /// <returns>Filtered room</returns>
+    public static Lib.Models.Room FilterRoomByRole(Lib.Models.Room room, bool isCoordinator)
+    {
+      var filteredRoom = room;
+
+      if (!isCoordinator)
+      {
+        filteredRoom.NumberOfOccupants = (room.NumberOfOccupants > 0) ? 1 : 0;
+        filteredRoom.Gender = null;
+      }
+
+      return filteredRoom;
+    }
+
+    /// <summary>
     /// Maps the Library Complex model to the ApiComplex model.
     /// </summary>
     /// <param name="complex"></param>
