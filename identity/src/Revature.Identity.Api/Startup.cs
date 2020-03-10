@@ -14,6 +14,7 @@ using Revature.Identity.Api.Telemetry;
 using Revature.Identity.DataAccess;
 using Revature.Identity.DataAccess.Repositories;
 using Revature.Identity.Lib.Interface;
+using Revature.Identity.Api.Services;
 using Serilog;
 
 namespace Revature.Identity.Api
@@ -59,6 +60,7 @@ namespace Revature.Identity.Api
       services.AddTransient<IOktaHelperFactory, OktaHelperFactory>();
       services.AddSingleton<IAuthorizationHandler, RoleRequirementHandler>();
       services.AddSingleton<ITelemetryInitializer, AccountTelemetryInitializer>();
+      services.AddSingleton<IServiceBusConsumer, ServiceBusConsumer>();
 
       services.AddSwaggerGen(c =>
       {
