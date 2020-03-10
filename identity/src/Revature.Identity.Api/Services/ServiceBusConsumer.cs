@@ -34,7 +34,7 @@ namespace Revature.Identity.Api.Services
     public ServiceBusConsumer(IConfiguration configuration, IServiceProvider services, ILogger<ServiceBusConsumer> logger)
     {
       //declare queues
-      _tenantQueue = new QueueClient(configuration.GetConnectionString("ConnectionStrings:ServiceBus"), configuration["Queues:TenantCUD"]);
+      _tenantQueue = new QueueClient(configuration.GetConnectionString("ServiceBus"), configuration["Queues:TenantCUD"]);
 
       _services = services;
       _logger = logger;
