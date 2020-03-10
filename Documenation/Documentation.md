@@ -89,7 +89,7 @@ These Roles can be managed in the Okta Client which can be found under Users>Gro
 COORDINATOR \
 Name: Test_One \
 Email: revtestone2020@gmail.com, rectestone2020+1@gmail.com \
-Password: UTAREV2020 \
+Password: hidden \
 Birthday: January 1 2000 \
 OKTA password: UTAokta2020 \
 OKTA What is your favorite security question: None \
@@ -97,7 +97,7 @@ OKTA What is your favorite security question: None \
 PROVIDER - PENDING \
 Name: Test_Two \
 Email: revtesttwo2020@gmail.com \
-Password: UTAREV2020 \
+Password: hidden \
 Birthday: January 1 2000 \
 OKTA password : UTAokta2020 \
 OKTA What is your favorite security question: None \
@@ -105,7 +105,7 @@ OKTA What is your favorite security question: None \
 PROVIDER - APPROVED \
 Name: Test_Three \
 Email: revtestthree2020@gmail.com, revtestthree2020+1@gmail.com \
-Password: UTAREV2020 \
+Password: hidden \
 Birthday: January 1 2000 \
 OKTA password : UTAokta2020 \
 OKTA What is your favorite security question: None \
@@ -113,7 +113,7 @@ OKTA What is your favorite security question: None \
 TENANT \
 Name: Test_Four \
 Email: revtestfour2020@gmail.com, revtestfour2020+1@gmail.com, revtestfour2020+2@gmail.com \
-Password: UTAREV2020 \
+Password: hidden \
 Birthday: January 1 2000 \
 OKTA password : UTAokta2020 \
 OKTA What is your favorite security question: None \
