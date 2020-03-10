@@ -11,6 +11,7 @@ using Revature.Lodging.DataAccess;
 using Revature.Lodging.DataAccess.Entities;
 using Revature.Lodging.DataAccess.Repository;
 using Revature.Lodging.Lib.Interface;
+using Revature.Lodging.Api.ServiceBus;
 using Serilog;
 using Microsoft.ApplicationInsights.Extensibility;
 using Revature.Lodging.Api.Telemetry;
@@ -77,6 +78,7 @@ namespace Revature.Lodging.Api
       services.AddScoped<IAmenityRepository, AmenityRepository>();
       services.AddScoped<IRoomRepository, RoomRepository>();
 
+      services.AddSingleton<IServiceBusConsumer, ServiceBusConsumer>();
       // services.AddHostedService<RoomServiceReceiver>();
       // services.AddScoped<IRoomServiceSender, RoomServiceSender>();
       services.AddHttpClient<IAddressRequest, AddressRequest>();
