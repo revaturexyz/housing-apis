@@ -69,8 +69,10 @@ namespace Revature.Lodging.Api.Controllers
         empty,
         vacancy);
 
+        // Create a list of ApiRoom to be returned by the action
         var apiRooms = new List<ApiRoom>();
 
+        // Mapping library models to API models to add to the ApiRoom list
         foreach(var room in rooms)
         {
           var apiRoom = new ApiRoom()
@@ -123,6 +125,8 @@ namespace Revature.Lodging.Api.Controllers
         _logger.LogInformation("Getting room ready...");
 
         var result = await _repository.ReadRoomAsync(roomId);
+        
+        // Map the library model to an API model
         var apiRoom = new ApiRoom
         {
           RoomId = result.Id,
@@ -184,10 +188,12 @@ namespace Revature.Lodging.Api.Controllers
 
         var existingAmenities = await _amenityRepo.ReadAmenityListAsync();
 
+        // Check whether the amenities in the posted room already exist or not. If not, add them to Amenities list.
         foreach(var postedAmenity in room.Amenities)
         {
           Logic.RoomAmenity roomAmenity = new Logic.RoomAmenity();
 
+          // If the amenity already exists in the database, add it to the new room entity.
           if(existingAmenities.Any(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower()))
           {
             var amenity = existingAmenities.FirstOrDefault(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower());
@@ -196,6 +202,8 @@ namespace Revature.Lodging.Api.Controllers
             roomAmenity.RoomId = createdRoom.Id;
             roomAmenity.AmenityId = amenity.Id;
           }
+
+          // If the amenity does not exist, create it and add it to the database.
           else
           {
             Logic.Amenity amenity = new Logic.Amenity()
@@ -206,6 +214,7 @@ namespace Revature.Lodging.Api.Controllers
             };
             await _amenityRepo.CreateAmenityAsync(amenity);
 
+            // Create a new entry in the RoomAmenity table.
             roomAmenity.Id = Guid.NewGuid();
             roomAmenity.RoomId = createdRoom.Id;
             roomAmenity.AmenityId = amenity.Id;
@@ -251,11 +260,7 @@ namespace Revature.Lodging.Api.Controllers
       {
         _logger.LogInformation("Updating a room");
 
-        //var roomFromDb = await _repository.ReadRoomAsync(roomId);
-        //var amenitiesFromDb = await _amenityRepo.ReadAmenityListByRoomIdAsync(roomId);
-
-        //roomFromDb.SetLease(room.LeaseStart, room.LeaseEnd);
-
+        // Map incoming parameters to the specified Room entry in the database.
         Logic.Room newRoom = new Logic.Room()
         {
           Id = room.RoomId,
@@ -269,6 +274,7 @@ namespace Revature.Lodging.Api.Controllers
 
         newRoom.SetLease(room.LeaseStart, room.LeaseEnd);
 
+        // Delete amenities from the retrieved room for the purpose of replacing them easily.
         await _amenityRepo.DeleteAmenityRoomAsync(roomId);
         _logger.LogInformation($"(API)old amenities for room id: {room.RoomId} is deleted.");
 
@@ -281,10 +287,12 @@ namespace Revature.Lodging.Api.Controllers
           room.Amenities = new List<ApiAmenity>();
         }
 
+        // Check each amenity in the updated room to ensure it exists. If not, create it.
         foreach (var postedAmenity in room.Amenities)
         {
           Logic.RoomAmenity roomAmenity = new Logic.RoomAmenity();
 
+          // If the amenity exists in the database, create a new RoomAmenity entry.
           if (existingAmenities.Any(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower()))
           {
             var amenity = existingAmenities.FirstOrDefault(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower());
@@ -293,6 +301,8 @@ namespace Revature.Lodging.Api.Controllers
             roomAmenity.RoomId = roomId;
             roomAmenity.AmenityId = amenity.Id;
           }
+          
+          // Else, create the new Amenity entry, then create an AmenityRoom entry.
           else
           {
             Logic.Amenity amenity = new Logic.Amenity()
