@@ -14,10 +14,6 @@ provider "azurerm" {
   version = "~>1.30.0"
 }
 
-provider "cloudflare" {
-  version = "~>1.16.0"
-}
-
 ## RESOURCES
 resource "azurerm_app_service" "accountxyz" {
   app_service_plan_id = "${azurerm_app_service_plan.accountxyz.id}"
