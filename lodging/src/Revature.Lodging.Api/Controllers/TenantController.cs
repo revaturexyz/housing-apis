@@ -27,7 +27,7 @@ namespace Revature.Lodging.Api.Controllers
     // GET: api/rooms?gender=g&endDate=e
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [Authorize/*(Roles = "Coordinator, Provider")*/] // OktaSetup
+    [Authorize(Roles = "Coordinator")] // OktaSetup
     public async Task<IActionResult> GetAsync(
           [FromQuery] string gender,
           [FromQuery] DateTime endDate

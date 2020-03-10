@@ -83,15 +83,15 @@ namespace Revature.Lodging.Api.Controllers
 
           var apiRoom = new ApiRoom()
           {
-            RoomId = /*room*/filteredRoom.Id,
-            RoomNumber = /*room*/filteredRoom.RoomNumber,
-            ComplexId = /*room*/filteredRoom.ComplexId,
-            NumberOfBeds = /*room*/filteredRoom.NumberOfBeds,
-            NumberOfOccupants = /*room*/filteredRoom.NumberOfOccupants,
-            Gender = /*room*/filteredRoom.Gender,
-            ApiRoomType = /*room*/filteredRoom.RoomType,
-            LeaseStart = /*room*/filteredRoom.LeaseStart,
-            LeaseEnd = /*room*/filteredRoom.LeaseEnd,
+            RoomId = filteredRoom.Id,
+            RoomNumber = filteredRoom.RoomNumber,
+            ComplexId = filteredRoom.ComplexId,
+            NumberOfBeds = filteredRoom.NumberOfBeds,
+            NumberOfOccupants = filteredRoom.NumberOfOccupants,
+            Gender = filteredRoom.Gender,
+            ApiRoomType = filteredRoom.RoomType,
+            LeaseStart = filteredRoom.LeaseStart,
+            LeaseEnd = filteredRoom.LeaseEnd,
             Amenities = (from amenity in await _amenityRepo.ReadAmenityListByRoomIdAsync(room.Id)
                          select new ApiAmenity()
                          {
@@ -167,19 +167,6 @@ namespace Revature.Lodging.Api.Controllers
         return BadRequest();
       }
     }
-
-    //Logic.Room FilterRoomByRole(Logic.Room room, bool isCoordinator)
-    //{
-    //  var filteredRoom = room;
-
-    //  if(!isCoordinator)
-    //  {
-    //    filteredRoom.NumberOfOccupants = 0;
-    //    filteredRoom.Gender = null;
-    //  }
-
-    //  return filteredRoom;
-    //}
 
     /// <summary>
     /// POST:
