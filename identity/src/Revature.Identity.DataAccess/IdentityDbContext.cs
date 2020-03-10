@@ -46,10 +46,22 @@ namespace Revature.Identity.DataAccess
         {
           new TenantAccount()
           {
-            TenantId = new System.Guid("5a64ba93-5f78-4972-9e80-ad3cb4678923"),
-            Name = "Test_Four",
+            TenantId = System.Guid.Parse("5a64ba93-5f78-4972-9e80-ad3cb4678923"),
+            Name = "Test Four",
             Email = "revtestfour2020@gmail.com"
           },
+          new TenantAccount()
+          {
+            TenantId = System.Guid.Parse("9f055e5f-92be-4ccc-85f4-b98288981822"),
+            Name = "Test Seven",
+            Email = "revtestfour2020+1@gmail.com"
+          },
+          new TenantAccount()
+          {
+            TenantId = System.Guid.Parse("f4154445-51eb-4303-998c-38e9fb817063"),
+            Name = "Test Eight",
+            Email = "revtestfour2020+2@gmail.com"
+          }
         });
       });
 
@@ -73,7 +85,7 @@ namespace Revature.Identity.DataAccess
         {
           new ProviderAccount()
           {
-            ProviderId = new System.Guid("dfc872fc-b708-4caf-b3f1-3c842c8d3078"),
+            ProviderId = System.Guid.Parse("dfc872fc-b708-4caf-b3f1-3c842c8d3078"),
             Name = "Test_Three",
             StatusText = "Approved",
             Email = "revtestthree2020@gmail.com",
@@ -81,12 +93,20 @@ namespace Revature.Identity.DataAccess
           },
           new ProviderAccount()
           {
-            ProviderId = new System.Guid("68b95c3a-af06-44ac-8ba0-4d3ea2d53c39"),
+            ProviderId = System.Guid.Parse("68b95c3a-af06-44ac-8ba0-4d3ea2d53c39"),
             Name = "Test_Two",
             StatusText = "Pending",
             Email = "revtesttwo2020@gmail.com",
             AccountCreatedAt = System.DateTime.Now
           },
+          new ProviderAccount()
+          {
+            ProviderId = System.Guid.Parse("f7631719-b74b-46c4-bb89-6b3a3681ac06"),
+            Name = "Test_Six",
+            StatusText = "Approved",
+            Email = "revtesttwo2020@gmail.com",
+            AccountCreatedAt = System.DateTime.Now
+          }
         });
       });
 
@@ -116,23 +136,15 @@ namespace Revature.Identity.DataAccess
         {
           new CoordinatorAccount()
           {
-            CoordinatorId = new System.Guid("837c3248-1685-4d08-934a-0f17a6d1836a"),
-            Name = "Cameron Coley",
-            Email = "cameron.coley@revature.com",
+            CoordinatorId = System.Guid.Parse("7d673549-be58-41d2-9ac0-0ecede8b27be"),
+            Name = "Test_Five",
+            Email = "revtestone2020+1@gmail.com",
             TrainingCenterName = "UTA",
             TrainingCenterAddress = "300 W Martin Luther King Jr Blvd, Austin, TX 78705"
           },
           new CoordinatorAccount()
           {
-            CoordinatorId = new System.Guid("7d673549-be58-41d2-9ac0-0ecede8b27be"),
-            Name = "Cameron Coley",
-            Email = "jacob.marquez.davis@hotmail.com",
-            TrainingCenterName = "UTA",
-            TrainingCenterAddress = "300 W Martin Luther King Jr Blvd, Austin, TX 78705"
-          },
-          new CoordinatorAccount()
-          {
-            CoordinatorId = new System.Guid("5d7189a2-5f16-461a-a81e-27bb1c8b4074"),
+            CoordinatorId = System.Guid.Parse("5d7189a2-5f16-461a-a81e-27bb1c8b4074"),
             Name = "Test_One",
             Email = "revtestone2020@gmail.com",
             TrainingCenterName = "UTA",
