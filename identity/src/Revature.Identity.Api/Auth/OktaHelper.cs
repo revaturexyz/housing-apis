@@ -71,8 +71,6 @@ namespace Revature.Identity.Api
     {
       try
       {
-        //var deserializedResponse = JsonSerializer.Deserialize<JsonElement>(response.Content);
-        //var managementToken = deserializedResponse.GetProperty("access_token").GetString();
         Client = new OktaClient(new OktaClientConfiguration 
         {
           OktaDomain = Domain,
