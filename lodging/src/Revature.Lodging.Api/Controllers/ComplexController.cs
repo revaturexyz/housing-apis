@@ -228,17 +228,28 @@ namespace Revature.Lodging.Api.Controllers
         Country = apiComplex.Address.Country,
       };
 
-      // Retrieves an Address object using AddressRequest and storing the AddressId
-      var addressId = (await _addressRequest.PostAddressAsync(complexAddress)).Id;
+      // Retrieves an Address object using AddressRequest 
+      var normalizedAddress = await _addressRequest.PostAddressAsync(complexAddress);
+
+      // Normalizes the Address in the Complex object that is passed in
+      apiComplex.Address.Id = normalizedAddress.Id;
+      apiComplex.Address.Street = normalizedAddress.Street;
+      apiComplex.Address.City = normalizedAddress.City;
+      apiComplex.Address.State = normalizedAddress.State;
+      apiComplex.Address.Country = normalizedAddress.Country;
+      apiComplex.Address.ZipCode = normalizedAddress.ZipCode;
 
       // Generates a new Guid for a ComplexId
       var complexId = Guid.NewGuid();
+
+      // Sets the Id of the Complex object that is passed in
+      apiComplex.ComplexId = complexId;
 
       // Creates a Complex object with the information in the apiComplex object argument
       var complex = new Logic.Complex()
       {
         Id = complexId,
-        AddressId = addressId,
+        AddressId = normalizedAddress.Id,
         ProviderId = apiComplex.ProviderId,
         ContactNumber = apiComplex.ContactNumber,
         ComplexName = apiComplex.ComplexName
@@ -290,7 +301,7 @@ namespace Revature.Lodging.Api.Controllers
 
         }
 
-        return Created($"api/Complex/{complex.Id}", apiComplex); //TODO: this needs to return the created complex object with complexId
+        return Created($"api/Complex/{complex.Id}", apiComplex);
 
       }
       catch (Exception ex)
