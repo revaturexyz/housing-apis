@@ -69,20 +69,6 @@ namespace Revature.Identity.Api
     /// <returns></returns>
     public bool ConnectManagementClient()
     {
-      var client = new RestClient($"{Domain}");
-      var request = new RestRequest(Method.POST);
-
-      request.AddHeader("Accept", "application/json");
-      request.AddHeader("Content-Type", "application/json");
-      request.AddParameter("application/json", $"{{\"client_id\":\"0oa2p2u6gCt9qrjbT4x6\",\"client_secret\":\"MZGag-k-r4Kq9Ei8VYwxl7JkTbqDRIhrozb0Kd5l\",\"audience\":\"https://{Domain}/api/v1/\",\"grant_type\":\"client_credentials\"}}", ParameterType.RequestBody);
-
-      var response = client.Execute(request);
-
-      if (response.ErrorException != null)
-      {
-        _logger.LogError(response.ErrorException, "Error while making Okta request");
-        return false;
-      }
       try
       {
         //var deserializedResponse = JsonSerializer.Deserialize<JsonElement>(response.Content);
