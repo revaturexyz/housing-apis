@@ -54,7 +54,7 @@ namespace Revature.Identity.Api.Controllers
           // If their roles arent set properly, set them
           if (!okta.Roles.Contains(OktaHelper.CoordinatorRole))
           {
-            await okta.AddRoleAsync(oktaUser.Id, "00g2qoe8fD5otteWj4x6");
+            await okta.AddRoleAsync(oktaUser.Id, OktaHelper.CoordinatorRole);
           }
         }
         else
@@ -66,7 +66,7 @@ namespace Revature.Identity.Api.Controllers
             // If their roles arent set properly, set them
             if (!okta.Roles.Contains(OktaHelper.TenantRole))
             {
-              await okta.AddRoleAsync(oktaUser.Id, "00g2skdaoGOwpGSHj4x6");
+              await okta.AddRoleAsync(oktaUser.Id, OktaHelper.TenantRole);
             }
           }
           else
@@ -80,7 +80,7 @@ namespace Revature.Identity.Api.Controllers
               if (prov.Status.StatusText == Status.Approved)
               {
                 // They have been approved, so assign role Provider
-                await okta.AddRoleAsync(oktaUser.Id, "00g2sl5lo8uAc4h7I4x6");
+                await okta.AddRoleAsync(oktaUser.Id, OktaHelper.ApprovedProviderRole);
               }
             }
           }
@@ -107,7 +107,7 @@ namespace Revature.Identity.Api.Controllers
           //Check roles for Tenant
           if (okta.Roles.Contains(OktaHelper.TenantRole))
           {
-            await okta.RemoveRoleAsync(oktaUser.Id, "00g2skdaoGOwpGSHj4x6");
+            await okta.RemoveRoleAsync(oktaUser.Id, OktaHelper.TenantRole);
           }
           else
           {
