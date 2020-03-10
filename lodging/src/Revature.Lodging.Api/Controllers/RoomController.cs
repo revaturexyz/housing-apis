@@ -124,7 +124,7 @@ namespace Revature.Lodging.Api.Controllers
     [HttpGet("{roomId}", Name = "GetRoomById")]
     [ProducesResponseType(typeof(Lib.Models.Room), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize(Roles = "Coordinator, Provider")] // OktaSetup
+    [Authorize] // OktaSetup
     public async Task<ActionResult<ApiRoom>> GetRoomByIdAsync([FromRoute]Guid roomId)
     {
       try
