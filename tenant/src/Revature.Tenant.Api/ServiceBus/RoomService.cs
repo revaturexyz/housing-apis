@@ -26,16 +26,22 @@ namespace Revature.Tenant.Api.ServiceBus
       IHttpContextAccessor httpContextAccessor,
       ILogger<RoomService> logger)
     {
+      _logger = logger;
+
       client.BaseAddress = new Uri(configuration["AppServices:Lodging"]);
 
       var incomingHeaders = httpContextAccessor.HttpContext.Request.Headers;
       if (incomingHeaders.TryGetValue(HeaderNames.Authorization, out StringValues authValues))
       {
-          client.DefaultRequestHeaders.Add(HeaderNames.Authorization, authValues as IEnumerable<string>);
+        client.DefaultRequestHeaders.Add(HeaderNames.Authorization, authValues as IEnumerable<string>);
+        _logger.LogInformation("Configured HttpClient with Authorization header");
+      }
+      else
+      {
+        _logger.LogWarning("No Authorization header found to configure HttpClient with");
       }
 
       _client = client;
-      _logger = logger;
     }
 
     /// <summary>
