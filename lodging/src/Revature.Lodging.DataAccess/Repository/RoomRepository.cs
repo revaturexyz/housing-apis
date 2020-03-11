@@ -84,7 +84,10 @@ namespace Revature.Lodging.DataAccess
         default:
           break;
       }
-
+      if(myRoom.Gender == null)
+      {
+        roomEntity.Gender = null;
+      } else { 
       string gender = myRoom.Gender.ToLower();
       switch (gender)
       {
@@ -95,7 +98,9 @@ namespace Revature.Lodging.DataAccess
           roomEntity.GenderId = 2;
           break;
         default:
+            roomEntity.Gender = null;
           break;
+        }
       }
 
       await _context.SaveChangesAsync();
