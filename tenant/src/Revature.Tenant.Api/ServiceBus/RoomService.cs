@@ -17,9 +17,15 @@ namespace Revature.Tenant.Api.ServiceBus
     private readonly HttpClient _client;
     private readonly ILogger<RoomService> _logger;
 
-    public RoomService(HttpClient client, ILogger<RoomService> logger, IConfiguration configuration)
+    public RoomService(HttpClient client, ILogger<RoomService> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
     {
       client.BaseAddress = new Uri(configuration["AppServices:Lodging"]);
+
+      if (httpContextAccessor.HttpContext.Request.Headers.TryGetValue(HeaderNames.Authorization, out var auth))
+      {
+          client.DefaultRequestHeaders.Add(HeaderNames.Authorization, auth as IEnumerable<string>);
+      }
+
       _client = client;
       _logger = logger;
     }
