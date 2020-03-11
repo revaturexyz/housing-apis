@@ -301,7 +301,7 @@ namespace Revature.Tenant.Api.Controllers
         //cast ApiTenant in Logic Tenant
         var newTenant = ApiMapper.Map(tenant);
 
-        if (tenant.ApiCar.LicensePlate != null)
+        if (tenant.ApiCar?.LicensePlate != null)
         {
           newTenant.Car = ApiMapper.Map(tenant.ApiCar);
           newTenant.CarId = 0;
