@@ -58,7 +58,8 @@ namespace Revature.Lodging.Api
                               "http://localhost:14080",
                               "https://localhost:14080",
                               "http://localhost:13080",
-                              "https://localhost:13080")
+                              "https://localhost:13080",
+                              "https://housing-angular-dev.azurewebsites.net")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
