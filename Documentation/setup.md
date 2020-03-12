@@ -37,7 +37,7 @@ To get okta working from the codebase, an okta account is needed.
 Go to https://developer.okta.com/, click on signup, and fill out the required information.
 After confirming your email, go to your new account and click on Users->Groups and click add group, creating “Coordinator”. Create the groups “Provider” and “Tenant” as well. 
 Your groups should look something like this: \
-![something](groups.png "groups")
+![something](./Images/groups.png "groups")
 Next, go to API ->Authorization Servers and select the default server. (note the URI shown)
 Click on Claims, then on Add Claim. Set the name “Roles”, Include in token type to “ID token”, “Always”, Value type “Groups”, Filter to matches regex .\*, and include in any scope. It should look like this: \
 ![something](editclaim.png "editclaims") \
