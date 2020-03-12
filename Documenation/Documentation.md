@@ -1,34 +1,38 @@
 # Setting Everything Up
 ## AppSettings
 Because appsettings.json is not gitignored, you will have to copy the contents of it to appsettings.development.json, which is gitignored, before making any changes. \
-Identity: \
-{ \
-  "ConnectionStrings": { \
-    "ServiceBus": "Endpoint=sb://revhousing.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=C9iatG+Im1Glp1QjMFrULMWsQVE+9uea0ZKaEQTZ7S4=", \
-    "IdentityDb": "Server=192.168.99.100;Port=8000;Database=IdentityDb;Username=postgres;Password=Pass@word" \
-  }, \
-  "Okta": { \
-    "OktaDomain": "https://dev-808810.okta.com", \
-    "ClientId": "0oa2tzs0sNkOVRCKy4x6", \
-    "Token": "000jeGaXFDDLBZVjKyNZ_B58uPPwTb3YS8zQ9kFIYl" \
-  } \
-} \
-Lodging: \
-Tenant: \
+Identity: 
+``` 
+{ 
+  "ConnectionStrings": {
+    `ServiceBus": "Endpoint=sb://revhousing.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=C9iatG+Im1Glp1QjMFrULMWsQVE+9uea0ZKaEQTZ7S4=",
+    "IdentityDb": "Server=192.168.99.100;Port=8000;Database=IdentityDb;Username=postgres;Password=Pass@word"
+  },
+  "Okta": { 
+    "OktaDomain": "https://dev-808810.okta.com", 
+    "ClientId": "0oa2tzs0sNkOVRCKy4x6", 
+    "Token": "000jeGaXFDDLBZVjKyNZ_B58uPPwTb3YS8zQ9kFIYl" 
+  } 
+}
+```
+Lodging: 
+Tenant: 
 Address: 
 
 ## Docker
 We use docker to spin up development databases with the following command: \
-*docker run --rm -it -e POSTGRES_PASSWORD=Pass@word -p 8000:5432 postgres:alpine* \
-This will spin up a docker container with the postgres image that can be accessed on port 8000 with password Pass@word. If you are using Docker Desktop, this will be localhost:8000. If you are using Docker Toolbox, this will be at 192.168.99.100:8000. In order to access it from Visual Studio, you will need to set up the connection string in your secrets.json file. The following is an example for the Tenant service with Docker Desktop, on port 8000, with password Pass@word. You will have to change localhost to 192.168.99.100 if you are using docker toolbox. \
-{ \
-  "ConnectionStrings": { \
-    "TenantDb": "Server=localhost;Port=8000;Database=tenant;Username=postgres;Password=Pass@word" \
-  }, \
-  "Okta": {  \
-      "OktaDomain": “Okta-Domain-Here” \
-    } \
-  } \
+`*docker run --rm -it -e POSTGRES_PASSWORD=Pass@word -p 8000:5432 postgres:alpine*` \
+This will spin up a docker container with the postgres image that can be accessed on `port 8000` with password `Pass@word`. If you are using Docker Desktop, this will be `localhost:8000`. If you are using Docker Toolbox, this will be at `192.168.99.100:8000`. In order to access it from Visual Studio, you will need to set up the connection string in your secrets.json file. The following is an example for the Tenant service with Docker Desktop, on `port 8000`, with password `Pass@word`. You will have to change localhost to `192.168.99.100` if you are using docker toolbox. 
+```
+{ 
+  "ConnectionStrings": { 
+    "TenantDb": "Server=localhost;Port=8000;Database=tenant;Username=postgres;Password=Pass@word" 
+  }, 
+  "Okta": {  
+      "OktaDomain": “Okta-Domain-Here” 
+  } 
+} 
+```
   As of right now, your programs will not run because your Okta domain “does not start with https”
 The following section will fix that. 
 ## Okta
@@ -37,86 +41,94 @@ To get okta working from the codebase, an okta account is needed.
 Go to https://developer.okta.com/, click on signup, and fill out the required information.
 After confirming your email, go to your new account and click on Users->Groups and click add group, creating “Coordinator”. Create the groups “Provider” and “Tenant” as well. 
 Your groups should look something like this: \
-![something](groups.png "groups")
+![something](groups.png "groups") \
 Next, go to API ->Authorization Servers and select the default server. (note the URI shown)
 Click on Claims, then on Add Claim. Set the name “Roles”, Include in token type to “ID token”, “Always”, Value type “Groups”, Filter to matches regex .\*, and include in any scope. It should look like this: \
 ![something](editclaim.png "editclaims") \
 Then, make another using Access. Your settings should look something like this when done: \
 ![something](finalclaims.png "finalclaims") \
-Next, go to the applications tab. Click add application. For the front end, select single page app and click next. Change the Base URI to localhost:4200 and choose a descriptive name. In the angular app, change environment.ts to include domain: https://dev-####.okta.com, issuer: https://dev-####.okta.com/oauth2/default, clientID: <clientid from the app you just created>, redirectUri: https://localhost:4200/implicit/callback. App.config should be injected in app.module.ts.
+Next, go to the applications tab. Click add application. For the front end, select single page app and click next. Change the Base URI to `localhost:4200` and choose a descriptive name. In the angular app, change environment.ts to include domain: https://dev-####.okta.com, issuer: https://dev-####.okta.com/oauth2/default, clientID: <clientid from the app you just created>, redirectUri: https://localhost:4200/implicit/callback. App.config should be injected in app.module.ts.
 Next, make a token. To do this, click on API -> Tokens, then on create token. Name the token whatever you like, we used managementToken. *Make sure not to lose the token value.*
 In each API, add the following in appsettings.development.json, using your okta domain, client ID, and token. Only the Identity service needs the token.\
-![something](Okta.png "Okta") \
+![something](Okta.png "Okta") 
   
 ## Adding Okta to a new API
-Middleware: Add to Startup.cs in ConfigureServices: \
-services.AddAuthentication(options => \
-  	{ \
-    	options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme; \
-    	options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme; \
-    	options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; \
-  	}) \
-  	.AddJwtBearer(options => \
-  	{ \
-    	options.Authority = Configuration["Okta:Domain"] + "/oauth2/default"; \
-    	options.Audience = "api://default"; \
-    	options.RequireHttpsMetadata = true; \
-    	options.SaveToken = true; \
-    	options.TokenValidationParameters = new TokenValidationParameters \
-    	{ \
-      	NameClaimType = "name", \
-      	RoleClaimType = "groups", \
-      	ValidateIssuer = true, \
-    	}; \
-  	}); \
+Middleware: Add to Startup.cs in ConfigureServices: 
+```
+services.AddAuthentication(options => 
+{ 
+  	options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme; 
+   	options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme; 
+   	options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; 
+}) 
+.AddJwtBearer(options => 
+{ 
+  options.Authority = Configuration["Okta:Domain"] + "/oauth2/default"; 
+  options.Audience = "api://default"; 
+  options.RequireHttpsMetadata = true; 
+  options.SaveToken = true; 
+  options.TokenValidationParameters = new TokenValidationParameters 
+  { 
+    NameClaimType = "name", 
+    RoleClaimType = "groups", 
+    ValidateIssuer = true, 
+  }; 
+});
+```
 In your controller, add the Authorize filter to add authentication and authorization to the controller  and/or http methods. \
-E.g. \
- // adds authentication, only authenticated users can access \
-[Authorize] \
+E.g. 
+``` C#
+// adds authentication, only authenticated users can access 
+[Authorize] 
 
-// authentication + role-based authorization, can only be accessed by an account that has \ //‘Coordinator’ in their role \
-[Authorize(Roles=”Coordinator”)] \
+// authentication + role-based authorization, can only be accessed by an account that has 
+//‘Coordinator’ in their role 
+[Authorize(Roles=”Coordinator”)] 
 
-// authorization for Coordinator OR Provider \
-[Authorize(Roles=”Coordinator,Provider”)] \
+// authorization for Coordinator OR Provider 
+[Authorize(Roles=”Coordinator,Provider”)] 
 
-// authorization for Coordinator AND Provider \
-[Authorize(Roles=”Coordinator”)] \
-[Authorize(Roles=”Provider”)] \
-![something](oktasetup.png "oktasetup")
-These Roles can be managed in the Okta Client which can be found under Users>Groups
+// authorization for Coordinator AND Provider 
+[Authorize(Roles=”Coordinator”)]
+[Authorize(Roles=”Provider”)]
+``` 
+![something](oktasetup.png "oktasetup") 
 
-COORDINATOR \
-Name: Test_One \
-Email: revtestone2020@gmail.com, rectestone2020+1@gmail.com \
-Password: hidden \
-Birthday: January 1 2000 \
-OKTA password: UTAokta2020 \
-OKTA What is your favorite security question: None \
+## Okta Client Roles : Users > Groups
 
-PROVIDER - PENDING \
-Name: Test_Two \
-Email: revtesttwo2020@gmail.com \
-Password: hidden \
-Birthday: January 1 2000 \
-OKTA password : UTAokta2020 \
-OKTA What is your favorite security question: None \
+```
+COORDINATOR 
+Name: Test_One 
+Email: revtestone2020@gmail.com, rectestone2020+1@gmail.com 
+Password: hidden 
+Birthday: January 1 2000 
+OKTA password: UTAokta2020 
+OKTA What is your favorite security question: None 
 
-PROVIDER - APPROVED \
-Name: Test_Three \
-Email: revtestthree2020@gmail.com, revtestthree2020+1@gmail.com \
-Password: hidden \
-Birthday: January 1 2000 \
-OKTA password : UTAokta2020 \
-OKTA What is your favorite security question: None \
+PROVIDER - PENDING 
+Name: Test_Two 
+Email: revtesttwo2020@gmail.com 
+Password: hidden 
+Birthday: January 1 2000 
+OKTA password : UTAokta2020 
+OKTA What is your favorite security question: None 
 
-TENANT \
-Name: Test_Four \
-Email: revtestfour2020@gmail.com, revtestfour2020+1@gmail.com, revtestfour2020+2@gmail.com \
-Password: hidden \
-Birthday: January 1 2000 \
-OKTA password : UTAokta2020 \
-OKTA What is your favorite security question: None \
+PROVIDER - APPROVED 
+Name: Test_Three 
+Email: revtestthree2020@gmail.com, revtestthree2020+1@gmail.com 
+Password: hidden 
+Birthday: January 1 2000 
+OKTA password : UTAokta2020 
+OKTA What is your favorite security question: None 
+
+TENANT 
+Name: Test_Four 
+Email: revtestfour2020@gmail.com, revtestfour2020+1@gmail.com, revtestfour2020+2@gmail.com 
+Password: hidden 
+Birthday: January 1 2000 
+OKTA password : UTAokta2020 
+OKTA What is your favorite security question: None 
+```
 
 ## Google APIs
 This section is required only for the Address service, which consumes the google maps Distance Matrix API and Geocoding API. \
@@ -126,15 +138,15 @@ https://cloud.google.com/maps-platform/
 
 # Overview of Services
 ## Disclaimer
-This section of the document is not a replacement for Swagger, and is more intended for giving an overview of how the services interact with, and depend on, each other. If you want to know how to call a service, please refer to the Swagger documentation for that service. \
+This section of the document is not a replacement for Swagger, and is more intended for giving an overview of how the services interact with, and depend on, each other. If you want to know how to call a service, please refer to the Swagger documentation for that service. 
 ## Inter-Service Communication
 // TODO: Talk about service buses and how they work, the various classes which use HTTPRequest, when you should use each, and that there are good examples in the code. \
-![something](servicemap.jpg "servicemap")
+![something](servicemap.jpg "servicemap") 
 ## Dependencies
 Tenant depends on Identity, Address, and Lodging \
 Lodging depends on Identity and Address \
 Identity and Address depend on nothing \
-UI depends on Identity, Lodging, and Tenant \
+UI depends on Identity, Lodging, and Tenant 
 
 ## Identity
 Port: 9100
@@ -313,7 +325,7 @@ Port: 9110
   * Consumed by post and put methods in tenant and lodging service
 # Overview of UI
 ## Overview
-The Angular portion of the Revature Housing project is focused on consuming the various APIs in order to display and edit complex and room information, as well as add and display Tenant data. \
+The Angular portion of the Revature Housing project is focused on consuming the various APIs in order to display and edit complex and room information, as well as add and display Tenant data. 
 * On Login: 
   * Tenant - Can view their profile information, view room information, as well as make maintenance requests. Currently the only functionality inside the code, is the Tenants ability to  view their current room information. 
   * Coordinator - Has the ability to add tenants, search for tenants, view complex information. View information relating to tenants 
@@ -323,81 +335,82 @@ The Angular portion of the Revature Housing project is focused on consuming the 
 User story: As a user I should be able to display a list of all tenants, as well as be able to filter them according to different attributes belonging to tenant. 
 ### select-tenant
 User story: As a user with admin privileges, I should be able to delete tenants from the database. \
-deleteTrigger() - confirms the deletion of tenant \
-deleteStop() - denies the deletion of tenant \
-deleteGo() - executes the deletion of a tenant \
-routeToSearchTenant() - navigate to the search tenant web page \
+`deleteTrigger()` - confirms the deletion of tenant \
+`deleteStop()` - denies the deletion of tenant \
+`deleteGo()` - executes the deletion of a tenant \
+routeToSearchTenant() - navigate to the search tenant web page 
 ### Tenant-maintenance
 User Story: As a user, I should be able to raise maintenance issues to the complex I’m staying at. I should have the ability to designate different issues for different areas of the living unit. \
-The models are as follows: \
-  areas: Array<string>;     	//list of areas in \
-  area_entrance: Array<string>; //entrance/halls \
-  area_living: Array<string>;   //living/dining room \
-  area_kitchen: Array<string>;  //kitchen \
-  area_bed: Array<string>;  	//bedroom \
-  area_bath: Array<string>; 	//bathroom \
-  area_other: Array<string>;	//other equipment \
+The models are as follows: 
+``` C#
+  areas: Array<string>;     	//list of areas in 
+  area_entrance: Array<string>; //entrance/halls 
+  area_living: Array<string>;   //living/dining room 
+  area_kitchen: Array<string>;  //kitchen 
+  area_bed: Array<string>;  	//bedroom 
+  area_bath: Array<string>; 	//bathroom 
+  area_other: Array<string>;	//other equipment 
  
-  maintenanceFG = new FormGroup({ \
-	unitFC: new FormControl(''), \
-	roomFC: new FormControl(''), \
-	firstnameFC: new FormControl(''), \ 
-	lastnameFC: new FormControl(''), \
-	emailFC: new FormControl(''), \
-	areaFC: new FormControl(''), \
-	descriptionFC: new FormControl('') \
-  }); \
+  maintenanceFG = new FormGroup({ 
+	unitFC: new FormControl(''), 
+	roomFC: new FormControl(''), 
+	firstnameFC: new FormControl(''), 
+	lastnameFC: new FormControl(''), 
+	emailFC: new FormControl(''), 
+	areaFC: new FormControl(''), 
+	descriptionFC: new FormControl('') 
+  }); 
 
-  this.areas = \
-	[ \
-  	'Entrance/Halls', \
-  	'Living/Dining Room', \
-  	'Kitchen', \
-  	'Bedroom(s)', \
-  	'Bathroom(s)', \
-  	'Other' \
-	]; \
-
-Majority of this component is currently double binding to html. There does not yet exist a database object to hold maintenance request. \
+  this.areas = 
+	[ 
+  	'Entrance/Halls', 
+  	'Living/Dining Room', 
+  	'Kitchen', 
+  	'Bedroom(s)', 
+  	'Bathroom(s)', 
+  	'Other' 
+	]; 
+```
+Majority of this component is currently double binding to html. There does not yet exist a database object to hold maintenance request. 
 ### View-Room
 User Story: \
 Allows for Tenants, and those who have tenant roles. To see their information, based on their tenant id which is a GUID. Accesses the GUID from Identity API. Then with the GUID tenant id they would access the Tenant Api to get the Room ID which is a GUID. Then uses the Lodging service to to get the room details, with the getRoomById(Room ID). \
-As of the hand off of the Jan 06 batch, it uses this model to store data: \
-
-room: Room = { \
-	roomId: null, \
-	roomNumber: ‘’, \
-	numberOfBeds: null, \
-	numberOfOccupants: null, \
-	apiRoomType: null, \
-	Amenities: null, \
-	leaseStart: null, \
-	leaseEnd: null, \
-	complexId: null, \
-	Gender: null \
+As of the hand off of the Jan 06 batch, it uses this model to store data: 
+``` C#
+room: Room = { 
+	roomId: null, 
+	roomNumber: ‘’, 
+	numberOfBeds: null, 
+	numberOfOccupants: null, 
+	apiRoomType: null, 
+	Amenities: null, 
+	leaseStart: null, 
+	leaseEnd: null, 
+	complexId: null, 
+	Gender: null 
 }
-
-Of these, the information displayed in view-room .html include roomNumber, numberOfBeds, numberOfOccupants, Amenities, leaseStart + leaseEnd. \
+```
+Of these, the information displayed in view-room .html include roomNumber, numberOfBeds, numberOfOccupants, Amenities, leaseStart + leaseEnd. 
 
 sessionStorage.getItem('guid') \
-This line is responsible for passing in the Okta guid from session storage. It is the reason our auth can communicate with DB objects. \
+This line is responsible for passing in the Okta guid from session storage. It is the reason our auth can communicate with DB objects. 
 
 The two methods called on initialization are: \
 this.getTenantInfo(this.tenantid); \
-this.getTenantRoom(this.currentTenant.roomId); \
+this.getTenantRoom(this.currentTenant.roomId); 
 
 getTenant info is meant to populate the current tenant as a result of Okta auth. \
-getTenantRoom is meant to populate the Room mapped to the tenant as a result of current tenant. \
+getTenantRoom is meant to populate the Room mapped to the tenant as a result of current tenant. 
 
-tenantid - string object that is meant to obtain the guid generated by okta as a string. Should contain the correct value upon runtime in local, cookie, or session storage. \
+tenantid - string object that is meant to obtain the guid generated by okta as a string. Should contain the correct value upon runtime in local, cookie, or session storage. 
 
-currentTenant - Tenant object containing all the information of the currently logged in tenant. It’s ultimate purpose is to transfer its room information to currentRoom. \
+currentTenant - Tenant object containing all the information of the currently logged in tenant. It’s ultimate purpose is to transfer its room information to currentRoom. 
 
-currentRoom - Room object containing all of the information that is to be displayed in the html view. \
+currentRoom - Room object containing all of the information that is to be displayed in the html view. 
 
-getById() method is obsolete upon the inclusion of tenant room. The only reason it’s still in the code at all is because of the limitations imposed to us regarding commits and pull requests. \
+`getById()` method is obsolete upon the inclusion of tenant room. The only reason it’s still in the code at all is because of the limitations imposed to us regarding commits and pull requests. 
 
-For this same reason, there still exists objects holding mock data within the component. The following objects can be removed without affecting the correctness of the program:  \
+For this same reason, there still exists objects holding mock data within the component. The following objects can be removed without affecting the correctness of the program:  
 * XRoom
 * X,Y,Z Amenity
 * AList
@@ -410,25 +423,28 @@ For this same reason, there still exists objects holding mock data within the co
 Services Used: \
 Identity Service - Used to access information about current tenant , to return the tenant id \
 Tenant Service - Used to access tenant information with method getTenantById , giving access to the room ID \
-Lodging Service - Used to access room information with the method getRoomById. \
+Lodging Service - Used to access room information with the method getRoomById. 
 
 ### Tenant-profile
-User story: A user should be able to view their personal information that is associated with their account. This information is held in a tenant object, which itself consists of several other objects such as tenant address, car, batch, training center. \
+User story: A user should be able to view their personal information that is associated with their account. This information is held in a tenant object, which itself consists of several other objects such as tenant address, car, batch, training center. 
 
 getTenantInfo - is meant to populate the current tenant as a result of Okta auth. \
-getTenantRoom - is meant to populate the Room mapped to the tenant as a result of current tenant. \ 
+getTenantRoom - is meant to populate the Room mapped to the tenant as a result of current tenant. 
 
-In the tenant-profile HTML we display firstname, lastname, gender, email, all address info, all batch info, all car info.  \
+In the tenant-profile HTML we display firstname, lastname, gender, email, all address info, all batch info, all car info.  
 ## Services
 ### Lodging Service [Complex Methods]
-GetAllComplexes(), consumes api/complex GET \
-GetComplexById(ComplexId : string (GUID)), consumes api/complex/{complexid} GET \
-GetComplexesByProviderId(ProviderId: string (GUID)), consumes api/complex/providerId/{providerId} GET \
-AddComplex(newComplex: <PostComplex>), consumes api/complex POST \
-UpdateComplex(updatedComplex: <Complex>), consumes api/complex PUT \
-DeleteComplexById(ComplexId : string (GUID)), consumes api/complex/{complexId} DELETE \
+```
+GetAllComplexes(), consumes api/complex GET 
+GetComplexById(ComplexId : string (GUID)), consumes api/complex/{complexid} GET 
+GetComplexesByProviderId(ProviderId: string (GUID)), consumes api/complex/providerId/{providerId} GET 
+AddComplex(newComplex: <PostComplex>), consumes api/complex POST 
+UpdateComplex(updatedComplex: <Complex>), consumes api/complex PUT 
+DeleteComplexById(ComplexId : string (GUID)), consumes api/complex/{complexId} DELETE 
+```
 
 ### Lodging Service [Room Methods]
+``` C#
 GetFilteredRooms(ComplexId : string (GUID) , [FromQuery] string roomNumber, 
 [FromQuery] int? numberOfBeds, 
 [FromQuery] string roomType, 
@@ -436,10 +452,11 @@ GetFilteredRooms(ComplexId : string (GUID) , [FromQuery] string roomNumber,
 [FromQuery] DateTime? endDate, 
 [FromQuery] Guid? roomId,
 [FromQuery] bool? vacancy,
-[FromQuery] bool? empty), consumes api/room/complexid/{ComplexId}? GET \
-AddRoom(newRoom: postRoom), consumes api/Room POST \
-UpdateRoom(roomId : string (GUID), room : Room), consumes api/room/{roomid} PUT \ 
-DeleteRoom(roomId : string (GUID)), consumes api/room/{roomid} DELETE \
+[FromQuery] bool? empty), consumes api/room/complexid/{ComplexId}? GET 
+AddRoom(newRoom: postRoom), consumes api/Room POST 
+UpdateRoom(roomId : string (GUID), room : Room), consumes api/room/{roomid} PUT 
+DeleteRoom(roomId : string (GUID)), consumes api/room/{roomid} DELETE
+```
 ### Identity Service
 ### Tenant Service
 ### View-room Service
