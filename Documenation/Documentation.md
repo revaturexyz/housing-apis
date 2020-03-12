@@ -1,4 +1,5 @@
 # Setting Everything Up
+Sonarcloud: https://sonarcloud.io/organizations/revaturexyz/projects?sort=-analysis_date
 ## AppSettings
 Because appsettings.json is not gitignored, you will have to copy the contents of it to appsettings.development.json, which is gitignored, before making any changes. \
 Identity: \
