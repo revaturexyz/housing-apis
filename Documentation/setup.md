@@ -37,7 +37,7 @@ To get okta working from the codebase, an okta account is needed.
 Go to https://developer.okta.com/, click on signup, and fill out the required information.
 After confirming your email, go to your new account and click on Users->Groups and click add group, creating “Coordinator”. Create the groups “Provider” and “Tenant” as well. 
 Your groups should look something like this: \
-![something](./Images/groups.png "groups")
+![something](./Images/groups.png "groups") \
 Next, go to API ->Authorization Servers and select the default server. (note the URI shown)
 Click on Claims, then on Add Claim. Set the name “Roles”, Include in token type to “ID token”, “Always”, Value type “Groups”, Filter to matches regex .\*, and include in any scope. It should look like this: \
 ![something](./Images/editclaim.png "editclaims") \
@@ -46,7 +46,7 @@ Then, make another using Access. Your settings should look something like this w
 Next, go to the applications tab. Click add application. For the front end, select single page app and click next. Change the Base URI to localhost:4200 and choose a descriptive name. In the angular app, change environment.ts to include domain: https://dev-####.okta.com, issuer: https://dev-####.okta.com/oauth2/default, clientID: <clientid from the app you just created>, redirectUri: https://localhost:4200/implicit/callback. App.config should be injected in app.module.ts.
 Next, make a token. To do this, click on API -> Tokens, then on create token. Name the token whatever you like, we used managementToken. *Make sure not to lose the token value.*
 In each API, add the following in appsettings.development.json, using your okta domain, client ID, and token. Only the Identity service needs the token.\
-![something](./Images/Okta.png "Okta") \
+![something](./Images/Okta.png "Okta")
   
 ## Adding Okta to a new API
 Middleware: Add to Startup.cs in ConfigureServices: \
@@ -83,7 +83,7 @@ E.g. \
 // authorization for Coordinator AND Provider \
 [Authorize(Roles=”Coordinator”)] \
 [Authorize(Roles=”Provider”)] \
-![something](./Images/oktasetup.png "oktasetup")
+![something](./Images/oktasetup.png "oktasetup") \
 These Roles can be managed in the Okta Client which can be found under Users>Groups
 
 COORDINATOR \
