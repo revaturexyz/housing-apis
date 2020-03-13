@@ -1,42 +1,7 @@
-# Setting Everything Up
-Sonarcloud: https://sonarcloud.io/organizations/revaturexyz/projects?sort=-analysis_date
-## AppSettings
-Because appsettings.json is not gitignored, you will have to copy the contents of it to appsettings.development.json, which is gitignored, before making any changes. \
-Identity: 
-``` 
-{ 
-  "ConnectionStrings": {
-    `ServiceBus": "(Enter Service Bus Connection String)",
-    "IdentityDb": "(Enter Database Connection String)"
-  },
-  "Okta": { 
-    "OktaDomain": "https://dev-808810.okta.com", 
-    "ClientId": "0oa2tzs0sNkOVRCKy4x6", 
-    "Token": "000jeGaXFDDLBZVjKyNZ_B58uPPwTb3YS8zQ9kFIYl" 
-  } 
-}
-```
-Lodging: 
-Tenant: 
-Address: 
-
-## Docker
-We use docker to spin up development databases with the following command: \
-`*docker run --rm -it -e POSTGRES_PASSWORD=Pass@word -p 8000:5432 postgres:alpine*` \
-This will spin up a docker container with the postgres image that can be accessed on `port 8000` with password `Pass@word`. If you are using Docker Desktop, this will be `localhost:8000`. If you are using Docker Toolbox, this will be at `192.168.99.100:8000`. In order to access it from Visual Studio, you will need to set up the connection string in your secrets.json file. The following is an example for the Tenant service with Docker Desktop, on `port 8000`, with password `Pass@word`. You will have to change localhost to `192.168.99.100` if you are using docker toolbox. 
-```
-{ 
-  "ConnectionStrings": { 
-    "TenantDb": "Server=localhost;Port=8000;Database=tenant;Username=postgres;Password=Pass@word" 
-  }, 
-  "Okta": {  
-      "OktaDomain": “Okta-Domain-Here” 
-  } 
-} 
-```
-  As of right now, your programs will not run because your Okta domain “does not start with https”
-The following section will fix that. 
-## Okta
+# Getting Started
+## Cloning the Repo
+## Setting up Consumed Services
+### Okta
 As of right now, this is needed for all services besides the Address service.
 To get okta working from the codebase, an okta account is needed. 
 Go to https://developer.okta.com/, click on signup, and fill out the required information.
@@ -52,7 +17,107 @@ Next, go to the applications tab. Click add application. For the front end, sele
 Next, make a token. To do this, click on API -> Tokens, then on create token. Name the token whatever you like, we used managementToken. *Make sure not to lose the token value.*
 In each API, add the following in appsettings.development.json, using your okta domain, client ID, and token. Only the Identity service needs the token.\
 ![something](./Images/Okta.png "Okta")
-  
+#### User accounts in seed data
+There are a number of accounts in the seed data in identity, but you will have to create new Okta accounts for them. Your trainer will have the email passwords for these accounts. Also note that some of these emails are `revtest{one-four}+{number}@gmail.com`. Okta treats emails with +{tag} in them as different emails; however, all accounts with the same one-four number are accessed through the same email account.
+
+```
+COORDINATOR 
+Name: Test_One 
+Email: revtestone2020@gmail.com, revtestone2020+1@gmail.com 
+Password: hidden 
+Birthday: January 1 2000 
+OKTA password: UTAokta2020 
+OKTA What is your favorite security question: None 
+
+PROVIDER - PENDING 
+Name: Test_Two 
+Email: revtesttwo2020@gmail.com 
+Password: hidden 
+Birthday: January 1 2000 
+OKTA password : UTAokta2020 
+OKTA What is your favorite security question: None 
+
+PROVIDER - APPROVED 
+Name: Test_Three 
+Email: revtestthree2020@gmail.com, revtestthree2020+1@gmail.com 
+Password: hidden 
+Birthday: January 1 2000 
+OKTA password : UTAokta2020 
+OKTA What is your favorite security question: None 
+
+TENANT 
+Name: Test_Four 
+Email: revtestfour2020@gmail.com, revtestfour2020+1@gmail.com, revtestfour2020+2@gmail.com 
+Password: hidden 
+Birthday: January 1 2000 
+OKTA password : UTAokta2020 
+OKTA What is your favorite security question: None 
+```
+### Google APIs
+#### This section might look filled in, but it does need work
+This section is required only for the Address service, which consumes the google maps Distance Matrix API and Geocoding API. \
+https://cloud.google.com/maps-platform/
+## Running with Visual Studio
+### Configuration
+#### This section might look filled in, but it does need work
+Because appsettings.json is not gitignored, you will have to copy the contents of it to appsettings.development.json, which is gitignored, before making any changes. \
+The following uses identity as an example of what you would put in appsettings.
+Identity: 
+``` 
+{ 
+  "ConnectionStrings": {
+    `ServiceBus": "(Enter Service Bus Connection String)",
+    "IdentityDb": "Server=localhost;Port=8000;Database=identity;Username=postgres;Password=Pass@word""
+  },
+  "Okta": { 
+    "OktaDomain": "https://dev-808810.okta.com", 
+    "ClientId": "0oa2tzs0sNkOVRCKy4x6", 
+    "Token": "000jeGaXFDDLBZVjKyNZ_B58uPPwTb3YS8zQ9kFIYl" 
+  } 
+}
+```
+
+### Running the database container
+We use docker to spin up development databases with the following command: \
+`docker run --rm -it -e POSTGRES_PASSWORD=Pass@word -p 8000:5432 postgres:alpine` \
+This will spin up a docker container with the postgres image that can be accessed on `port 8000` with password `Pass@word`. If you are using Docker Desktop, this will be `localhost:8000`. If you are using Docker Toolbox, this will be at `192.168.99.100:8000`. In order to access it from Visual Studio, you will need to set up the connection string in your secrets.json file. The following is an example for the Tenant service with Docker Desktop, on `port 8000`, with password `Pass@word`. You will have to change localhost to `192.168.99.100` if you are using docker toolbox. 
+```
+{ 
+  "ConnectionStrings": { 
+    "TenantDb": "Server=localhost;Port=8000;Database=tenant;Username=postgres;Password=Pass@word" 
+  }, 
+  "Okta": {  
+      "OktaDomain": “Okta-Domain-Here” 
+  } 
+} 
+```
+
+### Running the code
+## Running with Docker Compose
+### Configuration
+#### This section might look filled in, but it does need work
+Whoever does the configuration for VS, do this section too.
+Basically, you need to fill data in these 5 files to match what is in appsettings, and you need to copy \*.template to the same name but without the .template extension. Ideally, there should be a script that splits config from a single file into the five files needed by docker compose.
+`A__B=setting` (note there are no quotes) in these files is the same setting as `A: { B: "setting"}`
+The five files that hold the configuration follow. Note that you don't need to set up database connection strings because that is handled by docker compose.
+- .[addressAPIKey].template => .addressAPIKey
+- .[commonConfig]
+- .[commonSecret].template => .commonSecret
+- .[identitySecret].template => .identitySecret
+- .[oktaSecrets].template => .oktaSecrets
+### Commands
+`docker-compose -f manifest.docker.yaml up identity_data address_data lodging_data tenant_data`
+You need to run the data containers first and wait for them to be in a state to accept connections.
+![something](./Images/DockerComposeDataReady.png "Docker Compose Database Containers Ready") \
+`docker-compose -f manifest.docker.yaml build identity_api address_api lodging_api tenant_api`
+If you have made changes to your application, you will need to run the build command to ensure you are using the latest version. This step can be run in parallel with the previous step without any issues.
+`docker-compose -f manifest.docker.yaml up identity_api address_api lodging_api tenant_api`
+After the data containers are ready, and the api has built (if needed), you are ready to run your services in docker containers. After this step, if everything went well, you should be able to access the services at the local address noted in each service.
+![something](./Images/DockerComposeApiReady.png "Docker Compose API Containers Ready") \
+`docker-compose -f manifest.docker.yaml down`
+By default, after stopping the containers, data persists. If you want to return to seed data, you need to run the down command.
+
+# Working with existing architecture
 ## Adding Okta to a new API
 Middleware: Add to Startup.cs in ConfigureServices: 
 ```
@@ -95,47 +160,17 @@ E.g.
 ``` 
 ![something](./Images/oktasetup.png "oktasetup")
 
-## Okta Client Roles : Users > Groups
+## Pipeline
+Talk about Azure Pipelines for a bit
+### When it runs
+The pipeline runs on every pull request into master as well as commits on master. The pipeline only runs the build stage on PRs and all of the build, pack, and deploy stages on commits.
+### Reasons for failed pipelines
+The pipeline will fail on failed tests, so make sure your tests pass before you push.
+### Artifacts
+A successful build on a pull request into master will deploy the services on Azure App Service, the root endpoints are listed in the individual services.
 
-```
-COORDINATOR 
-Name: Test_One 
-Email: revtestone2020@gmail.com, rectestone2020+1@gmail.com 
-Password: hidden 
-Birthday: January 1 2000 
-OKTA password: UTAokta2020 
-OKTA What is your favorite security question: None 
-
-PROVIDER - PENDING 
-Name: Test_Two 
-Email: revtesttwo2020@gmail.com 
-Password: hidden 
-Birthday: January 1 2000 
-OKTA password : UTAokta2020 
-OKTA What is your favorite security question: None 
-
-PROVIDER - APPROVED 
-Name: Test_Three 
-Email: revtestthree2020@gmail.com, revtestthree2020+1@gmail.com 
-Password: hidden 
-Birthday: January 1 2000 
-OKTA password : UTAokta2020 
-OKTA What is your favorite security question: None 
-
-TENANT 
-Name: Test_Four 
-Email: revtestfour2020@gmail.com, revtestfour2020+1@gmail.com, revtestfour2020+2@gmail.com 
-Password: hidden 
-Birthday: January 1 2000 
-OKTA password : UTAokta2020 
-OKTA What is your favorite security question: None 
-```
-
-## Google APIs
-This section is required only for the Address service, which consumes the google maps Distance Matrix API and Geocoding API. \
-https://cloud.google.com/maps-platform/
-
-## Docker Compose
+In addition to deploying the services, it provides static analysis on SonarCloud which is visible here.
+Sonarcloud: https://sonarcloud.io/organizations/revaturexyz/projects?sort=-analysis_date
 
 # Overview of Services
 ## Disclaimer
@@ -462,7 +497,8 @@ DeleteRoom(roomId : string (GUID)), // consumes api/room/{roomid} DELETE
 ### Tenant Service
 ### View-room Service
 
-
-
-
-
+[addressAPIKey]: ../.addressAPIKey.template
+[commonConfig]: ../.commonConfig
+[commonSecret]: ../.commonSecret.template
+[identitySecret]: ../.identitySecret.template
+[oktaSecrets]: ../.oktaSecrets.template
