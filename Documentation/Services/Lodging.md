@@ -1,8 +1,8 @@
 Port: 9120
 
-## METHODS
+# METHODS
 
-# Complex
+## Complex
 
 /api/complex
 •	Resource: Complex
@@ -35,7 +35,7 @@ o	Gets all existing complexes from the database
  - Delete: Roles: Provider
     - Deletes a Complex and its amenities from the database based on complexid
 
-# Room
+## Room
 
 /api/room/complexId/{complexId}
  - Resource: Room
@@ -62,8 +62,8 @@ api/room/{roomId}
  - Delete: Roles: (######)
     - Deletes the room with the given id
 
-## CONNECTIONS
+# CONNECTIONS
  - ComplexController accesses the Address API using the AddressRequest service.
 
-## KNOWN ISSUES
+# KNOWN ISSUES
  - Mapping from library models to API models are done in the RoomController rather than using a mapper.
