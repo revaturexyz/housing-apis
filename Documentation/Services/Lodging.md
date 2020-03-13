@@ -1,3 +1,5 @@
+# Lodging API Service Documentation
+
 Port: 9120
 
 # METHODS
@@ -5,18 +7,18 @@ Port: 9120
 ## Complex
 
 /api/complex
-•	Resource: Complex
-•	Get: Roles: (#######)
-o	Gets all existing complexes from the database
+ - Resource: Complex
+ - Get: Roles: Coordinator, Provider
+    - Gets all existing complexes from the database
 
 /api/complex/{complexid}
  - Resource: Complex
- - Get: Roles: (########)
+ - Get: Roles: Coordinator, Provider
 	- Gets an existing complex from the database based on complex id
 
 /api/complex/providerid/{providerid}
  - Resource: Complex
- - Get: Roles: (#######)
+ - Get: Roles: Coordinator, Provider
     - Gets all existing complexes with the given providerid
 
 /api/complex
@@ -39,27 +41,27 @@ o	Gets all existing complexes from the database
 
 /api/room/complexId/{complexId}
  - Resource: Room
- - Get: Roles: (#####)
+ - Get: Roles: Coordinator, Provider
     - Gets rooms that match a query string
 
 api/room/{roomid}
  - Resource: Room
- - Get: Roles: (######)
+ - Get: Roles:
     - Gets a room by room id
 
 api/room
  - Resource: Room
- - Post(ApiRoom): Roles: (######)
+ - Post(ApiRoom): Roles: Provider
     - Adds a new room the the database
 
 api/room/{roomId}
  - Resource: Room
- - Put(roomId, APiRoom): Roles: (######)
+ - Put(roomId, APiRoom): Roles: Provider
     - Edits an existing room with the given room id, to the given room object
 
 api/room/{roomId}
  - Resource: Room
- - Delete: Roles: (######)
+ - Delete: Roles: Provider
     - Deletes the room with the given id
 
 # CONNECTIONS
