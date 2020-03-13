@@ -6,8 +6,8 @@ Identity:
 ``` 
 { 
   "ConnectionStrings": {
-    `ServiceBus": "Endpoint=sb://revhousing.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=C9iatG+Im1Glp1QjMFrULMWsQVE+9uea0ZKaEQTZ7S4=",
-    "IdentityDb": "Server=192.168.99.100;Port=8000;Database=IdentityDb;Username=postgres;Password=Pass@word"
+    `ServiceBus": "(Enter Service Bus Connection String)",
+    "IdentityDb": "(Enter Database Connection String)"
   },
   "Okta": { 
     "OktaDomain": "https://dev-808810.okta.com", 
