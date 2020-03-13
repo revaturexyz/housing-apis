@@ -57,6 +57,18 @@ OKTA What is your favorite security question: None
 #### This section might look filled in, but it does need work
 This section is required only for the Address service, which consumes the google maps Distance Matrix API and Geocoding API. \
 https://cloud.google.com/maps-platform/
+1. From the above link, click “Get Started”.
+2. You will be prompted to create a new project. Enter a name for your project.
+![something](./Images/CreateProject.JPG "createproject")
+3. Agree to the Terms of Service pictured above, and click Create.
+4. You will be prompted to enable billing. Click Create Billing Account.
+![something](./Images/CreateBillingAccount.JPG "createbillingaccount")
+5. Step through the process to set up your billing.
+6. You will be prompted to pick your products. Check the boxes next to the Routes and Places APIs to enable them. These will give you access to the Distance Matrix and Geocoding API as required above.
+![something](./Images/PickYourProducts.JPG "chooseyourproducts")
+7. Click Next. In the next window, fill out your industry and what you want to build as prompted.
+8. Your API key will be generated for you! Store it somewhere safe and click Done.
+
 ## Running with Visual Studio
 ### Configuration
 #### This section might look filled in, but it does need work
