@@ -4,7 +4,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using RestSharp;
 using Okta.Sdk;
 using Okta.Sdk.Configuration;
 using Microsoft.Extensions.Configuration;
