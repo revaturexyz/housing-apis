@@ -20,9 +20,9 @@ namespace Revature.Tenant.DataAccess.Entities
 
     public virtual DbSet<Batch> Batch { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      builder.Entity<Tenant>(entity =>
+      modelBuilder.Entity<Tenant>(entity =>
       {
         entity.HasKey(t => t.Id);
         entity.Property(t => t.Email).IsRequired();
@@ -76,7 +76,7 @@ namespace Revature.Tenant.DataAccess.Entities
           });
       });
 
-      builder.Entity<Car>(entity =>
+      modelBuilder.Entity<Car>(entity =>
       {
         entity.HasKey(c => c.Id);
         entity.Property(c => c.Id).UseIdentityColumn();
@@ -110,7 +110,7 @@ namespace Revature.Tenant.DataAccess.Entities
           });
       });
 
-      builder.Entity<Batch>(entity =>
+      modelBuilder.Entity<Batch>(entity =>
      {
        entity.HasKey(b => b.Id);
        entity.Property(b => b.Id).UseIdentityColumn();

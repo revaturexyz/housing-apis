@@ -108,7 +108,7 @@ namespace Revature.Tenant.Api
     {
       if (tenant.Id == null)
       {
-        throw new ArgumentNullException("Tenant Id must be set");
+        throw new ArgumentException("Tenant ID must be set", nameof(tenant));
       }
 
       return new Lib.Models.Tenant

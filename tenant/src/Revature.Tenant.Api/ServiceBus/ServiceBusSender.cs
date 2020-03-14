@@ -14,7 +14,6 @@ namespace Revature.Tenant.Api.ServiceBus
   public class ServiceBusSender : IServiceBusSender
   {
     private readonly QueueClient _queueClient;
-    private readonly IConfiguration _queueConfiguration;
     private readonly ILogger<ServiceBusSender> _logger;
 
     /// <summary>
@@ -22,11 +21,10 @@ namespace Revature.Tenant.Api.ServiceBus
     /// </summary>
     public ServiceBusSender(IConfiguration queueConfiguration, ILogger<ServiceBusSender> logger)
     {
-      _queueConfiguration = queueConfiguration;
       _logger = logger;
       _queueClient = new QueueClient(
-        _queueConfiguration.GetConnectionString("ServiceBus"),
-        _queueConfiguration.GetSection("Queues")["AssignedRoom"]);
+        queueConfiguration.GetConnectionString("ServiceBus"),
+        queueConfiguration.GetSection("Queues")["AssignedRoom"]);
     }
 
     /// <summary>

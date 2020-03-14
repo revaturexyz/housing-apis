@@ -11,7 +11,7 @@ namespace Revature.Tenant.DataAccess.Repository
   /// <summary>
   /// A repository for managing data access for tenant onjects and their cars.
   /// </summary>
-  public class TenantRepository : ITenantRepository
+  public sealed class TenantRepository : ITenantRepository
   {
     private readonly TenantContext _context;
     private readonly IMapper _mapper;
@@ -182,27 +182,9 @@ namespace Revature.Tenant.DataAccess.Repository
       await _context.SaveChangesAsync();
     }
 
-    #region IDisposable Support
-    private bool _disposedValue = false; // To detect redundant calls
-
-    protected virtual void Dispose(bool disposing)
-    {
-      if (!_disposedValue)
-      {
-        if (disposing)
-        {
-          _context.Dispose();
-        }
-
-        _disposedValue = true;
-      }
-    }
-
-    // This code added to correctly implement the disposable pattern.
     public void Dispose()
     {
-      Dispose(true);
+      _context.Dispose();
     }
-    #endregion
   }
 }

@@ -12,7 +12,6 @@ namespace Revature.Tenant.Lib.Models
     private string _gender;
     private string _firstName;
     private string _lastName;
-    private Guid _addressId;
     private Guid? _roomId;
     private int? _batchId;
     private Guid _trainingCenter;
@@ -42,7 +41,7 @@ namespace Revature.Tenant.Lib.Models
       {
         if (value == null)
         {
-          throw new ArgumentNullException("Email must not be null");
+          throw new ArgumentNullException(nameof(value));
         }
 
         if (value.Length == 0)
@@ -72,7 +71,7 @@ namespace Revature.Tenant.Lib.Models
       {
         if (value == null)
         {
-          throw new ArgumentNullException("First name must not be null");
+          throw new ArgumentNullException(nameof(value));
         }
 
         if (value.Length == 0)
@@ -91,7 +90,7 @@ namespace Revature.Tenant.Lib.Models
       {
         if (value == null)
         {
-          throw new ArgumentNullException("Last name must not be null");
+          throw new ArgumentNullException(nameof(value));
         }
 
         if (value.Length == 0)
@@ -126,7 +125,7 @@ namespace Revature.Tenant.Lib.Models
       {
         if (value == null)
         {
-          throw new ArgumentNullException("Gender must not be null");
+          throw new ArgumentNullException(nameof(value));
         }
 
         if (value.Length == 0)
@@ -140,11 +139,7 @@ namespace Revature.Tenant.Lib.Models
 
     public string FullName => $"{FirstName} {LastName}";
 
-    public Guid AddressId
-    {
-      get => _addressId;
-      set => _addressId = value;
-    }
+    public Guid AddressId { get; set; }
 
     public int? BatchId
     {
