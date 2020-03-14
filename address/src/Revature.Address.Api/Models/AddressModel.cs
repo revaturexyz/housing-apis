@@ -3,10 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Revature.Address.Api.Models
 {
-
   /// <summary>
   /// This class is model of the Business Library
-  /// address object for use in the address controller
+  /// address object for use in the address controller.
   /// </summary>
   public class AddressModel
   {

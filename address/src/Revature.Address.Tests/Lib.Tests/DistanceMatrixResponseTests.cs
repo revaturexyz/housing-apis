@@ -5,7 +5,7 @@ using Xunit;
 namespace Revature.Address.Tests.Lib.Tests
 {
   /// <summary>
-  /// Contains tests for Response class
+  /// Contains tests for Response class.
   /// </summary>
   public class DistanceMatrixResponseTests
   {
@@ -43,6 +43,7 @@ namespace Revature.Address.Tests.Lib.Tests
       {
         Elements = new List<ResponseElement> { element, element }
       };
+
       // Act (create a DistanceMatrixResponse object by passing in parameters)
       var response = new Response
       {
@@ -51,6 +52,7 @@ namespace Revature.Address.Tests.Lib.Tests
         Rows = new List<ResponseRow> { row1, row2 },
         Status = status
       };
+
       // Assert (ensure the properties are set to the values)
       Assert.Equal(2, response.DestinationAddresses.Count);
       Assert.Equal(2, response.OriginAddresses.Count);

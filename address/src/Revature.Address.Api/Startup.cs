@@ -17,7 +17,7 @@ namespace Revature.Address.Api
 {
   /// <summary>
   /// Handles the startup configuration for the
-  /// address api
+  /// address api.
   /// </summary>
   public class Startup
   {
@@ -36,13 +36,14 @@ namespace Revature.Address.Api
       {
         options.AddPolicy(CorsPolicyName, builder =>
         {
-          builder.WithOrigins("http://localhost:4200",
-                              "https://localhost:4200",
-                              "http://housing.revature.xyz",
-                              "https://housing.revature.xyz",
-                              "http://housingdev.revature.xyz",
-                              "https://housingdev.revature.xyz",
-                              "https://housing-angular-dev.azurewebsites.net")
+          builder.WithOrigins(
+            "http://localhost:4200",
+            "https://localhost:4200",
+            "http://housing.revature.xyz",
+            "https://housing.revature.xyz",
+            "http://housingdev.revature.xyz",
+            "https://housingdev.revature.xyz",
+            "https://housing-angular-dev.azurewebsites.net")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
@@ -55,12 +56,14 @@ namespace Revature.Address.Api
       services.AddScoped<IAddressLogic, AddressLogic>();
       services.AddScoped<IGoogleApiAccess, GoogleApiAccess>();
 
+      services.AddHttpClient();
+
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Revature Address", Version = "v1" });
       });
       services.AddApplicationInsightsTelemetry();
-      
+
       services.AddHealthChecks();
       services.AddSingleton<ITelemetryInitializer, AddressTelemetryInitializer>();
 
