@@ -118,15 +118,15 @@ The five files that hold the configuration follow. Note that you don't need to s
 - .[identitySecret].template => .identitySecret
 - .[oktaSecrets].template => .oktaSecrets
 ### Commands
-`docker-compose -f manifest.docker.yaml up identity_data address_data lodging_data tenant_data`
-You need to run the data containers first and wait for them to be in a state to accept connections.
-![something](./Images/DockerComposeDataReady.png "Docker Compose Database Containers Ready") \
-`docker-compose -f manifest.docker.yaml build identity_api address_api lodging_api tenant_api`
-If you have made changes to your application, you will need to run the build command to ensure you are using the latest version. This step can be run in parallel with the previous step without any issues.
-`docker-compose -f manifest.docker.yaml up identity_api address_api lodging_api tenant_api`
-After the data containers are ready, and the api has built (if needed), you are ready to run your services in docker containers. After this step, if everything went well, you should be able to access the services at the local address noted in each service.
-![something](./Images/DockerComposeApiReady.png "Docker Compose API Containers Ready") \
-`docker-compose -f manifest.docker.yaml down`
+`docker-compose -f manifest.docker.yaml up identity_data address_data lodging_data tenant_data` \
+You need to run the data containers first and wait for them to be in a state to accept connections. \
+![Docker Compose DB Ready](./Images/DockerComposeDataReady.png "Docker Compose Database Containers Ready") \
+`docker-compose -f manifest.docker.yaml build identity_api address_api lodging_api tenant_api` \
+If you have made changes to your application, you will need to run the build command to ensure you are using the latest version. This step can be run in parallel with the previous step without any issues. \
+`docker-compose -f manifest.docker.yaml up identity_api address_api lodging_api tenant_api` \
+After the data containers are ready, and the api has built (if needed), you are ready to run your services in docker containers. After this step, if everything went well, you should be able to access the services at the local address noted in each service. \
+![Docker Compose API Ready](./Images/DockerComposeApiReady.png "Docker Compose API Containers Ready") \
+`docker-compose -f manifest.docker.yaml down` \
 By default, after stopping the containers, data persists. If you want to return to seed data, you need to run the down command.
 
 # Working with existing architecture
