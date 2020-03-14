@@ -358,7 +358,7 @@ namespace Revature.Tenant.Api.Controllers
       {
         _logger.LogInformation("PUT - Updating tenant with tenantid {tenantId}.", tenant.Id);
         _logger.LogInformation("Posting Address to Address Service...");
-        var postedAddress = await this._addressService.GetAddressAsync(tenant.ApiAddress);
+        var postedAddress = await _addressService.GetAddressAsync(tenant.ApiAddress);
         tenant.AddressId = postedAddress.Id;
         //cast ApiTenant in Logic Tenant
         var newTenant = ApiMapper.Map(tenant);
