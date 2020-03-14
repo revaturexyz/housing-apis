@@ -5,13 +5,21 @@ namespace Revature.Tenant.DataAccess.Entities
 {
   public class TenantContext : DbContext
   {
-    public TenantContext() { }
+    public TenantContext()
+    {
+    }
 
-    public TenantContext(DbContextOptions<TenantContext> options) : base(options) { }
+    public TenantContext(DbContextOptions<TenantContext> options)
+      : base(options)
+    {
+    }
 
     public virtual DbSet<Tenant> Tenant { get; set; }
+
     public virtual DbSet<Car> Car { get; set; }
+
     public virtual DbSet<Batch> Batch { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
       builder.Entity<Tenant>(entity =>
@@ -26,8 +34,7 @@ namespace Revature.Tenant.DataAccess.Entities
         entity.HasOne(t => t.Car).WithOne(c => c.Tenant).HasForeignKey<Tenant>(t => t.CarId);
         entity.HasOne(t => t.Batch).WithMany(b => b.Tenant).HasForeignKey(t => t.BatchId);
 
-        entity.HasData
-        (
+        entity.HasData(
           new Tenant()
           {
             AddressId = Guid.Parse("1a4d6c6e-9640-44c9-8c6b-5aebd3f9a67e"),
@@ -66,9 +73,7 @@ namespace Revature.Tenant.DataAccess.Entities
             LastName = "Eight",
             RoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456ee"),
             TrainingCenter = Guid.Parse("837c3248-1685-4d08-934a-0f17a6d1836a")
-          }
-        );
-
+          });
       });
 
       builder.Entity<Car>(entity =>
@@ -82,8 +87,7 @@ namespace Revature.Tenant.DataAccess.Entities
         entity.Property(c => c.Year).IsRequired();
         entity.Property(c => c.State).IsRequired();
 
-        entity.HasData
-        (
+        entity.HasData(
           new Car()
           {
             Color = "White",
@@ -103,9 +107,7 @@ namespace Revature.Tenant.DataAccess.Entities
             Model = "VTX1300",
             State = "TX",
             Year = "2006"
-          }
-        );
-
+          });
       });
 
       builder.Entity<Batch>(entity =>
@@ -117,8 +119,7 @@ namespace Revature.Tenant.DataAccess.Entities
        entity.Property(b => b.EndDate).IsRequired();
        entity.Property(b => b.TrainingCenter).IsRequired();
 
-       entity.HasData
-       (
+       entity.HasData(
          new Batch()
          {
            BatchCurriculum = "C#",
@@ -134,8 +135,7 @@ namespace Revature.Tenant.DataAccess.Entities
            Id = 2,
            StartDate = new DateTime(2019, 08, 30),
            TrainingCenter = Guid.Parse("837c3248-1685-4d08-934a-0f17a6d1836a")
-         }
-       );
+         });
      });
     }
   }

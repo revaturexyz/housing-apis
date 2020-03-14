@@ -6,10 +6,10 @@ namespace Revature.Tenant.Api
   public static class ApiMapper
   {
     /// <summary>
-    /// Maps a Model Batch to an Api Batch
+    /// Maps a Model Batch to an Api Batch.
     /// </summary>
-    /// <param name="batch">A Model Batch</param>
-    /// <returns>An Api Batch</returns>
+    /// <param name="batch">A Model Batch.</param>
+    /// <returns>An Api Batch.</returns>
     public static ApiBatch Map(Lib.Models.Batch batch)
     {
       return new ApiBatch
@@ -23,10 +23,10 @@ namespace Revature.Tenant.Api
     }
 
     /// <summary>
-    /// Maps an Api Batch to a Model Batch
+    /// Maps an Api Batch to a Model Batch.
     /// </summary>
-    /// <param name="batch">An Api Batch</param>
-    /// <returns>A Model Batch</returns>
+    /// <param name="batch">An Api Batch.</param>
+    /// <returns>A Model Batch.</returns>
     public static Lib.Models.Batch Map(ApiBatch batch)
     {
       var b = new Lib.Models.Batch
@@ -40,10 +40,10 @@ namespace Revature.Tenant.Api
     }
 
     /// <summary>
-    /// Maps a Model Car to an Api Car
+    /// Maps a Model Car to an Api Car.
     /// </summary>
-    /// <param name="car">A Model Car</param>
-    /// <returns>an Api Car</returns>
+    /// <param name="car">A Model Car.</param>
+    /// <returns>an Api Car.</returns>
     public static ApiCar Map(Lib.Models.Car car)
     {
       return new ApiCar
@@ -59,10 +59,10 @@ namespace Revature.Tenant.Api
     }
 
     /// <summary>
-    /// Maps an Api Car to a Model Car
+    /// Maps an Api Car to a Model Car.
     /// </summary>
-    /// <param name="car">An Api Car</param>
-    /// <returns>A Model Car</returns>
+    /// <param name="car">An Api Car.</param>
+    /// <returns>A Model Car.</returns>
     public static Lib.Models.Car Map(ApiCar car)
     {
       return new Lib.Models.Car
@@ -78,10 +78,10 @@ namespace Revature.Tenant.Api
     }
 
     /// <summary>
-    /// Maps a Models Tenant to an Api Tenant
+    /// Maps a Models Tenant to an Api Tenant.
     /// </summary>
-    /// <param name="tenant">A Model Tenant</param>
-    /// <returns>An Api Tenant</returns>
+    /// <param name="tenant">A Model Tenant.</param>
+    /// <returns>An Api Tenant.</returns>
     public static ApiTenant Map(Lib.Models.Tenant tenant)
     {
       return new ApiTenant
@@ -100,16 +100,17 @@ namespace Revature.Tenant.Api
     }
 
     /// <summary>
-    /// Maps an Api Tenant to a Model Tenant
+    /// Maps an Api Tenant to a Model Tenant.
     /// </summary>
-    /// <param name="tenant">An Api Tenant</param>
-    /// <returns>A Model Tenant</returns>
+    /// <param name="tenant">An Api Tenant.</param>
+    /// <returns>A Model Tenant.</returns>
     public static Lib.Models.Tenant Map(ApiTenant tenant)
     {
       if (tenant.Id == null)
       {
         throw new ArgumentNullException("Tenant Id must be set");
       }
+
       return new Lib.Models.Tenant
       {
         Id = (Guid)tenant.Id,

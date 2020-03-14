@@ -1,6 +1,7 @@
 using System;
 using Revature.Tenant.Lib.Models;
 using Xunit;
+
 namespace Revature.Tenant.Tests.LibTests
 {
   public class AvailRoomTest

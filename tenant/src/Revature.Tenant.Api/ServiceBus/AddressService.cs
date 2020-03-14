@@ -13,7 +13,7 @@ namespace Revature.Tenant.Api.ServiceBus
     private readonly HttpClient _client;
 
     /// <summary>
-    /// Set Json Serialization to Camel Case policy
+    /// Set Json Serialization to Camel Case policy.
     /// </summary>
     private readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
     {
@@ -21,11 +21,13 @@ namespace Revature.Tenant.Api.ServiceBus
     };
 
     /// <summary>
-    /// Construct Address Service with base URI, Default, and injected HTTP Client
-    /// NOTE:   This constructor uses a try catch which will perform the try block if address service is operational,
-    ///         but will use dummy data otherwise. This should NOT be allowed into a public deployment!!!
+    /// Initializes a new instance of the <see cref="AddressService"/> class with base URI, Default, and injected HTTP Client.
     /// </summary>
-    /// <param name="client">HTTP Client (dependency injection)</param>
+    /// <remarks>
+    /// This constructor uses a try catch which will perform the try block if address service is operational,
+    /// but will use dummy data otherwise. This should NOT be allowed into a public deployment!!!.
+    /// </remarks>
+    /// <param name="client">HTTP Client (dependency injection).</param>
     /// <param name="addressConfiguration">Configuration file with base URI.</param>
     public AddressService(HttpClient client, IConfiguration addressConfiguration)
     {
@@ -47,8 +49,8 @@ namespace Revature.Tenant.Api.ServiceBus
     /// the address sent in the query string to Post a new address. The official Address entry will always accopany a success response.
     /// NOTE: This Method uses a try catch that may result in the use of dummy data! Should be removed before public deployment.
     /// </summary>
-    /// <param name="item">A model of an Address</param>
-    /// <returns>A model of the formal Address entry in Address Services Database, including it GUID</returns>
+    /// <param name="item">A model of an Address.</param>
+    /// <returns>A model of the formal Address entry in Address Services Database, including it GUID.</returns>
     public async Task<ApiAddress> GetAddressAsync(ApiAddress item)
     {
       try
@@ -72,14 +74,9 @@ namespace Revature.Tenant.Api.ServiceBus
       }
     }
 
-    /// <summary>
-    /// </summary>
-    /// <param name="item">A model of an Address</param>
-    /// <returns></returns>
     public async Task<ApiAddress> GetAddressAsync(Guid addressId)
     {
       var queryString = addressId.ToString();
-
 
       using var response = await SendRequestAsync<ApiAddress>(HttpMethod.Get, "api/Address/" + queryString);
       response.EnsureSuccessStatusCode();
@@ -88,10 +85,11 @@ namespace Revature.Tenant.Api.ServiceBus
     }
 
     /// <summary>
-    /// Private helper method for sending a HTTP Request between services
+    /// Private helper method for sending a HTTP Request between services.
     /// </summary>
-    /// <returns>A Request Response</returns>
-    private async Task<HttpResponseMessage> SendRequestAsync<T>(HttpMethod method, string uri, T body = null) where T : class
+    /// <returns>A Request Response.</returns>
+    private async Task<HttpResponseMessage> SendRequestAsync<T>(HttpMethod method, string uri, T body = null)
+      where T : class
     {
       using var request = new HttpRequestMessage(method, uri);
       if (body is T)
@@ -100,11 +98,12 @@ namespace Revature.Tenant.Api.ServiceBus
         var content = new StringContent(json, Encoding.Default, "application/json");
         request.Content = content;
       }
+
       return await _client.SendAsync(request);
     }
 
     /// <summary>
-    /// A private helper method for interpretting a HTTP Response
+    /// A private helper method for interpretting a HTTP Response.
     /// </summary>
     /// <returns>A generic typed object that may be included in the body of a response.</returns>
     private async Task<T> ReadResponseBodyAsync<T>(HttpResponseMessage response)

@@ -7,12 +7,12 @@ namespace Revature.Tenant.Tests.DataTests
   public class TenantTest
   {
     /// <summary>
-    /// Tests that  Constructor Should Construct With Setters
+    /// Tests that  Constructor Should Construct With Setters.
     /// </summary>
     [Fact]
     public void ConstructorShouldConstructWithSetters()
     {
-      // Arrange 
+      // Arrange
       var tenantId = Guid.Parse("fa4d6c6e-9650-44c9-8c6b-5aebd3f9a67d");
       var email = "firstname@email.com";
       var gender = "Male";
@@ -23,6 +23,7 @@ namespace Revature.Tenant.Tests.DataTests
       var carId = 3;
       var batchId = 3;
       var trainingCenter = Guid.Parse("fa4d6c6e-9650-44c9-8c6b-5aebd3f9a67b");
+
       // Act (set properties to variables through constructor)
       var apiTenant = new DatMod.Tenant
       {
@@ -37,8 +38,8 @@ namespace Revature.Tenant.Tests.DataTests
         BatchId = batchId,
         TrainingCenter = trainingCenter
       };
-      // Assert (assure the values are set)
 
+      // Assert (assure the values are set)
       Assert.Equal(tenantId, apiTenant.Id);
       Assert.Equal(email, apiTenant.Email);
       Assert.Equal(gender, apiTenant.Gender);

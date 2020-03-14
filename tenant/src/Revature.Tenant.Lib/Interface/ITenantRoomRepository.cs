@@ -7,15 +7,14 @@ namespace Revature.Tenant.Lib.Interface
   public interface ITenantRoomRepository
   {
     /// <summary>
-    /// Method that gets tenant and associated information of occupants in a room given RoomId
+    /// Method that gets tenant and associated information of occupants in a room given RoomId.
     /// </summary>
-    /// <param name="roomId">Room Id of a room</param>
-    /// <returns></returns>
+    /// <param name="roomId">Room Id of a room.</param>=
     public Task<List<Models.Tenant>> GetTenantsByRoomIdAsync(Guid roomId);
+
     /// <summary>
-    /// Method that gets tenants with no room assignments
+    /// Method that gets tenants with no room assignments.
     /// </summary>
-    /// <returns></returns>
     public Task<IList<Models.Tenant>> GetRoomlessTenantsAsync();
   }
 }

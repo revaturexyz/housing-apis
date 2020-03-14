@@ -7,28 +7,31 @@ using Xunit;
 namespace Revature.Tenant.Tests.DataTests
 {
   /// <summary>
-  /// Unit tests for data access methods in TenantRepository class
+  /// Unit tests for data access methods in TenantRepository class.
   /// </summary>
   public class TenantRepositoryTests
   {
     /// <summary>
-    /// A test for the Constructor to Construct 
+    /// A test for the Constructor to Construct.
     /// </summary>
     [Fact]
     public void ConstructorShouldConstruct()
     {
-      // Arrange 
+      // Arrange
       var options = TestDbInitializer.InitializeDbOptions("TestConstructor");
       using var db = TestDbInitializer.CreateTestDb(options);
       var mapper = new Mapper();
-      // Act 
+
+      // Act
       var repo = new TenantRepository(db, mapper);
-      // Assert 
+
+      // Assert
     }
 
     /// <summary>
-    /// Checks that AddAsync creates a new Tenant in Db
+    /// Checks that AddAsync creates a new Tenant in Db.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task AddShouldAddTest()
     {
@@ -73,8 +76,8 @@ namespace Revature.Tenant.Tests.DataTests
       await repo.AddAsync(tenant);
       await repo.SaveAsync();
       var check = await repo.GetByIdAsync(Guid.Parse("fa4d6c6e-9650-44c9-8c6b-5aebd3f9ac7d"));
-      // Assert
 
+      // Assert
       Assert.NotNull(check);
       Assert.Equal(tenant.Email, check.Email);
       Assert.Equal(tenant.Gender, check.Gender);
@@ -83,16 +86,16 @@ namespace Revature.Tenant.Tests.DataTests
       Assert.Equal(tenant.AddressId, check.AddressId);
       Assert.Equal(tenant.RoomId, check.RoomId);
       Assert.Equal(tenant.TrainingCenter, check.TrainingCenter);
-
     }
 
     /// <summary>
-    /// Checks that HasCarAsync Returns true if the tenant has a car
+    /// Checks that HasCarAsync Returns true if the tenant has a car.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task HasCarShouldReturnTrueIfHasCar()
     {
-      //Arrange
+      // Arrange
       var options = TestDbInitializer.InitializeDbOptions("HasCarShouldReturnTrueIfHasCar");
       using var db = TestDbInitializer.CreateTestDb(options);
       var mapper = new Mapper();
@@ -128,20 +131,14 @@ namespace Revature.Tenant.Tests.DataTests
       };
       tenant.Batch.SetStartAndEndDate(DateTime.MinValue, DateTime.Now);
 
-
-      //Act
-
+      // Act
       await repo.AddAsync(tenant);
       await repo.SaveAsync();
 
       var check = await repo.HasCarAsync(Guid.Parse("fa4d6c6e-9650-44c9-8c6b-4aebd3f9a67d"));
 
-      //Assert
-
+      // Assert
       Assert.True(check);
-
     }
-
-
   }
 }
