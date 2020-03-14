@@ -15,13 +15,14 @@ namespace Revature.Tenant.Api.ServiceBus
   public class IdentityService : IIdentityService
   {
     private readonly QueueClient _TenantQueue;
-    private readonly ILogger<RoomService> _logger;
+    private readonly ILogger<IdentityService> _logger;
 
-    public IdentityService(ILogger<RoomService> logger, IConfiguration configuration)
+    public IdentityService(ILogger<IdentityService> logger, IConfiguration configuration)
     {
       _TenantQueue = new QueueClient(configuration.GetConnectionString("ServiceBus"), configuration["Queues:TenantCUD"]);
       _logger = logger;
     }
+
     /// <summary>
     /// Method that creates new tenant accounts
     /// </summary>
