@@ -7,7 +7,7 @@ namespace Revature.Tenant.Api.Telemetry
 {
   internal class TenantTelemetryInitializer : ITelemetryInitializer
   {
-    IHttpContextAccessor contextAccessor;
+    private IHttpContextAccessor contextAccessor;
 
     public TenantTelemetryInitializer(IHttpContextAccessor ctxAccessor)
     {
