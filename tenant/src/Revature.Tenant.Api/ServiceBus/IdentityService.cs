@@ -25,7 +25,7 @@ namespace Revature.Tenant.Api.ServiceBus
     /// </summary>
     public async Task CreateAccount(Guid TenantId, string Email, string Name)
     {
-      Models.TenantAccountMessage tenantMessage = new Models.TenantAccountMessage
+      var tenantMessage = new Models.TenantAccountMessage
       {
         Name = Name,
         TenantId = TenantId,
@@ -42,7 +42,7 @@ namespace Revature.Tenant.Api.ServiceBus
     /// </summary>
     public async Task DeleteAccount(Guid TenantId, string Email, string Name)
     {
-      Models.TenantAccountMessage tenantMessage = new Models.TenantAccountMessage
+      var tenantMessage = new Models.TenantAccountMessage
       {
         Name = Name,
         TenantId = TenantId,
@@ -59,7 +59,7 @@ namespace Revature.Tenant.Api.ServiceBus
     /// </summary>
     public async Task UpdateAccount(Guid TenantId, string Email, string Name)
     {
-      Models.TenantAccountMessage tenantMessage = new Models.TenantAccountMessage
+      var tenantMessage = new Models.TenantAccountMessage
       {
         Name = Name,
         TenantId = TenantId,

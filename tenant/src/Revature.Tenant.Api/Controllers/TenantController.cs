@@ -295,7 +295,7 @@ namespace Revature.Tenant.Api.Controllers
       {
         _logger.LogInformation("Posting Address to Address Service...");
         var postedAddress = await _addressService.GetAddressAsync(tenant.ApiAddress);
-        Guid sharedId = Guid.NewGuid();
+        var sharedId = Guid.NewGuid();
         tenant.Id = sharedId;
         tenant.AddressId = postedAddress.Id;
         //cast ApiTenant in Logic Tenant
@@ -320,7 +320,7 @@ namespace Revature.Tenant.Api.Controllers
 
         //Send the create message to Identity
 
-        string Name = tenant.FirstName + " " + tenant.LastName;
+        var Name = tenant.FirstName + " " + tenant.LastName;
         await _tenantService.CreateAccount(sharedId, tenant.Email, Name);
 
         //Return Created and the model of the new tenant
@@ -373,7 +373,7 @@ namespace Revature.Tenant.Api.Controllers
         await _tenantRepository.SaveAsync();
         _logger.LogInformation("PUT persisted to dB");
 
-        string Name = tenant.FirstName + " " + tenant.LastName;
+        var Name = tenant.FirstName + " " + tenant.LastName;
         await _tenantService.UpdateAccount((Guid)tenant.Id, tenant.Email, Name);
 
         //Return NoContent
