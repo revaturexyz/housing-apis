@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
 using GoogleApi;
+using GoogleApi.Entities.Common.Enums;
 using GoogleApi.Entities.Maps.Geocoding.Address.Request;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,9 @@ namespace Revature.Address.Lib.BusinessLogic
 {
   public class GoogleApiAccess : IGoogleApiAccess
   {
+    private const string GoogleBaseUrl = "https://maps.googleapis.com/maps/api/distancematrix/json";
+
+    private readonly HttpClient _httpClient;
     private readonly ILogger _logger;
     private readonly string _key;
 
@@ -23,8 +27,16 @@ namespace Revature.Address.Lib.BusinessLogic
       PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy()
     };
 
-    public GoogleApiAccess(IConfiguration configuration, ILogger<GoogleApiAccess> logger = null)
+    public GoogleApiAccess(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<GoogleApiAccess> logger = null)
     {
+      _httpClient = httpClientFactory.CreateClient();
+
+      _httpClient.BaseAddress = new Uri(GoogleBaseUrl);
+
+      // Add an Accept header for JSON format.
+      _httpClient.DefaultRequestHeaders.Accept.Add(
+        new MediaTypeWithQualityHeaderValue("application/json"));
+
       _logger = logger;
       _key = configuration["GoogleApiKey"];
     }
@@ -42,18 +54,11 @@ namespace Revature.Address.Lib.BusinessLogic
 
       // added parameters to the Google API url
       var googleApiUrlParameter = $"?units=imperial&origins={formattedOrigin}&destinations={formattedDestination}&key=";
-      var googleBaseUrl = "https://maps.googleapis.com/maps/api/distancematrix/json";
 
       Response deserialized;
 
-      using var client = new HttpClient { BaseAddress = new Uri(googleBaseUrl) };
-
-      // Add an Accept header for JSON format.
-      client.DefaultRequestHeaders.Accept.Add(
-        new MediaTypeWithQualityHeaderValue("application/json"));
-
       // await for async call and get response.
-      using var response = await client.GetAsync(googleApiUrlParameter + _key).ConfigureAwait(false);
+      using var response = await _httpClient.GetAsync(googleApiUrlParameter + _key).ConfigureAwait(false);
       if (response.IsSuccessStatusCode)
       {
         deserialized = JsonSerializer.Deserialize<Response>(
@@ -114,18 +119,12 @@ namespace Revature.Address.Lib.BusinessLogic
       var results = response.Results.ToList();
 
       var addressComponents = results[0].AddressComponents.ToList();
-      var streetNum = addressComponents.
-        FirstOrDefault(t => t.Types.Contains(GoogleApi.Entities.Common.Enums.AddressComponentType.Street_Number));
-      var street = addressComponents.
-        FirstOrDefault(t => t.Types.Contains(GoogleApi.Entities.Common.Enums.AddressComponentType.Route));
-      var city = addressComponents.
-        FirstOrDefault(t => t.Types.Contains(GoogleApi.Entities.Common.Enums.AddressComponentType.Locality));
-      var state = addressComponents.
-        FirstOrDefault(t => t.Types.Contains(GoogleApi.Entities.Common.Enums.AddressComponentType.Administrative_Area_Level_1));
-      var country = addressComponents.
-        FirstOrDefault(t => t.Types.Contains(GoogleApi.Entities.Common.Enums.AddressComponentType.Country));
-      var zipCode = addressComponents.
-        FirstOrDefault(t => t.Types.Contains(GoogleApi.Entities.Common.Enums.AddressComponentType.Postal_Code));
+      var streetNum = addressComponents.First(t => t.Types.Contains(AddressComponentType.Street_Number));
+      var street = addressComponents.First(t => t.Types.Contains(AddressComponentType.Route));
+      var city = addressComponents.First(t => t.Types.Contains(AddressComponentType.Locality));
+      var state = addressComponents.First(t => t.Types.Contains(AddressComponentType.Administrative_Area_Level_1));
+      var country = addressComponents.First(t => t.Types.Contains(AddressComponentType.Country));
+      var zipCode = addressComponents.First(t => t.Types.Contains(AddressComponentType.Postal_Code));
 
       var normalized = new Address
       {

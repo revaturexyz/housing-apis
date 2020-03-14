@@ -28,20 +28,6 @@ namespace Revature.Address.Api
       };
     }
 
-    public static async Task<Lib.Address> MapVerifyAndNormalize(AddressModel address, IAddressLogic addressLogic)
-    {
-      var inputAddress = Map(address);
-      if (await addressLogic.IsValidAddressAsync(inputAddress))
-      {
-        Lib.Address normalizedAddress = await addressLogic.NormalizeAddressAsync(inputAddress);
-        return normalizedAddress;
-      }
-      else
-      {
-        throw new ArgumentException($"Address ({inputAddress}) does not exist in the real world");
-      }
-    }
-
     /// <summary>
     /// Maps a library model object to an API model object.
     /// </summary>
@@ -58,6 +44,20 @@ namespace Revature.Address.Api
         Country = address.Country,
         ZipCode = address.ZipCode
       };
+    }
+
+    public static async Task<Lib.Address> MapVerifyAndNormalize(AddressModel address, IAddressLogic addressLogic)
+    {
+      var inputAddress = Map(address);
+      if (await addressLogic.IsValidAddressAsync(inputAddress))
+      {
+        Lib.Address normalizedAddress = await addressLogic.NormalizeAddressAsync(inputAddress);
+        return normalizedAddress;
+      }
+      else
+      {
+        throw new ArgumentException($"Address ({inputAddress}) does not exist in the real world");
+      }
     }
   }
 }

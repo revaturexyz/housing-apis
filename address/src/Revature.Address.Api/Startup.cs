@@ -56,6 +56,8 @@ namespace Revature.Address.Api
       services.AddScoped<IAddressLogic, AddressLogic>();
       services.AddScoped<IGoogleApiAccess, GoogleApiAccess>();
 
+      services.AddHttpClient();
+
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Revature Address", Version = "v1" });
