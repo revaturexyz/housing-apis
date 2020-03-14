@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -8,8 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Revature.Tenant.Api.Models;
 using Revature.Tenant.Lib.Interface;
-using System.Linq;
-using Revature.Tenant.Lib.Models;
 
 namespace Revature.Tenant.Api.Controllers
 {
@@ -179,7 +178,8 @@ namespace Revature.Tenant.Api.Controllers
         try
         {
           address = await _addressService.GetAddressAsync(tenant.AddressId);
-        } catch
+        }
+        catch
         {
           address = null;
         }
@@ -311,7 +311,7 @@ namespace Revature.Tenant.Api.Controllers
           newTenant.Car = null;
           newTenant.CarId = null;
         }
-        
+
 
         //Call Repository Methods AddAsync and SaveAsync
         await _tenantRepository.AddAsync(newTenant);

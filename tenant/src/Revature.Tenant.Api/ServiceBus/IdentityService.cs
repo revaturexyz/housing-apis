@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Revature.Tenant.Lib.Models;
 
 
 namespace Revature.Tenant.Api.ServiceBus

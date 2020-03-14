@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Revature.Tenant.Api.Models;
-using Revature.Tenant.Lib.Models;
 
 namespace Revature.Tenant.Api
 {

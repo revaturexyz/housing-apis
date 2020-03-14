@@ -5,7 +5,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Revature.Tenant.Api.Models;
-using Revature.Tenant.Lib.Models;
 
 namespace Revature.Tenant.Api.ServiceBus
 {

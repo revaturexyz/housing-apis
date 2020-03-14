@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Revature.Tenant.Api.Models;
-using Revature.Tenant.Lib.Models;
 
 namespace Revature.Tenant.Api
 {
@@ -110,7 +106,7 @@ namespace Revature.Tenant.Api
     /// <returns>A Model Tenant</returns>
     public static Lib.Models.Tenant Map(ApiTenant tenant)
     {
-      if(tenant.Id == null)
+      if (tenant.Id == null)
       {
         throw new ArgumentNullException("Tenant Id must be set");
       }
