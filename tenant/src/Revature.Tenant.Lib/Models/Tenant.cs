@@ -123,10 +123,9 @@ namespace Revature.Tenant.Lib.Models
         _gender = value;
       }
     }
-    public string FullName
-    {
-      get => FirstName + " " + LastName;
-    }
+
+    public string FullName => $"{FirstName} {LastName}";
+
     public Guid AddressId
     {
       get => _addressId;
