@@ -25,7 +25,7 @@ namespace Revature.Address.Lib.BusinessLogic
       PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy()
     };
 
-    public GoogleApiAccess(IConfiguration configuration, ILogger<AddressLogic> logger = null)
+    public GoogleApiAccess(IConfiguration configuration, ILogger<GoogleApiAccess> logger = null)
     {
       _logger = logger;
       _key = configuration["GoogleApiKey"];
