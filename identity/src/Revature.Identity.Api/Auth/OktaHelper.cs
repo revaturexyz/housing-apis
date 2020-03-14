@@ -62,7 +62,7 @@ namespace Revature.Identity.Api
     }
 
     /// <summary>
-    /// Runs code to set up the management client, which involves sending a request to Auth0 in order to get
+    /// Runs code to set up the management client, which involves sending a request to Okta in order to get
     /// an authenticated token. Moved to a function so that it can be ignored if we just want
     /// to read the token's values.
     /// </summary>
@@ -71,32 +71,32 @@ namespace Revature.Identity.Api
     {
       try
       {
-        Client = new OktaClient(new OktaClientConfiguration 
+        Client = new OktaClient(new OktaClientConfiguration
         {
           OktaDomain = Domain,
-          Token = _token          
+          Token = _token
         });
       }
       catch (JsonException ex)
       {
-        _logger.LogError(ex, "Error while processing Auth0 response");
+        _logger.LogError(ex, "Error while processing Okta response");
       }
       catch (InvalidOperationException ex)
       {
-        _logger.LogError(ex, "Error while processing Auth0 response");
+        _logger.LogError(ex, "Error while processing Okta response");
       }
       catch (KeyNotFoundException ex)
       {
-        _logger.LogError(ex, "Error while processing Auth0 response");
+        _logger.LogError(ex, "Error while processing Okta response");
       }
       return false;
     }
 
     /// <summary>
-    /// Adds a role to the remote Auth0 profile.
+    /// Adds a role to the remote Okta profile.
     /// </summary>
-    /// <param name="oktaUserId">UserId according to Auth0. Has to be retrieved from the Management client.</param>
-    /// <param name="roleId">RoleId according to Auth0. Has to be retrieved from the Management client.</param>
+    /// <param name="oktaUserId">UserId according to Okta. Has to be retrieved from the Management client.</param>
+    /// <param name="roleId">RoleId according to Okta. Has to be retrieved from the Management client.</param>
     /// <returns></returns>
     public async Task AddRoleAsync(string oktaUserId, string roleId)
     {
@@ -104,10 +104,10 @@ namespace Revature.Identity.Api
     }
 
     /// <summary>
-    /// Removes a role from the remote Auth0 profile.
+    /// Removes a role from the remote Okta profile.
     /// </summary>
-    /// <param name="oktaUserId">UserId according to Auth0. Has to be retrieved from the Management client.</param>
-    /// <param name="roleId">RoleId according to Auth0. Has to be retrieved from the Management client.</param>
+    /// <param name="oktaUserId">UserId according to Okta. Has to be retrieved from the Management client.</param>
+    /// <param name="roleId">RoleId according to Okta. Has to be retrieved from the Management client.</param>
     /// <returns></returns>
     public async Task RemoveRoleAsync(string oktaUserId, string roleId)
     {
@@ -115,7 +115,7 @@ namespace Revature.Identity.Api
     }
 
     /// <summary>
-    /// Updates remote Auth0 profile's app metadata to include the given Revature account id. 
+    /// Updates remote Okta profile's app metadata to include the given Revature account id.
     /// </summary>
     /// <param name="oktaUserId"></param>
     /// <param name="newId"></param>
