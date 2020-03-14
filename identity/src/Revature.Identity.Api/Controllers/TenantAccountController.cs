@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Revature.Identity.Lib.Interface;
-using Revature.Identity.Lib.Model;
 
 namespace Revature.Identity.Api.Controllers
 {
@@ -34,7 +33,7 @@ namespace Revature.Identity.Api.Controllers
       {
         _logger.LogInformation("GET - Getting tenant with ID: {tenantId}", tenantId);
         var tenant = await _repo.GetTenantAccountByIdAsync(tenantId);
-       
+
         if (tenant == null)
         {
           _logger.LogWarning("No tenant found for given ID: {tenantId} on GET call.", tenantId);

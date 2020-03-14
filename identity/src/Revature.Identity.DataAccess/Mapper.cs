@@ -13,7 +13,7 @@ namespace Revature.Identity.DataAccess
     /// <param name="tenant"></param>
     /// <returns></returns>
     ///
-    
+
     public Lib.Model.TenantAccount MapTenant(Entities.TenantAccount tenant)
     {
       return new Lib.Model.TenantAccount
@@ -33,7 +33,7 @@ namespace Revature.Identity.DataAccess
         Email = tenant.Email
       };
     }
-    
+
 
 
 

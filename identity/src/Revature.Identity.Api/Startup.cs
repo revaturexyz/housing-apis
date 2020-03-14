@@ -7,14 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Okta.AspNetCore;
+using Revature.Identity.Api.Services;
 using Revature.Identity.Api.Telemetry;
 using Revature.Identity.DataAccess;
 using Revature.Identity.DataAccess.Repositories;
 using Revature.Identity.Lib.Interface;
-using Revature.Identity.Api.Services;
 using Serilog;
 
 namespace Revature.Identity.Api
@@ -92,7 +92,7 @@ namespace Revature.Identity.Api
           {
             RoleClaimType = "groups",
             ValidateIssuer = true,
-  
+
           };
         });
 

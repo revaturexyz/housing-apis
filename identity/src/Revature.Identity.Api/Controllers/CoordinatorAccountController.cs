@@ -45,7 +45,7 @@ namespace Revature.Identity.Api.Controllers
       {
         var okta = _oktaHelperFactory.Create(Request);
         var oktaUser = await okta.Client.Users.GetUserAsync(okta.Email);
-        var oktaRoles =  okta.Roles.ToList();
+        var oktaRoles = okta.Roles.ToList();
 
         var id = await _repo.GetCoordinatorIdByEmailAsync(okta.Email);
         //Update Okta roles based on local Db
@@ -61,7 +61,7 @@ namespace Revature.Identity.Api.Controllers
         {
           // Check the tentant db
           id = await _repo.GetTenantIdByEmailAsync(okta.Email);
-          if(id != Guid.Empty)
+          if (id != Guid.Empty)
           {
             // If their roles arent set properly, set them
             if (!okta.Roles.Contains(OktaHelper.TenantRole))
@@ -151,7 +151,7 @@ namespace Revature.Identity.Api.Controllers
     [HttpGet("{coordinatorId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize(Roles ="Coordinator")]
+    [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult> Get(Guid coordinatorId)
     {
       try

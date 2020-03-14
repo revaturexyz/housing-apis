@@ -16,7 +16,7 @@ namespace Revature.Identity.Lib.Model
 
     public string Name
     {
-      get { return _name; }
+      get => _name;
       set
       {
         NotNullOrEmptyorWhitespaces(value);
@@ -26,7 +26,7 @@ namespace Revature.Identity.Lib.Model
 
     public string Email
     {
-      get { return _email; }
+      get => _email;
       set
       {
         // This line simply uses the instantiation of the MailAddress object
@@ -55,7 +55,7 @@ namespace Revature.Identity.Lib.Model
     /// <param name="value"></param>
     private static void NotNullOrEmptyorWhitespaces(string value)
     {
-      if (String.IsNullOrWhiteSpace(value))
+      if (string.IsNullOrWhiteSpace(value))
       {
         if (value == null)
         {

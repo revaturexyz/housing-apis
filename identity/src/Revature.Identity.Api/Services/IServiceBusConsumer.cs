@@ -5,7 +5,7 @@ namespace Revature.Identity.Api.Services
   /// <summary>
   /// Interface for ServiceBusConsumer
   /// </summary>
-  interface IServiceBusConsumer
+  internal interface IServiceBusConsumer
   {
     void RegisterOnMessageHandlerAndReceiveMessages();
 

@@ -7,7 +7,7 @@ namespace Revature.Identity.Api.Telemetry
 {
   internal class AccountTelemetryInitializer : ITelemetryInitializer
   {
-    IHttpContextAccessor contextAccessor;
+    private readonly IHttpContextAccessor contextAccessor;
 
     public AccountTelemetryInitializer(IHttpContextAccessor ctxAccessor)
     {

@@ -29,10 +29,7 @@ namespace Revature.Identity.Lib.Model
     private string _statusText;
     public string StatusText
     {
-      get
-      {
-        return _statusText;
-      }
+      get => _statusText;
 
       set
       {

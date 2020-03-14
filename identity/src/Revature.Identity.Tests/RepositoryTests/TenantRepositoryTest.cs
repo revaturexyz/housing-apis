@@ -1,12 +1,8 @@
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Revature.Identity.DataAccess;
 using Revature.Identity.DataAccess.Repositories;
-using Revature.Identity.Tests;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Revature.Identity.Tests.RepositoryTests
@@ -39,7 +35,7 @@ namespace Revature.Identity.Tests.RepositoryTests
     }
 
     /// <summary>
-    /// Test for updateing a given Tenant's information within the database.
+    /// Test for updating a given Tenant's information within the database.
     /// </summary>
     /// <returns></returns>
     [Fact]

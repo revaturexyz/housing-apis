@@ -29,7 +29,7 @@ namespace Revature.Identity.Lib.Model
     /// </summary>
     public string Name
     {
-      get { return _name; }
+      get => _name;
       set
       {
         NotNullOrEmpty(value);
@@ -42,7 +42,7 @@ namespace Revature.Identity.Lib.Model
     /// </summary>
     public string Email
     {
-      get { return _email; }
+      get => _email;
       set
       {
         // This line simply uses the instantiation of the MailAddress object
@@ -57,10 +57,7 @@ namespace Revature.Identity.Lib.Model
     /// </summary>
     public string TrainingCenterName
     {
-      get
-      {
-        return this._trainingCenterName;
-      }
+      get => _trainingCenterName;
       set
       {
         NotNullOrEmpty(value);
@@ -73,10 +70,7 @@ namespace Revature.Identity.Lib.Model
     /// </summary>
     public string TrainingCenterAddress
     {
-      get
-      {
-        return this._trainingCenterAddress;
-      }
+      get => _trainingCenterAddress;
       set
       {
         NotNullOrEmpty(value);
