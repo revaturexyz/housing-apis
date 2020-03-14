@@ -4,7 +4,7 @@ namespace Revature.Address.Lib.Models.DistanceMatrix
 {
   /// <summary>
   /// The Response is composed of a list of response elements
-  /// from Distance Matrix API
+  /// from Distance Matrix API.
   /// </summary>
   public class ResponseRow
   {

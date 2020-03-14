@@ -28,15 +28,18 @@ namespace Revature.Address.Lib.BusinessLogic
       _logger = logger;
       _key = configuration["GoogleApiKey"];
     }
+
     public async Task<double> GetDistance(Address origin, Address destination, int distance)
     {
       if (_key == null)
       {
         _logger.LogError("Google Cloud Platform API key has not been set");
       }
+
       // formatted address to be used with Google API
       var formattedOrigin = origin.Street.Replace(" ", "+") + "+" + origin.City.Replace(" ", "+") + "," + origin.State.Replace(" ", "+") + "+" + origin.ZipCode;
       var formattedDestination = destination.Street.Replace(" ", "+") + "+" + destination.City.Replace(" ", "+") + "," + destination.State.Replace(" ", "+") + "+" + destination.ZipCode;
+
       // added parameters to the Google API url
       var googleApiUrlParameter = $"?units=imperial&origins={formattedOrigin}&destinations={formattedDestination}&key=";
       var googleBaseUrl = "https://maps.googleapis.com/maps/api/distancematrix/json";
@@ -44,6 +47,7 @@ namespace Revature.Address.Lib.BusinessLogic
       Response deserialized;
 
       using var client = new HttpClient { BaseAddress = new Uri(googleBaseUrl) };
+
       // Add an Accept header for JSON format.
       client.DefaultRequestHeaders.Accept.Add(
         new MediaTypeWithQualityHeaderValue("application/json"));
@@ -54,8 +58,10 @@ namespace Revature.Address.Lib.BusinessLogic
       {
         deserialized = JsonSerializer.Deserialize<Response>(
           await response.Content.ReadAsStringAsync().ConfigureAwait(false), _distanceMatrixSerializerOptions);
+
         // Parse the response body.
         var distanceValueString = deserialized.Rows[0].Elements[0].Distance.Text;
+
         // convert the response to a double
         var distanceValueDouble = double.Parse(distanceValueString[0..^2]);
         return distanceValueDouble;
@@ -67,10 +73,12 @@ namespace Revature.Address.Lib.BusinessLogic
         {
           throw new ArgumentException($"User input error {response.StatusCode}");
         }
+
         if ((int)response.StatusCode >= 500 && (int)response.StatusCode < 600)
         {
           throw new ArgumentException($"Google API returned internal server-side error {response.StatusCode}");
         }
+
         throw new ArgumentException($"Google API call was unsuccessful {response.StatusCode}");
       }
     }

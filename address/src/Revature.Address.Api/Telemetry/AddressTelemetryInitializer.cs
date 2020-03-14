@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 
 namespace Revature.Address.Api.Telemetry
 {
-
   internal class AddressTelemetryInitializer : ITelemetryInitializer
   {
     private readonly IHttpContextAccessor contextAccessor;
