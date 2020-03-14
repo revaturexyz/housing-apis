@@ -12,13 +12,14 @@ namespace Revature.Tenant.Lib.Models
     private string _gender;
     private string _firstName;
     private string _lastName;
-    private Guid _addressId;
     private Guid? _roomId;
     private int? _batchId;
     private Guid _trainingCenter;
 
     public Batch Batch { get; set; }
+
     public Car Car { get; set; }
+
     public Guid Id
     {
       get => _id;
@@ -32,6 +33,7 @@ namespace Revature.Tenant.Lib.Models
         _id = value;
       }
     }
+
     public string Email
     {
       get => _email;
@@ -39,12 +41,14 @@ namespace Revature.Tenant.Lib.Models
       {
         if (value == null)
         {
-          throw new ArgumentNullException("Email must not be null");
+          throw new ArgumentNullException(nameof(value));
         }
+
         if (value.Length == 0)
         {
           throw new ArgumentException("Email must not be empty", nameof(value));
         }
+
         try
         {
           // This line simply uses the instantiation of the MailAddress object
@@ -55,9 +59,11 @@ namespace Revature.Tenant.Lib.Models
         {
           throw new FormatException("Email must be correct format", ex);
         }
+
         _email = value;
       }
     }
+
     public string FirstName
     {
       get => _firstName;
@@ -65,8 +71,9 @@ namespace Revature.Tenant.Lib.Models
       {
         if (value == null)
         {
-          throw new ArgumentNullException("First name must not be null");
+          throw new ArgumentNullException(nameof(value));
         }
+
         if (value.Length == 0)
         {
           throw new ArgumentException("First name must not be empty", nameof(value));
@@ -75,6 +82,7 @@ namespace Revature.Tenant.Lib.Models
         _firstName = value;
       }
     }
+
     public string LastName
     {
       get => _lastName;
@@ -82,8 +90,9 @@ namespace Revature.Tenant.Lib.Models
       {
         if (value == null)
         {
-          throw new ArgumentNullException("Last name must not be null");
+          throw new ArgumentNullException(nameof(value));
         }
+
         if (value.Length == 0)
         {
           throw new ArgumentException("Last name must not be empty", nameof(value));
@@ -92,6 +101,7 @@ namespace Revature.Tenant.Lib.Models
         _lastName = value;
       }
     }
+
     public Guid? RoomId
     {
       get => _roomId;
@@ -105,7 +115,9 @@ namespace Revature.Tenant.Lib.Models
         _roomId = value;
       }
     }
+
     public int? CarId { get; set; }
+
     public string Gender
     {
       get => _gender;
@@ -113,8 +125,9 @@ namespace Revature.Tenant.Lib.Models
       {
         if (value == null)
         {
-          throw new ArgumentNullException("Gender must not be null");
+          throw new ArgumentNullException(nameof(value));
         }
+
         if (value.Length == 0)
         {
           throw new ArgumentException("Gender must not be empty", nameof(value));
@@ -123,15 +136,11 @@ namespace Revature.Tenant.Lib.Models
         _gender = value;
       }
     }
-    public string FullName
-    {
-      get => FirstName + " " + LastName;
-    }
-    public Guid AddressId
-    {
-      get => _addressId;
-      set => _addressId = value;
-    }
+
+    public string FullName => $"{FirstName} {LastName}";
+
+    public Guid AddressId { get; set; }
+
     public int? BatchId
     {
       get => _batchId;
@@ -145,6 +154,7 @@ namespace Revature.Tenant.Lib.Models
         _batchId = value;
       }
     }
+
     public Guid TrainingCenter
     {
       get => _trainingCenter;

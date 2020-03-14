@@ -3,30 +3,31 @@ using System;
 namespace Revature.Tenant.Lib.Models
 {
   /// <summary>
-  /// Model for the messages being sent to the room service
+  /// Model for the messages being sent to the room service.
   /// </summary>
   public class RoomMessage
   {
     private Guid _roomId;
     private string _gender;
     private int _operationType;
+
     /// <summary>
-    /// RoomId of tenant
+    /// Gets or sets room ID of tenant.
     /// </summary>
     public Guid RoomId
     {
       get => _roomId;
       set
       {
-        if (value == Guid.Empty) throw new ArgumentException("Room Id must be valid");
+        if (value == Guid.Empty) throw new ArgumentException("Room ID must be valid");
         _roomId = value;
       }
     }
 
     /// <summary>
-    /// Gender of tenant
+    /// Gets or sets gender of tenant.
     /// </summary>
-    /// <remarks>Needed for when the room gender is null on the room service</remarks>
+    /// <remarks>Needed for when the room gender is null on the room service.</remarks>
     public string Gender
     {
       get => _gender;
@@ -38,7 +39,7 @@ namespace Revature.Tenant.Lib.Models
     }
 
     /// <summary>
-    /// Two types: 0 for assigning a tenant to a room, 1 for unassigning a tenant to a room
+    /// Two types: 0 for assigning a tenant to a room, 1 for unassigning a tenant to a room.
     /// </summary>
     public int OperationType
     {

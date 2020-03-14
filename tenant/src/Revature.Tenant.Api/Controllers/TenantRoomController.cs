@@ -13,7 +13,7 @@ using Revature.Tenant.Lib.Models;
 namespace Revature.Tenant.Api.Controllers
 {
   /// <summary>
-  /// Controller for the functionality of assigning tenants to rooms
+  /// Controller for the functionality of assigning tenants to rooms.
   /// </summary>
   [Route("api/Tenant/")]
   [ApiController]
@@ -36,9 +36,8 @@ namespace Revature.Tenant.Api.Controllers
     }
 
     /// <summary>
-    /// Controller method that returns tenants that aren't assigned a room
+    /// Controller method that returns tenants that aren't assigned a room.
     /// </summary>
-    /// <returns></returns>
     [HttpGet]
     [Route("Unassigned")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -53,11 +52,8 @@ namespace Revature.Tenant.Api.Controllers
     }
 
     /// <summary>
-    /// Controller method for getting the tenant information of the occupants in vacant rooms
+    /// Controller method for getting the tenant information of the occupants in vacant rooms.
     /// </summary>
-    /// <param name="gender"></param>
-    /// <param name="endDate"></param>
-    /// <returns></returns>
     [HttpGet]
     [Route("Assign/AvailableRooms")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -82,8 +78,7 @@ namespace Revature.Tenant.Api.Controllers
               RoomId = room.item1,
               NumberOfBeds = room.item2,
               Tenants = await _repository.GetTenantsByRoomIdAsync(room.item1)
-            }
-          );
+            });
         }
 
         _logger.LogInformation("Success.");
@@ -98,11 +93,8 @@ namespace Revature.Tenant.Api.Controllers
     }
 
     /// <summary>
-    /// Controller method for assigning a tenant to a specific room
+    /// Controller method for assigning a tenant to a specific room.
     /// </summary>
-    /// <param name="tenantId"></param>
-    /// <param name="roomId"></param>
-    /// <returns></returns>
     [HttpPut]
     [Route("Assign/{tenantId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]

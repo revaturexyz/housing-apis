@@ -3,14 +3,13 @@ using Revature.Tenant.Lib.Interface;
 
 namespace Revature.Tenant.DataAccess
 {
-
   public class Mapper : IMapper
   {
     /// <summary>
-    /// Map a Model Tenant from a Entity Tenant
+    /// Map a Model Tenant from a Entity Tenant.
     /// </summary>
-    /// <param name="tenant">A Tenant Entity who may have a nested Car Model and/or a Batch Model</param>
-    /// <returns>A Tenant Model who may have a nested Car Model and/or a Batch Model</returns>
+    /// <param name="tenant">A Tenant Entity who may have a nested Car Model and/or a Batch Model.</param>
+    /// <returns>A Tenant Model who may have a nested Car Model and/or a Batch Model.</returns>
     public Lib.Models.Tenant MapTenant(Entities.Tenant tenant)
     {
       Lib.Models.Batch batch;
@@ -73,10 +72,10 @@ namespace Revature.Tenant.DataAccess
     }
 
     /// <summary>
-    /// Map a Entity Tenant from a Model Tenant
+    /// Map a Entity Tenant from a Model Tenant.
     /// </summary>
-    /// <param name="tenant">A Tenant Model who may have a nested Car Model and/or a Batch Model</param>
-    /// <returns>A Tenant Entity who may have a nested Car Model and/or a Batch Model</returns>
+    /// <param name="tenant">A Tenant Model who may have a nested Car Model and/or a Batch Model.</param>
+    /// <returns>A Tenant Entity who may have a nested Car Model and/or a Batch Model.</returns>
     public Entities.Tenant MapTenant(Lib.Models.Tenant tenant)
     {
       Entities.Car newCar;
@@ -92,7 +91,8 @@ namespace Revature.Tenant.DataAccess
           Color = tenant.Car.Color,
           Year = tenant.Car.Year,
           State = tenant.Car.State
-          //maybe add tenant
+
+          // maybe add tenant
         };
       }
       else
@@ -100,7 +100,6 @@ namespace Revature.Tenant.DataAccess
         newCar = null;
         newCarId = null;
       }
-
 
       return new Entities.Tenant
       {
@@ -119,10 +118,10 @@ namespace Revature.Tenant.DataAccess
     }
 
     /// <summary>
-    /// Map a Model Car from a Entity Car
+    /// Map a Model Car from a Entity Car.
     /// </summary>
-    /// <param name="car">A Car Entity</param>
-    /// <returns>A Car Model</returns>
+    /// <param name="car">A Car Entity.</param>
+    /// <returns>A Car Model.</returns>
     public Lib.Models.Car MapCar(Entities.Car car)
     {
       return new Lib.Models.Car
@@ -138,10 +137,10 @@ namespace Revature.Tenant.DataAccess
     }
 
     /// <summary>
-    /// Map a Entity Car from a Model Car
+    /// Map a Entity Car from a Model Car.
     /// </summary>
-    /// <param name="car">A Car Model</param>
-    /// <returns>A Car Entity</returns>
+    /// <param name="car">A Car Model.</param>
+    /// <returns>A Car Entity.</returns>
     public Entities.Car MapCar(Lib.Models.Car car)
     {
       return new Entities.Car
@@ -157,14 +156,14 @@ namespace Revature.Tenant.DataAccess
     }
 
     /// <summary>
-    /// Map a Model Batch from a Entity Batch
+    /// Map a Model Batch from a Entity Batch.
     /// </summary>
-    /// <param name="batch">A Batch Entity</param>
-    /// <returns>A Batch Model</returns>
-    /// <exception cref="System.ArgumentException">Thrown when start date is after end date</exception>
+    /// <param name="batch">A Batch Entity.</param>
+    /// <returns>A Batch Model.</returns>
+    /// <exception cref="ArgumentException">Thrown when start date is after end date.</exception>
     public Entities.Batch MapBatch(Lib.Models.Batch batch)
     {
-      //checks that start date is before end date
+      // checks that start date is before end date
       if (batch.StartDate.CompareTo(batch.EndDate) >= 0)
       {
         throw new ArgumentException($"Start date must be before end date. Start Date: {batch.StartDate}, End Date: {batch.EndDate}");
@@ -181,12 +180,11 @@ namespace Revature.Tenant.DataAccess
     }
 
     /// <summary>
-    /// Map a Entity Batch from a Model Batch
+    /// Map a Entity Batch from a Model Batch.
     /// </summary>
-    /// <param name="batch">A Batch Model</param>
-    /// <returns>A Batch Entity</returns>
-    /// <exception cref="System.ArgumentException">Thrown when start date is after end date</exception>
-
+    /// <param name="batch">A Batch Model.</param>
+    /// <returns>A Batch Entity.</returns>
+    /// <exception cref="ArgumentException">Thrown when start date is after end date.</exception>
     public Lib.Models.Batch MapBatch(Entities.Batch batch)
     {
       var newBatch = new Lib.Models.Batch()

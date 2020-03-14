@@ -13,11 +13,17 @@ namespace Revature.Tenant.DataAccess.Entities
     {
       Tenant = new HashSet<Tenant>();
     }
+
     public int Id { get; set; }
+
     public string BatchCurriculum { get; set; }
+
     public DateTime StartDate { get; set; }
+
     public DateTime EndDate { get; set; }
+
     public Guid TrainingCenter { get; set; }
+
     public virtual ICollection<Tenant> Tenant { get; set; }
   }
 }

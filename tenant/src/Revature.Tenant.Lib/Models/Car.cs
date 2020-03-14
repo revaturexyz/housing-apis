@@ -59,6 +59,7 @@ namespace Revature.Tenant.Lib.Models
         _model = value;
       }
     }
+
     public string Color
     {
       get => _color;
@@ -72,6 +73,7 @@ namespace Revature.Tenant.Lib.Models
         _color = value;
       }
     }
+
     public string Year
     {
       get => _year;

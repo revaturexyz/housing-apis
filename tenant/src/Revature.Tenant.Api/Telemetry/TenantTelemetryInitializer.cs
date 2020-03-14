@@ -1,4 +1,4 @@
-using Microsoft.ApplicationInsights.Channel;
+﻿using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Http;
@@ -7,7 +7,7 @@ namespace Revature.Tenant.Api.Telemetry
 {
   internal class TenantTelemetryInitializer : ITelemetryInitializer
   {
-    IHttpContextAccessor contextAccessor;
+    private readonly IHttpContextAccessor contextAccessor;
 
     public TenantTelemetryInitializer(IHttpContextAccessor ctxAccessor)
     {
