@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -41,14 +40,14 @@ namespace Revature.Address.Api.Controllers
     {
 
       var address = (await _db.GetAddressAsync(id: id)).FirstOrDefault();
-      if(address!= null)
+      if (address != null)
         return Ok(Mapper.Map(address));
       else
       {
         return NotFound("Address does not exist in address service");
       }
 
-      
+
     }
 
     /// <summary>
@@ -64,20 +63,22 @@ namespace Revature.Address.Api.Controllers
     [HttpGet("checkdistance")]
     public async Task<ActionResult<bool>> IsInRange([FromQuery] AddressModel from, [FromQuery] AddressModel to, [FromQuery] int distance = 20)
     {
-      try {
-      var start = Mapper.Map(from);
-      var end = Mapper.Map(to);
-      if (await _addressLogic.IsInRangeAsync(start, end, distance))
+      try
       {
-        _logger.LogInformation("These addresses are within range of each other");
-        return Ok(true);
+        var start = Mapper.Map(from);
+        var end = Mapper.Map(to);
+        if (await _addressLogic.IsInRangeAsync(start, end, distance))
+        {
+          _logger.LogInformation("These addresses are within range of each other");
+          return Ok(true);
+        }
+        else
+        {
+          _logger.LogError("These addresses are not in range of each other");
+          return Ok(false);
+        }
       }
-      else
-      {
-        _logger.LogError("These addresses are not in range of each other");
-        return Ok(false);
-      }
-      } catch (Exception e)
+      catch (Exception e)
       {
         _logger.LogError(e.Message);
         return BadRequest();
@@ -124,7 +125,7 @@ namespace Revature.Address.Api.Controllers
         _logger.LogError(e.Message);
         return BadRequest(e.Message);
       }
-      
+
     }
   }
 }

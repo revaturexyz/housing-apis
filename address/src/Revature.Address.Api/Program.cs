@@ -50,13 +50,15 @@ namespace Revature.Address.Api
         .CreateLogger();
     }
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-      Host.CreateDefaultBuilder(args)
+    public static IHostBuilder CreateHostBuilder(string[] args)
+    {
+      return Host.CreateDefaultBuilder(args)
         .ConfigureWebHostDefaults(webBuilder =>
         {
           webBuilder.UseStartup<Startup>();
           webBuilder.UseSerilog();
         });
+    }
 
     public static async Task EnsureDatabaseCreatedAsync(IHost host)
     {

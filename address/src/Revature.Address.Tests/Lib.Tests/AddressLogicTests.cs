@@ -1,6 +1,4 @@
 using System;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Moq;
 using Revature.Address.Lib.BusinessLogic;
 using Xunit;

@@ -60,7 +60,7 @@ namespace Revature.Address.Api
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Revature Address", Version = "v1" });
       });
       services.AddApplicationInsightsTelemetry();
-      
+
       services.AddHealthChecks();
       services.AddSingleton<ITelemetryInitializer, AddressTelemetryInitializer>();
 

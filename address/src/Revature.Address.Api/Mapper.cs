@@ -1,7 +1,7 @@
-using Revature.Address.Api.Models;
-using Revature.Address.Lib.BusinessLogic;
 using System;
 using System.Threading.Tasks;
+using Revature.Address.Api.Models;
+using Revature.Address.Lib.BusinessLogic;
 
 namespace Revature.Address.Api
 {

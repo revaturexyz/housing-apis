@@ -13,6 +13,9 @@ namespace Revature.Address.Lib.BusinessLogic
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public override string ConvertName(string name) => name.Underscore();
+    public override string ConvertName(string name)
+    {
+      return name.Underscore();
+    }
   }
 }
