@@ -162,7 +162,7 @@ namespace Revature.Lodging.DataAccess
       bool? empty = null,
       bool? vacancy = null)
     {
-      IEnumerable<Entities.Room> rooms = await _context.Room.Where(r => r.ComplexId == complexId)
+      IEnumerable<Data.Room> rooms = await _context.Room.Where(r => r.ComplexId == complexId)
                                                             .Include(r => r.Gender).Include(r => r.RoomType)
                                                             .ToListAsync() ?? throw new KeyNotFoundException("Complex Id not found");
       if (roomNumber != null)

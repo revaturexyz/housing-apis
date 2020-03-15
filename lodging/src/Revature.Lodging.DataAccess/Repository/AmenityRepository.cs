@@ -132,7 +132,7 @@ namespace Revature.Lodging.DataAccess.Repository
         var amenityComplices = await _context.ComplexAmenity
           .Where(a => a.ComplexId == complexId).ToListAsync();
 
-        var amenities = new List<Logic.Amenity>();
+        var amenities = new List<Amenity>();
         foreach (var ac in amenityComplices)
         {
           amenities.Add(Mapper.Map(await _context.Amenity.FindAsync(ac.AmenityId)));
@@ -155,7 +155,7 @@ namespace Revature.Lodging.DataAccess.Repository
         var amenityRooms = await _context.RoomAmenity
           .Where(a => a.RoomId == roomId).AsNoTracking().ToListAsync();
 
-        var amenities = new List<Logic.Amenity>();
+        var amenities = new List<Amenity>();
         foreach (var ac in amenityRooms)
         {
           amenities.Add(Mapper.Map(await _context.Amenity.FindAsync(ac.AmenityId)));

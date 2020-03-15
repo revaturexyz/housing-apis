@@ -40,9 +40,9 @@ namespace Revature.Lodging.Api
     /// </summary>
     /// <param name="room"></param>
     /// <returns></returns>
-    public static Models.ApiRoomtoSend Map(Lib.Models.Room room)
+    public static Models.ApiRoomToSend Map(Lib.Models.Room room)
     {
-      return new Models.ApiRoomtoSend
+      return new Models.ApiRoomToSend
       {
         RoomId = room.Id,
         RoomNumber = room.RoomNumber,
@@ -61,7 +61,7 @@ namespace Revature.Lodging.Api
     /// <returns></returns>
     public static Lib.Models.Room Map(Models.ApiRoom room)
     {
-      Lib.Models.Room tempRoom = new Lib.Models.Room
+      var tempRoom = new Lib.Models.Room
       {
         Id = room.RoomId,
         RoomNumber = room.RoomNumber,

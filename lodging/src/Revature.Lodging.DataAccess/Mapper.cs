@@ -137,7 +137,7 @@ namespace Revature.Lodging.DataAccess
     public static Entities.Room Map(Lib.Models.Room room)
     {
       //switch statement to convert gender and room type strings into int that represent primary key from respective tables
-      Nullable<int> genderId = null;
+      int? genderId = null;
       int roomTypeId = 0;
       string gender = room.Gender?.ToLower();
       string roomType = room.RoomType.ToLower();

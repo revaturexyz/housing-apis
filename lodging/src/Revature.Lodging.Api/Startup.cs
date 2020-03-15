@@ -105,9 +105,7 @@ namespace Revature.Lodging.Api
       services.AddScoped<IRoomRepository, RoomRepository>();
 
       // services.AddHostedService<RoomServiceReceiver>();
-      // services.AddScoped<IRoomServiceSender, RoomServiceSender>();
       services.AddHttpClient<IAddressRequest, AddressRequest>();
-      services.AddHttpClient<IRoomRequest, RoomRequest>();
       services.AddSingleton<ITelemetryInitializer, LodgingTelemetryInitializer>();
 
       services.AddAuthorization();

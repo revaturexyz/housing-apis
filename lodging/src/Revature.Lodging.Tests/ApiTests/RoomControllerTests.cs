@@ -159,7 +159,7 @@ namespace Revature.Lodging.Tests.ApiTests
       mockRepo.Setup(r => r.UpdateRoomAsync(
         It.IsAny<Lib.Models.Room>()
         ));
-      mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Models.Room>(new Lib.Models.Room()));
+      mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult(new Lib.Models.Room()));
 
       var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
 
@@ -199,7 +199,7 @@ namespace Revature.Lodging.Tests.ApiTests
         It.IsAny<Lib.Models.Room>()
         )).Throws(new InvalidOperationException());
 
-      mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Models.Room>(new Lib.Models.Room()));
+      mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult(new Lib.Models.Room()));
 
       var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
 
@@ -240,7 +240,7 @@ namespace Revature.Lodging.Tests.ApiTests
         It.IsAny<Lib.Models.Room>()
         )).Throws(new ArgumentException());
 
-      mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult<Lib.Models.Room>(new Lib.Models.Room()));
+      mockRepo.Setup(r => r.ReadRoomAsync(It.IsAny<Guid>())).Returns(Task.FromResult(new Lib.Models.Room()));
 
       var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object); ;
 

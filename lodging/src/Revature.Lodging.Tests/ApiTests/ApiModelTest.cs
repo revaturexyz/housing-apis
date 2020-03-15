@@ -108,7 +108,7 @@ namespace Revature.Lodging.Tests.ApiTests
       var cId = Guid.NewGuid();
       var start = DateTime.Parse("2019/1/1");
       var end = DateTime.Parse("2020/1/1");
-      var send = new ApiRoomtoSend
+      var send = new ApiRoomToSend
       {
         RoomId = rId,
         RoomNumber = "1234",

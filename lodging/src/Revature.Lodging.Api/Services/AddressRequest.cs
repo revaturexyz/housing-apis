@@ -66,10 +66,9 @@ namespace Revature.Lodging.Api.Services
     /// <returns></returns>
     public async Task<ApiAddress> GetAddressAsync(Guid addressId)
     {
-      var queryString = addressId.ToString();
+      var pathElement = addressId.ToString();
 
-
-      using var response = await SendRequestAsync<ApiAddress>(HttpMethod.Get, "api/Address/" + queryString);
+      using var response = await SendRequestAsync<ApiAddress>(HttpMethod.Get, "api/Address/" + pathElement);
       response.EnsureSuccessStatusCode();
 
       return await ReadResponseBodyAsync<ApiAddress>(response);

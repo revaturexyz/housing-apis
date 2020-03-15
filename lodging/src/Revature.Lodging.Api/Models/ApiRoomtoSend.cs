@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 namespace Revature.Lodging.Api.Models
 {
   /// <summary>
-  /// Api RoomtoSend model Created from Api Room model
+  /// API RoomToSend model Created from API Room model
   /// Its purpose is to send to Room service as enumarable collections
   /// </summary>
-  public class ApiRoomtoSend
+  public class ApiRoomToSend
   {
     [Required]
     public Guid RoomId { get; set; }

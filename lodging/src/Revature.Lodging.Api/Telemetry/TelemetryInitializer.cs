@@ -7,16 +7,16 @@ namespace Revature.Lodging.Api.Telemetry
 {
   internal class LodgingTelemetryInitializer : ITelemetryInitializer
   {
-    IHttpContextAccessor contextAccessor;
+    private readonly IHttpContextAccessor _contextAccessor;
 
     public LodgingTelemetryInitializer(IHttpContextAccessor ctxAccessor)
     {
-      contextAccessor = ctxAccessor;
+      _contextAccessor = ctxAccessor;
     }
 
     public void Initialize(ITelemetry telemetry)
     {
-      var ctx = contextAccessor.HttpContext;
+      var ctx = _contextAccessor.HttpContext;
 
       if (ctx != null)
       {

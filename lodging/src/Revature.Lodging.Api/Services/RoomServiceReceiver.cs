@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Revature.Lodging.Api.Services
 {
   /// <summary>
-  /// This classes purpose is to connect to the queue and listen/receive a message sent from the complex and tenant service.
+  /// This classes purpose is to connect to the queue and listen/receive a message sent from the tenant service.
   /// Based on their message we will call upon the repository accordingly
   /// </summary>
   public class RoomServiceReceiver : BackgroundService, IRoomServiceReceiver
