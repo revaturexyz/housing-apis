@@ -24,7 +24,7 @@ namespace Revature.Identity.Api
       // Remove 'Bearer '
       jwt = jwt.Replace("Bearer ", string.Empty);
       var handler = new JwtSecurityTokenHandler();
-      var token = handler.ReadJwtToken(jwt) as JwtSecurityToken;
+      JwtSecurityToken token = handler.ReadJwtToken(jwt);
 
       Email = (string)token.Payload["sub"];
       Roles = JsonSerializer.Deserialize<string[]>(token.Payload["groups"].ToString());

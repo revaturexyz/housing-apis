@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 using Revature.Identity.Lib.Interface;
 using Revature.Identity.Lib.Model;
 
-// using Microsoft.ServiceBus.Messaging;
 namespace Revature.Identity.Api.Services
 {
   /// <summary>

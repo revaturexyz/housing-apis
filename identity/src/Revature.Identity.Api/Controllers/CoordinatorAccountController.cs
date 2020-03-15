@@ -46,7 +46,6 @@ namespace Revature.Identity.Api.Controllers
       {
         var okta = _oktaHelperFactory.Create(Request);
         var oktaUser = await okta.Client.Users.GetUserAsync(okta.Email);
-        var oktaRoles = okta.Roles.ToList();
 
         var id = await _repo.GetCoordinatorIdByEmailAsync(okta.Email);
 
@@ -61,7 +60,7 @@ namespace Revature.Identity.Api.Controllers
         }
         else
         {
-          // Check the tentant db
+          // Check the tenant db
           id = await _repo.GetTenantIdByEmailAsync(okta.Email);
           if (id != Guid.Empty)
           {
