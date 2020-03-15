@@ -10,7 +10,7 @@ using Revature.Identity.Lib.Model;
 namespace Revature.Identity.Api.Controllers
 {
   /// <summary>
-  /// RESTful API Controllers for the Notifications
+  /// RESTful API Controller for the Notifications.
   /// </summary>
   [Route("api/notifications")]
   [ApiController]
@@ -55,7 +55,7 @@ namespace Revature.Identity.Api.Controllers
         _logger.LogInformation($"POST - Making notification for notification ID {notification.NotificationId}." +
           $" Provider ID: {notification.ProviderId}\n Coordinator ID: {notification.CoordinatorId}");
 
-        Lib.Model.Notification mappedNotification = new Lib.Model.Notification()
+        var mappedNotification = new Notification()
         {
           ProviderId = notification.ProviderId,
           CoordinatorId = notification.CoordinatorId,

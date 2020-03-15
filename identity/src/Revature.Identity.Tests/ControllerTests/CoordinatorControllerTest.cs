@@ -15,12 +15,12 @@ namespace Revature.Identity.Tests.ControllerTests
     /// <summary>
     /// Test for coordinator retrieval based on their Guid-Id.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task GetCoordinatorByIdAsync()
     {
-      TestHelper helper = new TestHelper();
-      Guid coordinatorId = helper.Coordinators[0].CoordinatorId;
+      var helper = new TestHelper();
+      var coordinatorId = helper.Coordinators[0].CoordinatorId;
 
       helper.Repository
         .Setup(x => x.GetCoordinatorAccountByIdAsync(It.IsAny<Guid>()))

@@ -7,14 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Okta.AspNetCore;
+using Revature.Identity.Api.Services;
 using Revature.Identity.Api.Telemetry;
 using Revature.Identity.DataAccess;
 using Revature.Identity.DataAccess.Repositories;
 using Revature.Identity.Lib.Interface;
-using Revature.Identity.Api.Services;
 using Serilog;
 
 namespace Revature.Identity.Api
@@ -33,7 +33,6 @@ namespace Revature.Identity.Api
 
     public void ConfigureServices(IServiceCollection services)
     {
-
       services.AddControllers();
       services.AddDbContext<IdentityDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString(ConnectionStringName)));
@@ -42,13 +41,14 @@ namespace Revature.Identity.Api
       {
         options.AddPolicy(CorsPolicyName, builder =>
         {
-          builder.WithOrigins("http://localhost:4200",
-                              "https://localhost:4200",
-                              "http://housing.revature.xyz",
-                              "https://housing.revature.xyz",
-                              "http://housingdev.revature.xyz",
-                              "https://housingdev.revature.xyz",
-                              "https://housing-angular-dev.azurewebsites.net")
+          builder.WithOrigins(
+            "http://localhost:4200",
+            "https://localhost:4200",
+            "http://housing.revature.xyz",
+            "https://housing.revature.xyz",
+            "http://housingdev.revature.xyz",
+            "https://housingdev.revature.xyz",
+            "https://housing-angular-dev.azurewebsites.net")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
@@ -92,7 +92,6 @@ namespace Revature.Identity.Api
           {
             RoleClaimType = "groups",
             ValidateIssuer = true,
-  
           };
         });
 

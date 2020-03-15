@@ -71,7 +71,7 @@ namespace Revature.Identity.Tests.Repository_Tests
     /// <summary>
     /// Update a given notification's entry in the database.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task UpdateNotificationAccountTestAsync()
     {
@@ -101,11 +101,11 @@ namespace Revature.Identity.Tests.Repository_Tests
     /// <summary>
     /// Delete a notification's entry from the database.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task DeleteNotificationTestAsync()
     {
-      //Assemble
+      // Assemble
       var helper = new TestHelper();
       var mapper = new Mapper();
       var options = new DbContextOptionsBuilder<IdentityDbContext>()
