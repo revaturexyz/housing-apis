@@ -10,7 +10,7 @@ namespace Revature.Lodging.DataAccess.Entities
     public string Type { get; set; }
 
     /// <summary>
-    /// Gender model has a collection of Room that stores the rooms assigned to the specified gender
+    /// Gender model has a collection of Room that stores the rooms assigned to the specified gender.
     /// </summary>
     public virtual ICollection<Room> Room { get; set; }
   }

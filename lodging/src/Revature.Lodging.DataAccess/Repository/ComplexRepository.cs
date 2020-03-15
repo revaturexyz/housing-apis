@@ -12,7 +12,6 @@ namespace Revature.Lodging.DataAccess.Repository
 {
   public class ComplexRepository : IComplexRepository
   {
-
     private readonly Entity.LodgingDbContext _context;
     private readonly IRoomRepository _roomRepo;
     private readonly ILogger<ComplexRepository> _log;
@@ -25,7 +24,7 @@ namespace Revature.Lodging.DataAccess.Repository
     }
 
     /// <summary>
-    /// Create new single complex in the database by logic complex object
+    /// Create new single complex in the database by logic complex object.
     /// </summary>
     /// <param name="lComplex"></param>
     /// <returns></returns>
@@ -41,10 +40,10 @@ namespace Revature.Lodging.DataAccess.Repository
     }
 
     /// <summary>
-    /// Read all existed complices in the database
+    /// Read all existed complices in the database.
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">list of complex not found</exception>
+    /// <exception cref="ArgumentNullException">list of complex not found.</exception>
     public async Task<List<Logic.Complex>> ReadComplexListAsync()
     {
       try
@@ -61,11 +60,11 @@ namespace Revature.Lodging.DataAccess.Repository
     }
 
     /// <summary>
-    /// Read single Logic complex object from complex Id
+    /// Read single Logic complex object from complex Id.
     /// </summary>
     /// <param name="complexId"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">complex not found by id</exception>
+    /// <exception cref="ArgumentNullException">complex not found by id.</exception>
     public async Task<Logic.Complex> ReadComplexByIdAsync(Guid complexId)
     {
       try
@@ -81,12 +80,12 @@ namespace Revature.Lodging.DataAccess.Repository
     }
 
     /// <summary>
-    /// Read single logic complex object from complex name and complex contact number
+    /// Read single logic complex object from complex name and complex contact number.
     /// </summary>
     /// <param name="name"></param>
     /// <param name="phone"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">list of complex not found</exception>
+    /// <exception cref="ArgumentNullException">list of complex not found.</exception>
     public async Task<Logic.Complex> ReadComplexByNameAndNumberAsync(string name, string phone)
     {
       try
@@ -105,11 +104,11 @@ namespace Revature.Lodging.DataAccess.Repository
     }
 
     /// <summary>
-    /// Update existed single complex by passing logic complex object
+    /// Update existed single complex by passing logic complex object.
     /// </summary>
     /// <param name="update"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">complex not found</exception>
+    /// <exception cref="ArgumentNullException">complex not found.</exception>
     public async Task<bool> UpdateComplexAsync(Logic.Complex update)
     {
       try
@@ -138,11 +137,11 @@ namespace Revature.Lodging.DataAccess.Repository
     }
 
     /// <summary>
-    /// Delete existed single complex from database by specific complex Id
+    /// Delete existed single complex from database by specific complex Id.
     /// </summary>
     /// <param name="complexId"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">complex not found</exception>
+    /// <exception cref="ArgumentNullException">complex not found.</exception>
     public async Task<bool> DeleteComplexAsync(Guid complexId)
     {
       try
@@ -164,7 +163,7 @@ namespace Revature.Lodging.DataAccess.Repository
     }
 
     /// <summary>
-    /// Create new single Amenities of Room in database by amenityroom object
+    /// Create new single Amenities of Room in database by amenityroom object.
     /// </summary>
     /// <param name="ar"></param>
     /// <returns></returns>
@@ -203,7 +202,6 @@ namespace Revature.Lodging.DataAccess.Repository
     //    throw;
     //  }
     //}
-
 
     /// <summary>
     /// Delete ALL amenity record from Amenity of complex in database by complex Id
@@ -313,7 +311,7 @@ namespace Revature.Lodging.DataAccess.Repository
     //}
 
     /// <summary>
-    /// Read amenity list for specific room from database by room Id 
+    /// Read amenity list for specific room from database by room Id
     /// </summary>
     /// <param name="roomId"></param>
     /// <returns></returns>

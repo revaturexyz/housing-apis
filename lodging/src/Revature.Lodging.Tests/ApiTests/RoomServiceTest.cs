@@ -2,7 +2,7 @@ namespace Revature.Lodging.Tests.ApiTests
 {
   /// <summary>
   /// this is for testing the class of room service bus
-  /// will filled it later
+  /// will filled it later.
   /// </summary>
   class RoomServiceTest
   {

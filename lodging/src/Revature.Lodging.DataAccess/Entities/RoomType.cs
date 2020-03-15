@@ -10,7 +10,7 @@ namespace Revature.Lodging.DataAccess.Entities
     public string Type { get; set; }
 
     /// <summary>
-    /// Model has a collection of Room that defines all the rooms with the specified room type
+    /// Model has a collection of Room that defines all the rooms with the specified room type.
     /// </summary>
     public virtual ICollection<Room> Room  { get; set; }
   }

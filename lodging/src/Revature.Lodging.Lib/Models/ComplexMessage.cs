@@ -3,7 +3,7 @@ using System;
 namespace Revature.Lodging.Lib.Models
 {
   /// <summary>
-  /// Model for message to be received from complex service
+  /// Model for message to be received from complex service.
   /// </summary>
   public class ComplexMessage
   {
@@ -16,7 +16,7 @@ namespace Revature.Lodging.Lib.Models
     public DateTime LeaseEnd { get; set; }
 
     /// <summary>
-    /// it is an identifier for Room service to recongnize which method should they act(CRUD)
+    /// it is an identifier for Room service to recongnize which method should they act(CRUD).
     /// </summary>
     public int QueOperator { get; set; }
   }

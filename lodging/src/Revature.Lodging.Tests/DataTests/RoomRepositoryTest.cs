@@ -10,7 +10,7 @@ using BusinessLogic = Revature.Lodging.Lib;
 namespace Revature.Lodging.Tests.DataTests
 {
   /// <summary>
-  /// Test class for testing all repository methods and general database functions
+  /// Test class for testing all repository methods and general database functions.
   /// </summary>
   public class RoomRepositoryTest
   {
@@ -39,7 +39,7 @@ namespace Revature.Lodging.Tests.DataTests
     // Use to set up a valid business logic Room
     private BusinessLogic.Models.Room PresetBLRoom()
     {
-      var room = new BusinessLogic.Models.Room 
+      var room = new BusinessLogic.Models.Room
       {
         Id = _newRoomId,
         ComplexId = _newComplexId,
@@ -376,7 +376,6 @@ namespace Revature.Lodging.Tests.DataTests
       assembleContext.Database.EnsureCreated();
       //var mapper = new DBMapper(assembleContext);
 
-
       var newRoom = PresetEntityRoom(assembleContext);
       var newRoom2 = PresetEntityRoom2(assembleContext);
       var newRoom3 = PresetEntityRoom3(assembleContext);
@@ -411,7 +410,6 @@ namespace Revature.Lodging.Tests.DataTests
       using var assembleContext = new LodgingDbContext(options);
       assembleContext.Database.EnsureCreated();
       //var mapper = new DBMapper(assembleContext);
-
 
       var newRoom = PresetEntityRoom(assembleContext);
       var newRoom2 = PresetEntityRoom2(assembleContext);

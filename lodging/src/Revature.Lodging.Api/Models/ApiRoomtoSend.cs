@@ -5,7 +5,7 @@ namespace Revature.Lodging.Api.Models
 {
   /// <summary>
   /// API RoomToSend model Created from API Room model
-  /// Its purpose is to send to Room service as enumarable collections
+  /// Its purpose is to send to Room service as enumarable collections.
   /// </summary>
   public class ApiRoomToSend
   {
@@ -21,7 +21,7 @@ namespace Revature.Lodging.Api.Models
 
     /// <summary>
     /// it is an identifier for Room service to recongnize which method should they act(CUD)
-    /// 0: create room, 1: update room, 2: delete single room, 3: delete all rooms belongs to same complex
+    /// 0: create room, 1: update room, 2: delete single room, 3: delete all rooms belongs to same complex.
     /// </summary>
     public int QueOperator { get; set; }
   }

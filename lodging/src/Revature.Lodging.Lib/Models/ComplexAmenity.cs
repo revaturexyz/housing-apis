@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Revature.Lodging.Lib.Models
 {
   /// <summary>
-  /// This model serves to connect the Amenity with the Complex that has that amenity. Both FK's
+  /// This model serves to connect the Amenity with the Complex that has that amenity. Both FK's.
   /// </summary>
   public class ComplexAmenity
   {

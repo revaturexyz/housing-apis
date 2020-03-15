@@ -12,7 +12,7 @@ namespace Revature.Lodging.Tests.ApiTests
   public class TenantControllerTests
   {
     /// <summary>
-    /// Unit test for GetAsync method in TenantController
+    /// Unit test for GetAsync method in TenantController.
     /// </summary>
     [Fact]
     public async Task GetAsyncShouldReturnRoomList()

@@ -14,7 +14,7 @@ namespace Revature.Lodging.Tests.DataTests
   {
     //private readonly NullLogger<Repository> log;
 
-    # region data to test 
+    # region data to test
     public static Guid CId1 = Guid.NewGuid();
     public static Guid AId1 = Guid.NewGuid();
     public static Guid PId1 = Guid.NewGuid();
@@ -127,15 +127,14 @@ namespace Revature.Lodging.Tests.DataTests
       RoomId = RId,
       AmenityId = AmId2
     };
-    #endregion 
+    #endregion
 
     /// <summary>
-    /// This test is to test CreateComplexAsync in DataAccess.Repository
+    /// This test is to test CreateComplexAsync in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void CreateComplexAsyncTest()
     {
-
       var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
@@ -152,7 +151,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test ReadComplexListAsync in DataAccess.Repository
+    /// This test is to test ReadComplexListAsync in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void ReadComplexListAsyncTest()
@@ -177,12 +176,11 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test ReadComplexAsync in DataAccess.Repository
+    /// This test is to test ReadComplexAsync in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void ReadComplexAsyncTest()
     {
-
       var log = new NullLogger<ComplexRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
@@ -200,7 +198,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test UpdateComplexAsync in DataAccess.Repository
+    /// This test is to test UpdateComplexAsync in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void UpdateComplexAsync()
@@ -232,7 +230,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test DeleteComplexAsync in DataAccess.Repository
+    /// This test is to test DeleteComplexAsync in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void DeleteComplexAsyncTest()
@@ -259,7 +257,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test CreateAmenityRoomAsync in DataAccess.Repository
+    /// This test is to test CreateAmenityRoomAsync in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void CreateAmenityRoomAsyncTest()
@@ -280,7 +278,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test CreateAmenityComplexAsync in DataAccess.Repository
+    /// This test is to test CreateAmenityComplexAsync in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void CreateAmenityComplexAsyncTest()
@@ -300,7 +298,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test CreateAmenityAsync in DataAccess.Repository
+    /// This test is to test CreateAmenityAsync in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void CreateAmenityAsyncTest()
@@ -321,12 +319,11 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test ReadAmenityList in DataAccess.Repository
+    /// This test is to test ReadAmenityList in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void ReadAmenityListAsyncTest()
     {
-
       var log = new NullLogger</*Complex*/AmenityRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
@@ -346,7 +343,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test ReadAmenityListByComplexId in DataAccess.Repository
+    /// This test is to test ReadAmenityListByComplexId in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void ReadAmenityListByComplexIdAsyncTest()
@@ -373,7 +370,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test ReadAmenityListByRoomId in DataAccess.Repository
+    /// This test is to test ReadAmenityListByRoomId in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void ReadAmenityListByRoomIdAsyncTest()
@@ -399,7 +396,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test ReadComplexByProviderAsync in DataAccess.Repository
+    /// This test is to test ReadComplexByProviderAsync in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void ReadComplexByProviderIDAsyncTest()
@@ -434,7 +431,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test UpdateAmenityAsync in DataAccess.Repository
+    /// This test is to test UpdateAmenityAsync in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void UpdateAmenityAsyncTest()
@@ -464,7 +461,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test DeleteAmenityAsync in DataAccess.Repository
+    /// This test is to test DeleteAmenityAsync in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void DeleteAmenityAsyncTest()
@@ -502,7 +499,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test ReadComplexByNameAndNumberAsync in DataAccess.Repository
+    /// This test is to test ReadComplexByNameAndNumberAsync in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void ReadComplexByNameAndNumberAsyncTest()
@@ -529,12 +526,11 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test DeleteAmenityRoomAsync in DataAccess.Repository
+    /// This test is to test DeleteAmenityRoomAsync in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void DeleteAmenityRoomAsyncTest()
     {
-
       var log = new NullLogger</*Complex*/AmenityRepository>();
       var options
           = new DbContextOptionsBuilder<Entity.LodgingDbContext>()
@@ -553,7 +549,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test DeleteAmenityComplexAsync in DataAccess.Repository
+    /// This test is to test DeleteAmenityComplexAsync in DataAccess.Repository.
     /// </summary>
     [Fact]
     public async void DeleteAmenityComplexAsyncTest()
@@ -574,7 +570,6 @@ namespace Revature.Lodging.Tests.DataTests
 
       Assert.Null(testContext.ComplexAmenity.Find(CId1));
     }
-
 
   }
 }

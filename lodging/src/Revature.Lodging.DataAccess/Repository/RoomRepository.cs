@@ -9,8 +9,8 @@ using Data = Revature.Lodging.DataAccess.Entities;
 
 namespace Revature.Lodging.DataAccess
 {
-  /// <summary> 
-  /// Class in charge of methods that affect the state and data in the Room DB
+  /// <summary>
+  /// Class in charge of methods that affect the state and data in the Room DB.
   /// </summary>
   public class RoomRepository : IRoomRepository
   {
@@ -22,7 +22,7 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Method that creates a Room
+    /// Method that creates a Room.
     /// </summary>
     /// <param name="myRoom"></param>
     /// <returns></returns>
@@ -36,23 +36,23 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Method that gets a Room
+    /// Method that gets a Room.
     /// </summary>
     /// <param name="roomId"></param>
     /// <returns></returns>
-    /// <exception cref="InvalidOperationException">Thrown when room is not found in the database</exception>
+    /// <exception cref="InvalidOperationException">Thrown when room is not found in the database.</exception>
     public async Task<Lib.Models.Room> ReadRoomAsync(Guid roomId)
     {
       return Mapper.Map(await _context.Room.Where(r => r.Id == roomId).Include(r => r.Gender).Include(r => r.RoomType).FirstAsync());
     }
 
     /// <summary>
-    /// Method that updates room
+    /// Method that updates room.
     /// </summary>
     /// <param name="myRoom"></param>
     /// <returns></returns>
-    /// <exception cref="InvalidOperationException">Thrown when room isn't found in DB</exception>
-    /// <remarks>Update room method for the complex service</remarks>
+    /// <exception cref="InvalidOperationException">Thrown when room isn't found in DB.</exception>
+    /// <remarks>Update room method for the complex service.</remarks>
     public async Task UpdateRoomAsync(Lib.Models.Room myRoom)
     {
       var roomEntity = await _context.Room.Where(r => r.Id == myRoom.Id)
@@ -87,7 +87,7 @@ namespace Revature.Lodging.DataAccess
       if(myRoom.Gender == null)
       {
         roomEntity.Gender = null;
-      } else { 
+      } else {
       string gender = myRoom.Gender.ToLower();
       switch (gender)
       {
@@ -107,11 +107,11 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Method that deletes a Room
+    /// Method that deletes a Room.
     /// </summary>
     /// <param name="roomId"></param>
     /// <returns></returns>
-    /// <exception cref="InvalidOperationException">Thrown when room Id isn't found</exception>
+    /// <exception cref="InvalidOperationException">Thrown when room Id isn't found.</exception>
     public async Task DeleteRoomAsync(Guid roomId)
     {
       var roomEntity = await _context.Room.FindAsync(roomId);
@@ -120,11 +120,11 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Deletes all rooms based on given complex ID and returns all room IDs that have been deleted
+    /// Deletes all rooms based on given complex ID and returns all room IDs that have been deleted.
     /// </summary>
     /// <param name="complexId"></param>
     /// <returns></returns>
-    /// <exception cref="InvalidOperationException">Thrown when room to be deleted isn't found in DB</exception>
+    /// <exception cref="InvalidOperationException">Thrown when room to be deleted isn't found in DB.</exception>
     public async Task<List<Guid>> DeleteComplexRoomAsync(Guid complexId)
     {
       var roomEntity = await _context.Room.Where(r => r.ComplexId == complexId).Select(r => r.Id).ToListAsync();
@@ -140,7 +140,7 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Method that filters Room based on ComplexId and other additional filters
+    /// Method that filters Room based on ComplexId and other additional filters.
     /// </summary>
     /// <param name="complexId"></param>
     /// <param name="roomNumber"></param>
@@ -150,7 +150,7 @@ namespace Revature.Lodging.DataAccess
     /// <param name="endDate"></param>
     /// <param name="roomId"></param>
     /// <returns></returns>
-    /// <exception cref="KeyNotFoundException">Either ComplexId or RoomId is not in the DB</exception>
+    /// <exception cref="KeyNotFoundException">Either ComplexId or RoomId is not in the DB.</exception>
     public async Task<IEnumerable<Lib.Models.Room>> GetFilteredRoomsAsync(
       Guid complexId,
       string roomNumber,
@@ -218,7 +218,7 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Returns vacant rooms based on gender and end date
+    /// Returns vacant rooms based on gender and end date.
     /// </summary>
     /// <param name="gender"></param>
     /// <param name="endDate"></param>
@@ -232,11 +232,11 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Method that updates the room occupants when a tenant is assigned a room
+    /// Method that updates the room occupants when a tenant is assigned a room.
     /// </summary>
     /// <param name="roomId"></param>
-    /// <exception cref="InvalidOperationException">Thrown when a room matching the roomId is not found, or the gender type isn't found </exception>
-    /// <remarks>Sets a room's gender when Gender is null, i.e. when the room was previously unoccupied</remarks>
+    /// <exception cref="InvalidOperationException">Thrown when a room matching the roomId is not found, or the gender type isn't found. </exception>
+    /// <remarks>Sets a room's gender when Gender is null, i.e. when the room was previously unoccupied.</remarks>
     public async Task AddRoomOccupantsAsync(Guid roomId, string tenantGender)
     {
       var roomToUpdate = await _context.Room.Where(r => r.Id == roomId).Include(r => r.Gender).FirstAsync();
@@ -249,12 +249,12 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Method that updates occupants when an occupant vacates a room
+    /// Method that updates occupants when an occupant vacates a room.
     /// </summary>
     /// <param name="roomId"></param>
     /// <returns></returns>
-    /// <exception cref="InvalidOperationException">Thrown when room isn't found</exception>
-    /// <remarks>Reverts gender of room back to null if updated room is empty</remarks>
+    /// <exception cref="InvalidOperationException">Thrown when room isn't found.</exception>
+    /// <remarks>Reverts gender of room back to null if updated room is empty.</remarks>
     public async Task SubtractRoomOccupantsAsync(Guid roomId)
     {
       var roomToUpdate = await _context.Room.Where(r => r.Id == roomId).Include(r => r.Gender).FirstAsync();

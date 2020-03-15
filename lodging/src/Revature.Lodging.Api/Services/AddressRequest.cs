@@ -13,7 +13,7 @@ namespace Revature.Lodging.Api.Services
     private readonly HttpClient _client;
 
     /// <summary>
-    /// Set Json Serialization to Camel Case policy
+    /// Set Json Serialization to Camel Case policy.
     /// </summary>
     private readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
     {
@@ -21,9 +21,9 @@ namespace Revature.Lodging.Api.Services
     };
 
     /// <summary>
-    /// Construct Address Service with base URI, Default, and injected HTTP Client
+    /// Construct Address Service with base URI, Default, and injected HTTP Client.
     /// </summary>
-    /// <param name="client">HTTP Client (dependency injection)</param>
+    /// <param name="client">HTTP Client (dependency injection).</param>
     /// <param name="addressConfiguration">Configuration file with base URI.</param>
     public AddressRequest(HttpClient client, IConfiguration addressConfiguration)
     {
@@ -44,8 +44,8 @@ namespace Revature.Lodging.Api.Services
     /// Gets the ID of an address in Address Service - if the address does not already exist, address service can use
     /// the address sent in the query string to Post a new address. The official Address entry will always accopany a success response.
     /// </summary>
-    /// <param name="item">A model of an Address</param>
-    /// <returns>A model of the formal Address entry in Address Services Database, including it GUID</returns>
+    /// <param name="item">A model of an Address.</param>
+    /// <returns>A model of the formal Address entry in Address Services Database, including it GUID.</returns>
     public async Task<ApiAddress> PostAddressAsync(ApiAddress item)
     {
       var queryString = "?"
@@ -63,7 +63,7 @@ namespace Revature.Lodging.Api.Services
 
     /// <summary>
     /// </summary>
-    /// <param name="item">A model of an Address</param>
+    /// <param name="item">A model of an Address.</param>
     /// <returns></returns>
     public async Task<ApiAddress> GetAddressAsync(Guid addressId)
     {
@@ -76,9 +76,9 @@ namespace Revature.Lodging.Api.Services
     }
 
     /// <summary>
-    /// Private helper method for sending a HTTP Request between services
+    /// Private helper method for sending a HTTP Request between services.
     /// </summary>
-    /// <returns>A Request Response</returns>
+    /// <returns>A Request Response.</returns>
     private async Task<HttpResponseMessage> SendRequestAsync<T>(HttpMethod method, string uri, T body = null) where T : class
     {
       using var request = new HttpRequestMessage(method, uri);
@@ -92,7 +92,7 @@ namespace Revature.Lodging.Api.Services
     }
 
     /// <summary>
-    /// A private helper method for interpretting a HTTP Response
+    /// A private helper method for interpretting a HTTP Response.
     /// </summary>
     /// <returns>A generic typed object that may be included in the body of a response.</returns>
     private async Task<T> ReadResponseBodyAsync<T>(HttpResponseMessage response)

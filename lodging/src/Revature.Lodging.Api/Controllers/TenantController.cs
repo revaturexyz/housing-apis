@@ -16,7 +16,7 @@ namespace Revature.Lodging.Api.Controllers
     private readonly ILogger _logger;
 
     /// <summary>
-    /// Controller in charge of communicating with the tenant service
+    /// Controller in charge of communicating with the tenant service.
     /// </summary>
     public TenantController(IRoomRepository repository, ILogger<TenantController> logger)
     {

@@ -108,7 +108,6 @@ namespace Revature.Lodging.DataAccess.Entities
           .IsRequired()
           .OnDelete(DeleteBehavior.Cascade);
 
-
         entity.HasData
         (
           new RoomAmenity { Id = Guid.Parse("5cb7eadd-30ce-49a7-9b8c-bae1d47f46a6"), AmenityId = amId1, RoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456fd") },
@@ -297,5 +296,4 @@ namespace Revature.Lodging.DataAccess.Entities
 
   }
 
-      
 }

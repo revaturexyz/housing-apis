@@ -8,7 +8,7 @@ namespace Revature.Lodging.Api.Models
   /// <summary>
   /// Api Complex model. Use it as parameter from front-end
   /// and/or as a return type to front-end
-  /// Also contains a Api ComplexAddress object and list of amenity
+  /// Also contains a Api ComplexAddress object and list of amenity.
   /// </summary>
   public class ApiComplex
   {

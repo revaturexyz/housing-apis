@@ -13,7 +13,7 @@ namespace Revature.Lodging.Api.Services
 {
   /// <summary>
   /// This classes purpose is to connect to the queue and listen/receive a message sent from the tenant service.
-  /// Based on their message we will call upon the repository accordingly
+  /// Based on their message we will call upon the repository accordingly.
   /// </summary>
   public class RoomServiceReceiver : BackgroundService, IRoomServiceReceiver
   {
@@ -22,7 +22,7 @@ namespace Revature.Lodging.Api.Services
     private readonly ILogger<RoomServiceReceiver> _log;
 
     /// <summary>
-    /// Constructor injecting IConfiguration, IServiceProvider, and ILogger
+    /// Constructor injecting IConfiguration, IServiceProvider, and ILogger.
     /// </summary>
     /// <param name="configuration"></param>
     /// <param name="services"></param>
@@ -35,7 +35,7 @@ namespace Revature.Lodging.Api.Services
     }
 
     /// <summary>
-    /// Registers the message and then calls the process message
+    /// Registers the message and then calls the process message.
     /// </summary>
     public void RegisterOnMessageHandlerAndReceiveMessages()
     {
@@ -51,7 +51,7 @@ namespace Revature.Lodging.Api.Services
     /// <summary>
     /// The actual method to process the received message.
     /// Receives and deserializes the message from room service.
-    /// It should be 
+    /// It should be.
     /// </summary>
     /// <param name="message"></param>
     /// <param name="token"></param>
@@ -109,11 +109,11 @@ namespace Revature.Lodging.Api.Services
     }
 
     /// <summary>
-    /// Inherited from the Background service, so far no use for it just yet
+    /// Inherited from the Background service, so far no use for it just yet.
     /// </summary>
     /// <param name="stoppingToken"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException">Inherited but not utilized</exception>
+    /// <exception cref="NotImplementedException">Inherited but not utilized.</exception>
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
       RegisterOnMessageHandlerAndReceiveMessages();

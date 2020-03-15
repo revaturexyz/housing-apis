@@ -32,7 +32,7 @@ namespace Revature.Lodging.Api
     public IConfiguration Configuration { get; }
 
     /// <summary>
-    /// to configure the services
+    /// to configure the services.
     /// </summary>
     /// <param name="services"></param>
     public void ConfigureServices(IServiceCollection services)
@@ -113,7 +113,7 @@ namespace Revature.Lodging.Api
     }
 
     /// <summary>
-    /// it is to create the app's request processing pipeline
+    /// it is to create the app's request processing pipeline.
     /// </summary>
     /// <param name="app"></param>
     /// <param name="env"></param>

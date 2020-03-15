@@ -7,36 +7,35 @@ namespace Revature.Lodging.Lib.Models
 {
   public class Room
   {
-
     /// <summary>
-    /// Room Number of the room
+    /// Room Number of the room.
     /// </summary>
     private string _roomNumber;
     /// <summary>
-    /// Number of beds in a Room, can also be interpreted as Room's full capacity
+    /// Number of beds in a Room, can also be interpreted as Room's full capacity.
     /// </summary>
     private int _numberOfBeds;
 
     /// <summary>
-    /// Number of occupants in a room
+    /// Number of occupants in a room.
     /// </summary>
     private int _numberOfOccupants;
 
     /// <summary>
-    /// room type
+    /// room type.
     /// </summary>
     private string _roomType;
 
     /// <summary>
-    /// Unique Identifier for each Room, assigned by complex service
+    /// Unique Identifier for each Room, assigned by complex service.
     /// </summary>
     [Required]
     public Guid Id { get; set; }
 
     /// <summary>
-    /// Another way to uniquely identify a Room, assigned by complex service
+    /// Another way to uniquely identify a Room, assigned by complex service.
     /// </summary>
-    /// <exception cref="ArgumentException">Thrown when room number has null or no value</exception>
+    /// <exception cref="ArgumentException">Thrown when room number has null or no value.</exception>
     public string RoomNumber
     {
       get => _roomNumber;
@@ -52,9 +51,9 @@ namespace Revature.Lodging.Lib.Models
 
     /// <summary>
     /// Logic for checking that the Number of Beds is greater than zero
-    /// Server side validation
+    /// Server side validation.
     /// </summary>
-    /// <exception cref="ArgumentException">Thrown when given an invalid number of beds</exception>
+    /// <exception cref="ArgumentException">Thrown when given an invalid number of beds.</exception>
     [Required]
     public int NumberOfBeds
     {
@@ -67,9 +66,9 @@ namespace Revature.Lodging.Lib.Models
     }
 
     /// <summary>
-    /// Number of occupants per Room, used to check for Room vacancy, updated whenever a tenant is assigned or leaves a Room
+    /// Number of occupants per Room, used to check for Room vacancy, updated whenever a tenant is assigned or leaves a Room.
     /// </summary>
-    /// <exception cref="ArgumentException">Thrown when occupants are greater than number number of beds</exception>
+    /// <exception cref="ArgumentException">Thrown when occupants are greater than number number of beds.</exception>
     [Required]
     public int NumberOfOccupants
     {
@@ -82,21 +81,21 @@ namespace Revature.Lodging.Lib.Models
     }
 
     /// <summary>
-    /// Date for the start of the lease, assigned by complex service
+    /// Date for the start of the lease, assigned by complex service.
     /// </summary>
     public DateTime LeaseStart { get; private set; }
 
     /// <summary>
-    /// Date for end of lease, assgined by complex service
+    /// Date for end of lease, assgined by complex service.
     /// </summary>
     public DateTime LeaseEnd { get; private set; }
 
     /// <summary>
-    /// Method that sets the lease of the room
+    /// Method that sets the lease of the room.
     /// </summary>
     /// <param name="start"></param>
     /// <param name="end"></param>
-    /// <exception cref="ArgumentException">Thrown when lease period is invalid, i.e the lease ends before it even begins</exception>
+    /// <exception cref="ArgumentException">Thrown when lease period is invalid, i.e the lease ends before it even begins.</exception>
     public void SetLease(DateTime start, DateTime end)
     {
       if (start == null || end == null)
@@ -113,20 +112,19 @@ namespace Revature.Lodging.Lib.Models
     }
 
     /// <summary>
-    /// Complex where Room belongs in, assigned by complex service
+    /// Complex where Room belongs in, assigned by complex service.
     /// </summary>
     [Required]
     public Guid ComplexId { get; set; }
     /// <summary>
-    /// Gender of the Room, when assigning a tenant to a Room, their roommates should be of the same gender
+    /// Gender of the Room, when assigning a tenant to a Room, their roommates should be of the same gender.
     /// </summary>
-    public string Gender { get; set; } 
-    
+    public string Gender { get; set; }
 
     /// <summary>
     /// Type of Room, for example: apartment, dorm, townhouse, hotel/motel.
     /// </summary>
-    /// <exception cref="ArgumentException">Thrown when the gender is null or has no value just whitespace</exception>
+    /// <exception cref="ArgumentException">Thrown when the gender is null or has no value just whitespace.</exception>
     public string RoomType {
       get => _roomType;
       set
@@ -139,7 +137,5 @@ namespace Revature.Lodging.Lib.Models
       }
     }
 
-   
-    
   }
 }

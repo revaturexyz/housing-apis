@@ -74,11 +74,11 @@ namespace Revature.Lodging.Api
     }
 
     /// <summary>
-    /// Filters and returns a given room based on the user's role
+    /// Filters and returns a given room based on the user's role.
     /// </summary>
     /// <param name="room"></param>
     /// <param name="isCoordinator"></param>
-    /// <returns>Filtered room</returns>
+    /// <returns>Filtered room.</returns>
     public static Lib.Models.Room FilterRoomByRole(Lib.Models.Room room, bool isCoordinator)
     {
       var filteredRoom = room;

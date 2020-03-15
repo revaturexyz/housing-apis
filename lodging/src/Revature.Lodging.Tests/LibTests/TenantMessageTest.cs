@@ -11,7 +11,7 @@ namespace Revature.Lodging.Tests.LibTests
     public string gender = "Male";
 
     /// <summary>
-    /// A test to ensure that creating a tenant message which includes a tuple of < Guid, string >
+    /// A test to ensure that creating a tenant message which includes a tuple of. < Guid, string >
     /// and an operation type is successful in creating
     /// </summary>
     [Fact]

@@ -7,7 +7,7 @@ namespace Revature.Lodging.Tests.ApiTests
   public class ApiModelTest
   {
     /// <summary>
-    /// This test is to test Amenity model in Api Model 
+    /// This test is to test Amenity model in Api Model.
     /// </summary>
     [Fact]
     public void ApiAmenityTest()
@@ -26,7 +26,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// This test is to test Complex Address model in Api Model 
+    /// This test is to test Complex Address model in Api Model.
     /// </summary>
     [Fact]
     public void ApiComplexAddressTest()
@@ -49,7 +49,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// This test is to test Complex model in Api Model 
+    /// This test is to test Complex model in Api Model.
     /// </summary>
     [Fact]
     public void ApiComplexTest()
@@ -72,7 +72,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// This test is to test Room model in Api Model 
+    /// This test is to test Room model in Api Model.
     /// </summary>
     [Fact]
     public void ApiRoomTest()
@@ -99,7 +99,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// This test is to test RoomtoSend model in Api Model 
+    /// This test is to test RoomtoSend model in Api Model.
     /// </summary>
     [Fact]
     public void ApiRoomtoSendTest()

@@ -14,7 +14,7 @@ namespace Revature.Lodging.Tests.ApiTests
   public class RoomControllerTests
   {
     /// <summary>
-    /// Test for Complex Controller method GetFilteredRooms
+    /// Test for Complex Controller method GetFilteredRooms.
     /// </summary>
     /// <returns></returns>
     //[Fact]
@@ -80,7 +80,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// Unit test for checking if room creation was successful method returns appropriate response
+    /// Unit test for checking if room creation was successful method returns appropriate response.
     /// </summary>
     /// <returns></returns>
     [Fact]
@@ -118,7 +118,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// Checks if the room creation was unsuccessful, returns bad request
+    /// Checks if the room creation was unsuccessful, returns bad request.
     /// </summary>
     /// <returns></returns>
     [Fact]
@@ -145,7 +145,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// Checks if room update was successful, method returns appropriate response
+    /// Checks if room update was successful, method returns appropriate response.
     /// </summary>
     /// <returns></returns>
     [Fact]
@@ -184,7 +184,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// Checks if updating was not successful, when the room isn't found, returns notfound
+    /// Checks if updating was not successful, when the room isn't found, returns notfound.
     /// </summary>
     /// <returns></returns>
     [Fact]
@@ -225,7 +225,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// Checks if update was unsuccessful due to bad user input, returns bad request
+    /// Checks if update was unsuccessful due to bad user input, returns bad request.
     /// </summary>
     /// <returns></returns>
     [Fact]
@@ -254,34 +254,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// Checks if get room was successful, returns appropriate response
-    /// </summary>
-    /// <returns></returns>
-    [Fact]
-    public async Task GetRoomShouldReturnRoom()
-    {
-      //arrange
-      var mockRepo = new Mock<IRoomRepository>();
-      var mockAmenityRepo = new Mock<IAmenityRepository>();
-      var mockLogger = new Mock<ILogger<RoomController>>();
-      var roomId = Guid.NewGuid();
-      var res = new Lib.Models.Room();
-
-      mockRepo.Setup(r => r.ReadRoomAsync(roomId))
-        .Returns(Task.FromResult(res));
-
-      var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
-
-
-      //act
-      //var result = await controller.GetRoomByIdAsync(Guid.NewGuid());
-      var model = Assert.IsAssignableFrom<ActionResult<ApiRoom>>(await controller.GetRoomByIdAsync(roomId));
-      //assert
-      Assert.IsAssignableFrom<ActionResult<ApiRoom>>(model);
-    }
-
-    /// <summary>
-    /// Checks if the room was not found, method returns not found
+    /// Checks if the room was not found, method returns not found.
     /// </summary>
     /// <returns></returns>
     [Fact]
@@ -303,7 +276,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// Checks if room was actually deleted, returns appropriate response
+    /// Checks if room was actually deleted, returns appropriate response.
     /// </summary>
     /// <returns></returns>
     [Fact]
@@ -326,7 +299,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// Checks if deletion was unsuccessful due to room not in Db, returns not found
+    /// Checks if deletion was unsuccessful due to room not in Db, returns not found.
     /// </summary>
     /// <returns></returns>
     [Fact]

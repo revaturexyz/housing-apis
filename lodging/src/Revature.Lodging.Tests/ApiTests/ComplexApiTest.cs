@@ -17,7 +17,7 @@ namespace Revature.Lodging.Tests.ApiTests
   public class ComplexApiTest
   {
     /// <summary>
-    /// This test is to test GetAllComplexAsync in Complex Api
+    /// This test is to test GetAllComplexAsync in Complex Api.
     /// </summary>
     [Fact]
     public async void GetAllComplexAsyncTest()
@@ -51,7 +51,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// This test is to test GetComplexByIdAsync in Complex Api
+    /// This test is to test GetComplexByIdAsync in Complex Api.
     /// </summary>
     [Fact]
     public async void GetComplexByIdAsyncTest()
@@ -76,7 +76,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// This test is to test GetComplexByNameAndNumberAsync in Complex Api
+    /// This test is to test GetComplexByNameAndNumberAsync in Complex Api.
     /// </summary>
     [Fact]
     public async void GetComplexByNameAndNumberAsyncTest()
@@ -103,7 +103,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// This test is to test GetComplexListByProviderIdAsync in Complex Api
+    /// This test is to test GetComplexListByProviderIdAsync in Complex Api.
     /// </summary>
     [Fact]
     public async void GetComplexListByProviderIdAsyncTest()
@@ -138,7 +138,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// This test is to test PutComplexAsync in Complex Api
+    /// This test is to test PutComplexAsync in Complex Api.
     /// </summary>
     [Fact]
     public async void PutComplexAsyncTest()
@@ -213,7 +213,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// This test is to test DeleteComplexAsync in Complex Api
+    /// This test is to test DeleteComplexAsync in Complex Api.
     /// </summary>
     [Fact]
     public async void DeleteComplexAsyncTest()

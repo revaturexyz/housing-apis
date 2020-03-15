@@ -7,7 +7,7 @@ namespace Revature.Lodging.Api.Models
   /// <summary>
   /// Api Room model. it is received from front-end when
   /// creating new rooms (as enumarable collections)
-  /// (not for sending to Room service)
+  /// (not for sending to Room service).
   /// </summary>
   public class ApiRoom
   {

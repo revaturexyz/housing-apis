@@ -2,10 +2,9 @@ using System;
 
 namespace Revature.Lodging.Api.Models
 {
-
   /// <summary>
   /// Api Amenity model, use it as parameter from front-end
-  /// or as return type to send back to front-end
+  /// or as return type to send back to front-end.
   /// </summary>
   public class ApiAmenity
   {

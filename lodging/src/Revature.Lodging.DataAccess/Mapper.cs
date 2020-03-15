@@ -5,7 +5,7 @@ namespace Revature.Lodging.DataAccess
   public static class Mapper
   {
     /// <summary>
-    /// Lib.Models.Amenity => Entities.Amenities
+    /// Lib.Models.Amenity => Entities.Amenities.
     /// </summary>
     /// <param name="amenity"></param>
     /// <returns></returns>
@@ -20,7 +20,7 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Entities.Amenity => Lib.Models.Amenity
+    /// Entities.Amenity => Lib.Models.Amenity.
     /// </summary>
     /// <param name="amenity"></param>
     /// <returns></returns>
@@ -35,7 +35,7 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Lib.Models.AmenityComplex => Entities.AmenityComplex
+    /// Lib.Models.AmenityComplex => Entities.AmenityComplex.
     /// </summary>
     /// <param name="amenityComplex"></param>
     /// <returns></returns>
@@ -50,7 +50,7 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Entities.AmenityComplex => Lib.Models.AmenityComplex
+    /// Entities.AmenityComplex => Lib.Models.AmenityComplex.
     /// </summary>
     /// <param name="amenityComplex"></param>
     /// <returns></returns>
@@ -65,7 +65,7 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Lib.Models.AmenityRoom => Entities.AmenityRoom
+    /// Lib.Models.AmenityRoom => Entities.AmenityRoom.
     /// </summary>
     /// <param name="amenityRoom"></param>
     /// <returns></returns>
@@ -80,7 +80,7 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Entities.AmenityRoom => Lib.Models.AmenityRoom
+    /// Entities.AmenityRoom => Lib.Models.AmenityRoom.
     /// </summary>
     /// <param name="amenityRoom"></param>
     /// <returns></returns>
@@ -95,7 +95,7 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Lib.Models.Complex => Entities.Complex
+    /// Lib.Models.Complex => Entities.Complex.
     /// </summary>
     /// <param name="complex"></param>
     /// <returns></returns>
@@ -112,7 +112,7 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Entities.Complex => Lib.Models.Complex
+    /// Entities.Complex => Lib.Models.Complex.
     /// </summary>
     /// <param name="complex"></param>
     /// <returns></returns>
@@ -130,7 +130,7 @@ namespace Revature.Lodging.DataAccess
     }
 
     /// <summary>
-    /// Lib.Models.Room => Entities.Room
+    /// Lib.Models.Room => Entities.Room.
     /// </summary>
     /// <param name="room"></param>
     /// <returns></returns>
@@ -155,7 +155,6 @@ namespace Revature.Lodging.DataAccess
         }
       }
 
-      
         switch (roomType)
         {
           case "apartment":
@@ -170,7 +169,7 @@ namespace Revature.Lodging.DataAccess
           case "hotel/motel":
             roomTypeId = 4;
             break;
-        
+
         }
 
       return new Entities.Room
@@ -185,12 +184,11 @@ namespace Revature.Lodging.DataAccess
         GenderId = genderId,
         RoomTypeId = roomTypeId
       };
-      
 
     }
 
     /// <summary>
-    /// Entities.Room => Lib.Models.Room
+    /// Entities.Room => Lib.Models.Room.
     /// </summary>
     /// <param name="room"></param>
     /// <returns></returns>
