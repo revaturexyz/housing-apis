@@ -11,7 +11,7 @@ namespace Revature.Address.Api
 {
   /// <summary>
   /// Specifies the steps completed when the
-  /// application is run
+  /// application is run.
   /// </summary>
   public static class Program
   {
@@ -50,13 +50,15 @@ namespace Revature.Address.Api
         .CreateLogger();
     }
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-      Host.CreateDefaultBuilder(args)
+    public static IHostBuilder CreateHostBuilder(string[] args)
+    {
+      return Host.CreateDefaultBuilder(args)
         .ConfigureWebHostDefaults(webBuilder =>
         {
           webBuilder.UseStartup<Startup>();
           webBuilder.UseSerilog();
         });
+    }
 
     public static async Task EnsureDatabaseCreatedAsync(IHost host)
     {

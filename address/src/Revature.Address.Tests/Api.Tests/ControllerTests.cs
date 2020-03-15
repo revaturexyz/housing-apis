@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Castle.Core.Logging;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
@@ -15,7 +13,7 @@ namespace Revature.Address.Tests.Api.Tests
   public class ControllerTests
   {
     /// <summary>
-    /// Tests that Constructor for Tenant Controller successfully constructs
+    /// Tests that Constructor for Tenant Controller successfully constructs.
     /// </summary>
     [Fact]
     public void ConstructorShouldConstruct()
@@ -34,8 +32,6 @@ namespace Revature.Address.Tests.Api.Tests
 
       // assert (test passes if no exception thrown)
     }
-
-
 
     [Fact]
     public async void CheckDistanceShouldCheckDistance()
@@ -72,8 +68,6 @@ namespace Revature.Address.Tests.Api.Tests
 
       // act (get check distance between addresses)
       var result = await test.IsInRange(validAddress1, validAddress2);
-
-      // Assert correct address was receive
 
       Assert.False(result.Value);
     }

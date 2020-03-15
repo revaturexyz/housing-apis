@@ -32,6 +32,7 @@ namespace Revature.Identity.Api.Controllers
      * check that the token has all of the information it needs and that the info
      * it has is correct.
      */
+
     // NOTE: You literally call ...accounts/id, not with any particular id
     // GET: api/coordinator-accounts/id
     [HttpGet("id")]
@@ -45,10 +46,10 @@ namespace Revature.Identity.Api.Controllers
       {
         var okta = _oktaHelperFactory.Create(Request);
         var oktaUser = await okta.Client.Users.GetUserAsync(okta.Email);
-        var oktaRoles =  okta.Roles.ToList();
 
         var id = await _repo.GetCoordinatorIdByEmailAsync(okta.Email);
-        //Update Okta roles based on local Db
+
+        // Update Okta roles based on local Db
         if (id != Guid.Empty)
         {
           // If their roles arent set properly, set them
@@ -59,9 +60,9 @@ namespace Revature.Identity.Api.Controllers
         }
         else
         {
-          // Check the tentant db
+          // Check the tenant db
           id = await _repo.GetTenantIdByEmailAsync(okta.Email);
-          if(id != Guid.Empty)
+          if (id != Guid.Empty)
           {
             // If their roles arent set properly, set them
             if (!okta.Roles.Contains(OktaHelper.TenantRole))
@@ -71,12 +72,12 @@ namespace Revature.Identity.Api.Controllers
           }
           else
           {
-            //check the provider db
+            // check the provider db
             id = await _repo.GetProviderIdByEmailAsync(okta.Email);
             if (id != Guid.Empty
               && !okta.Roles.Contains(OktaHelper.ApprovedProviderRole))
             {
-              ProviderAccount prov = await _repo.GetProviderAccountByIdAsync(id);
+              var prov = await _repo.GetProviderAccountByIdAsync(id);
               if (prov.Status.StatusText == Status.Approved)
               {
                 // They have been approved, so assign role Provider
@@ -85,7 +86,8 @@ namespace Revature.Identity.Api.Controllers
             }
           }
         }
-        //Update local Db with info from Okta for coordinators, delete old tenant accounts
+
+        // Update local Db with info from Okta for coordinators, delete old tenant accounts
         if (id == Guid.Empty)
         {
           // They have no account anywhere - check roles for Coordinator role
@@ -101,10 +103,12 @@ namespace Revature.Identity.Api.Controllers
               TrainingCenterName = "No Name",
               TrainingCenterAddress = "No Address"
             };
+
             // Add them
             _repo.AddCoordinatorAccount(coordinator);
           }
-          //Check roles for Tenant
+
+          // Check roles for Tenant
           if (okta.Roles.Contains(OktaHelper.TenantRole))
           {
             await okta.RemoveRoleAsync(oktaUser.Id, OktaHelper.TenantRole);
@@ -122,12 +126,14 @@ namespace Revature.Identity.Api.Controllers
               AccountCreatedAt = DateTime.Now,
               AccountExpiresAt = DateTime.Now.AddDays(7)
             };
+
             // Add them
             _repo.AddProviderAccountAsync(provider);
 
             // No notification is made. This is handled in the frontend when
             // they select a training center and click 'request approval'
           }
+
           // Db was modified either way, save changes
           await _repo.SaveAsync();
 
@@ -151,7 +157,7 @@ namespace Revature.Identity.Api.Controllers
     [HttpGet("{coordinatorId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Authorize(Roles ="Coordinator")]
+    [Authorize(Roles = "Coordinator")]
     public async Task<ActionResult> Get(Guid coordinatorId)
     {
       try

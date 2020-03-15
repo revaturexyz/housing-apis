@@ -1,4 +1,3 @@
-using System;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -45,14 +44,15 @@ namespace Revature.Tenant.Api
       {
         options.AddPolicy(CorsPolicyName, builder =>
         {
-          builder.WithOrigins("http://localhost:4200",
-                              "https://localhost:4200",
-                              "http://192.168.99.100:15080",
-                              "http://housing.revature.xyz",
-                              "https://housing.revature.xyz",
-                              "http://housingdev.revature.xyz",
-                              "https://housingdev.revature.xyz",
-                              "https://housing-angular-dev.azurewebsites.net")
+          builder.WithOrigins(
+            "http://localhost:4200",
+            "https://localhost:4200",
+            "http://192.168.99.100:15080",
+            "http://housing.revature.xyz",
+            "https://housing.revature.xyz",
+            "http://housingdev.revature.xyz",
+            "https://housingdev.revature.xyz",
+            "https://housing-angular-dev.azurewebsites.net")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
@@ -75,9 +75,11 @@ namespace Revature.Tenant.Api
 
       services.AddHttpClient<IAddressService, AddressService>();
 
+      services.AddHttpContextAccessor();
+
       services.AddAuthentication(options =>
       {
-        //options.DefaultScheme = OktaDefaults.ApiAuthenticationScheme;
+        // options.DefaultScheme = OktaDefaults.ApiAuthenticationScheme;
         options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
         options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -93,7 +95,6 @@ namespace Revature.Tenant.Api
           NameClaimType = "name",
           RoleClaimType = "groups",
           ValidateIssuer = true,
-
         };
       });
 

@@ -1,5 +1,5 @@
-using Revature.Lodging.DataAccess;
 using System;
+using Revature.Lodging.DataAccess;
 using Xunit;
 using Entity = Revature.Lodging.DataAccess.Entities;
 using Logic = Revature.Lodging.Lib.Models;
@@ -9,7 +9,7 @@ namespace Revature.Lodging.Tests.DataTests
   public class MapperTest
   {
     /// <summary>
-    /// This test is to test ComplextoE in DataAccess.Mapper.cs
+    /// This test is to test ComplextoE in DataAccess.Mapper.cs.
     /// </summary>
     [Fact]
     public void ComplextoETest()
@@ -37,7 +37,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test EtoComplex in DataAccess.Mapper.cs
+    /// This test is to test EtoComplex in DataAccess.Mapper.cs.
     /// </summary>
     [Fact]
     public void EtoComplexTest()
@@ -65,7 +65,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test AmenityRoomtoE in DataAccess.Mapper.cs
+    /// This test is to test AmenityRoomtoE in DataAccess.Mapper.cs.
     /// </summary>
     [Fact]
     public void AmenityRoomtoETest()
@@ -89,7 +89,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test EtoAmenityRoom in DataAccess.Mapper.cs
+    /// This test is to test EtoAmenityRoom in DataAccess.Mapper.cs.
     /// </summary>
     [Fact]
     public void EtoAmenityRoom()
@@ -113,7 +113,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test AmenityComplextoE in DataAccess.Mapper.cs
+    /// This test is to test AmenityComplextoE in DataAccess.Mapper.cs.
     /// </summary>
     [Fact]
     public void AmenityComplextoETest()
@@ -137,7 +137,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test EtoAmenityComplex in DataAccess.Mapper.cs
+    /// This test is to test EtoAmenityComplex in DataAccess.Mapper.cs.
     /// </summary>
     [Fact]
     public void EtoAmenityComplexTest()
@@ -161,7 +161,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test AmenitytoE in DataAccess.Mapper.cs
+    /// This test is to test AmenitytoE in DataAccess.Mapper.cs.
     /// </summary>
     [Fact]
     public void AmenitytoETest()
@@ -183,7 +183,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test EtoAmenity in DataAccess.Mapper.cs
+    /// This test is to test EtoAmenity in DataAccess.Mapper.cs.
     /// </summary>
     [Fact]
     public void EtoAmenityTest()

@@ -9,20 +9,21 @@ using Xunit;
 namespace Revature.Tenant.Tests.DataTests
 {
   /// <summary>
-  /// Unit tests for data access methods in TenantRoomRepository class
+  /// Unit tests for data access methods in TenantRoomRepository class.
   /// </summary>
   public class TenantRoomRepositoryTest
   {
     /// <summary>
-    /// GetTenantsByRoomIdAsync Should Return a List of Tenants
+    /// GetTenantsByRoomIdAsync should return a list of tenants.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task GetTenantsByRoomIdShouldReturnList()
     {
       var options = TestDbInitializer.InitializeDbOptions("GetTenantsByRoomIdShouldReturnList");
-      using var _context = TestDbInitializer.CreateTestDb(options);
+      using var context = TestDbInitializer.CreateTestDb(options);
       var mapper = new Mapper();
-      var repo = new TenantRoomRepository(_context, mapper);
+      var repo = new TenantRoomRepository(context, mapper);
 
       var tenant = new DataAccess.Entities.Tenant()
       {
@@ -56,8 +57,8 @@ namespace Revature.Tenant.Tests.DataTests
         }
       };
 
-      await _context.Tenant.AddAsync(tenant);
-      await _context.SaveChangesAsync();
+      await context.Tenant.AddAsync(tenant);
+      await context.SaveChangesAsync();
 
       var result = await repo.GetTenantsByRoomIdAsync(Guid.Parse("fa4d6c6e-9650-44c9-5c6b-5aebd3f9a67c"));
 
@@ -67,17 +68,18 @@ namespace Revature.Tenant.Tests.DataTests
       result = await repo.GetTenantsByRoomIdAsync(Guid.NewGuid());
       Assert.True(result.Count == 0);
     }
+
     /// <summary>
     /// GetRoomLessTenants should return a list of Tenants who have not yet been assigned a room.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task GetRoomlessTenantsShouldReturnList()
     {
       var options = TestDbInitializer.InitializeDbOptions("GetRoomlessTenantsShouldReturnList");
-      using var _context = TestDbInitializer.CreateTestDb(options);
+      using var context = TestDbInitializer.CreateTestDb(options);
       var mapper = new Mapper();
-      var repo = new TenantRoomRepository(_context, mapper);
+      var repo = new TenantRoomRepository(context, mapper);
 
       var tenant = new DataAccess.Entities.Tenant()
       {
@@ -111,8 +113,8 @@ namespace Revature.Tenant.Tests.DataTests
         }
       };
 
-      await _context.Tenant.AddAsync(tenant);
-      await _context.SaveChangesAsync();
+      await context.Tenant.AddAsync(tenant);
+      await context.SaveChangesAsync();
 
       var result = await repo.GetRoomlessTenantsAsync();
 

@@ -12,18 +12,18 @@ namespace Revature.Address.DataAccess
 {
   /// <summary>
   /// Contain methods for inserting, retrieving, and deleting
-  /// information from the database
+  /// information from the database.
   /// </summary>
-  public class DataAccess : IDataAccess
+  public sealed class DataAccess : IDataAccess
   {
     private readonly IMapper _mapper;
     private readonly AddressDbContext _context;
     private readonly ILogger _logger;
 
     /// <summary>
-    /// constructor for the project0 database access
+    /// Initializes a new instance of the <see cref="DataAccess"/> class.
     /// </summary>
-    /// <param name="context">Dbcontext for accessing the database</param>
+    /// <param name="context">DbContext for accessing the database.</param>
     public DataAccess(AddressDbContext context, IMapper mapper, ILogger<DataAccess> logger)
     {
       _context = context ?? throw new ArgumentNullException(nameof(context));
@@ -32,11 +32,9 @@ namespace Revature.Address.DataAccess
     }
 
     /// <summary>
-    /// Checks if address already exists in database,
-    /// if it doesn't it converts it and adds it to the database
+    /// Checks if address already exists in database;
+    /// if it doesn't it converts it and adds it to the database.
     /// </summary>
-    /// <param name="address"></param>
-    /// <returns></returns>
     public async Task<bool> AddAddressAsync(Lib.Address address)
     {
       try
@@ -53,15 +51,14 @@ namespace Revature.Address.DataAccess
         _logger.LogError($"Address Id: {address.Id} failed to add to database");
         return false;
       }
+
       return true;
     }
 
     /// <summary>
-    /// Given either an id or an address it retrieves an address from the database 
+    /// Given either an id or an address it retrieves an address from the database.
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="address"></param>
-    /// <returns>Returns an address</returns>
+    /// <returns>An address.</returns>
     public async Task<ICollection<Lib.Address>> GetAddressAsync(Guid? id = null, Lib.Address address = null)
     {
       var addresses = await _context.Addresses.AsNoTracking().ToListAsync();
@@ -72,14 +69,13 @@ namespace Revature.Address.DataAccess
       {
         addresses = addresses.Where(a => a.Street == address.Street && a.City == address.City && a.State == address.State && a.ZipCode == address.ZipCode && a.Country == address.Country).ToList();
       }
+
       return addresses.Select(_mapper.MapAddress).ToList();
     }
 
     /// <summary>
-    /// Given an id, it deletes the corresponding address from the database
+    /// Given an id, it deletes the corresponding address from the database.
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns>Returns true or false</returns>
     public async Task<bool> DeleteAddressAsync(Guid? id)
     {
       if (await _context.Addresses.FindAsync(id) is Entities.Address item)
@@ -87,39 +83,22 @@ namespace Revature.Address.DataAccess
         _context.Addresses.Remove(item);
         return true;
       }
+
       return false;
     }
 
     /// <summary>
-    /// Saves changes made to the database
+    /// Saves changes made to the database.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public async Task SaveAsync()
     {
       await _context.SaveChangesAsync();
     }
-    #region IDisposable Support
-    private bool _disposedValue = false; // To detect redundant calls
 
-    protected virtual void Dispose(bool disposing)
-    {
-      if (!_disposedValue)
-      {
-        if (disposing)
-        {
-          _context.Dispose();
-        }
-
-        _disposedValue = true;
-      }
-    }
-
-    // This code added to correctly implement the disposable pattern.
     public void Dispose()
     {
-      Dispose(true);
-      GC.SuppressFinalize(this);
+      _context.Dispose();
     }
-    #endregion
   }
 }

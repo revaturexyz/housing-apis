@@ -5,6 +5,7 @@ namespace Revature.Identity.DataAccess.Entities
   public class UpdateAction
   {
     public Guid UpdateActionId { get; set; }
+
     public Guid NotificationId { get; set; }
 
     public string UpdateType { get; set; }
@@ -12,6 +13,5 @@ namespace Revature.Identity.DataAccess.Entities
     public string SerializedTarget { get; set; }
 
     public Notification Notification { get; set; }
-
   }
 }

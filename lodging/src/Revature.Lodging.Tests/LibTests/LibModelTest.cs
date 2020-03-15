@@ -7,7 +7,7 @@ namespace Revature.Lodging.Tests.LibTests
   public class LibModelTest
   {
     /// <summary>
-    /// This test is to test Amenity in Library.Model
+    /// This test is to test Amenity in Library.Model.
     /// </summary>
     [Fact]
     public void AmenityTest()
@@ -26,7 +26,7 @@ namespace Revature.Lodging.Tests.LibTests
     }
 
     /// <summary>
-    /// This test is to test AmenityComplex in Library.Model
+    /// This test is to test AmenityComplex in Library.Model.
     /// </summary>
     [Fact]
     public void AmenityComplexTest()
@@ -48,7 +48,7 @@ namespace Revature.Lodging.Tests.LibTests
     }
 
     /// <summary>
-    /// This test is to test AmenityRoom in Library.Model
+    /// This test is to test AmenityRoom in Library.Model.
     /// </summary>
     [Fact]
     public void AmenityRoomTest()
@@ -70,7 +70,7 @@ namespace Revature.Lodging.Tests.LibTests
     }
 
     /// <summary>
-    /// This test is to test Complex in Library.Model
+    /// This test is to test Complex in Library.Model.
     /// </summary>
     [Fact]
     public void ComplexTest()

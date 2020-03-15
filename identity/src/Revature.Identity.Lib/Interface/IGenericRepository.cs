@@ -6,12 +6,10 @@ using Revature.Identity.Lib.Model;
 namespace Revature.Identity.Lib.Interface
 {
   /// <summary>
-  /// The interface-point for the data-access-layer's interaction with the business-logic-layer.
+  /// The interface point for the data-access layer's interaction with the business-logic layer.
   /// </summary>
   public interface IGenericRepository
   {
-    #region Provider
-
     public Task<Guid> GetProviderIdByEmailAsync(string providerEmail);
 
     public Task<ProviderAccount> GetProviderAccountByIdAsync(Guid providerId);
@@ -21,10 +19,6 @@ namespace Revature.Identity.Lib.Interface
     public Task<bool> UpdateProviderAccountAsync(ProviderAccount providerAccount);
 
     public Task<bool> DeleteProviderAccountAsync(Guid providerId);
-
-    #endregion
-
-    #region Coordinator
 
     public Task<Guid> GetCoordinatorIdByEmailAsync(string coordinatorEmail);
 
@@ -38,10 +32,6 @@ namespace Revature.Identity.Lib.Interface
 
     public Task<bool> DeleteCoordinatorAccountAsync(Guid coordinatorId);
 
-    #endregion
-
-    #region Notification
-
     public Task<Notification> GetNotificationByIdAsync(Guid notificationId);
 
     public Task<List<Notification>> GetNotificationsByCoordinatorIdAsync(Guid coordinatorId);
@@ -52,10 +42,6 @@ namespace Revature.Identity.Lib.Interface
 
     public Task<bool> DeleteNotificationByIdAsync(Guid notificationId);
 
-    #endregion
-
-    #region UpdateAction
-
     public Task<UpdateAction> GetUpdateActionByIdAsync(Guid actionId);
 
     public void AddUpdateAction(UpdateAction action);
@@ -63,21 +49,16 @@ namespace Revature.Identity.Lib.Interface
     public Task<bool> UpdateUpdateActionAsync(UpdateAction action);
 
     public Task<bool> DeleteUpdateActionByIdAsync(Guid actionId);
-    #endregion
 
-    #region Tenant
-
-    public Task<Guid> GetTenantIdByEmailAsync(string TenantEmail);
+    public Task<Guid> GetTenantIdByEmailAsync(string tenantEmail);
 
     public void AddTenantAccount(TenantAccount newTenant);
 
-    public Task<TenantAccount> GetTenantAccountByIdAsync(Guid TenantId);
+    public Task<TenantAccount> GetTenantAccountByIdAsync(Guid tenantId);
 
     public Task<bool> UpdateTenantAccountAsync(TenantAccount tenantAccount);
 
     public Task<bool> DeleteTenantAccountAsync(Guid tenantId);
-
-    #endregion
 
     public Task SaveAsync();
   }

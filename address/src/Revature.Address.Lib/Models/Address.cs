@@ -3,29 +3,31 @@ using System.Text.RegularExpressions;
 
 namespace Revature.Address.Lib
 {
-
   /// <summary>
   /// This is an address object for business logic purposes,
-  /// specifies a guid id as well as a street,
-  /// city, state, country, and zip code
+  /// specifies a GUID as well as a street,
+  /// city, state, country, and ZIP code.
   /// </summary>
   public class Address
   {
+    private string _street;
 
-    private string _street { get; set; }
-    private string _city { get; set; }
-    private string _state { get; set; }
-    private string _country { get; set; }
-    private string _zipCode { get; set; }
+    private string _city;
+
+    private string _state;
+
+    private string _country;
+
+    private string _zipCode;
 
     /// <summary>
-    /// Guid for identifying addresses
+    /// Gets or sets GUID for identifying addresses.
     /// </summary>
     public Guid? Id { get; set; }
 
     /// <summary>
-    /// Specifies that a street must not be null and
-    /// not whitespace or a series of special characters
+    /// Gets or sets street. Specifies that a street must not be null and
+    /// not whitespace or a series of special characters.
     /// </summary>
     public string Street
     {
@@ -36,6 +38,7 @@ namespace Revature.Address.Lib
         {
           throw new ArgumentNullException(nameof(value));
         }
+
         var trimmed = value.Trim('.', '+', '*', '\'', ' ', '%', '^', '&', '!', '@', '#', '$', '(', ')');
         if (trimmed.Length > 0)
         {
@@ -49,7 +52,7 @@ namespace Revature.Address.Lib
     }
 
     /// <summary>
-    /// Specifies that a city must not be null or whitespace
+    /// Gets or sets city. Specifies that a city must not be null or whitespace.
     /// </summary>
     public string City
     {
@@ -72,8 +75,8 @@ namespace Revature.Address.Lib
     }
 
     /// <summary>
-    /// Specifies that a state must not be null and
-    /// can only be a series of letters and spaces
+    /// Gets or sets state. Specifies that a state must not be null and
+    /// can only be a series of letters and spaces.
     /// </summary>
     public string State
     {
@@ -97,7 +100,7 @@ namespace Revature.Address.Lib
     }
 
     /// <summary>
-    /// Specifies that a country must not be null or whitespace
+    /// Gets or sets country. Specifies that a country must not be null or whitespace.
     /// </summary>
     public string Country
     {
@@ -120,7 +123,7 @@ namespace Revature.Address.Lib
     }
 
     /// <summary>
-    /// Specifies that a zip code must be a string of 5 integers
+    /// Gets or sets ZIP code. Specifies that a ZIP code must be a string of 5 integers.
     /// </summary>
     public string ZipCode
     {

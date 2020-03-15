@@ -4,7 +4,7 @@ using Xunit;
 namespace Revature.Address.Tests.Lib.Tests
 {
   /// <summary>
-  /// Contains tests for ResponseElement class
+  /// Contains tests for ResponseElement class.
   /// </summary>
   public class ElementTests
   {
@@ -29,6 +29,7 @@ namespace Revature.Address.Tests.Lib.Tests
         Value = value
       };
       var status = "Single";
+
       // Act (create model with variables)
       var element = new ResponseElement
       {
@@ -36,6 +37,7 @@ namespace Revature.Address.Tests.Lib.Tests
         Duration = duration,
         Status = status
       };
+
       // Assert (ensure the properties are set to the proper variables)
       Assert.Equal(distance, element.Distance);
       Assert.Equal(duration, element.Duration);

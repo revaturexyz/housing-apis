@@ -9,8 +9,8 @@
 ### Okta
 
 As of right now, this is needed for all services besides the Address service.
-To get okta working from the codebase, an okta account is needed.
-Go to https://developer.okta.com/, click on signup, and fill out the required information.
+To get Okta working from the codebase, an Okta account is needed.
+Go to https://developer.okta.com, click on signup, and fill out the required information.
 After confirming your email, go to your new account and click on Users -> Groups and click add group, creating "Coordinator". Create the groups "Provider" and "Tenant" as well.
 Your groups should look something like this:
 
@@ -25,7 +25,7 @@ Then, make another using Access. Your settings should look something like this w
 
 ![something](./Images/finalclaims.png "finalclaims")
 
-Next, go to the applications tab. Click add application. For the front end, select single page app and click next. Change the Base URI to localhost:4200 and choose a descriptive name. In the angular app, change [`environment.ts`] to include:
+Next, go to the applications tab. Click add application. For the front end, select single page app and click next. Change the Base URI to localhost:4200 and choose a descriptive name. In the Angular app, change [`environment.ts`] to include:
 
 - `domain: 'https://dev-######.okta.com'`
 - `issuer: 'https://dev-######.okta.com/oauth2/default'`
@@ -217,7 +217,7 @@ In your controller, add the `Authorize` filter to add authentication and authori
 [Authorize]
 
 // authentication + role-based authorization, can only be accessed by an account that has
-//‘Coordinator’ in their role
+//'Coordinator' in its role
 [Authorize(Roles="Coordinator")]
 
 // authorization for Coordinator OR Provider

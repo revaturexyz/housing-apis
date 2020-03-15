@@ -10,18 +10,19 @@ using BusinessLogic = Revature.Lodging.Lib;
 namespace Revature.Lodging.Tests.DataTests
 {
   /// <summary>
-  /// Test class for testing all repository methods and general database functions
+  /// Test class for testing all repository methods and general database functions.
   /// </summary>
   public class RoomRepositoryTest
   {
     /* Preset valid Room properties */
-    private Guid _newRoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456dd");
+    private readonly Guid _newRoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456dd");
 
-    private Guid _newRoomId2 = Guid.Parse("349e5358-169a-4bc6-aa0f-c054952456de");
+    private readonly Guid _newRoomId2 = Guid.Parse("349e5358-169a-4bc6-aa0f-c054952456de");
 
-    private Guid _newRoomId3 = Guid.Parse("449e5358-169a-4bc6-aa0f-c054952456df");
+    private readonly Guid _newRoomId3 = Guid.Parse("449e5358-169a-4bc6-aa0f-c054952456df");
 
-    private Guid _newComplexId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456dd");
+    private readonly Guid _newComplexId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456dd");
+
     private readonly string _newGender = "Female";
     private readonly string _newRoomNumber = "2002";
     private readonly string _newRoomType = "Dormitory";
@@ -36,75 +37,9 @@ namespace Revature.Lodging.Tests.DataTests
 
     /* End of Room Properties */
 
-    // Use to set up a valid business logic Room
-    private BusinessLogic.Models.Room PresetBLRoom()
-    {
-      var room = new BusinessLogic.Models.Room 
-      {
-        Id = _newRoomId,
-        ComplexId = _newComplexId,
-        Gender = _newGender,
-        RoomNumber = _newRoomNumber,
-        RoomType = _newRoomType,
-        NumberOfBeds = _newNumOfBeds,
-        NumberOfOccupants = _newNumOfOccupants,
-      };
-      room.SetLease(_newLeaseStart, _newLeaseEnd);
-      return room;
-    }
-
-    // Use to set up a valid entity Room
-    private DataAccess.Entities.Room PresetEntityRoom(LodgingDbContext context)
-    {
-      return new DataAccess.Entities.Room
-      {
-        Id = _newRoomId,
-        ComplexId = _newComplexId,
-        Gender = context.Gender.FirstOrDefault(g => g.Type == _newGender),
-        RoomNumber = _newRoomNumber,
-        RoomType = context.RoomType.FirstOrDefault(g => g.Type == _newRoomType),
-        NumberOfBeds = _newNumOfBeds,
-        NumberOfOccupants = _newNumOfOccupants,
-        LeaseStart = _newLeaseStart,
-        LeaseEnd = _newLeaseEnd
-      };
-    }
-
-    private DataAccess.Entities.Room PresetEntityRoom2(LodgingDbContext context)
-    {
-      return new DataAccess.Entities.Room
-      {
-        Id = _newRoomId2,
-        ComplexId = _newComplexId,
-        Gender = context.Gender.FirstOrDefault(g => g.Type == "Male"),
-        RoomNumber = "2003",
-        RoomType = context.RoomType.FirstOrDefault(g => g.Type == "Apartment"),
-        NumberOfBeds = _newNumOfBeds,
-        NumberOfOccupants = _newNumOfOccupants2,
-        LeaseStart = _newLeaseStart,
-        LeaseEnd = _newLeaseEnd
-      };
-    }
-
-    private DataAccess.Entities.Room PresetEntityRoom3(LodgingDbContext context)
-    {
-      return new DataAccess.Entities.Room
-      {
-        Id = _newRoomId3,
-        ComplexId = _newComplexId,
-        Gender = context.Gender.FirstOrDefault(g => g.Type == "Male"),
-        RoomNumber = "2004",
-        RoomType = context.RoomType.FirstOrDefault(g => g.Type == "TownHouse"),
-        NumberOfBeds = _newNumOfBeds,
-        NumberOfOccupants = _newNumOfOccupants3,
-        LeaseStart = _newLeaseStart,
-        LeaseEnd = _newLeaseEnd
-      };
-    }
-
-    //This test creates a Room, but gender and roomtype is null
-    //Should be able be able to fix by setting roomType and Gender to
-    //their respective Data entities class objects
+    // This test creates a Room, but gender and roomtype is null
+    // Should be able be able to fix by setting roomType and Gender to
+    // their respective Data entities class objects
     [Fact]
     public async Task CreateRoomShouldCreateAsync()
     {
@@ -245,7 +180,7 @@ namespace Revature.Lodging.Tests.DataTests
       Assert.Null(assertContext.Room.Find(_newRoomId));
     }
 
-    //Test where we add two rooms, but delete one to see if it's actually in there
+    // Test where we add two rooms, but delete one to see if it's actually in there
     [Fact]
     public async Task RepoDeleteOneOfTwo()
     {
@@ -327,24 +262,25 @@ namespace Revature.Lodging.Tests.DataTests
       using var actContext = new LodgingDbContext(options);
       var repo = new RoomRepository(actContext);
 
-      //Returns 1 room because there is only 1 room that matches that room number
+      // Returns 1 room because there is only 1 room that matches that room number
       var filterRoom1 = await repo.GetFilteredRoomsAsync(_newComplexId, _newRoomNumber, null, null, null, null, null);
-      //Returns 2 rooms because there are 2 rooms that are labeld as "Male" gender
+
+      // Returns 2 rooms because there are 2 rooms that are labeld as "Male" gender
       var filterRoom2 = await repo.GetFilteredRoomsAsync(_newComplexId, null, _newNumOfBeds, null, "Male", null, null);
 
-      //Returns 1 room because there is only one room labeled as room type TownHouse
+      // Returns 1 room because there is only one room labeled as room type TownHouse
       var filterRoom3 = await repo.GetFilteredRoomsAsync(_newComplexId, null, _newNumOfBeds, "TownHouse", null, null, null);
 
-      //Returns 3 rooms because that is all the rooms witht that complex Id
+      // Returns 3 rooms because that is all the rooms witht that complex Id
       var filterRoom4 = await repo.GetFilteredRoomsAsync(_newComplexId, null, null, null, null, null, null);
 
-      //Returns 3 rooms because there are 3 rooms with that many number of beds
+      // Returns 3 rooms because there are 3 rooms with that many number of beds
       var filterRoom5 = await repo.GetFilteredRoomsAsync(_newComplexId, null, _newNumOfBeds, null, null, null, null);
 
-      //Returns 0 rooms because there are no rooms whose lease are greater than the end date
+      // Returns 0 rooms because there are no rooms whose lease are greater than the end date
       var filterRoom6 = await repo.GetFilteredRoomsAsync(_newComplexId, null, null, null, null, DateTime.Now, null);
 
-      //Returns 1 room
+      // Returns 1 room
       var filterRoom7 = await repo.GetFilteredRoomsAsync(_newComplexId, null, null, null, null, null, _newRoomId);
 
       Assert.Equal(_newRoomNumber, filterRoom1.FirstOrDefault(r => r.RoomNumber == _newRoomNumber).RoomNumber);
@@ -355,8 +291,7 @@ namespace Revature.Lodging.Tests.DataTests
 
       Assert.Equal(1, filterRoom3.Count(r => r.RoomType == "TownHouse"));
 
-      //Assert.Equal(newComplexId, filterRoom4.FirstOrDefault(r => r.ComplexId == newComplexId).ComplexId);
-
+      // Assert.Equal(newComplexId, filterRoom4.FirstOrDefault(r => r.ComplexId == newComplexId).ComplexId);
       Assert.Equal(3, filterRoom4.Count(r => r.ComplexId == _newComplexId));
 
       Assert.Equal(3, filterRoom5.Count(r => r.NumberOfBeds == _newNumOfBeds));
@@ -365,6 +300,7 @@ namespace Revature.Lodging.Tests.DataTests
 
       Assert.True(filterRoom7.Count() == 1);
     }
+
     [Fact]
     public async Task RepoDeleteComplexRoomShouldDeleteAllRoomsInComplex()
     {
@@ -374,9 +310,8 @@ namespace Revature.Lodging.Tests.DataTests
 
       using var assembleContext = new LodgingDbContext(options);
       assembleContext.Database.EnsureCreated();
-      //var mapper = new DBMapper(assembleContext);
 
-
+      // var mapper = new DBMapper(assembleContext);
       var newRoom = PresetEntityRoom(assembleContext);
       var newRoom2 = PresetEntityRoom2(assembleContext);
       var newRoom3 = PresetEntityRoom3(assembleContext);
@@ -394,13 +329,13 @@ namespace Revature.Lodging.Tests.DataTests
 
       var assertContext = new LodgingDbContext(options);
 
-      //The DeleteComplexRoomAsync method deletes all rooms based on the complex, it works
-      //But we have 3 seeded room in our database that aren't in the same complex
-      //so even after delete all the created rooms
-      //we still have our seeded data.
+      // The DeleteComplexRoomAsync method deletes all rooms based on the complex, it works
+      // But we have 3 seeded room in our database that aren't in the same complex
+      // so even after delete all the created rooms
+      // we still have our seeded data.
       Assert.Equal(4, assertContext.Room.Count());
-
     }
+
     [Fact]
     public async Task RepoDeleteComplexRoomShouldDeleteNoRoomsInComplex()
     {
@@ -410,9 +345,8 @@ namespace Revature.Lodging.Tests.DataTests
 
       using var assembleContext = new LodgingDbContext(options);
       assembleContext.Database.EnsureCreated();
-      //var mapper = new DBMapper(assembleContext);
 
-
+      // var mapper = new DBMapper(assembleContext);
       var newRoom = PresetEntityRoom(assembleContext);
       var newRoom2 = PresetEntityRoom2(assembleContext);
       var newRoom3 = PresetEntityRoom3(assembleContext);
@@ -430,12 +364,13 @@ namespace Revature.Lodging.Tests.DataTests
 
       var assertContext = new LodgingDbContext(options);
 
-      //The DeleteComplexRoomAsync method deletes all rooms based on the complex, it works
-      //But we have 3 seeded room in our database that aren't in the same complex
-      //so even after delete all the created rooms
-      //we still have our seeded data.
+      // The DeleteComplexRoomAsync method deletes all rooms based on the complex, it works
+      // But we have 3 seeded room in our database that aren't in the same complex
+      // so even after delete all the created rooms
+      // we still have our seeded data.
       Assert.Equal(7, assertContext.Room.Count());
     }
+
     [Fact]
     public async Task AddRoomOccupantsShouldUpdateAsync()
     {
@@ -501,6 +436,7 @@ namespace Revature.Lodging.Tests.DataTests
       var result = await testContext.Room.FirstAsync(r => r.Id == _newRoomId);
       Assert.True(result.NumberOfOccupants == _newNumOfOccupants - 1);
     }
+
     [Fact]
     public async Task SubtractRoomOccupantsShouldSetGenderAsync()
     {
@@ -523,6 +459,72 @@ namespace Revature.Lodging.Tests.DataTests
 
       var result = await testContext.Room.Where(r => r.Id == _newRoomId).Include(r => r.Gender).FirstAsync();
       Assert.True(result.Gender == null);
+    }
+
+    // Use to set up a valid business logic Room
+    private BusinessLogic.Models.Room PresetBLRoom()
+    {
+      var room = new BusinessLogic.Models.Room
+      {
+        Id = _newRoomId,
+        ComplexId = _newComplexId,
+        Gender = _newGender,
+        RoomNumber = _newRoomNumber,
+        RoomType = _newRoomType,
+        NumberOfBeds = _newNumOfBeds,
+        NumberOfOccupants = _newNumOfOccupants,
+      };
+      room.SetLease(_newLeaseStart, _newLeaseEnd);
+      return room;
+    }
+
+    // Use to set up a valid entity Room
+    private DataAccess.Entities.Room PresetEntityRoom(LodgingDbContext context)
+    {
+      return new DataAccess.Entities.Room
+      {
+        Id = _newRoomId,
+        ComplexId = _newComplexId,
+        Gender = context.Gender.FirstOrDefault(g => g.Type == _newGender),
+        RoomNumber = _newRoomNumber,
+        RoomType = context.RoomType.FirstOrDefault(g => g.Type == _newRoomType),
+        NumberOfBeds = _newNumOfBeds,
+        NumberOfOccupants = _newNumOfOccupants,
+        LeaseStart = _newLeaseStart,
+        LeaseEnd = _newLeaseEnd
+      };
+    }
+
+    private DataAccess.Entities.Room PresetEntityRoom2(LodgingDbContext context)
+    {
+      return new DataAccess.Entities.Room
+      {
+        Id = _newRoomId2,
+        ComplexId = _newComplexId,
+        Gender = context.Gender.FirstOrDefault(g => g.Type == "Male"),
+        RoomNumber = "2003",
+        RoomType = context.RoomType.FirstOrDefault(g => g.Type == "Apartment"),
+        NumberOfBeds = _newNumOfBeds,
+        NumberOfOccupants = _newNumOfOccupants2,
+        LeaseStart = _newLeaseStart,
+        LeaseEnd = _newLeaseEnd
+      };
+    }
+
+    private DataAccess.Entities.Room PresetEntityRoom3(LodgingDbContext context)
+    {
+      return new DataAccess.Entities.Room
+      {
+        Id = _newRoomId3,
+        ComplexId = _newComplexId,
+        Gender = context.Gender.FirstOrDefault(g => g.Type == "Male"),
+        RoomNumber = "2004",
+        RoomType = context.RoomType.FirstOrDefault(g => g.Type == "TownHouse"),
+        NumberOfBeds = _newNumOfBeds,
+        NumberOfOccupants = _newNumOfOccupants3,
+        LeaseStart = _newLeaseStart,
+        LeaseEnd = _newLeaseEnd
+      };
     }
   }
 }

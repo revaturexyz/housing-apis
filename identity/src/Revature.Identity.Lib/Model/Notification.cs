@@ -9,17 +9,17 @@ namespace Revature.Identity.Lib.Model
   public class Notification
   {
     /// <summary>
-    /// Guid based Id for the Notification.
+    /// Gets or sets GUID-based ID for the Notification.
     /// </summary>
     public Guid NotificationId { get; set; } = Guid.NewGuid();
 
     /// <summary>
-    /// Guid based Id for a housing complex Provider.
+    /// Gets or sets GUID-based ID for a housing complex Provider.
     /// </summary>
     public Guid ProviderId { get; set; }
 
     /// <summary>
-    /// Guid based Id for a training center's Coordinator.
+    /// Gets or sets GUID-based ID for a training center's Coordinator.
     /// </summary>
     public Guid CoordinatorId { get; set; }
 
@@ -28,7 +28,7 @@ namespace Revature.Identity.Lib.Model
     public UpdateAction UpdateAction { get; set; }
 
     /// <summary>
-    /// Date and time the associated provider account expires at, if any, in the format 11:59:59.
+    /// Gets or sets date and time the associated provider account expires at, if any.
     /// </summary>
     public DateTime CreatedAt { get; set; } = DateTime.Now;
   }

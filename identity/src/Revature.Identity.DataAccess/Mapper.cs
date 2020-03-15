@@ -8,12 +8,8 @@ namespace Revature.Identity.DataAccess
   public class Mapper : IMapper
   {
     /// <summary>
-    /// Maps db tenant to logic tenant. Maps related coordinator and Status as well.
+    /// Maps DB tenant to logic tenant. Maps related coordinator and Status as well.
     /// </summary>
-    /// <param name="tenant"></param>
-    /// <returns></returns>
-    ///
-    
     public Lib.Model.TenantAccount MapTenant(Entities.TenantAccount tenant)
     {
       return new Lib.Model.TenantAccount
@@ -33,15 +29,10 @@ namespace Revature.Identity.DataAccess
         Email = tenant.Email
       };
     }
-    
-
-
 
     /// <summary>
-    /// Maps db Provider to logic Provider. Maps related coordinator and Status as well.
+    /// Maps DB Provider to logic Provider. Maps related coordinator and Status as well.
     /// </summary>
-    /// <param name="provider"></param>
-    /// <returns></returns>
     public Lib.Model.ProviderAccount MapProvider(Entities.ProviderAccount provider)
     {
       return new Lib.Model.ProviderAccount
@@ -71,11 +62,9 @@ namespace Revature.Identity.DataAccess
     }
 
     /// <summary>
-    /// Maps db Coordinator to logic Coordinator. Maps related list of outstanding
+    /// Maps DB Coordinator to logic Coordinator. Maps related list of outstanding
     /// Notifications as well.
     /// </summary>
-    /// <param name="coordinator"></param>
-    /// <returns></returns>
     public Lib.Model.CoordinatorAccount MapCoordinator(Entities.CoordinatorAccount coordinator)
     {
       return new Lib.Model.CoordinatorAccount
@@ -102,11 +91,9 @@ namespace Revature.Identity.DataAccess
     }
 
     /// <summary>
-    /// Maps db Notification to logic Notification. Maps Coordinator, Provider, and
+    /// Maps DB Notification to logic Notification. Maps Coordinator, Provider, and
     /// UpdateAction as well.
     /// </summary>
-    /// <param name="nofi"></param>
-    /// <returns></returns>
     public Lib.Model.Notification MapNotification(Entities.Notification nofi)
     {
       return new Lib.Model.Notification

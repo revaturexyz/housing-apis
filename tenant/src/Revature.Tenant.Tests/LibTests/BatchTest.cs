@@ -6,7 +6,7 @@ namespace Revature.Tenant.Tests.LibTests
   public class BatchTest
   {
     /// <summary>
-    /// Tests that Empty ID throw exception
+    /// Tests that Empty ID throw exception.
     /// </summary>
     [Fact]
     public void Batch_Id_Test()
@@ -15,22 +15,21 @@ namespace Revature.Tenant.Tests.LibTests
     }
 
     /// <summary>
-    /// Tests that Empty Curriculum throw exception
+    /// Tests that Empty Curriculum throw exception.
     /// </summary>
     [Fact]
     public void Batch_Curriculum_Empty()
     {
-      Assert.ThrowsAny<ArgumentException>(() => new Lib.Models.Batch { BatchCurriculum = "" });
+      Assert.ThrowsAny<ArgumentException>(() => new Lib.Models.Batch { BatchCurriculum = string.Empty });
     }
 
     /// <summary>
-    /// Tests that Empty train center ID throw exception
+    /// Tests that Empty train center ID throw exception.
     /// </summary>
     [Fact]
     public void Batch_Training_Center_Empty()
     {
       Assert.ThrowsAny<ArgumentException>(() => new Lib.Models.Batch { TrainingCenter = Guid.Empty });
     }
-
   }
 }

@@ -9,7 +9,7 @@ namespace Revature.Identity.Test.Logic_Tests.Model
   /// </summary>
   public class CoordinatorTesting
   {
-    //declare an instance for testing
+    // declare an instance for testing
     private readonly CoordinatorAccount _coordinator = new CoordinatorAccount();
 
     /// <summary>
@@ -29,7 +29,7 @@ namespace Revature.Identity.Test.Logic_Tests.Model
     [Fact]
     public void CoordinatorNameEmptyException()
     {
-      var emptyString = "";
+      var emptyString = string.Empty;
 
       Assert.ThrowsAny<ArgumentException>(() => _coordinator.Name = emptyString);
     }
@@ -62,7 +62,7 @@ namespace Revature.Identity.Test.Logic_Tests.Model
     [Fact]
     public void CoordinatorTCNameBlankException()
     {
-      var invalidName = "";
+      var invalidName = string.Empty;
 
       Assert.ThrowsAny<ArgumentException>(() => _coordinator.TrainingCenterName = invalidName);
     }
@@ -84,7 +84,7 @@ namespace Revature.Identity.Test.Logic_Tests.Model
     [Fact]
     public void CoordinatorTCAddrBlankException()
     {
-      var invalidAddr = "";
+      var invalidAddr = string.Empty;
 
       Assert.ThrowsAny<ArgumentException>(() => _coordinator.TrainingCenterName = invalidAddr);
     }

@@ -22,8 +22,7 @@ namespace Revature.Tenant.DataAccess.Repository
     /// <summary>
     /// Returns a list of tenants that are not currently assigned to a room.
     /// </summary>
-    /// <returns></returns>
-    /// <remarks>Batch needed for the language and batch end dates utilized in filtering the rooms</remarks>
+    /// <remarks>Batch needed for the language and batch end dates utilized in filtering the rooms.</remarks>
     public async Task<IList<Lib.Models.Tenant>> GetRoomlessTenantsAsync()
     {
       var tenants = await _context.Tenant
@@ -34,11 +33,9 @@ namespace Revature.Tenant.DataAccess.Repository
     }
 
     /// <summary>
-    /// Method that gets tenant and associated information of occupants in a room given RoomId
+    /// Method that gets tenant and associated information of occupants in a room given RoomId.
     /// </summary>
-    /// <param name="roomId"></param>
-    /// <returns></returns>
-    /// <remarks>Batch needed for the language and batch end dates utilized in filtering the rooms</remarks>
+    /// <remarks>Batch needed for the language and batch end dates utilized in filtering the rooms.</remarks>
     public async Task<List<Lib.Models.Tenant>> GetTenantsByRoomIdAsync(Guid roomId)
     {
       var tenants = await _context.Tenant
