@@ -477,12 +477,12 @@ In the tenant-profile component we display firstname, lastname, gender, email, a
 ## Services
 
 ### Lodging Service [Complex Methods]
-- GetAllComplexes(), consumes api/complex GET
-- GetComplexById(ComplexId : string (GUID)), consumes api/complex/{complexid} GET
-GetComplexesByProviderId(ProviderId: string (GUID)), consumes api/complex/providerId/- {providerId} GET
-- AddComplex(newComplex: <PostComplex>), consumes api/complex POST
-- UpdateComplex(updatedComplex: <Complex>), consumes api/complex PUT
-- DeleteComplexById(ComplexId : string (GUID)), consumes api/complex/{complexId} DELETE
+- `GetAllComplexes()`, consumes `api/complex` GET
+- `GetComplexById(complexId: string`, consumes `api/complex/{complexid}` GET
+- `GetComplexesByProviderId(providerId: string)`, `consumes api/complex/providerId/{providerId}` GET
+- `addComplex(newComplex: PostComplex)`, consumes `api/complex` POST
+- `updateComplexById(updatedComplex: Complex)`, consumes `api/complex` PUT
+- `DeleteComplexById(ComplexId: string)`, consumes `api/complex/{complexId}` DELETE
 
 ### Lodging Service [Room Methods]
 - `GetFilteredRooms(complexId: string, query: string)`, consumes api/room/complexid/{complexId} GET, with GUID and query string:
@@ -496,9 +496,9 @@ GetComplexesByProviderId(ProviderId: string (GUID)), consumes api/complex/provid
   [FromQuery] bool? vacancy,
   [FromQuery] bool? empty)
   ```
-- `AddRoom(newRoom: postRoom)`, consumes api/Room POST
-- `UpdateRoom(roomId: string, room: Room)`, with GUID, consumes api/room/{roomid} PUT
-- `DeleteRoom(roomId: string`, with GUID, consumes api/room/{roomid} DELETE
+- `AddRoom(newRoom: postRoom)`, consumes `api/Room` POST
+- `UpdateRoom(roomId: string, room: Room)`, with GUID, consumes `api/room/{roomid}` PUT
+- `DeleteRoom(roomId: string`, with GUID, consumes `api/room/{roomid}` DELETE
 
 ### Identity Service
 ### Tenant Service
