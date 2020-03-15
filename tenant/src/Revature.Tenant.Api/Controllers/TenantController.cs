@@ -136,10 +136,9 @@ namespace Revature.Tenant.Api.Controllers
     /// <summary>
     /// Get Tenant by Id.
     /// </summary>
-    /// <param name="id">The Guid Id of a tenant.</param>
+    /// <param name="id">The GUID of a tenant.</param>
     /// <returns>A Tenant with Batch and Car details, or NotFound if not found, or Internal Service Error for other exceptions.</returns>
     // GET: api/Tenant/5
-    // api/[controller]
     [HttpGet("{id}", Name = "GetByIdAsync")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -176,6 +175,11 @@ namespace Revature.Tenant.Api.Controllers
             _logger.LogError("Email does not exist in Okta account");
             return NotFound();
           }
+        }
+
+        if (tenant is null)
+        {
+          return NotFound();
         }
 
         ApiAddress address;
