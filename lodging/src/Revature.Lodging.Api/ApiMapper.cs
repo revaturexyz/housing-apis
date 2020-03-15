@@ -49,23 +49,6 @@ namespace Revature.Lodging.Api
     }
 
     /// <summary>
-    /// Filters and returns a given room based on the user's role.
-    /// </summary>
-    /// <returns>Filtered room.</returns>
-    public static Lib.Models.Room FilterRoomByRole(Lib.Models.Room room, bool isCoordinator)
-    {
-      var filteredRoom = room;
-
-      if (!isCoordinator)
-      {
-        filteredRoom.NumberOfOccupants = (room.NumberOfOccupants > 0) ? 1 : 0;
-        filteredRoom.Gender = null;
-      }
-
-      return filteredRoom;
-    }
-
-    /// <summary>
     /// Maps the Library Complex model to the ApiComplex model.
     /// </summary>
     public static async Task<Models.ApiComplex> Map(Lib.Models.Complex complex, IAddressRequest addressRequest)
@@ -93,6 +76,23 @@ namespace Revature.Lodging.Api
         ProviderId = complex.ProviderId,
         AddressId = complex.Address.Id
       };
+    }
+
+    /// <summary>
+    /// Filters and returns a given room based on the user's role.
+    /// </summary>
+    /// <returns>Filtered room.</returns>
+    public static Lib.Models.Room FilterRoomByRole(Lib.Models.Room room, bool isCoordinator)
+    {
+      var filteredRoom = room;
+
+      if (!isCoordinator)
+      {
+        filteredRoom.NumberOfOccupants = (room.NumberOfOccupants > 0) ? 1 : 0;
+        filteredRoom.Gender = null;
+      }
+
+      return filteredRoom;
     }
   }
 }

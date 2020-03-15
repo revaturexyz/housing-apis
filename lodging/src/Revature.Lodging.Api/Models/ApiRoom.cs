@@ -35,11 +35,6 @@ namespace Revature.Lodging.Api.Models
 
     public void SetLease(DateTime start, DateTime end)
     {
-      if (start == null || end == null)
-      {
-        return;
-      }
-
       if (start.CompareTo(end) >= 0)
       {
         throw new ArgumentException("Lease should start before it ends");

@@ -73,7 +73,7 @@ namespace Revature.Lodging.Api.Controllers
         foreach (var room in rooms)
         {
           // filter the api room model based on the user's role
-          var filteredRoom = ApiMapper.FilterRoomByRole(room, roles.Contains("Coordinator") ? true : false);
+          var filteredRoom = ApiMapper.FilterRoomByRole(room, roles.Contains("Coordinator"));
 
           var amenities = await _amenityRepo.ReadAmenityListByRoomIdAsync(room.Id);
           var apiRoom = new ApiRoom()
@@ -137,7 +137,7 @@ namespace Revature.Lodging.Api.Controllers
       var roles = principal.Claims.Where(c => c.Type == "groups").Select(c => c.Value).ToList();
 
       // filter room by role
-      result = ApiMapper.FilterRoomByRole(result, roles.Contains("Coordinator") ? true : false);
+      result = ApiMapper.FilterRoomByRole(result, roles.Contains("Coordinator"));
 
       List<Logic.Amenity> amenities = await _amenityRepo.ReadAmenityListByRoomIdAsync(roomId);
 

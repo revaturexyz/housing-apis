@@ -124,11 +124,6 @@ namespace Revature.Lodging.Lib.Models
     /// <exception cref="ArgumentException">Thrown when lease period is invalid, i.e the lease ends before it even begins.</exception>
     public void SetLease(DateTime start, DateTime end)
     {
-      if (start == null || end == null)
-      {
-        return;
-      }
-
       if (start.CompareTo(end) >= 0)
       {
         throw new ArgumentException("Lease should start before it ends");
