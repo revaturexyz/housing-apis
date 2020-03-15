@@ -61,15 +61,15 @@ namespace Revature.Lodging.Api.Controllers
         _logger.LogInformation("Getting filtered rooms...");
 
         var rooms = await _repository.GetFilteredRoomsAsync(
-        complexId,
-        roomNumber,
-        numberOfBeds,
-        roomType,
-        gender,
-        endDate,
-        roomId,
-        empty,
-        vacancy);
+          complexId,
+          roomNumber,
+          numberOfBeds,
+          roomType,
+          gender,
+          endDate,
+          roomId,
+          empty,
+          vacancy);
 
         var apiRooms = new List<ApiRoom>();
 
@@ -129,7 +129,16 @@ namespace Revature.Lodging.Api.Controllers
     {
       _logger.LogInformation("Getting room ready...");
 
-      var result = await _repository.ReadRoomAsync(roomId);
+      Logic.Room result;
+      try
+      {
+        result = await _repository.ReadRoomAsync(roomId);
+      }
+      catch (InvalidOperationException)
+      {
+        _logger.LogWarning("Room {roomId} not found", roomId);
+        return NotFound();
+      }
 
       var principal = HttpContext.User.Identities.SingleOrDefault();
       var roles = principal.Claims.Where(c => c.Type == "groups").Select(c => c.Value).ToList();
