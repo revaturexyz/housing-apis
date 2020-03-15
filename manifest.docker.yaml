@@ -1,4 +1,5 @@
 # housing_apis :: docker-compose
+# If you need to change this file, let your trainers know, so they can update the pipeline files to match
 
 networks:
   locally:
