@@ -13,14 +13,8 @@ namespace Revature.Lodging.DataAccess.Entities
 
     public Guid RoomId { get; set; }
 
-    /// <summary>
-    /// for FK: room Id.
-    /// </summary>
     public virtual Room Room { get; set; }
 
-    /// <summary>
-    /// for FK: amenity Id.
-    /// </summary>
     public virtual Amenity Amenity { get; set; }
   }
 }

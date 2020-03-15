@@ -5,8 +5,6 @@ namespace Revature.Lodging.DataAccess
     /// <summary>
     /// Lib.Models.Amenity => Entities.Amenities.
     /// </summary>
-    /// <param name="amenity"></param>
-    /// <returns></returns>
     public static Entities.Amenity Map(Lib.Models.Amenity amenity)
     {
       return new Entities.Amenity
@@ -20,8 +18,6 @@ namespace Revature.Lodging.DataAccess
     /// <summary>
     /// Entities.Amenity => Lib.Models.Amenity.
     /// </summary>
-    /// <param name="amenity"></param>
-    /// <returns></returns>
     public static Lib.Models.Amenity Map(Entities.Amenity amenity)
     {
       return new Lib.Models.Amenity
@@ -35,8 +31,6 @@ namespace Revature.Lodging.DataAccess
     /// <summary>
     /// Lib.Models.AmenityComplex => Entities.AmenityComplex.
     /// </summary>
-    /// <param name="amenityComplex"></param>
-    /// <returns></returns>
     public static Entities.ComplexAmenity Map(Lib.Models.ComplexAmenity amenityComplex)
     {
       return new Entities.ComplexAmenity
@@ -50,8 +44,6 @@ namespace Revature.Lodging.DataAccess
     /// <summary>
     /// Entities.AmenityComplex => Lib.Models.AmenityComplex.
     /// </summary>
-    /// <param name="amenityComplex"></param>
-    /// <returns></returns>
     public static Lib.Models.ComplexAmenity Map(Entities.ComplexAmenity amenityComplex)
     {
       return new Lib.Models.ComplexAmenity
@@ -65,8 +57,6 @@ namespace Revature.Lodging.DataAccess
     /// <summary>
     /// Lib.Models.AmenityRoom => Entities.AmenityRoom.
     /// </summary>
-    /// <param name="amenityRoom"></param>
-    /// <returns></returns>
     public static Entities.RoomAmenity Map(Lib.Models.RoomAmenity amenityRoom)
     {
       return new Entities.RoomAmenity
@@ -80,8 +70,6 @@ namespace Revature.Lodging.DataAccess
     /// <summary>
     /// Entities.AmenityRoom => Lib.Models.AmenityRoom.
     /// </summary>
-    /// <param name="amenityRoom"></param>
-    /// <returns></returns>
     public static Lib.Models.RoomAmenity Map(Entities.RoomAmenity amenityRoom)
     {
       return new Lib.Models.RoomAmenity
@@ -95,8 +83,6 @@ namespace Revature.Lodging.DataAccess
     /// <summary>
     /// Lib.Models.Complex => Entities.Complex.
     /// </summary>
-    /// <param name="complex"></param>
-    /// <returns></returns>
     public static Entities.Complex Map(Lib.Models.Complex complex)
     {
       return new Entities.Complex
@@ -112,8 +98,6 @@ namespace Revature.Lodging.DataAccess
     /// <summary>
     /// Entities.Complex => Lib.Models.Complex.
     /// </summary>
-    /// <param name="complex"></param>
-    /// <returns></returns>
     public static Lib.Models.Complex Map(Entities.Complex complex)
     {
       return new Lib.Models.Complex
@@ -124,17 +108,14 @@ namespace Revature.Lodging.DataAccess
         ComplexName = complex.ComplexName,
         ContactNumber = complex.ContactNumber
       };
-
     }
 
     /// <summary>
     /// Lib.Models.Room => Entities.Room.
     /// </summary>
-    /// <param name="room"></param>
-    /// <returns></returns>
     public static Entities.Room Map(Lib.Models.Room room)
     {
-      //switch statement to convert gender and room type strings into int that represent primary key from respective tables
+      // switch statement to convert gender and room type strings into int that represent primary key from respective tables
       int? genderId = null;
       int roomTypeId = 0;
       string gender = room.Gender?.ToLower();
@@ -167,7 +148,6 @@ namespace Revature.Lodging.DataAccess
         case "hotel/motel":
           roomTypeId = 4;
           break;
-
       }
 
       return new Entities.Room
@@ -182,17 +162,14 @@ namespace Revature.Lodging.DataAccess
         GenderId = genderId,
         RoomTypeId = roomTypeId
       };
-
     }
 
     /// <summary>
     /// Entities.Room => Lib.Models.Room.
     /// </summary>
-    /// <param name="room"></param>
-    /// <returns></returns>
     public static Lib.Models.Room Map(Entities.Room room)
     {
-      //switch statement that converts gender id and room type id from room to strings for Lib.Models.Room
+      // switch statement that converts gender id and room type id from room to strings for Lib.Models.Room
       string gender = null;
       string roomType = null;
 

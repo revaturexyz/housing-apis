@@ -97,35 +97,5 @@ namespace Revature.Lodging.Tests.ApiTests
       Assert.Equal(DateTime.Parse("2019/1/1"), room.LeaseStart);
       Assert.Equal(DateTime.Parse("2020/1/1"), room.LeaseEnd);
     }
-
-    /// <summary>
-    /// This test is to test RoomtoSend model in Api Model.
-    /// </summary>
-    [Fact]
-    public void ApiRoomtoSendTest()
-    {
-      var rId = Guid.NewGuid();
-      var cId = Guid.NewGuid();
-      var start = DateTime.Parse("2019/1/1");
-      var end = DateTime.Parse("2020/1/1");
-      var send = new ApiRoomToSend
-      {
-        RoomId = rId,
-        RoomNumber = "1234",
-        ComplexId = cId,
-        NumberOfBeds = 4,
-        RoomType = "dormitory",
-        LeaseStart = start,
-        LeaseEnd = end
-      };
-
-      Assert.Equal(rId, send.RoomId);
-      Assert.Equal("1234", send.RoomNumber);
-      Assert.Equal(cId, send.ComplexId);
-      Assert.Equal(4, send.NumberOfBeds);
-      Assert.Equal("dormitory", send.RoomType);
-      Assert.Equal(DateTime.Parse("2019/1/1"), send.LeaseStart);
-      Assert.Equal(DateTime.Parse("2020/1/1"), send.LeaseEnd);
-    }
   }
 }

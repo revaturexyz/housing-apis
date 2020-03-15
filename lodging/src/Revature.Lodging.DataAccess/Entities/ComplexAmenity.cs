@@ -13,14 +13,8 @@ namespace Revature.Lodging.DataAccess.Entities
 
     public Guid ComplexId { get; set; }
 
-    /// <summary>
-    /// for FK: complex Id.
-    /// </summary>
     public virtual Complex Complex { get; set; }
 
-    /// <summary>
-    /// for FK: amenity Id.
-    /// </summary>
     public virtual Amenity Amenity { get; set; }
   }
 }

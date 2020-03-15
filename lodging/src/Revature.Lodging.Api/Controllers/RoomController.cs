@@ -34,12 +34,6 @@ namespace Revature.Lodging.Api.Controllers
     /// GET:
     /// This controller method is to get rooms based on filters applied (roomNumber, numberOfBeds, etc).
     /// </summary>
-    /// <param name="complexId"></param>
-    /// <param name="roomNumber"></param>
-    /// <param name="numberOfBeds"></param>
-    /// <param name="roomType"></param>
-    /// <param name="gender"></param>
-    /// <param name="endDate"></param>
     /// <returns>IEnumerable of type (Room).</returns>
     [HttpGet("complexId/{complexId}")] // /complexId/{complexId}?roomNumber=a&numberOfBeds=b&roomType=c&gender=d&endDate=e&roomId=f
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -81,6 +75,7 @@ namespace Revature.Lodging.Api.Controllers
           // filter the api room model based on the user's role
           var filteredRoom = ApiMapper.FilterRoomByRole(room, roles.Contains("Coordinator") ? true : false);
 
+          var amenities = await _amenityRepo.ReadAmenityListByRoomIdAsync(room.Id);
           var apiRoom = new ApiRoom()
           {
             RoomId = filteredRoom.Id,
@@ -92,13 +87,12 @@ namespace Revature.Lodging.Api.Controllers
             ApiRoomType = filteredRoom.RoomType,
             LeaseStart = filteredRoom.LeaseStart,
             LeaseEnd = filteredRoom.LeaseEnd,
-            Amenities = (from amenity in await _amenityRepo.ReadAmenityListByRoomIdAsync(room.Id)
-                         select new ApiAmenity()
-                         {
-                           AmenityId = amenity.Id,
-                           AmenityType = amenity.AmenityType,
-                           Description = amenity.Description
-                         }).ToList()
+            Amenities = amenities.Select(amenity => new ApiAmenity()
+            {
+              AmenityId = amenity.Id,
+              AmenityType = amenity.AmenityType,
+              Description = amenity.Description
+            }).ToList()
           };
 
           apiRooms.Add(apiRoom);
@@ -110,7 +104,7 @@ namespace Revature.Lodging.Api.Controllers
       }
       catch (KeyNotFoundException ex)
       {
-        _logger.LogError("Either complex Id or room Id was not in the DB", ex);
+        _logger.LogError(ex, "Either complex Id or room Id was not in the DB");
         return NotFound(ex);
       }
     }
@@ -119,7 +113,6 @@ namespace Revature.Lodging.Api.Controllers
     /// GET:
     /// Reads/gets a room based given a roomId.
     /// </summary>
-    /// <param name="roomId"></param>
     /// <returns>Room.</returns>
     [HttpGet("{roomId}", Name = "GetRoomById")]
     [ProducesResponseType(typeof(Logic.Room), StatusCodes.Status200OK)]
@@ -176,14 +169,12 @@ namespace Revature.Lodging.Api.Controllers
     /// POST:
     /// Creates a room based on the complex's needs.
     /// </summary>
-    /// <param name="room"></param>
-    /// <returns>N/A.</returns>
     [HttpPost]
     [ProducesResponseType(typeof(Logic.Room), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Authorize(Roles = "Provider")] // OktaSetup
-    public async Task<IActionResult> AddRoomAsync
-      ([FromBody]ApiRoom room)
+    public async Task<IActionResult> AddRoomAsync(
+      [FromBody]ApiRoom room)
     {
       try
       {
@@ -196,8 +187,9 @@ namespace Revature.Lodging.Api.Controllers
           RoomNumber = room.RoomNumber,
           NumberOfBeds = room.NumberOfBeds,
           NumberOfOccupants = 0,
-          //Gender = room.Gender,
-          RoomType = room.ApiRoomType //(03/02/2020) should not update Gender and RoomType and adding new room to database?
+
+          // Gender = room.Gender,
+          RoomType = room.ApiRoomType // (03/02/2020) should not update Gender and RoomType and adding new room to database?
         };
         createdRoom.SetLease(room.LeaseStart, room.LeaseEnd);
 
@@ -231,8 +223,8 @@ namespace Revature.Lodging.Api.Controllers
             roomAmenity.RoomId = createdRoom.Id;
             roomAmenity.AmenityId = amenity.Id;
           }
-          await _amenityRepo.CreateAmenityRoomAsync(roomAmenity);
 
+          await _amenityRepo.CreateAmenityRoomAsync(roomAmenity);
         }
 
         await _repository.SaveAsync();
@@ -257,27 +249,24 @@ namespace Revature.Lodging.Api.Controllers
     /// PUT:
     /// Update a room's information.
     /// </summary>
-    /// <param name="roomId"></param>
-    /// <param name="room"></param>
-    /// <returns>No Content.</returns>
     /// <remarks>Update room functionality of complex service.</remarks>
     [HttpPut("{roomId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Authorize(Roles = "Provider")] // OktaSetup
-    public async Task<IActionResult> UpdateRoomAsync(Guid roomId,
+    public async Task<IActionResult> UpdateRoomAsync(
+      Guid roomId,
       [FromBody]ApiRoom room)
     {
       try
       {
         _logger.LogInformation("Updating a room");
 
-        //var roomFromDb = await _repository.ReadRoomAsync(roomId);
-        //var amenitiesFromDb = await _amenityRepo.ReadAmenityListByRoomIdAsync(roomId);
+        // var roomFromDb = await _repository.ReadRoomAsync(roomId);
+        // var amenitiesFromDb = await _amenityRepo.ReadAmenityListByRoomIdAsync(roomId);
 
-        //roomFromDb.SetLease(room.LeaseStart, room.LeaseEnd);
-
+        // roomFromDb.SetLease(room.LeaseStart, room.LeaseEnd);
         var newRoom = new Logic.Room()
         {
           Id = room.RoomId,
@@ -354,8 +343,6 @@ namespace Revature.Lodging.Api.Controllers
     /// DELETE:
     /// Delete room based on room Id.
     /// </summary>
-    /// <param name="roomId"></param>
-    /// <returns>No Content.</returns>
     [HttpDelete("{roomId}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -19,7 +19,8 @@ namespace Revature.Lodging.Lib.Models
     [Required]
     public Guid ProviderId { get; set; }
 
-    [Required, MaxLength(50)]
+    [Required]
+    [MaxLength(50)]
     public string ComplexName { get; set; }
 
     [MaxLength(20)]

@@ -29,7 +29,8 @@ namespace Revature.Lodging.Tests.ApiTests
         ComplexName = "test",
         ContactNumber = "1234567892"
       };
-      //setup
+
+      // setup
       var complexRepo = new Mock<IComplexRepository>();
       var amenityRepo = new Mock<IAmenityRepository>();
       var logger = new Mock<ILogger<ComplexController>>();
@@ -41,11 +42,11 @@ namespace Revature.Lodging.Tests.ApiTests
       complexRepo.Setup(r => r.ReadComplexListAsync())
         .Returns(Task.FromResult(res));
 
-      //act
+      // act
       var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
       var model = Assert.IsAssignableFrom<ActionResult<IEnumerable<ApiComplex>>>(await controller.GetAllComplexesAsync());
 
-      //assert
+      // assert
       Assert.IsAssignableFrom<ActionResult<IEnumerable<ApiComplex>>>(model);
     }
 
@@ -55,7 +56,7 @@ namespace Revature.Lodging.Tests.ApiTests
     [Fact]
     public async void GetComplexByIdAsyncTest()
     {
-      //setup
+      // setup
       var complexId = Guid.NewGuid();
       var complexRepo = new Mock<IComplexRepository>();
       var amenityRepo = new Mock<IAmenityRepository>();
@@ -66,11 +67,11 @@ namespace Revature.Lodging.Tests.ApiTests
       complexRepo.Setup(r => r.ReadComplexByIdAsync(complexId))
         .Returns(Task.FromResult(res));
 
-      //act
+      // act
       var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
       var model = Assert.IsAssignableFrom<ActionResult<ApiComplex>>(await controller.GetComplexByIdAsync(complexId));
 
-      //assert
+      // assert
       Assert.IsAssignableFrom<ActionResult<ApiComplex>>(model);
     }
 
@@ -80,7 +81,7 @@ namespace Revature.Lodging.Tests.ApiTests
     [Fact]
     public async void GetComplexByNameAndNumberAsyncTest()
     {
-      //setup
+      // setup
       var name = "test1";
       var number = "1234567890";
       var complexRepo = new Mock<IComplexRepository>();
@@ -92,12 +93,11 @@ namespace Revature.Lodging.Tests.ApiTests
       complexRepo.Setup(r => r.ReadComplexByNameAndNumberAsync(name, number))
         .Returns(Task.FromResult(res));
 
-      //act
-
+      // act
       var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
       var model = Assert.IsAssignableFrom<ActionResult<ApiComplex>>(await controller.GetComplexByNameAndNumberAsync(name, number));
 
-      //assert
+      // assert
       Assert.IsAssignableFrom<ActionResult<ApiComplex>>(model);
     }
 
@@ -107,7 +107,7 @@ namespace Revature.Lodging.Tests.ApiTests
     [Fact]
     public async void GetComplexListByProviderIdAsyncTest()
     {
-      //setup
+      // setup
       var pId = Guid.NewGuid();
       var complex = new Complex
       {
@@ -128,11 +128,11 @@ namespace Revature.Lodging.Tests.ApiTests
       complexRepo.Setup(r => r.ReadComplexByProviderIdAsync(pId))
         .Returns(Task.FromResult(res));
 
-      //act
+      // act
       var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
       var model = Assert.IsAssignableFrom<ActionResult<IEnumerable<ApiComplex>>>(await controller.GetComplexesByProviderId(pId));
 
-      //assert
+      // assert
       Assert.IsAssignableFrom<ActionResult<IEnumerable<ApiComplex>>>(model);
     }
 
@@ -206,11 +206,11 @@ namespace Revature.Lodging.Tests.ApiTests
       amenityRepo.Setup(p => p.CreateAmenityComplexAsync(ac))
 .Returns(Task.FromResult(res));
 
-      //act
+      // act
       var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
       var model = Assert.IsAssignableFrom<StatusCodeResult>(await controller.UpdateComplexAsync(apiComplex));
 
-      //assert
+      // assert
       Assert.IsAssignableFrom<StatusCodeResult>(model);
     }
 
@@ -234,11 +234,11 @@ namespace Revature.Lodging.Tests.ApiTests
       complexRepo.Setup(r => r.DeleteComplexAsync(cId))
         .Returns(Task.FromResult(res));
 
-      //act
+      // act
       var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
       var model = Assert.IsAssignableFrom<StatusCodeResult>(await controller.DeleteComplexByIdAsync(cId));
 
-      //assert
+      // assert
       Assert.IsAssignableFrom<StatusCodeResult>(model);
     }
   }

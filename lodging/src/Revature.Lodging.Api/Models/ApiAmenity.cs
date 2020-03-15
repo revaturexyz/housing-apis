@@ -9,7 +9,9 @@ namespace Revature.Lodging.Api.Models
   public class ApiAmenity
   {
     public Guid AmenityId { get; set; }
+
     public string AmenityType { get; set; }
+
     public string Description { get; set; }
   }
 }

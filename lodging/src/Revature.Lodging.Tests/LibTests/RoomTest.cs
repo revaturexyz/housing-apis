@@ -1,12 +1,13 @@
 using System;
 using Xunit;
 using BL = Revature.Lodging.Lib;
+
 namespace Revature.Room.Tests.Revature.Room.Lib.Tests
 {
   public class RoomTest
   {
-    private Guid _newRoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456dd");
-    private Guid _newComplexId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456dd");
+    private readonly Guid _newRoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456dd");
+    private readonly Guid _newComplexId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456dd");
     private readonly string _newGender = "Female";
     private readonly string _newRoomNumber = "2002";
     private readonly string _newRoomType = "Dormitory";
@@ -62,7 +63,7 @@ namespace Revature.Room.Tests.Revature.Room.Lib.Tests
     [Fact]
     public void RoomShouldRejectInvalidRoomNumber()
     {
-      Assert.Throws<ArgumentException>(() => new BL.Models.Room() { RoomNumber = "" });
+      Assert.Throws<ArgumentException>(() => new BL.Models.Room() { RoomNumber = string.Empty });
       Assert.Throws<ArgumentException>(() => new BL.Models.Room() { RoomNumber = null });
     }
 

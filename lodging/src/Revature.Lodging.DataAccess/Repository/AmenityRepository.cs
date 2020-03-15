@@ -179,14 +179,14 @@ namespace Revature.Lodging.DataAccess.Repository
         {
           eAmenity.AmenityType = amenity.AmenityType;
         }
+
         if (amenity.Description != null)
         {
           eAmenity.Description = amenity.Description;
         }
 
         await _context.SaveChangesAsync();
-        _log.LogInformation("amenity: {amenity.AmenityId} {amenity.AmenityType} was updated"
-                                      , amenity.Id, amenity.AmenityType);
+        _log.LogInformation("amenity: {amenityId} {amenityType} was updated", amenity.Id, amenity.AmenityType);
 
         return true;
       }

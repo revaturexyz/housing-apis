@@ -12,7 +12,7 @@ namespace Revature.Lodging.Api.Services
     /// <summary>
     /// Closes the queue after receiving the message.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public abstract Task CloseQueueAsync();
   }
 }

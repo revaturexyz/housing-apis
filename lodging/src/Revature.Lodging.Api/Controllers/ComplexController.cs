@@ -30,18 +30,17 @@ namespace Revature.Lodging.Api.Controllers
       _addressRequest = ar;
     }
 
-    #region GET
-
     /// <summary>
     /// (GET)
     /// Gets all existing Complex objects from database.
     /// </summary>
-    /// <returns> Collection of Complex objects with a list of associated amenities. </returns>
+    /// <returns>Collection of Complex objects with a list of associated amenities.</returns>
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet]
     [Authorize(Roles = "Coordinator, Provider")] // OktaSetup
-    //GET: api/complex
+
+    // GET: api/complex
     public async Task<ActionResult<IEnumerable<ApiComplex>>> GetAllComplexesAsync()
     {
       // Gets all the existing complexes from the database
@@ -72,7 +71,7 @@ namespace Revature.Lodging.Api.Controllers
           };
         }
 
-        //Creates a complex with its associated amenities that will be added to the list
+        // Creates a complex with its associated amenities that will be added to the list
         var apiComplex = new ApiComplex
         {
           ComplexId = complex.Id,
@@ -99,7 +98,8 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("{complexId}")]
     [Authorize(Roles = "Coordinator, Provider")] // OktaSetup
-    //GET: api/complex/{complexId}
+
+    // GET: api/complex/{complexId}
     public async Task<ActionResult<ApiComplex>> GetComplexByIdAsync([FromRoute]Guid complexId)
     {
       // Gets an existing Complex associated with the complexId
@@ -149,7 +149,8 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("providerId/{providerId}")]
     [Authorize(Roles = "Coordinator, Provider")] // OktaSetup
-    //GET: api/complex/providerId/{providerID}
+
+    // GET: api/complex/providerId/{providerID}
     public async Task<ActionResult<IEnumerable<ApiComplex>>> GetComplexesByProviderId([FromRoute]Guid providerId)
     {
       // Gets all existing complexes associated with the given providerId
@@ -196,10 +197,6 @@ namespace Revature.Lodging.Api.Controllers
       return Ok(apiComplexes);
     }
 
-    #endregion
-
-    #region POST
-
     /// <summary>
     /// (POST)
     /// Adds a new Complex object to the database;
@@ -211,7 +208,8 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpPost]
     [Authorize(Roles = "Provider")] // OktaSetup
-    //POST: api/complex/
+
+    // POST: api/complex/
     public async Task<ActionResult<ApiComplex>> PostComplexAsync([FromBody]ApiComplex apiComplex)
     {
       // Creates an address from address properties in apiComplex object argument
@@ -295,11 +293,9 @@ namespace Revature.Lodging.Api.Controllers
 
           await _amenityRepository.CreateAmenityComplexAsync(complexAmenity);
           _log.LogInformation("a list of amenities for complex id: {complex.Id} was created", complex.Id);
-
         }
 
         return Created($"api/Complex/{complex.Id}", apiComplex);
-
       }
       catch (Exception ex)
       {
@@ -307,10 +303,6 @@ namespace Revature.Lodging.Api.Controllers
         throw;
       }
     }
-
-    #endregion
-
-    #region PUT
 
     /// <summary>
     /// (PUT)
@@ -321,7 +313,8 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [HttpPut]
     [Authorize(Roles = "Provider")] // OktaSetup
-    //PUT: api/complex/
+
+    // PUT: api/complex/
     public async Task<ActionResult> UpdateComplexAsync([FromBody]ApiComplex apiComplex)
     {
       // Maps the apiComplex to a Complex Library model
@@ -396,9 +389,6 @@ namespace Revature.Lodging.Api.Controllers
       }
     }
 
-    #endregion
-
-    #region DELETE
     /// <summary>
     /// (DELETE)
     /// Deletes a Complex object by ComplexId from database.
@@ -408,7 +398,8 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [HttpDelete("{complexId}")]
     [Authorize(Roles = "Provider")] // OktaSetup
-    //DELETE: api/complex/{complexId}
+
+    // DELETE: api/complex/{complexId}
     public async Task<ActionResult> DeleteComplexByIdAsync([FromRoute]Guid complexId)
     {
       // Deletes an existing complex associated the complexId in the database
@@ -417,10 +408,6 @@ namespace Revature.Lodging.Api.Controllers
 
       return NoContent();
     }
-
-    #endregion
-
-    #region METHODS THAT MAY NOT BE NEEDED
 
     /// <summary>
     /// (GET)
@@ -432,7 +419,8 @@ namespace Revature.Lodging.Api.Controllers
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("{complexName}/{complexNumber}")]
     [Authorize(Roles = "Coordinator, Provider")] // OktaSetup
-    //GET: api/complex/{complexName}/{complexNumber}
+
+    // GET: api/complex/{complexName}/{complexNumber}
     public async Task<ActionResult<ApiComplex>> GetComplexByNameAndNumberAsync([FromRoute]string complexName, string complexNumber)
     {
       var lcomplex = await _complexRepository.ReadComplexByNameAndNumberAsync(complexName, complexNumber);
@@ -440,7 +428,6 @@ namespace Revature.Lodging.Api.Controllers
 
       // var aId = lcomplex.AddressId;
       // var address = await _addressRequest.GetAddressAsync(aId);
-
       var apiComplex = new ApiComplex
       {
         ComplexId = lcomplex.Id,
@@ -454,7 +441,5 @@ namespace Revature.Lodging.Api.Controllers
 
       return Ok(apiComplex);
     }
-
-    #endregion
   }
 }

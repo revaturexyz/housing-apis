@@ -21,23 +21,16 @@ namespace Revature.Lodging.Api.Services
     };
 
     /// <summary>
-    /// Construct Address Service with base URI, Default, and injected HTTP Client.
+    /// Initializes a new instance of the <see cref="AddressRequest"/> class.
     /// </summary>
-    /// <param name="client">HTTP Client (dependency injection).</param>
-    /// <param name="addressConfiguration">Configuration file with base URI.</param>
+    /// <param name="client">HTTP client.</param>
+    /// <param name="addressConfiguration">Configuration set with base URI.</param>
     public AddressRequest(HttpClient client, IConfiguration addressConfiguration)
     {
-      try
-      {
-        client.BaseAddress = new Uri(addressConfiguration.GetSection("AppServices")["Address"]);
-        client.DefaultRequestHeaders.Add("Accept", "application/json");
+      client.BaseAddress = new Uri(addressConfiguration.GetSection("AppServices")["Address"]);
+      client.DefaultRequestHeaders.Add("Accept", "application/json");
 
-        _client = client;
-      }
-      catch
-      {
-        _client = null;
-      }
+      _client = client;
     }
 
     /// <summary>
@@ -61,10 +54,6 @@ namespace Revature.Lodging.Api.Services
       return await ReadResponseBodyAsync<ApiAddress>(response);
     }
 
-    /// <summary>
-    /// </summary>
-    /// <param name="item">A model of an Address.</param>
-    /// <returns></returns>
     public async Task<ApiAddress> GetAddressAsync(Guid addressId)
     {
       var pathElement = addressId.ToString();
@@ -76,10 +65,11 @@ namespace Revature.Lodging.Api.Services
     }
 
     /// <summary>
-    /// Private helper method for sending a HTTP Request between services.
+    /// Private helper method for sending a HTTP request between services.
     /// </summary>
-    /// <returns>A Request Response.</returns>
-    private async Task<HttpResponseMessage> SendRequestAsync<T>(HttpMethod method, string uri, T body = null) where T : class
+    /// <returns>The response to the HTTP request.</returns>
+    private async Task<HttpResponseMessage> SendRequestAsync<T>(HttpMethod method, string uri, T body = null)
+      where T : class
     {
       using var request = new HttpRequestMessage(method, uri);
       if (body is T)
@@ -88,11 +78,12 @@ namespace Revature.Lodging.Api.Services
         var content = new StringContent(json, Encoding.Default, "application/json");
         request.Content = content;
       }
+
       return await _client.SendAsync(request);
     }
 
     /// <summary>
-    /// A private helper method for interpretting a HTTP Response.
+    /// A private helper method for interpreting a HTTP Response.
     /// </summary>
     /// <returns>A generic typed object that may be included in the body of a response.</returns>
     private async Task<T> ReadResponseBodyAsync<T>(HttpResponseMessage response)
