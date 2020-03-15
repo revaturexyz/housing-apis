@@ -1,42 +1,32 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Revature.Tenant.Api.ServiceBus
 {
+  /// <summary>
+  /// Service that communicates with the Identity service to create and delete tenant accounts.
+  /// </summary>
   public interface IIdentityService
   {
     /// <summary>
-    /// Service that communicates with the Identity service to create and delete tenant accounts
+    /// Method that deletes tenant accounts.
     /// </summary>
+    /// <exception cref="HttpRequestException">Thrown when the response from the room service isn't successful.</exception>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task DeleteAccount(Guid tenantId, string email, string name);
+
     /// <summary>
-    /// Method that deletes tenant accounts
+    /// Method that creates new tenant accounts.
     /// </summary>
-    /// <param name="TenantId"></param>
-    /// <param name="Email"></param>
-    /// <param name="Name"></param>
-    /// <returns></returns>
-    /// <exception cref="HttpRequestException">Thrown when the response from the room service isn't successful</exception>
-    Task DeleteAccount(Guid TenantId, string Email, string Name);
+    /// <exception cref="HttpRequestException">Thrown when the response from the room service isn't successful.</exception>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task CreateAccount(Guid tenantId, string email, string name);
+
     /// <summary>
-    /// Method that creates new tenant accounts
+    /// Method that modifies existing tenant accounts.
     /// </summary>
-    /// <param name="TenantId"></param>
-    /// <param name="Email"></param>
-    /// <param name="Name"></param>
-    /// <returns></returns>
-    /// <exception cref="HttpRequestException">Thrown when the response from the room service isn't successful</exception>
-    Task CreateAccount(Guid TenantId, string Email, string Name);
-    /// <summary>
-    /// Method that modifies existing tenant accounts
-    /// </summary>
-    /// <param name="TenantId"></param>
-    /// <param name="Email"></param>
-    /// <param name="Name"></param>
-    /// <returns></returns>
-    /// <exception cref="HttpRequestException">Thrown when the response from the room service isn't successful</exception>
-    Task UpdateAccount(Guid TenantId, string Email, string Name);
+    /// <exception cref="HttpRequestException">Thrown when the response from the room service isn't successful.</exception>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task UpdateAccount(Guid tenantId, string email, string name);
   }
 }
-

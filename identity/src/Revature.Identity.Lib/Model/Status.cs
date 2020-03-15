@@ -1,5 +1,5 @@
-
 using System;
+
 namespace Revature.Identity.Lib.Model
 {
   /// <summary>
@@ -19,20 +19,20 @@ namespace Revature.Identity.Lib.Model
     public static readonly string Rejected = "Rejected";
     public static readonly string UnderReview = "Under Review";
 
-    public Status() { }
+    private string _statusText;
+
+    public Status()
+    {
+    }
 
     public Status(string newStatus)
     {
       StatusText = newStatus;
     }
 
-    private string _statusText;
     public string StatusText
     {
-      get
-      {
-        return _statusText;
-      }
+      get => _statusText;
 
       set
       {
@@ -53,7 +53,9 @@ namespace Revature.Identity.Lib.Model
           _statusText = value;
         }
         else
+        {
           throw new ArgumentException("Only Pending, Accepted, Rejected, and Under Review.");
+        }
       }
     }
   }

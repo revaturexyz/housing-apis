@@ -1,4 +1,5 @@
 # Setting Everything Up
+Sonarcloud: https://sonarcloud.io/organizations/revaturexyz/projects?sort=-analysis_date
 ## AppSettings
 Because appsettings.json is not gitignored, you will have to copy the contents of it to appsettings.development.json, which is gitignored, before making any changes. \
 Identity: \
@@ -37,16 +38,16 @@ To get okta working from the codebase, an okta account is needed.
 Go to https://developer.okta.com/, click on signup, and fill out the required information.
 After confirming your email, go to your new account and click on Users->Groups and click add group, creating “Coordinator”. Create the groups “Provider” and “Tenant” as well. 
 Your groups should look something like this: \
-![something](groups.png "groups")
+![something](./Images/groups.png "groups") \
 Next, go to API ->Authorization Servers and select the default server. (note the URI shown)
 Click on Claims, then on Add Claim. Set the name “Roles”, Include in token type to “ID token”, “Always”, Value type “Groups”, Filter to matches regex .\*, and include in any scope. It should look like this: \
-![something](editclaim.png "editclaims") \
+![something](./Images/editclaim.png "editclaims") \
 Then, make another using Access. Your settings should look something like this when done: \
-![something](finalclaims.png "finalclaims") \
+![something](./Images/finalclaims.png "finalclaims") \
 Next, go to the applications tab. Click add application. For the front end, select single page app and click next. Change the Base URI to localhost:4200 and choose a descriptive name. In the angular app, change environment.ts to include domain: https://dev-####.okta.com, issuer: https://dev-####.okta.com/oauth2/default, clientID: <clientid from the app you just created>, redirectUri: https://localhost:4200/implicit/callback. App.config should be injected in app.module.ts.
 Next, make a token. To do this, click on API -> Tokens, then on create token. Name the token whatever you like, we used managementToken. *Make sure not to lose the token value.*
 In each API, add the following in appsettings.development.json, using your okta domain, client ID, and token. Only the Identity service needs the token.\
-![something](Okta.png "Okta") \
+![something](./Images/Okta.png "Okta")
   
 ## Adding Okta to a new API
 Middleware: Add to Startup.cs in ConfigureServices: \
@@ -83,7 +84,7 @@ E.g. \
 // authorization for Coordinator AND Provider \
 [Authorize(Roles=”Coordinator”)] \
 [Authorize(Roles=”Provider”)] \
-![something](oktasetup.png "oktasetup")
+![something](./Images/oktasetup.png "oktasetup") \
 These Roles can be managed in the Okta Client which can be found under Users>Groups
 
 COORDINATOR \
@@ -129,7 +130,7 @@ https://cloud.google.com/maps-platform/
 This section of the document is not a replacement for Swagger, and is more intended for giving an overview of how the services interact with, and depend on, each other. If you want to know how to call a service, please refer to the Swagger documentation for that service. \
 ## Inter-Service Communication
 // TODO: Talk about service buses and how they work, the various classes which use HTTPRequest, when you should use each, and that there are good examples in the code. \
-![something](servicemap.jpg "servicemap")
+![something](./Images/servicemap.jpg "servicemap")
 ## Dependencies
 Tenant depends on Identity, Address, and Lodging \
 Lodging depends on Identity and Address \

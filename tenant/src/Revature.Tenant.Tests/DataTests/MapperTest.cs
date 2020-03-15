@@ -9,7 +9,7 @@ namespace Revature.Tenant.Tests.DataTests
     private readonly Mapper mapper = new Mapper();
 
     /// <summary>
-    /// Tests that Lib Tenant To Db Tenant
+    /// Tests that Lib Tenant To Db Tenant.
     /// </summary>
     [Fact]
     public void LibTenantToDbTenantTest()
@@ -58,7 +58,7 @@ namespace Revature.Tenant.Tests.DataTests
     }
 
     /// <summary>
-    /// Tests that Db Tenant To Lib Tenant Test
+    /// Tests that Db Tenant To Lib Tenant Test.
     /// </summary>
     [Fact]
     public void DbTenantToLibTenantTest()
@@ -108,7 +108,7 @@ namespace Revature.Tenant.Tests.DataTests
     }
 
     /// <summary>
-    /// Tests that Lib Car To Db Car
+    /// Tests that Lib Car To Db Car.
     /// </summary>
     [Fact]
     public void LibCarToDbCarTest()
@@ -122,7 +122,6 @@ namespace Revature.Tenant.Tests.DataTests
         Color = "Green",
         LicensePlate = "ABC123",
         State = "TX"
-
       };
 
       var cars = mapper.MapCar(car);
@@ -136,7 +135,7 @@ namespace Revature.Tenant.Tests.DataTests
     }
 
     /// <summary>
-    /// Tests that Db Car To Lib Car 
+    /// Tests that Db Car To Lib Car.
     /// </summary>
     [Fact]
     public void DbCarToLibCarTest()

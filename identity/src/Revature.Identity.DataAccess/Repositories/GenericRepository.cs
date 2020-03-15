@@ -13,24 +13,21 @@ namespace Revature.Identity.DataAccess.Repositories
   /// </summary>
   public class GenericRepository : IGenericRepository
   {
-
-    //the database
+    // the database
     private readonly IdentityDbContext _context;
 
-    //the mapper tool
+    // the mapper tool
     private readonly IMapper _mapper;
 
-    //constructor
+    // constructor
     public GenericRepository(IdentityDbContext db, IMapper mapper)
     {
-      //inject the database
+      // inject the database
       _context = db ?? throw new ArgumentNullException(nameof(db), "Context cannot be null.");
 
-      //instantiate the mapper
+      // instantiate the mapper
       _mapper = mapper;
     }
-
-    #region Provider
 
     public async Task<Guid> GetProviderIdByEmailAsync(string providerEmail)
     {
@@ -41,10 +38,8 @@ namespace Revature.Identity.DataAccess.Repositories
     }
 
     /// <summary>
-    /// Get the Provider by Guid
+    /// Get the Provider by GUID.
     /// </summary>
-    /// <param name="providerId"></param>
-    /// <returns></returns>
     public async Task<ProviderAccount> GetProviderAccountByIdAsync(Guid providerId)
     {
       var provider = await _context.ProviderAccount
@@ -57,7 +52,6 @@ namespace Revature.Identity.DataAccess.Repositories
     /// <summary>
     /// Add a Provider to the database.
     /// </summary>
-    /// <param name="newAccount"></param>
     public void AddProviderAccountAsync(ProviderAccount newAccount)
     {
       var newEntity = _mapper.MapProvider(newAccount);
@@ -67,8 +61,6 @@ namespace Revature.Identity.DataAccess.Repositories
     /// <summary>
     /// Update a Provider's account on the database.
     /// </summary>
-    /// <param name="providerAccount"></param>
-    /// <returns></returns>
     public async Task<bool> UpdateProviderAccountAsync(ProviderAccount providerAccount)
     {
       var existingEntity = await _context.ProviderAccount.FirstOrDefaultAsync(p => p.ProviderId == providerAccount.ProviderId);
@@ -83,8 +75,6 @@ namespace Revature.Identity.DataAccess.Repositories
     /// <summary>
     /// Delete a provider's account from the database.
     /// </summary>
-    /// <param name="providerId"></param>
-    /// <returns></returns>
     public async Task<bool> DeleteProviderAccountAsync(Guid providerId)
     {
       var entityToBeRemoved = await _context.ProviderAccount.FirstOrDefaultAsync(p => p.ProviderId == providerId);
@@ -94,10 +84,6 @@ namespace Revature.Identity.DataAccess.Repositories
       _context.Remove(entityToBeRemoved);
       return true;
     }
-
-    #endregion
-
-    #region Coordinator
 
     public async Task<Guid> GetCoordinatorIdByEmailAsync(string coordinatorEmail)
     {
@@ -110,8 +96,6 @@ namespace Revature.Identity.DataAccess.Repositories
     /// <summary>
     /// Get a Coordinator's account from the databse.
     /// </summary>
-    /// <param name="coordinatorId"></param>
-    /// <returns></returns>
     public async Task<CoordinatorAccount> GetCoordinatorAccountByIdAsync(Guid coordinatorId)
     {
       var coordinator = await _context.CoordinatorAccount
@@ -124,7 +108,6 @@ namespace Revature.Identity.DataAccess.Repositories
     /// <summary>
     /// Gets all available coordinator accounts.
     /// </summary>
-    /// <returns></returns>
     public async Task<List<CoordinatorAccount>> GetAllCoordinatorAccountsAsync()
     {
       var coordinators = await _context.CoordinatorAccount
@@ -161,15 +144,9 @@ namespace Revature.Identity.DataAccess.Repositories
       return true;
     }
 
-    #endregion
-
-    #region Notification
-
     /// <summary>
-    /// Get a notification by it's Guid-Id.
+    /// Get a notification by its GUID.
     /// </summary>
-    /// <param name="notificationId"></param>
-    /// <returns></returns>
     public async Task<Notification> GetNotificationByIdAsync(Guid notificationId)
     {
       var notification = await _context.Notification
@@ -184,8 +161,6 @@ namespace Revature.Identity.DataAccess.Repositories
     /// <summary>
     /// Get a list of notifications based on the attached coordinator.
     /// </summary>
-    /// <param name="coordinatorId"></param>
-    /// <returns></returns>
     public async Task<List<Notification>> GetNotificationsByCoordinatorIdAsync(Guid coordinatorId)
     {
       var notification = await _context.Notification
@@ -197,8 +172,8 @@ namespace Revature.Identity.DataAccess.Repositories
     }
 
     /// <summary>
-    /// Ad a new notification to the database    /// </summary>
-    /// <param name="newNofi"></param>
+    /// Add a new notification to the database.
+    /// </summary>
     public void AddNotification(Notification newNofi)
     {
       newNofi.UpdateAction.NotificationId = newNofi.NotificationId;
@@ -211,8 +186,6 @@ namespace Revature.Identity.DataAccess.Repositories
     /// <summary>
     /// Delete an individual notification from the database.
     /// </summary>
-    /// <param name="notificationId"></param>
-    /// <returns></returns>
     public async Task<bool> DeleteNotificationByIdAsync(Guid notificationId)
     {
       var entityToBeRemoved = await _context.Notification.FirstOrDefaultAsync(n => n.NotificationId == notificationId);
@@ -229,8 +202,6 @@ namespace Revature.Identity.DataAccess.Repositories
     /// <summary>
     /// Update an individual notification stored on the database.
     /// </summary>
-    /// <param name="notification"></param>
-    /// <returns></returns>
     public async Task<bool> UpdateNotificationAsync(Notification notification)
     {
       var existingEntity = await _context.Notification.FirstOrDefaultAsync(n => n.NotificationId == notification.NotificationId);
@@ -244,10 +215,6 @@ namespace Revature.Identity.DataAccess.Repositories
       _context.Entry(existingEntity).CurrentValues.SetValues(updatedEntity);
       return true;
     }
-
-    #endregion
-
-    #region UpdateAction
 
     public async Task<UpdateAction> GetUpdateActionByIdAsync(Guid actionId)
     {
@@ -283,15 +250,12 @@ namespace Revature.Identity.DataAccess.Repositories
       _context.Remove(entityToBeRemoved);
       return true;
     }
-    #endregion
 
-    #region Tenant
-
-    public async Task<Guid> GetTenantIdByEmailAsync(string TenantEmail)
+    public async Task<Guid> GetTenantIdByEmailAsync(string tenantEmail)
     {
       var tenant = await _context.TenantAccount
     .AsNoTracking()
-    .FirstOrDefaultAsync(c => c.Email == TenantEmail);
+    .FirstOrDefaultAsync(c => c.Email == tenantEmail);
       return tenant != null ? tenant.TenantId : Guid.Empty;
     }
 
@@ -301,13 +265,12 @@ namespace Revature.Identity.DataAccess.Repositories
       _context.Add(newEntity);
     }
 
-    public async Task<TenantAccount> GetTenantAccountByIdAsync(Guid TenantId)
+    public async Task<TenantAccount> GetTenantAccountByIdAsync(Guid tenantId)
     {
       var tenant = await _context.TenantAccount
   .AsNoTracking()
-  .FirstOrDefaultAsync(p => p.TenantId == TenantId);
+  .FirstOrDefaultAsync(p => p.TenantId == tenantId);
       return tenant != null ? _mapper.MapTenant(tenant) : null;
-
     }
 
     public async Task<bool> UpdateTenantAccountAsync(TenantAccount tenantAccount)
@@ -331,11 +294,10 @@ namespace Revature.Identity.DataAccess.Repositories
       return true;
     }
 
-    #endregion
-
     /// <summary>
     /// Save changes in context to the database.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public async Task SaveAsync()
     {
       await _context.SaveChangesAsync();

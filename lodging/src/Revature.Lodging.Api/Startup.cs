@@ -1,23 +1,21 @@
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.Authentication.JwtBearer; // OktaSetup
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens; // OktaSetup
 using Microsoft.OpenApi.Models;
 using Okta.AspNetCore;
 using Revature.Lodging.Api.Services;
+using Revature.Lodging.Api.Telemetry;
 using Revature.Lodging.DataAccess;
 using Revature.Lodging.DataAccess.Entities;
 using Revature.Lodging.DataAccess.Repository;
 using Revature.Lodging.Lib.Interface;
 using Serilog;
-using Microsoft.ApplicationInsights.Extensibility;
-using Revature.Lodging.Api.Telemetry;
-using Revature.Lodging.Lib;
-
-using Microsoft.AspNetCore.Authentication.JwtBearer; // OktaSetup
-using Microsoft.IdentityModel.Tokens; // OktaSetup
 
 namespace Revature.Lodging.Api
 {
@@ -33,42 +31,39 @@ namespace Revature.Lodging.Api
 
     public IConfiguration Configuration { get; }
 
-    /// <summary>
-    /// to configure the services
-    /// </summary>
-    /// <param name="services"></param>
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddCors(options =>
       {
         options.AddPolicy(CorsPolicyName, builder =>
         {
-          builder.WithOrigins("http://localhost:4200",
-                              "https://localhost:4200",
-                              "http://housing.revature.xyz",
-                              "https://housing.revature.xyz",
-                              "http://housingdev.revature.xyz",
-                              "https://housingdev.revature.xyz",
-                              "http://192.168.99.100:12080",
-                              "https://192.168.99.100:12080",
-                              "http://192.168.99.100:13080",
-                              "https://192.168.99.100:13080",
-                              "http://192.168.99.100:14080",
-                              "https://192.168.99.100:14080",
-                              "http://localhost:14080",
-                              "https://localhost:14080",
-                              "http://localhost:13080",
-                              "https://localhost:13080")
+          builder.WithOrigins(
+            "http://localhost:4200",
+            "https://localhost:4200",
+            "http://housing.revature.xyz",
+            "https://housing.revature.xyz",
+            "http://housingdev.revature.xyz",
+            "https://housingdev.revature.xyz",
+            "http://192.168.99.100:12080",
+            "https://192.168.99.100:12080",
+            "http://192.168.99.100:13080",
+            "https://192.168.99.100:13080",
+            "http://192.168.99.100:14080",
+            "https://192.168.99.100:14080",
+            "http://localhost:14080",
+            "https://localhost:14080",
+            "http://localhost:13080",
+            "https://localhost:13080",
+            "https://housing-angular-dev.azurewebsites.net")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
         });
       });
 
-      #region OktaSetup
       services.AddAuthentication(options =>
       {
-        //options.DefaultScheme = OktaDefaults.ApiAuthenticationScheme;
+        // options.DefaultScheme = OktaDefaults.ApiAuthenticationScheme;
         options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
         options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -86,10 +81,9 @@ namespace Revature.Lodging.Api
           ValidateIssuer = true,
         };
       });
-      #endregion
 
       services.AddApplicationInsightsTelemetry();
-      
+
       services.AddHealthChecks();
 
       services.AddSwaggerGen(c =>
@@ -104,22 +98,14 @@ namespace Revature.Lodging.Api
       services.AddScoped<IRoomRepository, RoomRepository>();
 
       // services.AddHostedService<RoomServiceReceiver>();
-      // services.AddScoped<IRoomServiceSender, RoomServiceSender>();
       services.AddHttpClient<IAddressRequest, AddressRequest>();
-      services.AddHttpClient<IRoomRequest, RoomRequest>();
       services.AddSingleton<ITelemetryInitializer, LodgingTelemetryInitializer>();
 
       services.AddAuthorization();
 
       services.AddControllers();
-
     }
 
-    /// <summary>
-    /// it is to create the app's request processing pipeline
-    /// </summary>
-    /// <param name="app"></param>
-    /// <param name="env"></param>
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
@@ -148,13 +134,6 @@ namespace Revature.Lodging.Api
         endpoints.MapControllers();
         endpoints.MapHealthChecks("/health");
       });
-
-      ////for the service-bus listener
-      ////define the event-listener
-      //var bus = app.ApplicationServices.GetService<IRoomServiceReceiver>();
-
-      ////start listening
-      //bus.RegisterOnMessageHandlerAndReceiveMessages();
     }
   }
 }

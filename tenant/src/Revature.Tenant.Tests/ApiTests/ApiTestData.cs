@@ -7,10 +7,10 @@ using LibMod = Revature.Tenant.Lib.Models;
 
 namespace Revature.Tenant.Tests.ApiTests
 {
-  //Static class with data for ApiTests
+  // Static class with data for ApiTests
   internal static class ApiTestData
   {
-    internal static List<LibMod.Tenant> Tenants = new List<LibMod.Tenant>
+    internal static List<LibMod.Tenant> Tenants { get; } = new List<LibMod.Tenant>
     {
       new LibMod.Tenant
       {
@@ -25,22 +25,21 @@ namespace Revature.Tenant.Tests.ApiTests
         BatchId = 2,
         Batch = new LibMod.Batch
         {
-            Id = 2,
-            BatchCurriculum = "C#",
-            TrainingCenter = Guid.Parse("d9e4077e-0e5e-4201-8801-a2ea40b8c0b5")
+          Id = 2,
+          BatchCurriculum = "C#",
+          TrainingCenter = Guid.Parse("d9e4077e-0e5e-4201-8801-a2ea40b8c0b5")
         },
         Car = new LibMod.Car
         {
-            Id = 1,
-            Color = "yellow",
-            Make = "mitsubishi",
-            Model = "montero sport",
-            LicensePlate = "1231234",
-            State = "Texas",
-            Year = "1999"
+          Id = 1,
+          Color = "yellow",
+          Make = "mitsubishi",
+          Model = "montero sport",
+          LicensePlate = "1231234",
+          State = "Texas",
+          Year = "1999"
         },
         TrainingCenter = Guid.Parse("d9e4077e-0e5e-4201-8801-a2ea40b8c0b5")
-
       },
 
       new LibMod.Tenant
@@ -56,40 +55,39 @@ namespace Revature.Tenant.Tests.ApiTests
         BatchId = 2,
         Batch = new LibMod.Batch
         {
-            Id = 2,
-            BatchCurriculum = "C#",
-            TrainingCenter = Guid.Parse("d9e4077e-0e5e-4201-8801-a2ea40b8c0b5")
+          Id = 2,
+          BatchCurriculum = "C#",
+          TrainingCenter = Guid.Parse("d9e4077e-0e5e-4201-8801-a2ea40b8c0b5")
         },
         Car = new LibMod.Car
         {
-            Id = 2,
-            Color = "yellow",
-            Make = "mitsubishi",
-            Model = "montero sport",
-            LicensePlate = "1231234",
-            State = "Texas",
-            Year = "1999"
+          Id = 2,
+          Color = "yellow",
+          Make = "mitsubishi",
+          Model = "montero sport",
+          LicensePlate = "1231234",
+          State = "Texas",
+          Year = "1999"
         },
         TrainingCenter = Guid.Parse("d9e4077e-0e5e-4201-8801-a2ea40b8c0b5")
       },
-
     };
 
-    internal static List<LibMod.Batch> Batches = new List<LibMod.Batch>
+    internal static List<LibMod.Batch> Batches { get; } = new List<LibMod.Batch>
     {
-      new Lib.Models.Batch
+      new LibMod.Batch
       {
         Id = 1,
         BatchCurriculum = "C#",
         TrainingCenter = Guid.Parse("d9e4077e-0e5e-4201-8801-a2ea40b8c0b5")
       },
-      new Lib.Models.Batch
+      new LibMod.Batch
       {
         Id = 2,
         BatchCurriculum = "C#",
         TrainingCenter = Guid.Parse("d9e4077e-0e5e-4201-8801-a2ea40b8c0b5")
       },
-      new Lib.Models.Batch
+      new LibMod.Batch
       {
         Id = 3,
         BatchCurriculum = "C#",
@@ -101,23 +99,25 @@ namespace Revature.Tenant.Tests.ApiTests
     {
       var mockRepo = new Mock<ITenantRepository>();
       mockRepo.Setup(repo => repo.GetBatchesAsync(It.IsAny<Guid>()))
-            .ReturnsAsync(() => testBatches);
+        .ReturnsAsync(() => testBatches);
 
       return mockRepo;
     }
+
     internal static Mock<ITenantRepository> MockTenantRepo(List<LibMod.Tenant> testTenants)
     {
       var mockRepo = new Mock<ITenantRepository>();
       mockRepo.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>()))
-            .ReturnsAsync((Guid i) =>
-            {
-              var tenant = testTenants.FirstOrDefault(t => t.Id == i);
-              if (tenant == null)
-              {
-                throw new ArgumentException();
-              }
-              return tenant;
-            });
+        .ReturnsAsync((Guid i) =>
+        {
+          var tenant = testTenants.FirstOrDefault(t => t.Id == i);
+          if (tenant == null)
+          {
+            throw new ArgumentException();
+          }
+
+          return tenant;
+        });
       return mockRepo;
     }
   }

@@ -7,7 +7,7 @@ namespace Revature.Lodging.Tests.DataTests
   public class EntityModelTest
   {
     /// <summary>
-    /// This test is to test Amenity in Entity Model
+    /// This test is to test Amenity in Entity Model.
     /// </summary>
     [Fact]
     public void AmenityTest()
@@ -26,7 +26,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test AmenityComplex in Entity Model
+    /// This test is to test AmenityComplex in Entity Model.
     /// </summary>
     [Fact]
     public void AmenityComplexTest()
@@ -48,7 +48,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test AmenityRoom in Entity Model
+    /// This test is to test AmenityRoom in Entity Model.
     /// </summary>
     [Fact]
     public void AmenityRoomTest()
@@ -70,7 +70,7 @@ namespace Revature.Lodging.Tests.DataTests
     }
 
     /// <summary>
-    /// This test is to test Complex in Entity Model
+    /// This test is to test Complex in Entity Model.
     /// </summary>
     [Fact]
     public void ComplexTest()

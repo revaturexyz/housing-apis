@@ -1,12 +1,8 @@
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Revature.Identity.DataAccess;
 using Revature.Identity.DataAccess.Repositories;
-using Revature.Identity.Tests;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Revature.Identity.Tests.RepositoryTests
@@ -39,9 +35,9 @@ namespace Revature.Identity.Tests.RepositoryTests
     }
 
     /// <summary>
-    /// Test for updateing a given Tenant's information within the database.
+    /// Test for updating a given Tenant's information within the database.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task UpdateTenantAccountTestAsync()
     {
@@ -66,7 +62,6 @@ namespace Revature.Identity.Tests.RepositoryTests
       var assertTenant = assertContext.TenantAccount.First(p => p.TenantId == arrangeTenant.TenantId);
       Assert.Equal(arrangeTenant.Name, assertTenant.Name);
     }
-
 
     /// <summary>
     /// Retrieve a Tenant by way of a Guid Id from the database.
@@ -94,15 +89,14 @@ namespace Revature.Identity.Tests.RepositoryTests
       Assert.NotNull(result);
     }
 
-
     /// <summary>
     /// Test the deletion of a given tenant from the database.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task DeleteTenantTestAsync()
     {
-      //Assemble
+      // Assemble
       var helper = new TestHelper();
       var mapper = new Mapper();
       var options = new DbContextOptionsBuilder<IdentityDbContext>()
@@ -114,8 +108,10 @@ namespace Revature.Identity.Tests.RepositoryTests
       assembleContext.SaveChanges();
       var actContext = new IdentityDbContext(options);
       var repo = new GenericRepository(actContext, new Mapper());
+
       // Act
       await repo.DeleteTenantAccountAsync(deleteTenant.TenantId);
+
       // Assert
       var tenant = actContext.TenantAccount.ToList();
       Assert.DoesNotContain(deleteTenant, tenant);

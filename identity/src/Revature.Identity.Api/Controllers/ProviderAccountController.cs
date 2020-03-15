@@ -41,6 +41,7 @@ namespace Revature.Identity.Api.Controllers
         _logger.LogWarning($"No provider account found for {providerId}");
         return NotFound();
       }
+
       return Ok(provider);
     }
 
@@ -71,6 +72,7 @@ namespace Revature.Identity.Api.Controllers
         _logger.LogInformation($"Put request persisted for {providerId}");
         return NoContent();
       }
+
       _logger.LogWarning($"Put request failed for {providerId}");
       return NotFound();
     }
@@ -86,13 +88,12 @@ namespace Revature.Identity.Api.Controllers
       var existingProvider = await _repo.GetProviderAccountByIdAsync(providerId);
       if (existingProvider != null && existingProvider.Status.StatusText != Status.Approved)
       {
-        //This section would effect the coordinator, not the provider.
-        //The Get() methodin CoordinatorAccountController will update Okta permissions on next login.
-        //OktaHelper okta = _oktaHelperFactory.Create(Request);  
-        //var oktaUser = await okta.Client.Users.FirstOrDefault(user => user.Profile.Email == okta.Email);
-        //// Add approved_provider 
-        //await okta.AddRoleAsync(oktaUser.Id, OktaHelper.ApprovedProviderRole);
-
+        // This section would effect the coordinator, not the provider.
+        // The Get() methodin CoordinatorAccountController will update Okta permissions on next login.
+        // OktaHelper okta = _oktaHelperFactory.Create(Request);
+        // var oktaUser = await okta.Client.Users.FirstOrDefault(user => user.Profile.Email == okta.Email);
+        //// Add approved_provider
+        // await okta.AddRoleAsync(oktaUser.Id, OktaHelper.ApprovedProviderRole);
         existingProvider.Status.StatusText = Status.Approved;
         await _repo.UpdateProviderAccountAsync(existingProvider);
         await _repo.SaveAsync();
@@ -122,6 +123,7 @@ namespace Revature.Identity.Api.Controllers
         _logger.LogInformation($"Delete request persisted for {providerId}");
         return NoContent();
       }
+
       _logger.LogWarning($"Delete request failed for {providerId}");
       return NotFound();
     }

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Revature.Identity.Lib.Model;
 using Xunit;
 
@@ -8,7 +6,7 @@ namespace Revature.Identity.Tests.LogicTests.Model
 {
   public class TenantTesting
   {
-    //declare an instance for testing
+    // declare an instance for testing
     private readonly TenantAccount _tenant = new TenantAccount();
 
     /// <summary>
@@ -28,7 +26,7 @@ namespace Revature.Identity.Tests.LogicTests.Model
     [Fact]
     public void TenantNameEmptyException()
     {
-      var emptyString = "";
+      var emptyString = string.Empty;
 
       Assert.ThrowsAny<ArgumentException>(() => _tenant.Name = emptyString);
     }
@@ -50,7 +48,7 @@ namespace Revature.Identity.Tests.LogicTests.Model
     [Fact]
     public void TenantEmailEmptyException()
     {
-      var emptyString = "";
+      var emptyString = string.Empty;
 
       Assert.ThrowsAny<ArgumentException>(() => _tenant.Email = emptyString);
     }

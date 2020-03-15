@@ -5,7 +5,7 @@ using Xunit;
 namespace Revature.Address.Tests.Lib.Tests
 {
   /// <summary>
-  /// Contains tests for ResponseRow class
+  /// Contains tests for ResponseRow class.
   /// </summary>
   public class RowTests
   {
@@ -37,11 +37,13 @@ namespace Revature.Address.Tests.Lib.Tests
         Duration = duration,
         Status = status
       };
+
       // Act (create row with variables)
       var row = new ResponseRow
       {
         Elements = new List<ResponseElement> { element }
       };
+
       // Assert (ensure model properties are set to variables)
       Assert.NotNull(row.Elements);
       Assert.Single(row.Elements);

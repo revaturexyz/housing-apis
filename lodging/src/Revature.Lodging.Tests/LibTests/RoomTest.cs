@@ -1,12 +1,13 @@
 using System;
 using Xunit;
 using BL = Revature.Lodging.Lib;
+
 namespace Revature.Room.Tests.Revature.Room.Lib.Tests
 {
   public class RoomTest
   {
-    private Guid _newRoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456dd");
-    private Guid _newComplexId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456dd");
+    private readonly Guid _newRoomId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456dd");
+    private readonly Guid _newComplexId = Guid.Parse("249e5358-169a-4bc6-aa0f-c054952456dd");
     private readonly string _newGender = "Female";
     private readonly string _newRoomNumber = "2002";
     private readonly string _newRoomType = "Dormitory";
@@ -18,7 +19,7 @@ namespace Revature.Room.Tests.Revature.Room.Lib.Tests
 
     /// <summary>
     /// Test for making sure that creating a room should create a room and that the
-    /// properties of the room should have something populating them
+    /// properties of the room should have something populating them.
     /// </summary>
     [Fact]
     public void RoomShouldCreate()
@@ -47,7 +48,7 @@ namespace Revature.Room.Tests.Revature.Room.Lib.Tests
     }
 
     /// <summary>
-    /// Test to throw an exception if inserting the lease date is not valid
+    /// Test to throw an exception if inserting the lease date is not valid.
     /// </summary>
     [Fact]
     public void RoomShouldRejectInvalidLease()
@@ -57,17 +58,17 @@ namespace Revature.Room.Tests.Revature.Room.Lib.Tests
     }
 
     /// <summary>
-    /// Test to throw an exception if inserting a room number that is not accepted
+    /// Test to throw an exception if inserting a room number that is not accepted.
     /// </summary>
     [Fact]
     public void RoomShouldRejectInvalidRoomNumber()
     {
-      Assert.Throws<ArgumentException>(() => new BL.Models.Room() { RoomNumber = "" });
+      Assert.Throws<ArgumentException>(() => new BL.Models.Room() { RoomNumber = string.Empty });
       Assert.Throws<ArgumentException>(() => new BL.Models.Room() { RoomNumber = null });
     }
 
     /// <summary>
-    /// Test to throws an exception if inserting invalid number of beds
+    /// Test to throws an exception if inserting invalid number of beds.
     /// </summary>
     [Fact]
     public void RoomShouldRejectInvalidNumberOfBeds()
@@ -77,12 +78,11 @@ namespace Revature.Room.Tests.Revature.Room.Lib.Tests
     }
 
     /// <summary>
-    /// Test that throws an exception if number of occupants is not a valid value
+    /// Test that throws an exception if number of occupants is not a valid value.
     /// </summary>
     [Fact]
     public void RoomShouldRejectInvalidNumberOfOccupants()
     {
-
       Assert.Throws<ArgumentException>(() => new BL.Models.Room() { NumberOfOccupants = -1 });
 
       var room = new BL.Models.Room() { NumberOfBeds = 2 };
@@ -90,13 +90,13 @@ namespace Revature.Room.Tests.Revature.Room.Lib.Tests
     }
 
     /// <summary>
-    /// Test that throws an exception if the room type is not a valid value
+    /// Test that throws an exception if the room type is not a valid value.
     /// </summary>
     [Fact]
     public void RoomShouldRejectInvalidRoomType()
     {
-     // Assert.Throws<ArgumentException>(() => new BL.Models.Room() { RoomType = "" });
-     // Assert.Throws<ArgumentException>(() => new BL.Models.Room() { RoomType = null });
+      // Assert.Throws<ArgumentException>(() => new BL.Models.Room() { RoomType = "" });
+      // Assert.Throws<ArgumentException>(() => new BL.Models.Room() { RoomType = null });
     }
   }
 }

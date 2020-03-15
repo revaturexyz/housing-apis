@@ -12,8 +12,9 @@ namespace Revature.Lodging.Tests.ApiTests
   public class TenantControllerTests
   {
     /// <summary>
-    /// Unit test for GetAsync method in TenantController
+    /// Unit test for GetAsync method in TenantController.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task GetAsyncShouldReturnRoomList()
     {
@@ -22,8 +23,8 @@ namespace Revature.Lodging.Tests.ApiTests
       var mockLogger = new Mock<ILogger<TenantController>>();
       var controller = new TenantController(mockRepo.Object, mockLogger.Object);
 
-      var gender = "nonbinary";
-      var dateTime = new DateTime();
+      var gender = "male";
+      var dateTime = default(DateTime);
 
       // act
       var result = await controller.GetAsync(gender, dateTime);

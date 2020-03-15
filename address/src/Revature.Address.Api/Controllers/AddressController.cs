@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -12,13 +11,12 @@ namespace Revature.Address.Api.Controllers
 {
   /// <summary>
   /// This controller handles http requests sent to the
-  /// address service
+  /// address service.
   /// </summary>
   [Route("api/[controller]")]
   [ApiController]
   public class AddressController : ControllerBase
   {
-
     private readonly IDataAccess _db;
     private readonly ILogger _logger;
     private readonly IAddressLogic _addressLogic;
@@ -31,24 +29,21 @@ namespace Revature.Address.Api.Controllers
     }
 
     /// <summary>
-    /// This method returns an address matching the given addressId
+    /// This method returns an address matching the given addressId.
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
     // GET: api/address/5
     [HttpGet("{id}")]
     public async Task<ActionResult<AddressModel>> GetAddressById(Guid id)
     {
-
       var address = (await _db.GetAddressAsync(id: id)).FirstOrDefault();
-      if(address!= null)
+      if (address != null)
+      {
         return Ok(Mapper.Map(address));
+      }
       else
       {
         return NotFound("Address does not exist in address service");
       }
-
-      
     }
 
     /// <summary>
@@ -57,27 +52,26 @@ namespace Revature.Address.Api.Controllers
     /// 20 miles of each other using Google's Distance MAtrix API
     /// and returns false if they are not.
     /// </summary>
-    /// <param name="addresses"></param>
-    /// <param name="addressLogic"></param>
-    /// <returns></returns>
     // GET: api/address/checkdistance
     [HttpGet("checkdistance")]
     public async Task<ActionResult<bool>> IsInRange([FromQuery] AddressModel from, [FromQuery] AddressModel to, [FromQuery] int distance = 20)
     {
-      try {
-      var start = Mapper.Map(from);
-      var end = Mapper.Map(to);
-      if (await _addressLogic.IsInRangeAsync(start, end, distance))
+      try
       {
-        _logger.LogInformation("These addresses are within range of each other");
-        return Ok(true);
+        var start = Mapper.Map(from);
+        var end = Mapper.Map(to);
+        if (await _addressLogic.IsInRangeAsync(start, end, distance))
+        {
+          _logger.LogInformation("These addresses are within range of each other");
+          return Ok(true);
+        }
+        else
+        {
+          _logger.LogError("These addresses are not in range of each other");
+          return Ok(false);
+        }
       }
-      else
-      {
-        _logger.LogError("These addresses are not in range of each other");
-        return Ok(false);
-      }
-      } catch (Exception e)
+      catch (Exception e)
       {
         _logger.LogError(e.Message);
         return BadRequest();
@@ -90,9 +84,6 @@ namespace Revature.Address.Api.Controllers
     /// exists with Google's Geocode API and if it does it's added to the database and
     /// its addressId is returned, otherwise a bad request message is returned.
     /// </summary>
-    /// <param name="address"></param>
-    /// <param name="addressLogic"></param>
-    /// <returns></returns>
     // GET: api/address
     [HttpGet]
     public async Task<ActionResult<AddressModel>> GetAddress([FromQuery] AddressModel address)
@@ -113,18 +104,15 @@ namespace Revature.Address.Api.Controllers
         }
         else
         {
-
           _logger.LogError("Address already exists in the database");
           return Mapper.Map(checkAddress);
         }
       }
       catch (ArgumentException e)
       {
-
         _logger.LogError(e.Message);
         return BadRequest(e.Message);
       }
-      
     }
   }
 }

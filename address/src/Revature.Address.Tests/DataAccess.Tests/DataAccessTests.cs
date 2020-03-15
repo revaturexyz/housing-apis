@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -10,13 +9,13 @@ namespace Revature.Address.Tests.DataAccess.Tests
 {
   /// <summary>
   /// This class runs tests for data access
-  /// functionality
+  /// functionality.
   /// </summary>
   public class DataAccessTests
   {
     /// <summary>
     /// This tests checks if a database can be
-    /// successfully created
+    /// successfully created.
     /// </summary>
     [Fact]
     public void CanCreateDB()
@@ -31,12 +30,12 @@ namespace Revature.Address.Tests.DataAccess.Tests
 
     /// <summary>
     /// This tests checks if an address can
-    /// be added to the database
+    /// be added to the database.
     /// </summary>
     [Fact]
     public async void CreateAddressAsync()
     {
-      var options = TestDbContext.TestDbInitalizer("CanGetId"); //Create Instance of DB. 
+      var options = TestDbContext.TestDbInitalizer("CanGetId"); // Create Instance of DB.
       using var dbcreate = TestDbContext.CreateTestDb(options);
       var newAddy = new Address.Lib.Address
       {
@@ -55,19 +54,22 @@ namespace Revature.Address.Tests.DataAccess.Tests
 
     /// <summary>
     /// This tests if we can successfully retrieve
-    /// an address from the database using its id
+    /// an address from the database using its id.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task GetAddressAsync()
     {
-      var options = TestDbContext.TestDbInitalizer("CanGetID"); //Create Instance of DB. 
-      //Insert data into test, specifically ValidAddress1().
+      var options = TestDbContext.TestDbInitalizer("CanGetID"); // Create Instance of DB.
+
+      // Insert data into test, specifically ValidAddress1().
       var saveId = AddressTestData.ValidAddress1().Id;
       using (var dbcreate = TestDbContext.CreateTestDb(options))
       {
         dbcreate.Add(AddressTestData.ValidAddress1());
         dbcreate.SaveChanges();
       }
+
       using (var dbcreate = TestDbContext.CreateTestDb(options))
       {
         var mapper = new Mapper();
@@ -82,8 +84,9 @@ namespace Revature.Address.Tests.DataAccess.Tests
 
     /// <summary>
     /// This tests checks we can successfully delete an
-    /// address from the database using its id
+    /// address from the database using its id.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task DeleteAddressAsync()
     {
@@ -97,7 +100,7 @@ namespace Revature.Address.Tests.DataAccess.Tests
         dbcreate.SaveChanges();
       }
 
-      //We want to delete Address2. 
+      // We want to delete Address2.
       using (var dbcreate = TestDbContext.CreateTestDb(options))
       {
         var testId = AddressTestData.ValidAddress2().Id;

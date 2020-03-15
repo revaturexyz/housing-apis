@@ -25,6 +25,7 @@ namespace Revature.Tenant.Lib.Models
         _id = value;
       }
     }
+
     public string BatchCurriculum
     {
       get => _batchCurriculum;
@@ -40,25 +41,8 @@ namespace Revature.Tenant.Lib.Models
     }
 
     public DateTime StartDate { get; private set; }
+
     public DateTime EndDate { get; private set; }
-
-    /// <summary>
-    /// This is a Set method that checks that the start date is earlier than the end date before allow the backing field to be set.
-    /// </summary>
-    /// <param name="startDate">The value of the start date</param>
-    /// <param name="endDate">The value of the end date</param>
-    /// <returns>true if start date is before end date and _startdate and _enddate are set, else false</returns>
-    public void SetStartAndEndDate(DateTime startDate, DateTime endDate)
-    {
-      //Checks if start date is after end date
-      if (startDate.CompareTo(endDate) >= 0)
-      {
-        throw new ArgumentException($"Start date must be before End date. Start Date: {startDate}, End Date: {endDate}");
-      }
-      StartDate = startDate;
-      EndDate = endDate;
-
-    }
 
     public Guid TrainingCenter
     {
@@ -72,6 +56,23 @@ namespace Revature.Tenant.Lib.Models
 
         _trainingCenter = value;
       }
+    }
+
+    /// <summary>
+    /// This is a Set method that checks that the start date is earlier than the end date before allow the backing field to be set.
+    /// </summary>
+    /// <param name="startDate">The value of the start date.</param>
+    /// <param name="endDate">The value of the end date.</param>
+    public void SetStartAndEndDate(DateTime startDate, DateTime endDate)
+    {
+      // Checks if start date is after end date
+      if (startDate.CompareTo(endDate) >= 0)
+      {
+        throw new ArgumentException($"Start date must be before End date. Start Date: {startDate}, End Date: {endDate}");
+      }
+
+      StartDate = startDate;
+      EndDate = endDate;
     }
   }
 }

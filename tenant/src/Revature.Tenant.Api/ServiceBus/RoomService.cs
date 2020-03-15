@@ -13,7 +13,7 @@ using Revature.Tenant.Lib.Models;
 namespace Revature.Tenant.Api.ServiceBus
 {
   /// <summary>
-  /// Service that communicates with the room service
+  /// Service that communicates with the room service.
   /// </summary>
   public class RoomService : IRoomService
   {
@@ -45,12 +45,9 @@ namespace Revature.Tenant.Api.ServiceBus
     }
 
     /// <summary>
-    /// Method that gets vacant rooms from the room service
+    /// Method that gets vacant rooms from the room service.
     /// </summary>
-    /// <param name="gender"></param>
-    /// <param name="endDate"></param>
-    /// <returns></returns>
-    /// <exception cref="HttpRequestException">Thrown when the response from the room service isn't successful</exception>
+    /// <exception cref="HttpRequestException">Thrown when the response from the room service isn't successful.</exception>
     public async Task<List<AvailRoom>> GetVacantRoomsAsync(string gender, DateTime endDate)
     {
       var resourceURI = "api/rooms?gender=" + gender + "&endDate=" + endDate;
@@ -70,7 +67,6 @@ namespace Revature.Tenant.Api.ServiceBus
         _logger.LogError(await response.Content.ReadAsStringAsync());
         throw new HttpRequestException("Unable to receive response from room service");
       }
-
     }
   }
 }

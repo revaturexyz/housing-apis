@@ -7,11 +7,11 @@ namespace Revature.Identity.Api
   /// </summary>
   public class RoleRequirement : IAuthorizationRequirement
   {
-    public string Role { get; }
-
     public RoleRequirement(string role)
     {
       Role = role;
     }
+
+    public string Role { get; }
   }
 }

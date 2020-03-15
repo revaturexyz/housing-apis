@@ -11,16 +11,16 @@ namespace Revature.Tenant.DataAccess.Repository
   /// <summary>
   /// A repository for managing data access for tenant onjects and their cars.
   /// </summary>
-  public class TenantRepository : ITenantRepository
+  public sealed class TenantRepository : ITenantRepository
   {
     private readonly TenantContext _context;
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Initializes a new tenant repository given a suitable tenant data source.
+    /// Initializes a new instance of the <see cref="TenantRepository"/> class given a suitable tenant data source.
     /// </summary>
-    /// <param name="context">The data source</param>
-    /// <param name="mapper">The mapper</param>
+    /// <param name="context">The data source.</param>
+    /// <param name="mapper">The mapper.</param>
     public TenantRepository(TenantContext context, IMapper mapper)
     {
       _context = context;
@@ -30,7 +30,8 @@ namespace Revature.Tenant.DataAccess.Repository
     /// <summary>
     /// Adds a new tenant object as well as its associated properties.
     /// </summary>
-    /// <param name="tenant">The Tenant</param>
+    /// <param name="tenant">The Tenant.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public async Task AddAsync(Lib.Models.Tenant tenant)
     {
       var newTenant = _mapper.MapTenant(tenant);
@@ -40,7 +41,7 @@ namespace Revature.Tenant.DataAccess.Repository
     /// <summary>
     /// Updates a new tenant object as well as its associated properties.
     /// </summary>
-    /// <param name="tenant">The Tenant</param>
+    /// <param name="tenant">The Tenant.</param>
     public void Put(Lib.Models.Tenant tenant)
     {
       var newTenant = _mapper.MapTenant(tenant);
@@ -55,8 +56,8 @@ namespace Revature.Tenant.DataAccess.Repository
     /// <summary>
     /// Gets a tenant using their id.
     /// </summary>
-    /// <param name="id">The ID of the tenant</param>
-    /// <returns>A tenant, including their Car and Batch, if applicable</returns>
+    /// <param name="id">The ID of the tenant.</param>
+    /// <returns>A tenant, including their Car and Batch, if applicable.</returns>
     public async Task<Lib.Models.Tenant> GetByIdAsync(Guid id)
     {
       var tenant = await _context.Tenant
@@ -74,9 +75,9 @@ namespace Revature.Tenant.DataAccess.Repository
     }
 
     /// <summary>
-    /// Gets a list of all tenants
+    /// Gets a list of all tenants.
     /// </summary>
-    /// <returns>The collection of all tenants, including their Car and Batch, if applicable</returns>
+    /// <returns>The collection of all tenants, including their Car and Batch, if applicable.</returns>
     public async Task<ICollection<Lib.Models.Tenant>> GetAllAsync(string firstName = null, string lastName = null, string gender = null, Guid? trainingCenter = null)
     {
       var tenants = _context.Tenant
@@ -88,14 +89,17 @@ namespace Revature.Tenant.DataAccess.Repository
       {
         tenants = tenants.Where(t => t.FirstName == firstName);
       }
+
       if (!string.IsNullOrWhiteSpace(lastName))
       {
         tenants = tenants.Where(t => t.LastName == lastName);
       }
+
       if (!string.IsNullOrWhiteSpace(gender))
       {
         tenants = tenants.Where(t => t.Gender == gender);
       }
+
       if (trainingCenter != null)
       {
         tenants = tenants.Where(t => t.TrainingCenter == trainingCenter);
@@ -104,13 +108,11 @@ namespace Revature.Tenant.DataAccess.Repository
       return (await tenants.ToListAsync()).Select(_mapper.MapTenant).ToList();
     }
 
-
-
     /// <summary>
-    /// Gets all batches in a training center
+    /// Gets all batches in a training center.
     /// </summary>
-    /// <param name="trainingCenter">A Guid of a training center</param>
-    /// <returns>A list of batches</returns>
+    /// <param name="trainingCenter">A Guid of a training center.</param>
+    /// <returns>A list of batches.</returns>
     public async Task<ICollection<Lib.Models.Batch>> GetBatchesAsync(Guid trainingCenter)
     {
       var batch = _context.Batch.Where(b => b.TrainingCenter == trainingCenter);
@@ -122,7 +124,8 @@ namespace Revature.Tenant.DataAccess.Repository
     /// <summary>
     /// Deletes a tenant using their id.
     /// </summary>
-    /// <param name="id">The ID of the tenant</param>
+    /// <param name="id">The ID of the tenant.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public async Task DeleteByIdAsync(Guid id)
     {
       var tenant = await _context.Tenant.FindAsync(id);
@@ -133,7 +136,8 @@ namespace Revature.Tenant.DataAccess.Repository
     /// <summary>
     /// Updates values associated to a tenant.
     /// </summary>
-    /// <param name="tenant">The tenant with changed values</param>
+    /// <param name="tenant">The tenant with changed values.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public async Task UpdateAsync(Lib.Models.Tenant tenant)
     {
       var currentTenant = await _context.Tenant.FindAsync(tenant.Id);
@@ -148,10 +152,10 @@ namespace Revature.Tenant.DataAccess.Repository
     }
 
     /// <summary>
-    /// Takes in a tenant Id and checks if the tenant has a car. 
+    /// Takes in a tenant Id and checks if the tenant has a car.
     /// </summary>
-    /// <param name="tenantId">tenant Id</param>
-    /// <returns>True if Tenant has Car, returns false if the Tenant has no car</returns>
+    /// <param name="tenantId">tenant Id.</param>
+    /// <returns>True if Tenant has Car, returns false if the Tenant has no car.</returns>
     public async Task<bool> HasCarAsync(Guid tenantId)
     {
       var currentTenant = await _context.Tenant.FindAsync(tenantId);
@@ -170,34 +174,17 @@ namespace Revature.Tenant.DataAccess.Repository
     }
 
     /// <summary>
-    /// This persists changes to data base. 
+    /// This persists changes to data base.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public async Task SaveAsync()
     {
       await _context.SaveChangesAsync();
     }
 
-    #region IDisposable Support
-    private bool _disposedValue = false; // To detect redundant calls
-
-    protected virtual void Dispose(bool disposing)
-    {
-      if (!_disposedValue)
-      {
-        if (disposing)
-        {
-          _context.Dispose();
-        }
-
-        _disposedValue = true;
-      }
-    }
-
-    // This code added to correctly implement the disposable pattern.
     public void Dispose()
     {
-      Dispose(true);
+      _context.Dispose();
     }
-    #endregion
   }
 }

@@ -3,17 +3,18 @@ using Revature.Address.DataAccess.Interfaces;
 namespace Revature.Address.DataAccess
 {
   /// <summary>
-  /// Handles mapping between business library and data access address objects
+  /// Handles mapping between business library and data access address objects.
   /// </summary>
   public class Mapper : IMapper
   {
-    public Mapper() { }
+    public Mapper()
+    {
+    }
 
     /// <summary>
-    /// Converts DataAccess address object into Business Library address object
+    /// Converts DataAccess address object into Business Library address object.
     /// </summary>
-    /// <param name="address"></param>
-    /// <returns>Returns Business Library address object</returns>
+    /// <returns>Returns Business Library address object.</returns>
     public Lib.Address MapAddress(Entities.Address address)
     {
       return new Lib.Address
@@ -28,10 +29,9 @@ namespace Revature.Address.DataAccess
     }
 
     /// <summary>
-    /// Converts Business Library address object into DataAccess address object 
+    /// Converts Business Library address object into DataAccess address object.
     /// </summary>
-    /// <param name="address"></param>
-    /// <returns>Returns DataAccess address object</returns>
+    /// <returns>Returns DataAccess address object.</returns>
     public Entities.Address MapAddress(Lib.Address address)
     {
       return new Entities.Address

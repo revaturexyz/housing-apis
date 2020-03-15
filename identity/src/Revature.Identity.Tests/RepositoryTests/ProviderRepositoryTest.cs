@@ -39,9 +39,9 @@ namespace Revature.Identity.Test.Repository_Tests
     }
 
     /// <summary>
-    /// Test for updateing a given Provider's information within the database.
+    /// Test for updating a given Provider's information within the database.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task UpdateProviderAccountTestAsync()
     {
@@ -68,7 +68,6 @@ namespace Revature.Identity.Test.Repository_Tests
       var assertProvider = assertContext.ProviderAccount.First(p => p.ProviderId == arrangeProvider.ProviderId);
       Assert.Equal(arrangeProvider.Name, assertProvider.Name);
     }
-
 
     /// <summary>
     /// Retrieve a provider by way of a Guid Id from the database.
@@ -97,15 +96,14 @@ namespace Revature.Identity.Test.Repository_Tests
       Assert.NotNull(result);
     }
 
-
     /// <summary>
     /// Test the deletion of a given provider from the database.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task DeleteProviderTestAsync()
     {
-      //Assemble
+      // Assemble
       var helper = new TestHelper();
       var mapper = new Mapper();
       var options = new DbContextOptionsBuilder<IdentityDbContext>()
@@ -117,8 +115,10 @@ namespace Revature.Identity.Test.Repository_Tests
       assembleContext.SaveChanges();
       var actContext = new IdentityDbContext(options);
       var repo = new GenericRepository(actContext, new Mapper());
+
       // Act
       await repo.DeleteProviderAccountAsync(deleteProvider.ProviderId);
+
       // Assert
       var provider = actContext.ProviderAccount.ToList();
       Assert.DoesNotContain(deleteProvider, provider);
