@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Revature.Lodging.Lib.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Revature.Lodging.Lib.Interface;
 using Entity = Revature.Lodging.DataAccess.Entities;
 using Logic = Revature.Lodging.Lib.Models;
 

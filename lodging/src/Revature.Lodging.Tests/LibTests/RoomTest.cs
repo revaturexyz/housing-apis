@@ -94,8 +94,8 @@ namespace Revature.Room.Tests.Revature.Room.Lib.Tests
     [Fact]
     public void RoomShouldRejectInvalidRoomType()
     {
-     // Assert.Throws<ArgumentException>(() => new BL.Models.Room() { RoomType = "" });
-     // Assert.Throws<ArgumentException>(() => new BL.Models.Room() { RoomType = null });
+      // Assert.Throws<ArgumentException>(() => new BL.Models.Room() { RoomType = "" });
+      // Assert.Throws<ArgumentException>(() => new BL.Models.Room() { RoomType = null });
     }
   }
 }

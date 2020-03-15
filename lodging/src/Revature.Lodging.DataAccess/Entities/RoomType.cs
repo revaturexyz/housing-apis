@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Revature.Lodging.DataAccess.Entities
 {
@@ -12,6 +10,6 @@ namespace Revature.Lodging.DataAccess.Entities
     /// <summary>
     /// Model has a collection of Room that defines all the rooms with the specified room type.
     /// </summary>
-    public virtual ICollection<Room> Room  { get; set; }
+    public virtual ICollection<Room> Room { get; set; }
   }
 }

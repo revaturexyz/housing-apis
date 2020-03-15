@@ -1,5 +1,3 @@
-using System;
-
 namespace Revature.Lodging.DataAccess
 {
   public static class Mapper
@@ -155,22 +153,22 @@ namespace Revature.Lodging.DataAccess
         }
       }
 
-        switch (roomType)
-        {
-          case "apartment":
-            roomTypeId = 1;
-            break;
-          case "dormitory":
-            roomTypeId = 2;
-            break;
-          case "townhouse":
-            roomTypeId = 3;
-            break;
-          case "hotel/motel":
-            roomTypeId = 4;
-            break;
+      switch (roomType)
+      {
+        case "apartment":
+          roomTypeId = 1;
+          break;
+        case "dormitory":
+          roomTypeId = 2;
+          break;
+        case "townhouse":
+          roomTypeId = 3;
+          break;
+        case "hotel/motel":
+          roomTypeId = 4;
+          break;
 
-        }
+      }
 
       return new Entities.Room
       {

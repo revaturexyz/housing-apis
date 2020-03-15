@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -6,11 +9,7 @@ using Revature.Lodging.Api.Models;
 using Revature.Lodging.Api.Services;
 using Revature.Lodging.Lib.Interface;
 using Revature.Lodging.Lib.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xunit;
-using Logic = Revature.Lodging.Lib.Models;
 
 namespace Revature.Lodging.Tests.ApiTests
 {
@@ -195,14 +194,17 @@ namespace Revature.Lodging.Tests.ApiTests
       var ar = new Mock<IAddressRequest>();
       var res = true;
 
-      /*complex*/amenityRepo.Setup(r => r.DeleteAmenityComplexAsync(cId))
-        .Returns(Task.FromResult(res));
+      /*complex*/
+      amenityRepo.Setup(r => r.DeleteAmenityComplexAsync(cId))
+.Returns(Task.FromResult(res));
       complexRepo.Setup(r => r.UpdateComplexAsync(complex))
         .Returns(Task.FromResult(res));
-      /*complex*/amenityRepo.Setup(c => c.ReadAmenityListAsync())
-        .Returns(Task.FromResult(amenities));
-      /*complex*/amenityRepo.Setup(p => p.CreateAmenityComplexAsync(ac))
-        .Returns(Task.FromResult(res));
+      /*complex*/
+      amenityRepo.Setup(c => c.ReadAmenityListAsync())
+.Returns(Task.FromResult(amenities));
+      /*complex*/
+      amenityRepo.Setup(p => p.CreateAmenityComplexAsync(ac))
+.Returns(Task.FromResult(res));
 
       //act
       var controller = new ComplexController(complexRepo.Object, logger.Object, ar.Object, amenityRepo.Object);
@@ -226,8 +228,9 @@ namespace Revature.Lodging.Tests.ApiTests
       var ar = new Mock<IAddressRequest>();
       var res = true;
 
-      /*complex*/amenityRepo.Setup(r => r.DeleteAmenityComplexAsync(cId))
-        .Returns(Task.FromResult(res));
+      /*complex*/
+      amenityRepo.Setup(r => r.DeleteAmenityComplexAsync(cId))
+.Returns(Task.FromResult(res));
       complexRepo.Setup(r => r.DeleteComplexAsync(cId))
         .Returns(Task.FromResult(res));
 

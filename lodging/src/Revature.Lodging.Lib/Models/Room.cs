@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Revature.Lodging.Lib.Models
 {
@@ -125,7 +123,8 @@ namespace Revature.Lodging.Lib.Models
     /// Type of Room, for example: apartment, dorm, townhouse, hotel/motel.
     /// </summary>
     /// <exception cref="ArgumentException">Thrown when the gender is null or has no value just whitespace.</exception>
-    public string RoomType {
+    public string RoomType
+    {
       get => _roomType;
       set
       {

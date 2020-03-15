@@ -1,5 +1,5 @@
-using Revature.Lodging.DataAccess;
 using System;
+using Revature.Lodging.DataAccess;
 using Xunit;
 using Entity = Revature.Lodging.DataAccess.Entities;
 using Logic = Revature.Lodging.Lib.Models;

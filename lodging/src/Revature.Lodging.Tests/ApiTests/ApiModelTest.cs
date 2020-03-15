@@ -1,5 +1,5 @@
-using Revature.Lodging.Api.Models;
 using System;
+using Revature.Lodging.Api.Models;
 using Xunit;
 
 namespace Revature.Lodging.Tests.ApiTests

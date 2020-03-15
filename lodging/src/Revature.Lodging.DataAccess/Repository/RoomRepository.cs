@@ -84,22 +84,24 @@ namespace Revature.Lodging.DataAccess
         default:
           break;
       }
-      if(myRoom.Gender == null)
+      if (myRoom.Gender == null)
       {
         roomEntity.Gender = null;
-      } else {
-      string gender = myRoom.Gender.ToLower();
-      switch (gender)
+      }
+      else
       {
-        case "male":
-          roomEntity.GenderId = 1;
-          break;
-        case "female":
-          roomEntity.GenderId = 2;
-          break;
-        default:
+        string gender = myRoom.Gender.ToLower();
+        switch (gender)
+        {
+          case "male":
+            roomEntity.GenderId = 1;
+            break;
+          case "female":
+            roomEntity.GenderId = 2;
+            break;
+          default:
             roomEntity.Gender = null;
-          break;
+            break;
         }
       }
 
@@ -189,10 +191,11 @@ namespace Revature.Lodging.DataAccess
       {
         rooms = rooms.Where(r => r.Id == roomId) ?? throw new KeyNotFoundException("Room Id not found");
       }
-      if(empty == true)
+      if (empty == true)
       {
         rooms = rooms.Where(r => r.NumberOfOccupants == 0);
-      } else if (empty == false)
+      }
+      else if (empty == false)
       {
         rooms = rooms.Where(r => r.NumberOfOccupants > 0);
       }

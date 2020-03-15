@@ -204,7 +204,7 @@ namespace Revature.Lodging.Tests.ApiTests
       var controller = new RoomController(mockRepo.Object, mockAmenityRepo.Object, mockLogger.Object);
 
       //act
-     // var roomTest = new ApiRoom();
+      // var roomTest = new ApiRoom();
       var roomTest = new ApiRoom
       {
         ComplexId = Guid.NewGuid(),
@@ -346,7 +346,7 @@ namespace Revature.Lodging.Tests.ApiTests
     //}
 
     /// <summary>
-    /// Checks if deleting rooms of a complex was unsucessful becaue room to be deleted was not found, returns not found
+    /// Checks if deleting rooms of a complex was unsuccessful because room to be deleted was not found, returns not found
     /// </summary>
     /// <returns></returns>
     //  [Fact]

@@ -1,9 +1,9 @@
+using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Revature.Lodging.DataAccess;
 using Revature.Lodging.DataAccess.Repository;
-using System;
-using System.Linq;
 using Xunit;
 using Entity = Revature.Lodging.DataAccess.Entities;
 using Logic = Revature.Lodging.Lib.Models;
