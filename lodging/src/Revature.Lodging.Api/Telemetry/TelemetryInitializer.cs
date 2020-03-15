@@ -21,7 +21,7 @@ namespace Revature.Lodging.Api.Telemetry
       if (ctx != null)
       {
         var requestTelemetry = ctx.Features.Get<RequestTelemetry>();
- 
+
         if (requestTelemetry != null && !string.IsNullOrEmpty(requestTelemetry.Context.User.Id) &&
           (string.IsNullOrEmpty(telemetry.Context.User.Id) || string.IsNullOrEmpty(telemetry.Context.Session.Id)))
         {

@@ -137,6 +137,8 @@ namespace Revature.Lodging.Api.Controllers
       // filter room by role
       result = ApiMapper.FilterRoomByRole(result, roles.Contains("Coordinator") ? true : false);
 
+      List<Logic.Amenity> amenities = await _amenityRepo.ReadAmenityListByRoomIdAsync(roomId);
+
       var apiRoom = new ApiRoom
       {
         RoomId = result.Id,
@@ -148,7 +150,8 @@ namespace Revature.Lodging.Api.Controllers
         ApiRoomType = result.RoomType,
         LeaseStart = result.LeaseStart,
         LeaseEnd = result.LeaseEnd,
-        Amenities = (from amenity in await _amenityRepo.ReadAmenityListByRoomIdAsync(roomId) select new ApiAmenity() {
+        Amenities = amenities.Select(amenity => new ApiAmenity
+        {
           AmenityId = amenity.Id,
           AmenityType = amenity.AmenityType,
           Description = amenity.Description
@@ -193,11 +196,11 @@ namespace Revature.Lodging.Api.Controllers
 
         var existingAmenities = await _amenityRepo.ReadAmenityListAsync();
 
-        foreach(var postedAmenity in room.Amenities)
+        foreach (var postedAmenity in room.Amenities)
         {
           var roomAmenity = new Logic.RoomAmenity();
 
-          if(existingAmenities.Any(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower()))
+          if (existingAmenities.Any(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower()))
           {
             var amenity = existingAmenities.FirstOrDefault(existingAmenity => existingAmenity.AmenityType.ToLower() == postedAmenity.AmenityType.ToLower());
 

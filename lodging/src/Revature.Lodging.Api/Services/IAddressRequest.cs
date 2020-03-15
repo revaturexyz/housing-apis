@@ -1,6 +1,6 @@
-using Revature.Lodging.Api.Models;
 using System;
 using System.Threading.Tasks;
+using Revature.Lodging.Api.Models;
 
 namespace Revature.Lodging.Api.Services
 {

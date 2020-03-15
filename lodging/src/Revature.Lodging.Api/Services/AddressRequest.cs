@@ -1,10 +1,10 @@
-using Microsoft.Extensions.Configuration;
-using Revature.Lodging.Api.Models;
 using System;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Revature.Lodging.Api.Models;
 
 namespace Revature.Lodging.Api.Services
 {
@@ -33,7 +33,8 @@ namespace Revature.Lodging.Api.Services
         client.DefaultRequestHeaders.Add("Accept", "application/json");
 
         _client = client;
-      } catch
+      }
+      catch
       {
         _client = null;
       }

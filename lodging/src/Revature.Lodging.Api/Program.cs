@@ -1,11 +1,11 @@
+using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Revature.Lodging.DataAccess.Entities;
 using Serilog;
 using Serilog.Events;
-using System;
-using System.Threading.Tasks;
 
 namespace Revature.Lodging.Api
 {
@@ -60,13 +60,15 @@ namespace Revature.Lodging.Api
     /// </summary>
     /// <param name="args"></param>
     /// <returns></returns>
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-      Host.CreateDefaultBuilder(args)
+    public static IHostBuilder CreateHostBuilder(string[] args)
+    {
+      return Host.CreateDefaultBuilder(args)
         .ConfigureWebHostDefaults(webBuilder =>
         {
           webBuilder.UseStartup<Startup>();
           webBuilder.UseSerilog();
         });
+    }
 
     /// <summary>
     /// add service to ensure the database is existed every time

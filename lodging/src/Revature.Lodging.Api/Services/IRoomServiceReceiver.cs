@@ -7,12 +7,12 @@ namespace Revature.Lodging.Api.Services
     /// <summary>
     /// Registers the message and then calls the process message
     /// </summary>
-    abstract public void RegisterOnMessageHandlerAndReceiveMessages();
+    public abstract void RegisterOnMessageHandlerAndReceiveMessages();
 
     /// <summary>
     /// Closes the queue after receiving the message.
     /// </summary>
     /// <returns></returns>
-    abstract public Task CloseQueueAsync();
+    public abstract Task CloseQueueAsync();
   }
 }

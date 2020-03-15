@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -5,10 +9,6 @@ using Microsoft.Extensions.Logging;
 using Revature.Lodging.Api.Models;
 using Revature.Lodging.Api.Services;
 using Revature.Lodging.Lib.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Logic = Revature.Lodging.Lib.Models;
 
 namespace Revature.Lodging.Api.Controllers

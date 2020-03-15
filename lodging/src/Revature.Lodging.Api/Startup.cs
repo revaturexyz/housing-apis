@@ -1,23 +1,21 @@
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.Authentication.JwtBearer; // OktaSetup
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens; // OktaSetup
 using Microsoft.OpenApi.Models;
 using Okta.AspNetCore;
 using Revature.Lodging.Api.Services;
+using Revature.Lodging.Api.Telemetry;
 using Revature.Lodging.DataAccess;
 using Revature.Lodging.DataAccess.Entities;
 using Revature.Lodging.DataAccess.Repository;
 using Revature.Lodging.Lib.Interface;
 using Serilog;
-using Microsoft.ApplicationInsights.Extensibility;
-using Revature.Lodging.Api.Telemetry;
-using Revature.Lodging.Lib;
-
-using Microsoft.AspNetCore.Authentication.JwtBearer; // OktaSetup
-using Microsoft.IdentityModel.Tokens; // OktaSetup
 
 namespace Revature.Lodging.Api
 {
@@ -90,7 +88,7 @@ namespace Revature.Lodging.Api
       #endregion
 
       services.AddApplicationInsightsTelemetry();
-      
+
       services.AddHealthChecks();
 
       services.AddSwaggerGen(c =>

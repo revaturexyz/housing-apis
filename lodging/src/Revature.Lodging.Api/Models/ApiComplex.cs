@@ -1,7 +1,7 @@
-using Revature.Lodging.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Revature.Lodging.Lib.Models;
 
 namespace Revature.Lodging.Api.Models
 {
