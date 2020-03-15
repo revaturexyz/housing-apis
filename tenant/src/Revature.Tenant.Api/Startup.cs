@@ -75,6 +75,8 @@ namespace Revature.Tenant.Api
 
       services.AddHttpClient<IAddressService, AddressService>();
 
+      services.AddHttpContextAccessor();
+
       services.AddAuthentication(options =>
       {
         // options.DefaultScheme = OktaDefaults.ApiAuthenticationScheme;
