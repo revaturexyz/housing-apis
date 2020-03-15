@@ -9,7 +9,7 @@ namespace Revature.Identity.Tests.Logic_Tests.Model
   /// </summary>
   public class ProviderTesting
   {
-    //instantiate a test object
+    // instantiate a test object
     private readonly ProviderAccount _provider = new ProviderAccount();
 
     /// <summary>
@@ -43,13 +43,14 @@ namespace Revature.Identity.Tests.Logic_Tests.Model
       string nullEmail = null;
       Assert.ThrowsAny<ArgumentNullException>(() => _provider.Email = nullEmail);
     }
+
     /// <summary>
     /// Test if the Provider's email is blank.
     /// </summary>
     [Fact]
     public void ProviderEmailEmptyException()
     {
-      string emptyEmail = "";
+      string emptyEmail = string.Empty;
       Assert.ThrowsAny<ArgumentException>(() => _provider.Email = emptyEmail);
     }
 

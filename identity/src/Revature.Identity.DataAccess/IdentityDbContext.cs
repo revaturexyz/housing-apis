@@ -3,36 +3,37 @@ using Revature.Identity.DataAccess.Entities;
 
 namespace Revature.Identity.DataAccess
 {
+  /// <summary>
+  /// Context class that acts to define the structure of the database.
+  /// </summary>
   public class IdentityDbContext : DbContext
   {
-    /// <summary>
-    /// Context class that acts to define the structure of a code-first database.
-    /// </summary>
-    ///
-
-    // Defualt constructor
     public IdentityDbContext()
-    { }
+    {
+    }
 
-    // Constructor with options and iheritance from its parent class.
-    public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
+    // Constructor with options and inheritance from its parent class.
+    public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
+      : base(options)
     {
     }
 
     // All tables found in the database defined here
     public virtual DbSet<Notification> Notification { get; set; }
+
     public virtual DbSet<UpdateAction> UpdateAction { get; set; }
+
     public virtual DbSet<ProviderAccount> ProviderAccount { get; set; }
+
     public virtual DbSet<CoordinatorAccount> CoordinatorAccount { get; set; }
+
     public virtual DbSet<TenantAccount> TenantAccount { get; set; }
 
     /// <summary>
     /// Defines the features for each and every table.
     /// </summary>
-    /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
       modelBuilder.Entity<TenantAccount>(entity =>
       {
         entity.HasKey(e => e.TenantId);
@@ -42,7 +43,7 @@ namespace Revature.Identity.DataAccess
         entity.Property(e => e.Email)
           .IsRequired()
           .HasMaxLength(100);
-        entity.HasData(new Entities.TenantAccount[]
+        entity.HasData(new TenantAccount[]
         {
           new TenantAccount()
           {
@@ -81,7 +82,7 @@ namespace Revature.Identity.DataAccess
         entity.Property(e => e.StatusText);
         entity.Property(e => e.AccountCreatedAt)
           .IsRequired();
-        entity.HasData(new Entities.ProviderAccount[]
+        entity.HasData(new ProviderAccount[]
         {
           new ProviderAccount()
           {
@@ -132,7 +133,7 @@ namespace Revature.Identity.DataAccess
           .WithOne(p => p.Coordinator)
           .HasForeignKey(p => p.CoordinatorId);
 
-        entity.HasData(new Entities.CoordinatorAccount[]
+        entity.HasData(new CoordinatorAccount[]
         {
           new CoordinatorAccount()
           {

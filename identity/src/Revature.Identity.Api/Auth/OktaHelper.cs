@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Okta.Sdk;
 using Okta.Sdk.Configuration;
-using Microsoft.Extensions.Configuration;
 
 namespace Revature.Identity.Api
 {
@@ -16,48 +15,47 @@ namespace Revature.Identity.Api
     public static readonly string ApprovedProviderRole = "00g2sl5lo8uAc4h7I4x6";
     public static readonly string TenantRole = "00g2skdaoGOwpGSHj4x6";
 
-    public static string _token { get; set; }
     private readonly ILogger _logger;
-    public OktaClient Client { get; private set; }
-    public string Email { get; private set; }
-    public IEnumerable<string> Roles { get; private set; }
-    public JsonElement AppMetadata { get; private set; }
+
+    public OktaHelper(Microsoft.AspNetCore.Http.HttpRequest request, ILogger logger)
+    {
+      string jwt = request.Headers["Authorization"];
+
+      // Remove 'Bearer '
+      jwt = jwt.Replace("Bearer ", string.Empty);
+      var handler = new JwtSecurityTokenHandler();
+      var token = handler.ReadJwtToken(jwt) as JwtSecurityToken;
+
+      Email = (string)token.Payload["sub"];
+      Roles = JsonSerializer.Deserialize<string[]>(token.Payload["groups"].ToString());
+      _logger = logger;
+    }
+
+    public static string Token { get; private set; }
 
     public static string Domain { get; private set; }
-
-    public static string Audience { get; private set; }
 
     public static string ClientId { get; private set; }
 
     public static string Secret { get; private set; }
 
-    public static string ClaimsDomain { get; } = "https://dev-808810.okta.com";
+    public OktaClient Client { get; private set; }
+
+    public string Email { get; private set; }
+
+    public IEnumerable<string> Roles { get; private set; }
+
+    public JsonElement AppMetadata { get; private set; }
 
     /// <summary>
     /// Function to set the secret values, intended for use in Startup.
     /// </summary>
-    /// <param name="domain"></param>
-    /// <param name="clientId"></param>
-    /// <param name="secret"></param>
     public static void SetSecretValues(string domain, string clientId, string secret, string token)
     {
       Domain = domain;
       ClientId = clientId;
       Secret = secret;
-      _token = token;
-    }
-
-    public OktaHelper(Microsoft.AspNetCore.Http.HttpRequest request, ILogger logger)
-    {
-      string jwt = request.Headers["Authorization"];
-      // Remove 'Bearer '
-      jwt = jwt.Replace("Bearer ", "");
-      var handler = new JwtSecurityTokenHandler();
-      var token = handler.ReadJwtToken(jwt) as JwtSecurityToken;
-
-      Email = (string) token.Payload["sub"];
-      Roles = JsonSerializer.Deserialize<string[]>(token.Payload["groups"].ToString());
-      _logger = logger;
+      Token = token;
     }
 
     /// <summary>
@@ -65,7 +63,6 @@ namespace Revature.Identity.Api
     /// an authenticated token. Moved to a function so that it can be ignored if we just want
     /// to read the token's values.
     /// </summary>
-    /// <returns></returns>
     public bool ConnectManagementClient()
     {
       try
@@ -73,7 +70,7 @@ namespace Revature.Identity.Api
         Client = new OktaClient(new OktaClientConfiguration
         {
           OktaDomain = Domain,
-          Token = _token
+          Token = Token
         });
       }
       catch (JsonException ex)
@@ -88,6 +85,7 @@ namespace Revature.Identity.Api
       {
         _logger.LogError(ex, "Error while processing Okta response");
       }
+
       return false;
     }
 
@@ -96,7 +94,7 @@ namespace Revature.Identity.Api
     /// </summary>
     /// <param name="oktaUserId">UserId according to Okta. Has to be retrieved from the Management client.</param>
     /// <param name="roleId">RoleId according to Okta. Has to be retrieved from the Management client.</param>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public async Task AddRoleAsync(string oktaUserId, string roleId)
     {
       await Client.Groups.AddUserToGroupAsync(roleId, oktaUserId);
@@ -107,22 +105,20 @@ namespace Revature.Identity.Api
     /// </summary>
     /// <param name="oktaUserId">UserId according to Okta. Has to be retrieved from the Management client.</param>
     /// <param name="roleId">RoleId according to Okta. Has to be retrieved from the Management client.</param>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public async Task RemoveRoleAsync(string oktaUserId, string roleId)
     {
-      await Client.Groups.RemoveGroupUserAsync( roleId, oktaUserId);
+      await Client.Groups.RemoveGroupUserAsync(roleId, oktaUserId);
     }
 
     /// <summary>
     /// Updates remote Okta profile's app metadata to include the given Revature account id.
     /// </summary>
-    /// <param name="oktaUserId"></param>
-    /// <param name="newId"></param>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public async Task UpdateMetadataWithIdAsync(string oktaUserId, Guid newId)
     {
-        var User = await Client.Users.GetUserAsync(oktaUserId);
-        await Client.Users.UpdateUserAsync(User, oktaUserId, null);
+      var user = await Client.Users.GetUserAsync(oktaUserId);
+      await Client.Users.UpdateUserAsync(user, oktaUserId, null);
     }
   }
 }

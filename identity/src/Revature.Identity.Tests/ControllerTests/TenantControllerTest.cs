@@ -10,14 +10,14 @@ namespace Revature.Identity.Tests.ControllerTests
   public class TenantControllerTest
   {
     /// <summary>
-    /// Test for tenant retrieval based on their Guid-Id.
+    /// Test for tenant retrieval based on their GUID.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task GetTenantByIdAsync()
     {
-      TestHelper helper = new TestHelper();
-      Guid tenantId = helper.Tenants[0].TenantId;
+      var helper = new TestHelper();
+      var tenantId = helper.Tenants[0].TenantId;
 
       helper.Repository
         .Setup(x => x.GetTenantAccountByIdAsync(It.IsAny<Guid>()))

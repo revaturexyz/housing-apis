@@ -4,13 +4,11 @@ namespace Revature.Identity.Lib.Model
 {
   public class TenantAccount
   {
-
     private string _email;
     private string _name;
 
-
     /// <summary>
-    /// Tenant Name: Required to be a non-empty string
+    /// Gets or sets tenant name: required to be a non-empty string.
     /// </summary>
     public string Name
     {
@@ -23,12 +21,12 @@ namespace Revature.Identity.Lib.Model
     }
 
     /// <summary>
-    /// New Tenant Id created Type (Guid)
+    /// Gets or sets tenant ID (GUID).
     /// </summary>
     public Guid TenantId { get; set; } = Guid.NewGuid();
 
     /// <summary>
-    /// Tenant Email: DataType.EmailAddress required
+    /// Gets or sets tenant email: valid email address format required.
     /// </summary>
     public string Email
     {
@@ -42,17 +40,16 @@ namespace Revature.Identity.Lib.Model
       }
     }
 
-
     /// <summary>
-    /// Checks to see if a string is either null (does not exist) or empty ( "" )
+    /// Checks to see if a string is either null (does not exist) or empty ( "" ).
     /// </summary>
-    /// <param name="value"></param>
     private static void NotNullOrEmpty(string value)
     {
       if (value == null)
       {
         throw new ArgumentNullException(nameof(value), "Your Input cannot be null");
       }
+
       if (value.Length == 0)
       {
         throw new ArgumentException("Your Input cannot be empty string.", nameof(value));
@@ -60,4 +57,3 @@ namespace Revature.Identity.Lib.Model
     }
   }
 }
-

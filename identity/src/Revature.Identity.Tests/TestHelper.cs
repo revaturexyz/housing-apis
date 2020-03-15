@@ -21,31 +21,6 @@ namespace Revature.Identity.Tests
   /// </summary>
   public class TestHelper
   {
-    public Mock<Revature.Identity.Lib.Interface.IGenericRepository> Repository { get; private set; }
-    public Mock<Revature.Identity.Api.IOktaHelperFactory> OktaHelperFactory { get; private set; }
-
-    //API Controller Instantiation
-    public CoordinatorAccountController CoordinatorAccountController { get; private set; }
-    public NotificationController NotificationController { get; private set; }
-    public ProviderAccountController ProviderAccountController { get; private set; }
-    public TenantAccountController TenantAccountController { get; private set; }
-
-    public List<CoordinatorAccount> Coordinators { get; private set; }
-    public List<Notification> Notifications { get; private set; }
-    public List<ProviderAccount> Providers { get; private set; }
-    public List<Status> Statuses { get; private set; }
-    public List<UpdateAction> UpdateActions { get; private set; }
-    public List<TenantAccount> Tenants { get; private set; }
-
-    //for testing expiration times
-    public static DateTime Now { get; set; }
-    public static DateTime NowPSev { get; set; }
-    public static DateTime NowPThirty { get; set; }
-    public static ILogger<CoordinatorAccountController> LoggerCoord { get; set; }
-    public static ILogger<NotificationController> LoggerNoti { get; set; }
-    public static ILogger<ProviderAccountController> LoggerProv { get; set; }
-    public static ILogger<TenantAccountController> LoggerTenant { get; set; }
-
     public TestHelper()
     {
       LoggerCoord = new NullLogger<CoordinatorAccountController>();
@@ -65,6 +40,46 @@ namespace Revature.Identity.Tests
       NowPSev = Now.AddDays(7);
       NowPThirty = Now.AddDays(30);
     }
+
+    // for testing expiration times
+    public static DateTime Now { get; set; }
+
+    public static DateTime NowPSev { get; set; }
+
+    public static DateTime NowPThirty { get; set; }
+
+    public static ILogger<CoordinatorAccountController> LoggerCoord { get; set; }
+
+    public static ILogger<NotificationController> LoggerNoti { get; set; }
+
+    public static ILogger<ProviderAccountController> LoggerProv { get; set; }
+
+    public static ILogger<TenantAccountController> LoggerTenant { get; set; }
+
+    public Mock<Lib.Interface.IGenericRepository> Repository { get; private set; }
+
+    public Mock<IOktaHelperFactory> OktaHelperFactory { get; private set; }
+
+    // API Controller Instantiation
+    public CoordinatorAccountController CoordinatorAccountController { get; private set; }
+
+    public NotificationController NotificationController { get; private set; }
+
+    public ProviderAccountController ProviderAccountController { get; private set; }
+
+    public TenantAccountController TenantAccountController { get; private set; }
+
+    public List<CoordinatorAccount> Coordinators { get; private set; }
+
+    public List<Notification> Notifications { get; private set; }
+
+    public List<ProviderAccount> Providers { get; private set; }
+
+    public List<Status> Statuses { get; private set; }
+
+    public List<UpdateAction> UpdateActions { get; private set; }
+
+    public List<TenantAccount> Tenants { get; private set; }
 
     /// <summary>
     /// Set up the example database-entries used by the "moqed" database.
@@ -96,7 +111,6 @@ namespace Revature.Identity.Tests
         },
       };
     }
-
 
     private void SetUpProviderAccount()
     {
@@ -132,7 +146,6 @@ namespace Revature.Identity.Tests
       };
     }
 
-
     private void SetUpTenantAccount()
     {
       Tenants = new List<TenantAccount>
@@ -154,7 +167,6 @@ namespace Revature.Identity.Tests
         }
       };
     }
-
 
     private void SetUpUpdateActions()
     {

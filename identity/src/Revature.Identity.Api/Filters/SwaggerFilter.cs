@@ -30,10 +30,10 @@ namespace Revature.Identity.Api
         };
 
         operation.Security = new List<OpenApiSecurityRequirement>
-                {
-                    // scope list should be empty when definition type is bearer
-                    new OpenApiSecurityRequirement { [ bearerScheme ] = Array.Empty<string>() }
-                };
+        {
+          // scope list should be empty when definition type is bearer
+          new OpenApiSecurityRequirement { [bearerScheme] = Array.Empty<string>() }
+        };
       }
     }
   }

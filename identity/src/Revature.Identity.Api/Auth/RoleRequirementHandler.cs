@@ -17,18 +17,22 @@ namespace Revature.Identity.Api
       _loggerFactory = loggerFactory ?? throw new System.ArgumentNullException(nameof(loggerFactory));
     }
 
-    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context,
-                                                   RoleRequirement requirement)
+    protected override Task HandleRequirementAsync(
+        AuthorizationHandlerContext context,
+        RoleRequirement requirement)
     {
       if (context.Resource is AuthorizationFilterContext mvcContext)
       {
         var logger = _loggerFactory.CreateLogger("Revature.Account.Api.OktaHelper");
+
         // We just want to read the token, no management client, so we don't use the factory
         var auth = new OktaHelper(mvcContext.HttpContext.Request, logger);
 
         foreach (var role in auth.Roles)
+        {
           if (role == requirement.Role)
             context.Succeed(requirement);
+        }
       }
 
       return Task.CompletedTask;

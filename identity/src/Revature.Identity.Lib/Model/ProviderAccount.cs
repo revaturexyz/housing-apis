@@ -11,7 +11,9 @@ namespace Revature.Identity.Lib.Model
   {
     private string _name;
     private string _email;
+
     public Guid ProviderId { get; set; } = Guid.NewGuid();
+
     public Guid? CoordinatorId { get; set; }
 
     public string Name
@@ -37,22 +39,23 @@ namespace Revature.Identity.Lib.Model
     }
 
     /// <summary>
-    /// The current status of a provider's account.
+    /// Gets or sets the current status of a provider's account.
     /// </summary>
     public Status Status { get; set; }
+
     /// <summary>
-    /// Date and time the account was created at, expressed in the format 11:59:59.
+    /// Gets or sets date and time the account was created at, expressed in the format 11:59:59.
     /// </summary>
     public DateTime AccountCreatedAt { get; set; }
+
     /// <summary>
-    /// Date and time the account expires at.
+    /// Gets or sets date and time the account expires at.
     /// </summary>
     public DateTime AccountExpiresAt { get; set; }
 
     /// <summary>
-    /// Checks to see if a string is either null (does not exist) or empty ( "" ) or whitespaces ("  ")
+    /// Checks to see if a string is either null (does not exist) or empty ( "" ) or whitespaces ("  ").
     /// </summary>
-    /// <param name="value"></param>
     private static void NotNullOrEmptyorWhitespaces(string value)
     {
       if (string.IsNullOrWhiteSpace(value))

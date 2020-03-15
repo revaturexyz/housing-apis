@@ -8,24 +8,23 @@ namespace Revature.Identity.Lib.Model
   /// </summary>
   public class CoordinatorAccount
   {
-
     private string _email;
     private string _name;
     private string _trainingCenterName;
     private string _trainingCenterAddress;
 
     /// <summary>
-    /// Guid based Id for the managing-coordinator who manages this message.
+    /// Gets or sets gUID based ID for the managing coordinator who manages this message.
     /// </summary>
     public Guid CoordinatorId { get; set; } = Guid.NewGuid();
 
     /// <summary>
-    /// References a list of notifications associated with a given coordinator.
+    /// Gets or sets a list of notifications associated with a given coordinator.
     /// </summary>
-    public virtual List<Lib.Model.Notification> Notifications { get; set; } = new List<Lib.Model.Notification>();
+    public virtual List<Notification> Notifications { get; set; } = new List<Notification>();
 
     /// <summary>
-    /// Coordinator's full name.
+    /// Gets or sets coordinator's full name.
     /// </summary>
     public string Name
     {
@@ -38,7 +37,7 @@ namespace Revature.Identity.Lib.Model
     }
 
     /// <summary>
-    /// Coordinator's valid email
+    /// Gets or sets coordinator's valid email.
     /// </summary>
     public string Email
     {
@@ -53,7 +52,7 @@ namespace Revature.Identity.Lib.Model
     }
 
     /// <summary>
-    /// Name of the training center associated with the coordinator.
+    /// Gets or sets name of the training center associated with the coordinator.
     /// </summary>
     public string TrainingCenterName
     {
@@ -66,7 +65,7 @@ namespace Revature.Identity.Lib.Model
     }
 
     /// <summary>
-    /// Address of the training center associated with the coordinator.
+    /// Gets or sets address of the training center associated with the coordinator.
     /// </summary>
     public string TrainingCenterAddress
     {
@@ -79,18 +78,18 @@ namespace Revature.Identity.Lib.Model
     }
 
     /// <summary>
-    /// Checks to see if a string is either null (does not exist) or empty ( "" )
+    /// Checks to see if a string is either null (does not exist) or empty ( "" ).
     /// </summary>
-    /// <param name="value"></param>
     private static void NotNullOrEmpty(string value)
     {
       if (value == null)
       {
-        throw new ArgumentNullException(nameof(value), "Your Input cannot be null");
+        throw new ArgumentNullException(nameof(value), "Your input cannot be null");
       }
+
       if (value.Length == 0)
       {
-        throw new ArgumentException("Your Input cannot be empty string.", nameof(value));
+        throw new ArgumentException("Your input cannot be empty string.", nameof(value));
       }
     }
   }

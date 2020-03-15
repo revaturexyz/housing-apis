@@ -13,18 +13,18 @@ namespace Revature.Identity.Tests.ControllerTests
   public class ProviderControllerTest
   {
     /// <summary>
-    /// Test for Provider retrieval based on their Guid-Id. 
+    /// Test for Provider retrieval based on their Guid-Id.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task GetProviderByIdAsync()
     {
-      TestHelper helper = new TestHelper();
-      Guid providerId = helper.Providers[0].ProviderId;
+      var helper = new TestHelper();
+      var providerId = helper.Providers[0].ProviderId;
 
       helper.Repository
-       .Setup(x => x.GetProviderAccountByIdAsync(It.IsAny<Guid>()))
-       .Returns(Task.FromResult(helper.Providers[0]));
+        .Setup(x => x.GetProviderAccountByIdAsync(It.IsAny<Guid>()))
+        .Returns(Task.FromResult(helper.Providers[0]));
 
       Assert.NotNull(await helper.ProviderAccountController.Get(providerId) as OkObjectResult);
     }
@@ -32,53 +32,53 @@ namespace Revature.Identity.Tests.ControllerTests
     /// <summary>
     /// Test for a sucessful provider-account-update.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task UpdateProviderAccountAsyncSuccessfulVerificationAsync()
     {
-      TestHelper helper = new TestHelper();
-      Guid providerId = helper.Notifications[0].ProviderId;
+      var helper = new TestHelper();
+      var providerId = helper.Notifications[0].ProviderId;
       var updatedProvider = helper.Providers[0];
       updatedProvider.Name = "New Name";
 
       helper.Repository
-          .Setup(x => x.GetProviderAccountByIdAsync(It.IsAny<Guid>()))
-              .Returns(Task.FromResult(helper.Providers[0]))
-              .Verifiable();
+        .Setup(x => x.GetProviderAccountByIdAsync(It.IsAny<Guid>()))
+          .Returns(Task.FromResult(helper.Providers[0]))
+          .Verifiable();
       helper.Repository
-          .Setup(x => x.UpdateProviderAccountAsync(It.IsAny<ProviderAccount>()))
-              .Returns(Task.FromResult(true))
-              .Verifiable();
+        .Setup(x => x.UpdateProviderAccountAsync(It.IsAny<ProviderAccount>()))
+          .Returns(Task.FromResult(true))
+          .Verifiable();
 
       var updatedResult = await helper.ProviderAccountController.Put(providerId, updatedProvider);
 
       helper.Repository
-          .Verify();
+        .Verify();
     }
 
     /// <summary>
     /// Test for a successful provider account deletion.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
-    public async Task DeletProviderAccountAsyncSuccessfulVerificationAsync()
+    public async Task DeleteProviderAccountAsyncSuccessfulVerificationAsync()
     {
-      TestHelper helper = new TestHelper();
-      Guid providerId = helper.Providers[0].ProviderId;
+      var helper = new TestHelper();
+      var providerId = helper.Providers[0].ProviderId;
 
       helper.Repository
-          .Setup(x => x.GetProviderAccountByIdAsync(It.IsAny<Guid>()))
-              .Returns(Task.FromResult(helper.Providers[0]))
-              .Verifiable();
+        .Setup(x => x.GetProviderAccountByIdAsync(It.IsAny<Guid>()))
+          .Returns(Task.FromResult(helper.Providers[0]))
+          .Verifiable();
       helper.Repository
-          .Setup(x => x.DeleteProviderAccountAsync(It.IsAny<Guid>()))
-              .Returns(Task.FromResult(true))
-              .Verifiable();
+        .Setup(x => x.DeleteProviderAccountAsync(It.IsAny<Guid>()))
+          .Returns(Task.FromResult(true))
+          .Verifiable();
 
       var deleted = await helper.ProviderAccountController.Delete(providerId);
 
       helper.Repository
-          .Verify();
+        .Verify();
     }
   }
 }

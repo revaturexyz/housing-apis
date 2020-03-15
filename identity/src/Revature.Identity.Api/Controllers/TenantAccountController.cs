@@ -12,7 +12,6 @@ namespace Revature.Identity.Api.Controllers
   [ApiController]
   public class TenantAccountController : ControllerBase
   {
-
     private readonly IGenericRepository _repo;
     private readonly ILogger<TenantAccountController> _logger;
 
