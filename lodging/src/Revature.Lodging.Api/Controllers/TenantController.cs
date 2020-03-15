@@ -8,6 +8,9 @@ using Revature.Lodging.Lib.Interface;
 
 namespace Revature.Lodging.Api.Controllers
 {
+  /// <summary>
+  /// Controller in charge of communicating with the tenant service.
+  /// </summary>
   [Route("api/[controller]")]
   [ApiController]
   public class TenantController : ControllerBase
@@ -15,9 +18,6 @@ namespace Revature.Lodging.Api.Controllers
     private readonly IRoomRepository _repository;
     private readonly ILogger _logger;
 
-    /// <summary>
-    /// Controller in charge of communicating with the tenant service
-    /// </summary>
     public TenantController(IRoomRepository repository, ILogger<TenantController> logger)
     {
       _repository = repository ?? throw new NullReferenceException("Repository cannot be null." + nameof(repository));
@@ -30,8 +30,7 @@ namespace Revature.Lodging.Api.Controllers
     [Authorize(Roles = "Coordinator")] // OktaSetup
     public async Task<IActionResult> GetAsync(
           [FromQuery] string gender,
-          [FromQuery] DateTime endDate
-          )
+          [FromQuery] DateTime endDate)
     {
       _logger.LogInformation("Getting vacant filtered rooms...");
       var result = await _repository.GetVacantFilteredRoomsByGenderandEndDateAsync(gender, endDate);

@@ -1,13 +1,12 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Revature.Lodging.Lib.Interface;
-using Revature.Lodging.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Revature.Lodging.Lib.Interface;
+using Revature.Lodging.Lib.Models;
 using Entity = Revature.Lodging.DataAccess.Entities;
-using Logic = Revature.Lodging.Lib.Models;
 
 namespace Revature.Lodging.DataAccess.Repository
 {
@@ -132,7 +131,7 @@ namespace Revature.Lodging.DataAccess.Repository
         var amenityComplices = await _context.ComplexAmenity
           .Where(a => a.ComplexId == complexId).ToListAsync();
 
-        var amenities = new List<Logic.Amenity>();
+        var amenities = new List<Amenity>();
         foreach (var ac in amenityComplices)
         {
           amenities.Add(Mapper.Map(await _context.Amenity.FindAsync(ac.AmenityId)));
@@ -155,7 +154,7 @@ namespace Revature.Lodging.DataAccess.Repository
         var amenityRooms = await _context.RoomAmenity
           .Where(a => a.RoomId == roomId).AsNoTracking().ToListAsync();
 
-        var amenities = new List<Logic.Amenity>();
+        var amenities = new List<Amenity>();
         foreach (var ac in amenityRooms)
         {
           amenities.Add(Mapper.Map(await _context.Amenity.FindAsync(ac.AmenityId)));
@@ -180,14 +179,14 @@ namespace Revature.Lodging.DataAccess.Repository
         {
           eAmenity.AmenityType = amenity.AmenityType;
         }
+
         if (amenity.Description != null)
         {
           eAmenity.Description = amenity.Description;
         }
 
         await _context.SaveChangesAsync();
-        _log.LogInformation("amenity: {amenity.AmenityId} {amenity.AmenityType} was updated"
-                                      , amenity.Id, amenity.AmenityType);
+        _log.LogInformation("amenity: {amenityId} {amenityType} was updated", amenity.Id, amenity.AmenityType);
 
         return true;
       }

@@ -1,5 +1,5 @@
-using Revature.Lodging.Api.Models;
 using System;
+using Revature.Lodging.Api.Models;
 using Xunit;
 
 namespace Revature.Lodging.Tests.ApiTests
@@ -7,7 +7,7 @@ namespace Revature.Lodging.Tests.ApiTests
   public class ApiModelTest
   {
     /// <summary>
-    /// This test is to test Amenity model in Api Model 
+    /// This test is to test Amenity model in Api Model.
     /// </summary>
     [Fact]
     public void ApiAmenityTest()
@@ -26,7 +26,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// This test is to test Complex Address model in Api Model 
+    /// This test is to test Complex Address model in Api Model.
     /// </summary>
     [Fact]
     public void ApiComplexAddressTest()
@@ -49,7 +49,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// This test is to test Complex model in Api Model 
+    /// This test is to test Complex model in Api Model.
     /// </summary>
     [Fact]
     public void ApiComplexTest()
@@ -72,7 +72,7 @@ namespace Revature.Lodging.Tests.ApiTests
     }
 
     /// <summary>
-    /// This test is to test Room model in Api Model 
+    /// This test is to test Room model in Api Model.
     /// </summary>
     [Fact]
     public void ApiRoomTest()
@@ -96,36 +96,6 @@ namespace Revature.Lodging.Tests.ApiTests
       Assert.Equal("apartment", room.ApiRoomType);
       Assert.Equal(DateTime.Parse("2019/1/1"), room.LeaseStart);
       Assert.Equal(DateTime.Parse("2020/1/1"), room.LeaseEnd);
-    }
-
-    /// <summary>
-    /// This test is to test RoomtoSend model in Api Model 
-    /// </summary>
-    [Fact]
-    public void ApiRoomtoSendTest()
-    {
-      var rId = Guid.NewGuid();
-      var cId = Guid.NewGuid();
-      var start = DateTime.Parse("2019/1/1");
-      var end = DateTime.Parse("2020/1/1");
-      var send = new ApiRoomtoSend
-      {
-        RoomId = rId,
-        RoomNumber = "1234",
-        ComplexId = cId,
-        NumberOfBeds = 4,
-        RoomType = "dormitory",
-        LeaseStart = start,
-        LeaseEnd = end
-      };
-
-      Assert.Equal(rId, send.RoomId);
-      Assert.Equal("1234", send.RoomNumber);
-      Assert.Equal(cId, send.ComplexId);
-      Assert.Equal(4, send.NumberOfBeds);
-      Assert.Equal("dormitory", send.RoomType);
-      Assert.Equal(DateTime.Parse("2019/1/1"), send.LeaseStart);
-      Assert.Equal(DateTime.Parse("2020/1/1"), send.LeaseEnd);
     }
   }
 }
