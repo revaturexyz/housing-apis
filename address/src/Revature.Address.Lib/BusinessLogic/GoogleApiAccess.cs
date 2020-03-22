@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using GoogleApi;
 using GoogleApi.Entities.Common.Enums;
+using GoogleApi.Entities.Maps.Geocoding;
 using GoogleApi.Entities.Maps.Geocoding.Address.Request;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -27,7 +28,10 @@ namespace Revature.Address.Lib.BusinessLogic
       PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy()
     };
 
-    public GoogleApiAccess(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<GoogleApiAccess> logger = null)
+    public GoogleApiAccess(
+      IHttpClientFactory httpClientFactory,
+      IConfiguration configuration,
+      ILogger<GoogleApiAccess> logger)
     {
       _httpClient = httpClientFactory.CreateClient();
 
@@ -41,7 +45,7 @@ namespace Revature.Address.Lib.BusinessLogic
       _key = configuration["GoogleApiKey"];
     }
 
-    public async Task<double> GetDistance(Address origin, Address destination, int distance)
+    public async Task<double> GetDistanceAsync(Address origin, Address destination)
     {
       if (_key == null)
       {
@@ -49,20 +53,21 @@ namespace Revature.Address.Lib.BusinessLogic
       }
 
       // formatted address to be used with Google API
-      var formattedOrigin = origin.Street.Replace(" ", "+") + "+" + origin.City.Replace(" ", "+") + "," + origin.State.Replace(" ", "+") + "+" + origin.ZipCode;
-      var formattedDestination = destination.Street.Replace(" ", "+") + "+" + destination.City.Replace(" ", "+") + "," + destination.State.Replace(" ", "+") + "+" + destination.ZipCode;
+      var encodedOrigin = UrlEncodeAddress(origin);
+      var encodedDestination = UrlEncodeAddress(destination);
 
       // added parameters to the Google API url
-      var googleApiUrlParameter = $"?units=imperial&origins={formattedOrigin}&destinations={formattedDestination}&key=";
+      var relativeUrl = $"?units=imperial&origins={encodedOrigin}&destinations={encodedDestination}&key={_key}";
 
       Response deserialized;
 
       // await for async call and get response.
-      using var response = await _httpClient.GetAsync(googleApiUrlParameter + _key).ConfigureAwait(false);
+      using var response = await _httpClient.GetAsync(relativeUrl).ConfigureAwait(false);
       if (response.IsSuccessStatusCode)
       {
-        deserialized = JsonSerializer.Deserialize<Response>(
-          await response.Content.ReadAsStringAsync().ConfigureAwait(false), _distanceMatrixSerializerOptions);
+        var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+        deserialized = JsonSerializer.Deserialize<Response>(responseBody, _distanceMatrixSerializerOptions);
 
         // Parse the response body.
         var distanceValueString = deserialized.Rows[0].Elements[0].Distance.Text;
@@ -92,30 +97,23 @@ namespace Revature.Address.Lib.BusinessLogic
     {
       var request = new AddressGeocodeRequest
       {
-        Address = $"{address.Street} {address.City}, {address.State} {address.ZipCode} {address.Country}",
+        Address = address.ToString(),
         Key = _key
       };
-      var response = await GoogleMaps.AddressGeocode.QueryAsync(request);
-      var results = response.Results.ToArray();
 
-      if (results.Length != 0)
-      {
-        return true;
-      }
-      else
-      {
-        return false;
-      }
+      GeocodeResponse response = await GoogleMaps.AddressGeocode.QueryAsync(request).ConfigureAwait(false);
+
+      return response.Results.Any();
     }
 
     public async Task<Address> NormalizeAddressAsync(Address address)
     {
       var request = new AddressGeocodeRequest
       {
-        Address = $"{address.Street} {address.City}, {address.State} {address.ZipCode} {address.Country}",
+        Address = address.ToString(),
         Key = _key
       };
-      var response = await GoogleMaps.AddressGeocode.QueryAsync(request);
+      var response = await GoogleMaps.AddressGeocode.QueryAsync(request).ConfigureAwait(false);
       var results = response.Results.ToList();
 
       var addressComponents = results[0].AddressComponents.ToList();
@@ -135,6 +133,22 @@ namespace Revature.Address.Lib.BusinessLogic
         ZipCode = zipCode.LongName
       };
       return normalized;
+    }
+
+    /// <summary>
+    /// Formats an address as a URL-encoded string.
+    /// </summary>
+    /// <remarks>
+    /// Uses Uri.EscapeDataString. All other .NET APIs for this task, like
+    /// HttpUtility.UrlEncode, WebUtility.UrlEncode, Uri, and
+    /// HttpUtility.ParseQueryString, have problems like vague documentation
+    /// and nonstandard behavior. GoogleApi package does the same.
+    /// </remarks>
+    /// <param name="address">An address.</param>
+    /// <returns>The URL-encoded address string.</returns>
+    public string UrlEncodeAddress(Address address)
+    {
+      return Uri.EscapeDataString(address.ToString());
     }
   }
 }

@@ -140,5 +140,10 @@ namespace Revature.Address.Lib
         }
       }
     }
+
+    public override string ToString()
+    {
+      return $"{Street} {City}, {State} {Country} {ZipCode}";
+    }
   }
 }

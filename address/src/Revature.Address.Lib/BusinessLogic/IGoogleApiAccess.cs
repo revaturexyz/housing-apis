@@ -4,7 +4,7 @@ namespace Revature.Address.Lib.BusinessLogic
 {
   public interface IGoogleApiAccess
   {
-    public Task<double> GetDistance(Address origin, Address destination, int distance);
+    public Task<double> GetDistanceAsync(Address origin, Address destination);
 
     public Task<bool> IsValidAddressAsync(Address address);
 

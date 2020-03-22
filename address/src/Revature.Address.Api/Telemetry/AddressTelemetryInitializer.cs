@@ -7,16 +7,16 @@ namespace Revature.Address.Api.Telemetry
 {
   internal class AddressTelemetryInitializer : ITelemetryInitializer
   {
-    private readonly IHttpContextAccessor contextAccessor;
+    private readonly IHttpContextAccessor _contextAccessor;
 
     public AddressTelemetryInitializer(IHttpContextAccessor contextAccessor)
     {
-      this.contextAccessor = contextAccessor;
+      _contextAccessor = contextAccessor;
     }
 
     public void Initialize(ITelemetry telemetry)
     {
-      var ctx = contextAccessor.HttpContext;
+      var ctx = _contextAccessor.HttpContext;
 
       if (ctx != null)
       {

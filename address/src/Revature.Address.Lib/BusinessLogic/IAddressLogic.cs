@@ -9,9 +9,5 @@ namespace Revature.Address.Lib.BusinessLogic
     Task<bool> IsValidAddressAsync(Address address);
 
     Task<Address> NormalizeAddressAsync(Address address);
-
-    string GetGoogleApiUrl(string origin, string destination);
-
-    string FormatAddress(Address address);
   }
 }
